@@ -2,28 +2,34 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Login from "@/views/Login/Login";
 import DashBoard from "@/views/DashBoard/DashBoard";
-import Index from "@/views/Main/Index"
+import Index from "@/views/Main/Index";
+import AfterLogin from "@/components/Login/AfterLogin";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path:"/",
+    path: "/",
     name: "Login",
     component: Login,
   },
-  { 
-    path: '/', 
-    name:"Index",
+  {
+    path: "/afterLogin/:employeeNumber",
+    name: "AfterLogin",
+    component: AfterLogin,
+  },
+  {
+    path: "/",
+    name: "Index",
     component: Index,
-      children: [
-        {
-          path: '/dashboard',
-          name: "DashBoard",
-          component: DashBoard
-        },
-      ]
-    }
+    children: [
+      {
+        path: "/dashboard",
+        name: "DashBoard",
+        component: DashBoard,
+      },
+    ],
+  },
 ];
 
 const router = new VueRouter({

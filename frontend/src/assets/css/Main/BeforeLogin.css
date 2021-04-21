@@ -86,6 +86,9 @@ radial-gradient(ellipse farthest-corner at 0 140%, #5d9dff 0%, #2178ff 70%, #358
   text-align: right;
   opacity: 0.8;
 }
+.login-form-left-side p{
+  font-size: 12px;
+}
 .login-form-left-side{
   width: 50%;
   border-radius: 0px 10px 10px 0px;

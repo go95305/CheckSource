@@ -1,9 +1,5 @@
 <template>
   <div class="background">
-    <!-- <div class="logo">
-      <img src="@/assets/shinhan.png" />
-    </div> -->
-
     <div class="page-container">
       <div class="login-form-container shadow">
         <div class="login-form-right-side">
@@ -16,16 +12,21 @@
           <div class="login-input-container">
             <div class="login-input-wrap input-id">
               <i class="far fa-envelope"></i>
-              <input v-model="EmployeeNumber" placeholder="사번" type="text" />
+              <input
+                v-model="loginInfo.EmployeeNumber"
+                placeholder="사번"
+                type="text"
+              />
             </div>
             <div class="login-input-wrap input-password">
               <i class="fas fa-key"></i>
               <input
-                v-model="Password"
+                v-model="loginInfo.Password"
                 placeholder="비밀번호"
                 type="password"
               />
             </div>
+            <p v-if="!isLogin">로그인 정보가 틀렸습니다. 다시 입력해주세요.</p>
           </div>
           <div class="login-btn-wrap">
             <button class="login-btn" @click="login">Login</button>
@@ -40,12 +41,24 @@ export default {
   name: "Login",
   data() {
     return {
-      EmployeeNumber: "",
-      Password: "",
+      loginInfo: {
+        EmployeeNumber: "",
+        Password: "",
+      },
       isLogin: true,
     };
   },
-  methods: {},
+  methods: {
+    showInfo() {
+      this.$router.push({
+        name: "AfterLogin",
+        params: { employeeNumber: this.loginInfo.EmployeeNumber },
+      });
+    },
+    login() {
+      this.isLogin = false;
+    },
+  },
 };
 </script>
-<style scoped src="@/assets/css/Main/Login.css"></style>
+<style scoped src="../../assets/css/Main/BeforeLogin.css"></style>
