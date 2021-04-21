@@ -26,8 +26,12 @@
 
 .sidenav a:hover {
   border-radius: 50px;
-  background-color: #0ba7dd;
-  color: #f1f1f1;
+  background-color: #0ba9dd70;
+}
+
+.sidenav_choiced{
+    border-radius: 50px;
+    background-color: #0ba7dd !important;
 }
 
 #nav-logo{
