@@ -28,7 +28,7 @@
             </div>
           </div>
           <div class="login-btn-wrap">
-            <button class="login-btn" @click="showInfo">Login</button>
+            <button class="login-btn" @click="login">Login</button>
           </div>
         </div>
       </div>
@@ -42,14 +42,10 @@ export default {
     return {
       EmployeeNumber: "",
       Password: "",
+      isLogin: true,
     };
   },
-  methods: {
-    showInfo() {
-      console.log(this.EmployeeNumber);
-      console.log(this.Password);
-    },
-  },
+  methods: {},
 };
 </script>
 <style scoped src="@/assets/css/Main/Login.css"></style>
