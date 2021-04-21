@@ -1,15 +1,45 @@
 <template>
   <nav class="sidenav">
-    <router-link class="title-font" to="/dashboard">대시보드</router-link>
-    <router-link to="/dashboard">마이페이지</router-link>
-    <router-link to="/dashboard">전체목록</router-link>
-</nav>
+    <profile id="nav-profile" />
+    <router-link
+      :class="{ sidenav_choiced: currentPathName == 'DashBoard' }"
+      to="/dashboard"
+      >대시보드</router-link
+    >
+    <router-link
+      :class="{ sidenav_choiced: currentPathName == 'MyPage' }"
+      to="/login"
+      >마이페이지</router-link
+    >
+    <router-link
+      :class="{ sidenav_choiced: currentPathName == 'TotalList' }"
+      to="/dashboard"
+      >전체목록</router-link
+    >
+    <div id="nav-logo">
+      <img src="@/assets/shinhan.png" width="150px" alt="nav-logo" />
+    </div>
+  </nav>
 </template>
 
 <script>
+import Profile from "@/components/Main/Profile";
 export default {
   name: "Navbar",
-  components: {},
+  components: { Profile },
+  data() {
+    return {
+      currentPathName: "",
+    };
+  },
+  watch: {
+    $route(to) {
+      this.currentPathName = to.name;
+    },
+  },
+  created() {
+      this.currentPathName = this.$route.name;
+  },
 };
 </script>
 

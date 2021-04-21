@@ -7,7 +7,10 @@
   left: 0;
   background: linear-gradient(#00a3e2, #153081);
   overflow-x: hidden;
-  padding-top: 60px;
+}
+
+#nav-profile{
+    padding:20px 0px;
 }
 
 .sidenav a {
@@ -23,6 +26,18 @@
 
 .sidenav a:hover {
   border-radius: 50px;
-  background-color: #0ba7dd;
-  color: #f1f1f1;
+  background-color: #0ba9dd70;
+}
+
+.sidenav_choiced{
+    border-radius: 50px;
+    background-color: #0ba7dd !important;
+}
+
+#nav-logo{
+    position:absolute;
+    width: 100%;
+    bottom:0;
+    padding-bottom: 20px;
+    text-align: center;
 }
