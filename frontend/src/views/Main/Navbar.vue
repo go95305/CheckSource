@@ -1,13 +1,19 @@
 <template>
   <nav class="sidenav">
     <profile id="nav-profile" />
-    <router-link :class="{ sidenav_choiced: currentPage == 1 }" to="/dashboard"
+    <router-link
+      :class="{ sidenav_choiced: currentPathName == 'DashBoard' }"
+      to="/dashboard"
       >대시보드</router-link
     >
-    <router-link :class="{ sidenav_choiced: currentPage == 2 }" to="/dashboard"
+    <router-link
+      :class="{ sidenav_choiced: currentPathName == 'MyPage' }"
+      to="/login"
       >마이페이지</router-link
     >
-    <router-link :class="{ sidenav_choiced: currentPage == 3 }" to="/dashboard"
+    <router-link
+      :class="{ sidenav_choiced: currentPathName == 'TotalList' }"
+      to="/dashboard"
       >전체목록</router-link
     >
     <div id="nav-logo">
@@ -23,21 +29,16 @@ export default {
   components: { Profile },
   data() {
     return {
-      currentPage: 0,
       currentPathName: "",
     };
   },
   watch: {
-    currentPathName: function () {
-      switch (this.currentPathName) {
-        case "DashBoard":
-          this.currentPage = 1;
-          break;
-      }
+    $route(to) {
+      this.currentPathName = to.name;
     },
   },
   created() {
-    this.currentPathName = this.$route.name;
+      this.currentPathName = this.$route.name;
   },
 };
 </script>
