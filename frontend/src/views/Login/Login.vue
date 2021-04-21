@@ -1,86 +1,34 @@
 <template>
   <div class="background">
-    <div class="logo">
+    <!-- <div class="logo">
       <img src="@/assets/shinhan.png" />
-    </div>
-    
-    <div class="login-wrap">
-      <div class="login-html">
-        <input
-          id="tab-1"
-          type="radio"
-          name="tab"
-          class="sign-in"
-          checked
-        /><label for="tab-1" class="tab">Sign In</label>
-        <input id="tab-2" type="radio" name="tab" class="sign-up" /><label
-          for="tab-2"
-          class="tab"
-          >Sign Up</label
-        >
-        <div class="login-form">
-          <div class="sign-in-htm">
-            <div class="group">
-              <label for="user" class="label">Username</label>
-              <input id="user" type="text" class="input" />
+    </div> -->
+
+    <div class="page-container">
+      <div class="login-form-container shadow">
+        <div class="login-form-right-side">
+          <div class="top-logo-wrap"></div>
+          <img id="right-side-logo" src="@/assets/shinhan.png" />
+          <h3>Shinhan Bank Opensource Validation</h3>
+        </div>
+        <div class="login-form-left-side">
+          <div class="login-top-wrap"></div>
+          <div class="login-input-container">
+            <div class="login-input-wrap input-id">
+              <i class="far fa-envelope"></i>
+              <input v-model="EmployeeNumber" placeholder="사번" type="text" />
             </div>
-            <div class="group">
-              <label for="pass" class="label">Password</label>
+            <div class="login-input-wrap input-password">
+              <i class="fas fa-key"></i>
               <input
-                id="pass"
+                v-model="Password"
+                placeholder="비밀번호"
                 type="password"
-                class="input"
-                data-type="password"
               />
-            </div>
-            <div class="group">
-              <input id="check" type="checkbox" class="check" checked />
-              <label for="check"
-                ><span class="icon"></span> Keep me Signed in</label
-              >
-            </div>
-            <div class="group">
-              <input type="submit" class="button" value="Sign In" />
-            </div>
-            <div class="hr"></div>
-            <div class="foot-lnk">
-              <a href="#forgot">Forgot Password?</a>
             </div>
           </div>
-          <div class="sign-up-htm">
-            <div class="group">
-              <label for="user" class="label">Username</label>
-              <input id="user" type="text" class="input" />
-            </div>
-            <div class="group">
-              <label for="pass" class="label">Password</label>
-              <input
-                id="pass"
-                type="password"
-                class="input"
-                data-type="password"
-              />
-            </div>
-            <div class="group">
-              <label for="pass" class="label">Repeat Password</label>
-              <input
-                id="pass"
-                type="password"
-                class="input"
-                data-type="password"
-              />
-            </div>
-            <div class="group">
-              <label for="pass" class="label">Email Address</label>
-              <input id="pass" type="text" class="input" />
-            </div>
-            <div class="group">
-              <input type="submit" class="button" value="Sign Up" />
-            </div>
-            <div class="hr"></div>
-            <div class="foot-lnk">
-              <label for="tab-1">Already Member?</label>
-            </div>
+          <div class="login-btn-wrap">
+            <button class="login-btn" @click="showInfo">Login</button>
           </div>
         </div>
       </div>
@@ -90,6 +38,18 @@
 <script>
 export default {
   name: "Login",
+  data() {
+    return {
+      EmployeeNumber: "",
+      Password: "",
+    };
+  },
+  methods: {
+    showInfo() {
+      console.log(this.EmployeeNumber);
+      console.log(this.Password);
+    },
+  },
 };
 </script>
 <style scoped src="@/assets/css/Main/Login.css"></style>

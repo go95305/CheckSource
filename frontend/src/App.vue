@@ -15,7 +15,7 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
 
 * { 
-  margin: 0 !important;
+  margin: 0 ;
 }
 
 #app {
