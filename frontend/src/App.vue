@@ -14,7 +14,7 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;500&display=swap%27');
 
 * { 
-  margin: 0;
+  margin: 0 ;
 }
 
 #app {
