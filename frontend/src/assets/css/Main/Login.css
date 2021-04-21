@@ -1,0 +1,17 @@
+.background {
+  background: linear-gradient(#00a3e2, #153081);
+  width: 100vw;
+  height: 100vh;
+  /* margin: 0%; */
+  /* background-size: 100%; */
+}
+.logo {
+  opacity: 0.5;
+  height: 40vh;
+  width: 20vw;
+  position: absolute;
+  margin: -150px 0px 0px -200px;
+  top: 34%;
+  left: 45%;
+  display: block;
+}
