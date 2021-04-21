@@ -11,17 +11,21 @@
         <div class="login-form-left-side">
           <div class="login-top-wrap"></div>
           <div class="login-input-container">
-            <div class="login-input-wrap input-id">
+            <div class="login-input-wrap input-name">
               <i class="far fa-envelope"></i>
-              <input placeholder="사번" type="text" />
+              <input placeholder="성명" type="text" />
             </div>
-            <div class="login-input-wrap input-password">
+            <div class="login-input-wrap input-department">
               <i class="fas fa-key"></i>
-              <input placeholder="비밀번호" type="password" />
+              <input placeholder="부서" type="text" />
+            </div>
+            <div class="login-input-wrap input-rank">
+              <i class="fas fa-key"></i>
+              <input placeholder="계급" type="text" />
             </div>
           </div>
           <div class="login-btn-wrap">
-            <button class="login-btn">Login</button>
+            <button class="login-btn">등록</button>
           </div>
         </div>
       </div>

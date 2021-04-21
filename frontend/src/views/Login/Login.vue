@@ -29,7 +29,7 @@
             <p v-if="!isLogin">로그인 정보가 틀렸습니다. 다시 입력해주세요.</p>
           </div>
           <div class="login-btn-wrap">
-            <button class="login-btn" @click="login">Login</button>
+            <button class="login-btn" @click="showInfo">Login</button>
           </div>
         </div>
       </div>
