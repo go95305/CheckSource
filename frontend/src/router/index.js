@@ -4,6 +4,7 @@ import Login from "@/views/Login/Login";
 import DashBoard from "@/views/DashBoard/DashBoard";
 import Index from "@/views/Main/Index";
 import AfterLogin from "@/components/Login/AfterLogin";
+import MyProject from "@/views/MyProject/MyProject";
 
 Vue.use(VueRouter);
 
@@ -27,6 +28,18 @@ const routes = [
         path: "dashboard",
         name: "DashBoard",
         component: DashBoard,
+      },
+      {
+        path: "myproject",
+        name: "MyProject",
+        component: MyProject,
+        children:[
+          {
+            path: "summary",
+            name: "Summary",
+            component: DashBoard,
+          },
+        ]
       },
     ],
   },
