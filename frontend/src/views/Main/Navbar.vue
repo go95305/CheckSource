@@ -34,11 +34,12 @@ export default {
   },
   watch: {
     $route(to) {
+      //경로 이동 시 해당 경로 이름 설정
       this.currentPathName = to.name;
     },
   },
   created() {
-      this.currentPathName = this.$route.name;
+    this.currentPathName = this.$route.name;
   },
 };
 </script>
