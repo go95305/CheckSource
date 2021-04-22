@@ -2,7 +2,7 @@
   <div class="background">
     <div class="page-container">
       <div class="login-form-container shadow">
-        <div class="login-form-right-side">
+        <div class="login-form-right-side-before">
           <div class="top-logo-wrap"></div>
           <img id="right-side-logo" src="@/assets/shinhan.png" />
           <h3>Shinhan Bank Opensource Validation</h3>
@@ -61,4 +61,4 @@ export default {
   },
 };
 </script>
-<style scoped src="../../assets/css/Main/BeforeLogin.css"></style>
+<style scoped src="../../assets/css/Main/Login.css"></style>

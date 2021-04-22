@@ -2,7 +2,7 @@
   <div class="background">
     <div class="page-container">
       <div class="login-form-container shadow">
-        <div class="login-form-right-side">
+        <div class="login-form-right-side-after">
           <div class="top-logo-wrap"></div>
           <!-- <img id="right-side-logo" src="@/assets/shinhan.png" /> -->
           <h2>{{ MyInfo.EmployeeNumber }}님 반갑습니다.</h2>
@@ -50,5 +50,6 @@ export default {
   },
 };
 </script>
-<style scoped src="../../assets/css/Main/AfterLogin.css">
+<style scoped src="../../assets/css/Main/Login.css">
+
 </style>
