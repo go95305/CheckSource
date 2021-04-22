@@ -19,13 +19,18 @@ const routes = [
     component: AfterLogin,
   },
   {
-    path: "/",
+    path: "/index",
     name: "Index",
     component: Index,
     children: [
       {
-        path: "/dashboard",
+        path: "/index/dashboard",
         name: "DashBoard",
+        component: DashBoard,
+      },
+      {
+        path: "/dashboard",
+        name: "MyPage",
         component: DashBoard,
       },
     ],

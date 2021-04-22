@@ -1,0 +1,23 @@
+
+#profile-image{
+    border-radius: 50%;
+    margin:0 10px 0 20px;
+}
+
+#profile-info{
+    display: inline-block;
+    vertical-align: top;
+}
+
+#profile-info p,
+#profile-info span{
+    color: white;
+}
+
+#profile-info span{
+    font-size: small;
+    font-weight: 300;
+}
+#profile-info__department{
+    margin-right: 5px;
+}
