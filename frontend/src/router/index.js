@@ -4,6 +4,7 @@ import Login from "@/views/Login/Login";
 import DashBoard from "@/views/DashBoard/DashBoard";
 import Index from "@/views/Main/Index";
 import AfterLogin from "@/components/Login/AfterLogin";
+import BeforeLogin from "@/components/Login/BeforeLogin";
 
 Vue.use(VueRouter);
 
@@ -12,11 +13,18 @@ const routes = [
     path: "/",
     name: "Login",
     component: Login,
-  },
-  {
-    path: "/afterLogin/:employeeNumber",
-    name: "AfterLogin",
-    component: AfterLogin,
+    children: [
+      {
+        path: "afterLogin/:employeeNumber",
+        name: "AfterLogin",
+        component: AfterLogin,
+      },
+      {
+        path: "",
+        name: "BeforeLogin",
+        component: BeforeLogin,
+      },
+    ],
   },
   {
     path: "/index",
