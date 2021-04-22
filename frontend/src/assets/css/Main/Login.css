@@ -62,7 +62,7 @@
 #right-side-logo{
   height: 30%;
 }
-.login-form-right-side{
+.login-form-right-side-before{
   width: 50%; 
   border-radius: 10px 0px 0px 10px;
   display: flex;
@@ -72,6 +72,21 @@
   color: white;
   background-image: 
 radial-gradient(ellipse farthest-corner at 0 140%, #5d9dff 0%, #2178ff 70%, #3585ff 70%);
+}
+.login-form-right-side-after{
+  width: 50%; 
+  border-radius: 10px 0px 0px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background-image: radial-gradient(
+    ellipse farthest-corner at 0 140%,
+    #885dff 0%,
+    #8921ff 70%,
+    #f835ff 70%
+  );
 }
 .login-form-right-side h1{
   color: white;
@@ -85,6 +100,9 @@ radial-gradient(ellipse farthest-corner at 0 140%, #5d9dff 0%, #2178ff 70%, #358
   font-size:12px;
   text-align: right;
   opacity: 0.8;
+}
+.login-form-left-side p{
+  font-size: 12px;
 }
 .login-form-left-side{
   width: 50%;
