@@ -11,8 +11,7 @@ export default {
 }
 </script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap%27');
-@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;500&display=swap%27');
 
 * { 
   margin: 0 ;
@@ -22,7 +21,4 @@ export default {
   font-family: 'Noto Sans KR';
 }
 
-.title-font{
-  font-family: 'Do Hyeon';
-}
 </style>

@@ -1,26 +1,28 @@
-
 .sidenav {
-  height: 100%; /* 100% Full-height */
-  width: 200px; /* 0 width - change this with JavaScript */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Stay on top */
-  top: 0; /* Stay at the top */
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
   left: 0;
-  background-color: #111; /* Black*/
-  overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 60px; /* Place content 60px from the top */
-  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+  background: linear-gradient(#00a3e2, #153081);
+  overflow-x: hidden;
+  padding-top: 60px;
 }
 
 .sidenav a {
-  padding: 8px 8px 8px 32px;
+  margin: 0px 10px;
+  padding: 8px;
   text-decoration: none;
   font-size: 25px;
-  color: #818181;
+  color: #ffffff;
+  text-align: center;
   display: block;
   transition: 0.3s;
 }
 
 .sidenav a:hover {
+  border-radius: 50px;
+  background-color: #0ba7dd;
   color: #f1f1f1;
 }
