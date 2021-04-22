@@ -2,19 +2,24 @@
   <nav class="sidenav">
     <profile id="nav-profile" />
     <router-link
-      :class="{ sidenav_choiced: currentPathName == 'DashBoard' }"
+      :class="{ sidenav_choiced: currentPathName == 'dashboard' }"
       to="/dashboard"
       >대시보드</router-link
     >
     <router-link
-      :class="{ sidenav_choiced: currentPathName == 'MyPage' }"
-      to="/login"
-      >마이페이지</router-link
+      :class="{ sidenav_choiced: currentPathName == 'myproject' }"
+      to="/myproject/summary"
+      >내 프로젝트</router-link
     >
     <router-link
       :class="{ sidenav_choiced: currentPathName == 'TotalList' }"
       to="/dashboard"
       >전체목록</router-link
+    >
+       <router-link
+      :class="{ sidenav_choiced: currentPathName == 'MyPage' }"
+      to="/dashboard"
+      >마이페이지</router-link
     >
     <div id="nav-logo">
       <img src="@/assets/shinhan.png" width="150px" alt="nav-logo" />
@@ -35,11 +40,12 @@ export default {
   watch: {
     $route(to) {
       //경로 이동 시 해당 경로 이름 설정
-      this.currentPathName = to.name;
+      this.currentPathName = to.path.split('/')[1];
     },
   },
   created() {
-    this.currentPathName = this.$route.name;
+    this.currentPathName = this.$route.path.split('/')[1];
+    console.log(this.currentPathName);
   },
 };
 </script>
