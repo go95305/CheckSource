@@ -8,7 +8,7 @@
     >
     <router-link
       :class="{ sidenav_choiced: currentPathName == 'myproject' }"
-      to="/myproject/summary"
+      to="/myproject/main/summary"
       >내 프로젝트</router-link
     >
     <router-link
@@ -45,7 +45,6 @@ export default {
   },
   created() {
     this.currentPathName = this.$route.path.split('/')[1];
-    console.log(this.currentPathName);
   },
 };
 </script>
