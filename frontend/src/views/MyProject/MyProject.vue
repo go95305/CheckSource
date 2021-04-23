@@ -3,8 +3,11 @@
     <div id="my-project">
       <my-project-path :department="'내 프로젝트'" />
       <h1 id="my-project-title">내 프로젝트</h1>
-      <tab id="my-project-tab" name="my-project" :list="tabList" />
-      <router-view/>
+      <tab
+        id="my-project-tab"
+        :list="tabList"
+      />
+      <router-view />
     </div>
   </div>
 </template>
@@ -16,7 +19,20 @@ export default {
   components: { MyProjectPath, Tab },
   data() {
     return {
-      tabList: ["Summary", "Department", "My Project"],
+      tabList: [
+        {
+          name:"Summary",
+          path:'/myproject/summary'
+        }, 
+        {
+          name:"Department",
+          path:'/myproject/department'
+        }, 
+        {
+          name:"Project",
+          path:'/myproject/project'
+        }, 
+      ],
     };
   },
 };

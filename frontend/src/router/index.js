@@ -39,6 +39,16 @@ const routes = [
             name: "Summary",
             component: DashBoard,
           },
+          {
+            path: "department",
+            name: "Department",
+            component: DashBoard,
+          },
+          {
+            path: "project",
+            name: "Project",
+            component: DashBoard,
+          },
         ]
       },
     ],
@@ -48,6 +58,7 @@ const routes = [
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
+  linkActiveClass: 'active',
   routes,
 });
 
