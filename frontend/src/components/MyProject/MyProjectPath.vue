@@ -29,7 +29,7 @@ export default {
       GoMyProject:function(){
           if(this.project.length > 0){
               //프로젝트 명 있을 때
-            this.$router.push('/myproject')
+            this.$router.push('/myproject/main/summary')
           }
       }
   },

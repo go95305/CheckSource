@@ -17,8 +17,8 @@
       >전체목록</router-link
     >
        <router-link
-      :class="{ sidenav_choiced: currentPathName == 'MyPage' }"
-      to="/dashboard"
+      :class="{ sidenav_choiced: currentPathName == 'mypage' }"
+      to="/mypage/profile"
       >마이페이지</router-link
     >
     <div id="nav-logo">
