@@ -20,7 +20,7 @@
           </div>
           <div class="login-input-wrap input-rank">
             <i class="fas fa-key"></i>
-            <input placeholder="계급" type="text" />
+            <input placeholder="직급" type="text" />
           </div>
         </div>
         <div class="login-btn-wrap">

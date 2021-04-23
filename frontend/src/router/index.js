@@ -5,13 +5,13 @@ import DashBoard from "@/views/DashBoard/DashBoard";
 import Index from "@/views/Main/Index";
 import AfterLogin from "@/components/Login/AfterLogin";
 import BeforeLogin from "@/components/Login/BeforeLogin";
-
+import LicenseList from "@/components/MyPage/LicenseList"
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "Login",
+    name: "",
     component: Login,
     children: [
       {
@@ -43,6 +43,11 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/licenseList",
+    name: "LicenseList",
+    component: LicenseList,
+  }
 ];
 
 const router = new VueRouter({
