@@ -42,7 +42,7 @@
       "parser": "babel-eslint"
     },
     "rules": {
-      "prettier/prettier": ["error", { "endOfLine": "auto" }] 
+      
     }
   },
   "browserslist": [

@@ -1,47 +1,45 @@
 /* navbar */
 .sidenav {
-  height: 100%;
-  width: 200px;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background: linear-gradient(#00a3e2, #153081);
-  overflow-x: hidden;
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background: linear-gradient(#153081, #00a3e2);
+    overflow-x: hidden;
 }
 
 /* navbar profile */
-#nav-profile{
-    padding:20px 0px;
+#nav-profile {
+    padding: 20px 0px;
 }
 
 /* navbar router-link */
 .sidenav a {
-  margin: 0px 10px;
-  padding: 8px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #ffffff;
-  text-align: center;
-  display: block;
-  transition: 0.3s;
+    /* margin: 0px 10px; */
+    padding: 8px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #ffffff;
+    text-align: center;
+    display: block;
+    transition: 0.3s;
 }
 
 .sidenav a:hover {
-  border-radius: 50px;
-  background-color: #0ba9dd70;
+    background-color: #0ba9dd70;
 }
 
-.sidenav_choiced{
-    border-radius: 50px;
-    background-color: #0ba7dd !important;
+.sidenav_choiced {
+    background-color: #0ba9dd70 !important;
 }
 
 /* navbar logo */
-#nav-logo{
-    position:absolute;
+#nav-logo {
+    position: absolute;
     width: 100%;
-    bottom:0;
+    bottom: 0;
     padding-bottom: 20px;
     text-align: center;
 }
