@@ -5,19 +5,25 @@ import DashBoard from "@/views/DashBoard/DashBoard";
 import Index from "@/views/Main/Index";
 import AfterLogin from "@/components/Login/AfterLogin";
 import MyProject from "@/views/MyProject/MyProject";
-
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "Login",
+    name: "",
     component: Login,
-  },
-  {
-    path: "/afterLogin/:employeeNumber",
-    name: "AfterLogin",
-    component: AfterLogin,
+    children: [
+      {
+        path: "afterLogin/:employeeNumber",
+        name: "AfterLogin",
+        component: AfterLogin,
+      },
+      {
+        path: "",
+        name: "BeforeLogin",
+        component: BeforeLogin,
+      },
+    ],
   },
   {
     path: "/",
@@ -43,6 +49,11 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/licenseList",
+    name: "LicenseList",
+    component: LicenseList,
+  }
 ];
 
 const router = new VueRouter({
