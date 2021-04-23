@@ -8,6 +8,7 @@ import BeforeLogin from "@/components/Login/BeforeLogin";
 import MyProject from "@/views/MyProject/MyProject";
 import MyProjectMain from "@/views/MyProject/MyProjectMain";
 import MyProjectResult from "@/views/MyProject/MyProjectResult";
+import LicenseList from "@/components/MyProject/LicenseList"
 
 Vue.use(VueRouter);
 
@@ -84,7 +85,7 @@ const routes = [
               {
                 path: "license",
                 name: "License",
-                component: DashBoard,
+                component: LicenseList,
               },
             ],
           },
