@@ -1,35 +1,15 @@
 <template>
   <div class="container">
-    <ul class="responsive-table">
-      <li class="table-header">
-        <div id="col col-1">Job Id</div>
-        <div id="col col-2">Customer Name</div>
-        <div id="col col-3">Amount Due</div>
-        <div id="col col-4">Payment Status</div>
-      </li>
-      <li class="table-row">
-        <div id="col col-1"  class="table-content" data-label="Job Id">42235</div>
-        <div id="col col-2" class="table-content" data-label="Customer Name">John Doe</div>
-        <div id="col col-3" class="table-content" data-label="Amount">$350</div>
-        <div id="col col-4" class="table-content" data-label="Payment Status">Pending</div>
-      </li>
-      <li class="table-row">
-        <div id="col col-1"  class="table-content" data-label="Job Id">42235</div>
-        <div id="col col-2" class="table-content" data-label="Customer Name">John Doe</div>
-        <div id="col col-3" class="table-content" data-label="Amount">$350</div>
-        <div id="col col-4" class="table-content" data-label="Payment Status">Pending</div>
-      </li>
-      <li class="table-row">
-        <div id="col col-1"  class="table-content" data-label="Job Id">42235</div>
-        <div id="col col-2" class="table-content" data-label="Customer Name">John Doe</div>
-        <div id="col col-3" class="table-content" data-label="Amount">$350</div>
-        <div id="col col-4" class="table-content" data-label="Payment Status">Pending</div>
-      </li>
-      <li class="table-row">
-        <div id="col col-1"  class="table-content" data-label="Job Id">42235</div>
-        <div id="col col-2" class="table-content" data-label="Customer Name">John Doe</div>
-        <div id="col col-3" class="table-content" data-label="Amount">$350</div>
-        <div id="col col-4" class="table-content" data-label="Payment Status">Pending</div>
+    <div class="table-header">
+      <div class="title title-1">Name</div>
+      <div class="title title-2">URL</div>
+      <div class="title title-3">License Obligation</div>
+    </div>
+    <ul class="responsive-table" :key="index" v-for="(item, index) in list">
+      <li class="table-row" :class="{ illegal: list[index].illegal }">
+        <div class="col col-1">{{ item.name }}</div>
+        <div class="col col-2">{{ item.url }}</div>
+        <div class="col col-3">{{ item.obligation }}</div>
       </li>
     </ul>
   </div>
@@ -37,7 +17,28 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      list: [
+        {
+          name: "Apache License 2.0",
+          url: "http://www.apache.org/licenses/LICENSE-2.0",
+          obligation: "Apache License 2.0",
+          illegal: true,
+        },
+        {
+          name: "GNU General Public License v2.0 or later",
+          url: "https://opensource.org/licenses/BSD-3-Clause",
+          obligation: "Apache License 2.0",
+          illegal: true,
+        },
+        {
+          name: "Eclipse Public License 2.0",
+          url: "https://www.eclipse.org/legal/epl-2.0",
+          obligation: "Apache License 2.0",
+          illegal: false,
+        },
+      ],
+    };
   },
 };
 </script>
