@@ -10,11 +10,12 @@ ul li{
     margin-bottom: -1px;
 }
 
-input {
+a {
     display:none;
+    text-decoration: none;
 }
 
-label{
+a{
     display: inline-block;
     padding:12px 15px;
     border: 1px solid rgb(221, 221, 221);
@@ -24,11 +25,11 @@ label{
     color:gray;
 }
 
-label:hover{
+a:hover{
     border-color: rgb(221, 221, 221);
 }
 
-input:checked + label{
+a.active{
     background: white;
     border: 1px solid rgb(221, 221, 221);
     border-bottom-color: white;
