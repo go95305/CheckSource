@@ -5,6 +5,8 @@ import DashBoard from "@/views/DashBoard/DashBoard";
 import Index from "@/views/Main/Index";
 import AfterLogin from "@/components/Login/AfterLogin";
 import MyProject from "@/views/MyProject/MyProject";
+import BeforeLogin from "@/components/Login/BeforeLogin";
+import LicenseList from "@/components/MyPage/LicenseList"
 Vue.use(VueRouter);
 
 const routes = [
