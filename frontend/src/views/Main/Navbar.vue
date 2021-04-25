@@ -1,51 +1,95 @@
 <template>
-  <nav class="sidenav">
-    <profile id="nav-profile" />
-    <router-link
-      :class="{ sidenav_choiced: currentPathName == 'dashboard' }"
-      to="/dashboard"
-      >대시보드</router-link
-    >
-    <router-link
-      :class="{ sidenav_choiced: currentPathName == 'myproject' }"
-      to="/myproject/main/summary"
-      >내 프로젝트</router-link
-    >
-    <router-link
-      :class="{ sidenav_choiced: currentPathName == 'TotalList' }"
-      to="/dashboard"
-      >전체목록</router-link
-    >
-       <router-link
-      :class="{ sidenav_choiced: currentPathName == 'mypage' }"
-      to="/mypage/profile"
-      >마이페이지</router-link
-    >
-    <div id="nav-logo">
-      <img src="@/assets/shinhan.png" width="150px" alt="nav-logo" />
-    </div>
-  </nav>
+    <nav class="sidenav">
+        <profile id="nav-profile" />
+        <ul class="nav-ul">
+            <li class="nav-li" @click="LiClickHandler">
+                <router-link to="/dashboard">대시보드</router-link>
+            </li>
+            <li class="nav-li" @click="LiClickHandler">
+                <div class="dropdown">
+                    <span class="dropbtn">내 프로젝트</span>
+                    <div class="dropdown-content">
+                        <router-link to="/myproject/main/summary"
+                            >Summary</router-link
+                        >
+                        <router-link to="/myproject/main/gitlab"
+                            >GitLab</router-link
+                        >
+                        <router-link to="/myproject/main/github"
+                            >GitHab</router-link
+                        >
+                    </div>
+                </div>
+            </li>
+            <li class="nav-li" @click="LiClickHandler">
+                <div class="dropdown">
+                    <span class="dropbtn">전체목록</span>
+                    <div class="dropdown-content">
+                        <router-link to="/myproject/main/summary"
+                            >Open Source</router-link
+                        >
+                        <router-link to="/myproject/main/gitlab"
+                            >License</router-link
+                        >
+                    </div>
+                </div>
+            </li>
+            <li class="nav-li" @click="LiClickHandler">
+                <div class="dropdown">
+                    <span class="dropbtn">마이페이지</span>
+                    <div class="dropdown-content">
+                        <router-link to="/mypage/profile">Profile</router-link>
+                        <router-link to="/mypage/profile">SCM</router-link>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+        <!-- <router-link
+            :class="{ sidenav_choiced: currentPathName == 'myproject' }"
+            to="/myproject/main/summary"
+            >내 프로젝트</router-link
+        >
+        <router-link
+            :class="{ sidenav_choiced: currentPathName == 'TotalList' }"
+            to="/dashboard"
+            >전체목록</router-link
+        > -->
+
+        <div id="nav-logo">
+            <img src="@/assets/shinhan.png" width="150px" alt="nav-logo" />
+        </div>
+    </nav>
 </template>
 
 <script>
 import Profile from "@/components/Main/Profile";
 export default {
-  name: "Navbar",
-  components: { Profile },
-  data() {
-    return {
-      currentPathName: "",
-    };
-  },
-  watch: {
-    $route(to) {
-      //경로 이동 시 해당 경로 이름 설정
-      this.currentPathName = to.path.split('/')[1];
+    name: "Navbar",
+    components: { Profile },
+    data() {
+        return {
+            currentPathName: "",
+        };
     },
-  },
-  created() {
-    this.currentPathName = this.$route.path.split('/')[1];
-  },
+    watch: {
+        $route(to) {
+            //경로 이동 시 해당 경로 이름 설정
+            this.currentPathName = to.path.split("/")[1];
+        },
+    },
+    created() {
+        this.currentPathName = this.$route.path.split("/")[1];
+    },
+    methods: {
+        LiClickHandler: function (event) {
+            let dropbtns = this.$el.getElementsByClassName("dropbtn");
+            for (let i = 0; i < dropbtns.length; i++) {
+                dropbtns[i].classList.remove("choice");
+            }
+            event.target.classList.add("choice");
+        },
+    },
 };
 </script>
 
