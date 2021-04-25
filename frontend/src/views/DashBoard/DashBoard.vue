@@ -111,8 +111,14 @@
             </div>
           </div>
           <!-- table end -->
-
-          <div class="project-title">PROJECT</div>
+          <i class="material-icons">face</i>
+          <VerifyCard />
+          <div class="project-title">
+            <vueper-slides fractions progress>
+              <vueper-slide v-for="i in 10" :key="i" />
+              <template v-slot:content> hi~ </template>
+            </vueper-slides>
+          </div>
         </div>
       </div>
 
@@ -188,9 +194,20 @@
 <script>
 import '@/assets/css/DashBoard/DashBoard.scss';
 import TopFiveGraph from '@/components/DashBoard/TopFiveGraph.vue';
+import VerifyCard from '@/components/DashBoard/VerifyCard.vue';
+import { VueperSlides, VueperSlide } from 'vueperslides';
+import 'vueperslides/dist/vueperslides.css';
 
 export default {
   name: 'DashBoard',
-  components: { TopFiveGraph },
+  components: {
+    TopFiveGraph,
+    VerifyCard,
+    VueperSlides,
+    VueperSlide,
+  },
+  data() {
+    return {};
+  },
 };
 </script>
