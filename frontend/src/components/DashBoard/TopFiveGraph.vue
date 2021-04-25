@@ -15,7 +15,7 @@ export default {
       new Chart(ctx, {
         type: 'doughnut',
         data: {
-          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple'],
+          labels: ['Apache-2.0', 'Ruby', 'MIT', 'JSON', 'JSON'],
           datasets: [
             {
               label: '# of Votes',
