@@ -111,7 +111,7 @@
             </div>
           </div>
           <!-- table end -->
-          <i class="material-icons">face</i>
+          <span class="material-icons">face</span>
           <VerifyCard />
           <div class="project-title">
             <vueper-slides fractions progress>
