@@ -2,31 +2,31 @@
   <nav class="sidenav">
     <profile id="nav-profile" />
     <ul class="nav-ul">
-      <li class="nav-li" @click="LiClickHandler">
+      <li class="nav-li" @click="MenuClickHandler">
         <router-link to="/dashboard">대시보드</router-link>
       </li>
-      <li class="nav-li" @click="LiClickHandler">
+      <li class="nav-li">
         <div class="dropdown">
-          <span class="dropbtn">내 프로젝트</span>
+          <span class="dropbtn"  @click="MenuClickHandler">내 프로젝트</span>
           <div class="dropdown-content">
-            <router-link to="/myproject/main/summary">Summary</router-link>
+            <router-link to="/myproject/main/status">Status</router-link>
             <router-link to="/myproject/main/gitlab">GitLab</router-link>
             <router-link to="/myproject/main/github">GitHab</router-link>
           </div>
         </div>
       </li>
-      <li class="nav-li" @click="LiClickHandler">
+      <li class="nav-li">
         <div class="dropdown">
-          <span class="dropbtn">전체목록</span>
+          <span class="dropbtn"  @click="MenuClickHandler">전체목록</span>
           <div class="dropdown-content">
             <router-link to="/myproject/main/summary">Open Source</router-link>
             <router-link to="/myproject/main/gitlab">License</router-link>
           </div>
         </div>
       </li>
-      <li class="nav-li" @click="LiClickHandler">
+      <li class="nav-li">
         <div class="dropdown">
-          <span class="dropbtn">마이페이지</span>
+          <span class="dropbtn"  @click="MenuClickHandler">마이페이지</span>
           <div class="dropdown-content">
             <router-link to="/mypage/profile">Profile</router-link>
             <router-link to="/mypage/profile">SCM</router-link>
@@ -72,14 +72,14 @@ export default {
     this.currentPathName = this.$route.path.split("/")[1];
   },
   methods: {
-    LiClickHandler: function (event) {
+    MenuClickHandler: function (event) {
       if (event.target.classList.contains("choice")) {
         event.target.classList.remove("choice");
       } else {
-        // let dropbtns = this.$el.getElementsByClassName("dropbtn");
-        // for (let i = 0; i < dropbtns.length; i++) {
-        //   dropbtns[i].classList.remove("choice");
-        // }
+        let dropbtns = this.$el.getElementsByClassName("choice");
+        for (let i = 0; i < dropbtns.length; i++) {
+          dropbtns[i].classList.remove("choice");
+        }
         event.target.classList.add("choice");
       }
     },
