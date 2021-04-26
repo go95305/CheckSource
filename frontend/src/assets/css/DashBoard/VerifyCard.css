@@ -122,3 +122,8 @@
   padding-top: 20px;
   padding-bottom: 31px;
 }
+
+.vc-btn-detail {
+  padding: 10px 6px;
+  vertical-align: top;
+}

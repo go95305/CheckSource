@@ -33,9 +33,15 @@
 
       <!-- down -->
       <div class="verifycard-meta">
-        <div class="verifycard-btn">rescan</div>
+        <div class="verifycard-btn">
+          <span class="material-icons"> replay </span>
+          <span class="vc-btn-detail">rescan</span>
+        </div>
 
-        <div class="verifycard-btn">report</div>
+        <div class="verifycard-btn">
+          <span class="material-icons"> text_snippet </span>
+          <span class="vc-btn-detail">report</span>
+        </div>
       </div>
       <!-- end of down -->
     </div>
