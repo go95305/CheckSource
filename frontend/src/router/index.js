@@ -17,6 +17,7 @@ import LicenseList from "@/components/MyProject/LicenseList";
 
 import MyPage from "@/views/MyPage/MyPage";
 import MyPageProfile from "@/views/MyPage/MyPageProfile";
+import MyPageSCM from "@/views/MyPage/MyPageSCM";
 
 Vue.use(VueRouter);
 
@@ -108,6 +109,11 @@ const routes = [
                         path: "profile",
                         name: "MyPageProfile",
                         component: MyPageProfile,
+                    },
+                    {
+                        path: "scm",
+                        name: "MyPageSCM",
+                        component: MyPageSCM,
                     },
                 ],
             },

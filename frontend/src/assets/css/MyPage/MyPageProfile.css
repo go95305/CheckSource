@@ -1,0 +1,71 @@
+#mypage-profile-title {
+    margin: 15px 0px;
+}
+
+#mypage-profile-container {
+    /* border: 1px solid #000; */
+    max-width: 450px;
+    margin-right: 30px;
+}
+
+#mypage-profile-image {
+    width: 130px;
+    height: 130px;
+    margin: 30px;
+    border-radius: 65px;
+}
+
+#mypage-profile-container table,
+#mypage-profile-container tbody,
+#mypage-profile-container tr {
+    display: block;
+}
+
+#mypage-profile-container .table-left {
+    display: inline-block;
+    text-align: center;
+    width: 20%;
+    margin: 0px auto;
+}
+
+#mypage-profile-container .table-right {
+    display: inline-block;
+    width: 70%;
+}
+
+#mypage-profile-container .table-right input {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0px;
+    border: none;
+    border-bottom: 2px solid #ccc;
+}
+
+#mypage-profile-container .table-right input:active,
+#mypage-profile-container .table-right input:focus {
+    border: none;
+    outline: none;
+    border-bottom: 2px solid #00a3e2;
+}
+
+#submit-button {
+    display: block;
+    margin: 30px auto;
+    padding: 10px 30px;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    color: white;
+    font-size: medium;
+    background: #153081;
+    box-shadow: 2px 2px 5px #ccc;
+    cursor: pointer;
+}
+
+#submit-button:hover {
+    box-shadow: 4px 4px 5px #ccc;
+}
+
+#submit-button:active {
+    box-shadow: -2px -2px 5px #ccc;
+}
