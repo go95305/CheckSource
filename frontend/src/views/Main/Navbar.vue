@@ -19,7 +19,7 @@
         <div class="dropdown">
           <span class="dropbtn"  @click="MenuClickHandler">전체목록</span>
           <div class="dropdown-content">
-            <router-link to="/myproject/main/summary">Open Source</router-link>
+            <router-link to="/myproject/main/status">Open Source</router-link>
             <router-link to="/myproject/main/gitlab">License</router-link>
           </div>
         </div>
@@ -29,7 +29,7 @@
           <span class="dropbtn"  @click="MenuClickHandler">마이페이지</span>
           <div class="dropdown-content">
             <router-link to="/mypage/profile">Profile</router-link>
-            <router-link to="/mypage/profile">SCM</router-link>
+            <router-link to="/mypage/scm">SCM</router-link>
           </div>
         </div>
       </li>
