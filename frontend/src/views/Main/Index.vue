@@ -1,17 +1,16 @@
 <template>
-  <div>
-    <navbar></navbar>
-    <router-view id="main"></router-view>
-  </div>
+    <div>
+        <navbar></navbar>
+        <router-view id="main"></router-view>
+    </div>
 </template>
 
 <script>
-import Navbar from '@/views/Main/Navbar.vue';
+import Navbar from "@/views/Main/Navbar.vue";
 
 export default {
-   name: "Index",
-  components: { Navbar },
+    name: "Index",
+    components: { Navbar },
 };
 </script>
-<style scoped src="@/assets/css/Main/Index.css">
-</style>
+<style scoped src="@/assets/css/Main/Index.css"></style>
