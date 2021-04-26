@@ -115,8 +115,10 @@
           <VerifyCard />
           <div class="project-title">
             <vueper-slides fractions progress>
-              <vueper-slide v-for="i in 10" :key="i" />
-              <template v-slot:content> hi~ </template>
+              <vueper-slide v-for="i in 5" :key="i" />
+              <template v-slot:content>
+                <VerifyCard />
+              </template>
             </vueper-slides>
           </div>
         </div>
@@ -133,13 +135,51 @@
       </div>
 
       <!-- warning -->
-      <div class="card card--finance">
+      <div class="card">
         <div class="card__header">
           <div class="card__header-title text-light">
             <strong>라이선스 의무 warning</strong>
           </div>
         </div>
         <div id="chartdiv">
+          <!-- tab -->
+          <div class="relative text-lg w-48">
+            <button
+              class=""
+              @click="isOptionsExpanded = !isOptionsExpanded"
+              @blur="isOptionsExpanded = false"
+            >
+              <span>{{ selectedOption }}</span>
+              <svg
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                class="ease-in-out"
+                :class="isOptionsExpanded ? 'rotate-180' : 'rotate-0'"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+            <transition>
+              <ul v-show="isOptionsExpanded" class="overflow-hidden">
+                <li
+                  v-for="(option, index) in options"
+                  :key="index"
+                  class="px-3 py-2 transition-colors duration-300 hover:bg-gray-200"
+                  @mousedown.prevent="setOption(option)"
+                >
+                  {{ option }}
+                </li>
+              </ul>
+            </transition>
+          </div>
+          <!-- tab end -->
+
           <div class="dashboard-table-warning">
             <div class="d-tbl-header">
               <table
@@ -207,7 +247,17 @@ export default {
     VueperSlide,
   },
   data() {
-    return {};
+    return {
+      isOptionsExpanded: false,
+      selectedOption: '1x',
+      options: ['1x', '2x', '3x', '4x or more'],
+    };
+  },
+  methods: {
+    setOption(option) {
+      this.selectedOption = option;
+      this.isOptionsExpanded = false;
+    },
   },
 };
 </script>
