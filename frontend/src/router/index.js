@@ -11,7 +11,7 @@ import DashBoard from "@/views/DashBoard/DashBoard";
 
 import MyProject from "@/views/MyProject/MyProject";
 import MyProjectMain from "@/views/MyProject/MyProjectMain";
-import MyProjectSummary from "@/views/MyProject/MyProjectSummary";
+import MyProjectStatus from "@/views/MyProject/MyProjectStatus";
 import MyProjectResult from "@/views/MyProject/MyProjectResult";
 import LicenseList from "@/components/MyProject/LicenseList";
 
@@ -59,9 +59,9 @@ const routes = [
                         component: MyProjectMain,
                         children: [
                             {
-                                path: "summary",
-                                name: "Summary",
-                                component: MyProjectSummary,
+                                path: "status",
+                                name: "Status",
+                                component: MyProjectStatus,
                             },
                             {
                                 path: "department",
