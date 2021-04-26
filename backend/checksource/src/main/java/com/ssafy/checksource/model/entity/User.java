@@ -5,14 +5,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,13 +20,18 @@ import lombok.Data;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
+@Table(name = "User")
 public class User implements UserDetails{
 
 	@Id
 	@Column(name = "user_id")
 	private String userId;
+	private String userName;
 	private String token;
+    @Column(columnDefinition = "boolean default false")
 	private boolean flag;
 	@Column(name = "gitlap_id")
 	private String gitlapId;
@@ -63,9 +64,14 @@ public class User implements UserDetails{
     }
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    public Boolean getFlag() {
+        return this.flag;
+    }
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Override
     public String getUsername() {
-        return null;
+        return this.userName;
     }
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
