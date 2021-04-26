@@ -1,11 +1,8 @@
 package com.ssafy.checksource.controller;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.ssafy.checksource.model.dto.TokenResultDTO;
+import com.ssafy.checksource.model.dto.UserDTO;
+import org.springframework.web.bind.annotation.*;
 
 import com.ssafy.checksource.model.dto.SsoDTO;
 import com.ssafy.checksource.service.UserService;
@@ -22,11 +19,25 @@ public class UserController {
 	
 	//테스트
 	@PostMapping("/test")
-	public void test(@RequestBody SsoDTO ssoDto) {
-		userService.loginApi(ssoDto);
+	public boolean test(@RequestBody SsoDTO ssoDto) {
+		boolean check = userService.loginApi(ssoDto);
+
+		return check;
 	}
-	
-	//SSO 테이블 API 요청
+
+	@GetMapping("/checkUser")
+	public TokenResultDTO checkUser(@RequestParam String userId) {
+		TokenResultDTO tokenResultDTO = userService.checkUser(userId);
+
+		return tokenResultDTO;
+	}
+
+	@PostMapping("/userForm")
+	public TokenResultDTO userForm(@RequestBody UserDTO userDTO) {
+		TokenResultDTO tokenResultDTO = userService.userForm(userDTO);
+
+		return tokenResultDTO;
+	}
 	
 	//로그인
 	//로그아웃
