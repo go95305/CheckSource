@@ -54,7 +54,7 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
 
     //spring security
-    compile "org.springframework.boot:spring-boot-starter-security"
+	compile "org.springframework.boot:spring-boot-starter-security"
 
 	//gson
 	implementation 'com.google.code.gson:gson'
