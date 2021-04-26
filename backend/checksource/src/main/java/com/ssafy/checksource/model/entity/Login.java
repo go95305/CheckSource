@@ -12,6 +12,6 @@ public class Login {
 
 	@Id
 	@Column(name = "user_id")
-	private Long userId;
+	private String userId;
 	private String password;
 }

@@ -4,8 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.ssafy.checksource.model.entity.Login;
 
-public interface SsoRepository extends JpaRepository<Login, Long>{
+public interface SsoRepository extends JpaRepository<Login, String>{
 
-	Login findByUserIdAndPassword (Long userId, String password);
+	Login findByUserIdAndPassword (String userId, String password);
 	
 }

@@ -18,7 +18,7 @@ public class UserService {
 	private final SsoRepository ssoRepository;
 	
 	public boolean loginApi(SsoDTO ssoDto) {
-		Long userId = ssoDto.getUserId();
+		String userId = ssoDto.getUserId();
 		String password = ssoDto.getPassword();
 		Login loginUser = ssoRepository.findByUserIdAndPassword(userId, password);
 		System.out.println(loginUser);

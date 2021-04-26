@@ -43,7 +43,7 @@ public class JwtTokenProvider {
     }
 
     // AccessToken 생성
-    public String generateToken (String user_id){   //username->Uid
+    public String generateToken (String user_id){   
         return createToken(user_id, TOKEN_VALIDATION_SECOND);
     }
 
