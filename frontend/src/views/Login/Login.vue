@@ -1,5 +1,11 @@
 <template>
-    <div>
-        <h1>로그인</h1>
+    <div class="background">
+        <router-view></router-view>
     </div>
 </template>
+<script>
+export default {
+    name: "Login",
+};
+</script>
+<style scoped src="../../assets/css/Login/Login.css"></style>
