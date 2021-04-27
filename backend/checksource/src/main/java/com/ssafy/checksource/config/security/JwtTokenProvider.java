@@ -21,7 +21,7 @@ public class JwtTokenProvider {
     @Value("spring.jwt.secret")
     private String secretKey;
 
-    public static final long TOKEN_VALIDATION_SECOND = 1000L * 60 * 60 * 5; // 1 Hour
+    public static final long TOKEN_VALIDATION_SECOND = 1000L * 60 * 60 * 5; // 5 Hour 유효기간
 
     private final UserDetailsService userDetailsService;
 
@@ -31,7 +31,7 @@ public class JwtTokenProvider {
     }
 
     //Jwt 토큰 생성
-    public String createToken(String user_id, long expireTime){    //nickname ->Uid
+    public String createToken(String user_id, long expireTime){   
         Claims claims = Jwts.claims().setSubject(user_id);
         Date now = new Date();
         return Jwts.builder()
