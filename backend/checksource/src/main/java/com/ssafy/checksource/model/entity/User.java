@@ -29,19 +29,19 @@ public class User implements UserDetails{
 	@Id
 	@Column(name = "user_id")
 	private String userId;
-	private String userName;
+	private String name;
 	private String token;
     @Column(columnDefinition = "boolean default false")
-	private boolean flag;
+	private boolean flag; //회원정보 입력 여부
 	@Column(name = "gitlap_id")
 	private String gitlapId;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "depart_id", insertable=false, updatable=false)
+	@JoinColumn(name = "depart_id")
 	private Depart depart;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "job_id", insertable=false, updatable=false)
+	@JoinColumn(name = "job_id")
 	private Job job;
 
 	
@@ -71,7 +71,7 @@ public class User implements UserDetails{
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Override
     public String getUsername() {
-        return this.userName;
+        return this.name;
     }
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
