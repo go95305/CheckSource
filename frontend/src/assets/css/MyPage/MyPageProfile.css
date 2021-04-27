@@ -3,9 +3,18 @@
 }
 
 #mypage-profile-container {
-    /* border: 1px solid #000; */
-    max-width: 450px;
-    margin-right: 30px;
+    padding-right: 30px;
+    max-width: 500px;
+}
+
+#mypage-profile-content {
+    display: flex;
+    flex-flow: wrap;
+    align-items: flex-start;
+}
+
+.mypage-section-image {
+    width: 200px;
 }
 
 #mypage-profile-image {
@@ -15,44 +24,81 @@
     border-radius: 65px;
 }
 
-#mypage-profile-container table,
-#mypage-profile-container tbody,
-#mypage-profile-container tr {
+.mypage-section-table {
+    flex-grow: 1;
+    padding-left: 30px;
+}
+#mypage-profile-table,
+#mypage-profile-table tbody {
     display: block;
 }
 
-#mypage-profile-container .table-left {
-    display: inline-block;
-    text-align: center;
-    width: 20%;
-    margin: 0px auto;
+#mypage-profile-table tr {
+    display: block;
+    margin-bottom: 16px;
 }
 
-#mypage-profile-container .table-right {
-    display: inline-block;
-    width: 70%;
+#mypage-profile-table .table-left {
+    display: block;
+    text-align: left;
+    /* margin: 0px auto; */
+    font-weight: 300;
+    font-size: small;
 }
 
-#mypage-profile-container .table-right input {
+#mypage-profile-table .table-right {
+    display: block;
+    /* width: 100%; */
+}
+
+#mypage-profile-table .table-right input {
     width: 100%;
-    padding: 10px;
-    margin: 5px 0px;
-    border: none;
-    border-bottom: 2px solid #ccc;
+    height: 32px;
+    padding: 2px 10px 2px 13px;
+    background-color: rgb(246, 246, 246);
+    border: 1px solid #eee;
+    border-radius: 5px;
+    box-sizing: border-box;
 }
 
-#mypage-profile-container .table-right input:active,
-#mypage-profile-container .table-right input:focus {
+#mypage-profile-table .table-right input:active,
+#mypage-profile-table .table-right input:focus {
     border: none;
     outline: none;
-    border-bottom: 2px solid #00a3e2;
+    background-color: rgb(251, 251, 251);
+    border: 1px solid #00a3e2;
+}
+
+#mypage-select {
+    height: 32px;
+    padding: 2px 10px;
+    background-color: rgb(246, 246, 246);
+    border: 1px solid #eee;
+    border-radius: 5px;
+    width: 100%;
+}
+
+#mypage-select:after {
+    position: absolute;
+    content: "";
+    top: 14px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-color: #fff transparent transparent transparent;
+}
+
+#mypage-select:active,
+#mypage-select:focus {
+    outline: none;
 }
 
 #submit-button {
     display: block;
     margin: 30px auto;
-    padding: 10px 30px;
-    border-radius: 10px;
+    padding: 10px 40px;
+    border-radius: 5px;
     outline: none;
     border: none;
     color: white;
