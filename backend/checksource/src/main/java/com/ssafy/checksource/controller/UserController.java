@@ -40,5 +40,5 @@ public class UserController {
 	}
 	
 	//로그인
-	//로그아웃
+	//로그아웃 할때 user테이블 token을 null값으로
 }

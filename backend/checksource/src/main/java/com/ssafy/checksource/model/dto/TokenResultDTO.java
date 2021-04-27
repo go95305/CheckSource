@@ -11,7 +11,7 @@ public class TokenResultDTO {
     @ApiModelProperty(value="name")
     private String name;
 
-    @ApiModelProperty(value="correct")
+    @ApiModelProperty(value="code")
     private Integer code;
 }
 

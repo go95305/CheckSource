@@ -45,6 +45,12 @@ public class UserService {
 
 		if (user != null) {
 			if (user.getFlag()) {
+				String token = jwtTokenProvider.generateToken(user.getUserId());
+
+				user.setToken(token);
+
+				userRepository.save(user);
+
 				tokenResultDTO.setToken(user.getToken());
 				tokenResultDTO.setName(user.getUsername());
 				tokenResultDTO.setCode(0);
