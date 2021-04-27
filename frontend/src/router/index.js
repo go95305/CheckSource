@@ -18,6 +18,7 @@ import LicenseList from "@/components/MyProject/LicenseList";
 import MyPage from "@/views/MyPage/MyPage";
 import MyPageProfile from "@/views/MyPage/MyPageProfile";
 import MyPageSCM from "@/views/MyPage/MyPageSCM";
+import MyPageGitLab from "@/views/MyPage/MyPageGitLab";
 
 Vue.use(VueRouter);
 
@@ -65,13 +66,13 @@ const routes = [
                                 component: MyProjectStatus,
                             },
                             {
-                                path: "department",
-                                name: "Department",
+                                path: "gitlab",
+                                name: "GitLab",
                                 component: DashBoard,
                             },
                             {
-                                path: "project",
-                                name: "Project",
+                                path: "github",
+                                name: "GitHub",
                                 component: DashBoard,
                             },
                         ],
@@ -114,6 +115,13 @@ const routes = [
                         path: "scm",
                         name: "MyPageSCM",
                         component: MyPageSCM,
+                        children:[
+                            {
+                                path: "gitlab",
+                                name: "MyPageGitLab",
+                                component: MyPageGitLab,
+                            },
+                        ],
                     },
                 ],
             },

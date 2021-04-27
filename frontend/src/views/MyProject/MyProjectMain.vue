@@ -1,7 +1,7 @@
 <template>
     <div>
-        <my-project-path :department="'내 프로젝트'" />
-        <h1 id="my-project-main-title">내 프로젝트</h1>
+        <my-project-path :department="'프로젝트'" />
+        <h1 id="my-project-main-title">프로젝트</h1>
         <!-- <tab id="my-project-main-tab" :list="tabList" /> -->
         <router-view />
     </div>
