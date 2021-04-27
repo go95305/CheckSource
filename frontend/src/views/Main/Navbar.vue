@@ -45,7 +45,7 @@
                     >
                     <div class="dropdown-content">
                         <router-link to="/mypage/profile">Profile</router-link>
-                        <router-link to="/mypage/scm">SCM</router-link>
+                        <router-link to="/mypage/scm/gitlab">SCM</router-link>
                     </div>
                 </div>
             </li>

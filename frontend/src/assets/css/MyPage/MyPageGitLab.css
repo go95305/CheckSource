@@ -1,0 +1,42 @@
+#mypage-gitlab-current-title {
+    margin-top: 10px;
+}
+
+#mypage-gitlab-current-account {
+    margin: 20px 10px;
+    font-weight: 300;
+}
+
+#mypage-gitlab-button {
+    cursor: pointer;
+    padding: 10px;
+    font-weight: 500;
+    border-radius: 5px;
+    display: flex;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    color: white;
+    font-size: medium;
+    background: #153081e5;
+    box-shadow: 2px 2px 5px #ccc;
+}
+
+#mypage-gitlab-button:active,
+#mypage-gitlab-button:focus {
+    outline: none;
+}
+
+#mypage-gitlab-button span {
+    align-self: center;
+}
+
+#mypage-gitlab-new-id {
+    max-height: 0px;
+    overflow: hidden;
+    transition: max-height 0.5s;
+}
+
+#mypage-gitlab-new-id.open {
+    max-height: 50px;
+}
