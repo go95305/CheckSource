@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/user/login", "/user/test", "/user/userForm", "/user/checkUser")
+                .antMatchers("/user/test","/user/loginApi", "/user/userForm", "/user/checkUser")
                 .permitAll()
                 .antMatchers(
                         "/v2/api-docs", "/swagger-resources/**",
@@ -48,11 +48,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors();
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        // swagger 관련 리소스 시큐리티 필터 제거
-        web.ignoring().antMatchers(
-                "/v2/api-docs", "/swagger-resources/**",
-                "/swagger-ui.html", "/webjars/**", "/swagger/**", "/configuration/**");
-    }
+//    @Override
+//    public void configure(WebSecurity web) throws Exception {
+//        // swagger 관련 리소스 시큐리티 필터 제거
+//        web.ignoring().antMatchers(
+//                "/v2/api-docs", "/swagger-resources/**",
+//                "/swagger-ui.html", "/webjars/**", "/swagger/**", "/configuration/**");
+//    }
 }
