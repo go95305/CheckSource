@@ -14,7 +14,7 @@ export default {
     methods: {
         GoProjectResult: function () {
             this.$router.push({
-                path: "/myproject/result/summary",
+                path: "/project/result/summary",
                 query: { projectId: this.projectId },
             });
         },
