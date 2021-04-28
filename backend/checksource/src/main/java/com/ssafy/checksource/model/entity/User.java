@@ -33,8 +33,8 @@ public class User implements UserDetails{
 	private String token;
     @Column(columnDefinition = "boolean default false")
 	private boolean flag; //회원정보 입력 여부
-	@Column(name = "gitlap_id")
-	private String gitlapId;
+	@Column(name = "gitlab_id")
+	private String gitlabId;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "depart_id")

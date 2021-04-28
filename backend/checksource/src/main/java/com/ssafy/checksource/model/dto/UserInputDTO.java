@@ -6,7 +6,7 @@ import lombok.Data;
 public class UserInputDTO {
     private String userId;
     private String name;
-    private String gitlapId;
+    private String gitlabId;
     private Long job;
     private Long depart;
 }
