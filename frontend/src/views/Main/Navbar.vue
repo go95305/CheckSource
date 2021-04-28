@@ -11,7 +11,7 @@
                         class="dropbtn"
                         @click="MenuClickHandler"
                         :class="{
-                            active: currentPathName == 'project',
+                            'router-link-active': currentPathName == 'project',
                         }"
                         >프로젝트</span
                     >
@@ -34,7 +34,8 @@
                         class="dropbtn"
                         @click="MenuClickHandler"
                         :class="{
-                            active: currentPathName == 'totallist',
+                            'router-link-active':
+                                currentPathName == 'totallist',
                         }"
                         >전체목록</span
                     >
@@ -54,7 +55,7 @@
                         class="dropbtn"
                         @click="MenuClickHandler"
                         :class="{
-                            active: currentPathName == 'mypage',
+                            'router-link-active': currentPathName == 'mypage',
                         }"
                         >마이페이지</span
                     >
