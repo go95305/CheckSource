@@ -51,8 +51,8 @@ const routes = [
                 component: DashBoard,
             },
             {
-                path: "myproject",
-                name: "MyProject",
+                path: "project",
+                name: "Project",
                 component: MyProject,
                 children: [
                     {

@@ -8,6 +8,7 @@
     left: 0;
     background: linear-gradient(#153081, #00a3e2);
     overflow-x: hidden;
+    box-shadow: 3px 0px 10px rgba(200, 200, 200, 0.5);
 }
 
 /* navbar profile */
@@ -32,10 +33,10 @@
     text-shadow: 0px 0px 10px white;
 }
 
-/* .sidenav_choiced {
-    text-shadow: 0px 0px 10px white;
-    background-color: #0ba9dd70 !important;
-} */
+.sidenav_choiced {
+    text-shadow: 0px 0px 5px white;
+    /* background-color: #0ba9dd70 !important; */
+}
 
 .nav-ul {
     list-style: none;

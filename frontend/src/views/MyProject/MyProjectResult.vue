@@ -22,15 +22,15 @@ export default {
         this.tabList = [
             {
                 name: "Summary",
-                path: "/myproject/result/summary?projectId=" + this.projectId,
+                path: "/project/result/summary?projectId=" + this.projectId,
             },
             {
                 name: "Component",
-                path: "/myproject/result/component?projectId=" + this.projectId,
+                path: "/project/result/component?projectId=" + this.projectId,
             },
             {
                 name: "License",
-                path: "/myproject/result/license?projectId=" + this.projectId,
+                path: "/project/result/license?projectId=" + this.projectId,
             },
         ];
     },

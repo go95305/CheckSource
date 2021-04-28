@@ -2,7 +2,7 @@
     <div>
         <img
             id="profile-image"
-            src="http://placehold.it/50x50"
+            src="@/assets/images/lululala.png"
             alt="profileImage"
         />
         <div id="profile-info">
@@ -10,6 +10,7 @@
             <span id="profile-info__department">ICT운영부</span>
             <span id="profile-info__rank">선임</span>
         </div>
+        <div id="profile-hr"></div>
     </div>
 </template>
 <style scoped src="@/assets/css/Main/Profile.css"></style>

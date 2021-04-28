@@ -4,7 +4,7 @@
 
 #mypage-profile-container {
     padding-right: 30px;
-    max-width: 500px;
+    max-width: 650px;
 }
 
 #mypage-profile-content {
@@ -14,7 +14,7 @@
 }
 
 .mypage-section-image {
-    width: 200px;
+    width: 210px;
 }
 
 #mypage-profile-image {
@@ -22,11 +22,44 @@
     height: 130px;
     margin: 30px;
     border-radius: 65px;
+    object-fit: contain;
+    box-shadow: 0px 0px 10px #ccc;
 }
 
-.mypage-section-table {
+.mypage-section-info {
     flex-grow: 1;
 }
+
+.mypage-profile-info-image {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.mypage-profile-info-image input {
+    display: none;
+}
+
+.mypage-profile-info-image label div {
+    width: 60px;
+    height: 60px;
+    margin: 5px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+
+.mypage-profile-info-image label img {
+    width: 60px;
+    height: 60px;
+    align-self: center;
+    object-fit: contain;
+}
+
+.mypage-profile-info-image input:checked + label div {
+    border-radius: 50%;
+    box-shadow: 0px 0px 5px #ccc;
+}
+
 #mypage-profile-table,
 #mypage-profile-table tbody {
     display: block;
@@ -99,18 +132,20 @@
     padding: 10px 40px;
     border-radius: 5px;
     outline: none;
-    border: none;
     color: white;
     font-size: medium;
-    background: #153081;
-    box-shadow: 2px 2px 5px #ccc;
+    color: #153081;
+    box-shadow: 0px 4px 5px #ddd;
     cursor: pointer;
+
+    border: 1px solid #eee;
+    background-color: white;
 }
 
 #submit-button:hover {
-    box-shadow: 4px 4px 5px #ccc;
+    box-shadow: 0px 4px 5px #ccc;
 }
 
 #submit-button:active {
-    box-shadow: -2px -2px 5px #ccc;
+    box-shadow: 0px 4px 5px #ccc;
 }
