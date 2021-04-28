@@ -112,14 +112,40 @@
           </div>
           <!-- table end -->
 
-          <VerifyCard />
-          <div class="project-title">
+          <!-- <VerifyCard /> -->
+          <!-- <div class="project-title">
             <vueper-slides fractions progress>
               <vueper-slide v-for="i in 5" :key="i" />
               <template v-slot:content>
                 <VerifyCard />
               </template>
             </vueper-slides>
+          </div> -->
+
+          <div id="slider">
+            <transition-group
+              tag="div"
+              :name="transitionName"
+              class="slides-group"
+            >
+              <div v-if="show" :key="current" class="slide">
+                <VerifyCard />
+              </div>
+            </transition-group>
+            <div
+              class="dash-c-btn dash-c-btn-prev"
+              aria-label="Previous slide"
+              @click="slide(-1)"
+            >
+              &#10094;
+            </div>
+            <div
+              class="dash-c-btn dash-c-btn-next"
+              aria-label="Next slide"
+              @click="slide(1)"
+            >
+              &#10095;
+            </div>
           </div>
         </div>
       </div>
@@ -194,6 +220,7 @@
                 <thead class="dash-thead-css">
                   <tr>
                     <th scope="col">Repository</th>
+                    <th scope="col">Department</th>
                     <th scope="col">Project</th>
                     <th scope="col">OpenSource</th>
                     <th scope="col">License</th>
@@ -211,12 +238,14 @@
                 <tbody>
                   <tr>
                     <td>gitlab#1</td>
+                    <td>ICT운영부</td>
                     <td>ASC project</td>
                     <td>Elasticsearch Extra Plugins</td>
                     <td>GPL</td>
                   </tr>
                   <tr>
                     <td>gitlab#3</td>
+                    <td>ICT운영부</td>
                     <td>MinorLoan</td>
                     <td>H2</td>
                     <td>GPL</td>
@@ -235,7 +264,6 @@
 import '@/assets/css/DashBoard/DashBoard.scss';
 import TopFiveGraph from '@/components/DashBoard/TopFiveGraph.vue';
 import VerifyCard from '@/components/DashBoard/VerifyCard.vue';
-import { VueperSlides, VueperSlide } from 'vueperslides';
 import 'vueperslides/dist/vueperslides.css';
 
 export default {
@@ -243,14 +271,16 @@ export default {
   components: {
     TopFiveGraph,
     VerifyCard,
-    VueperSlides,
-    VueperSlide,
   },
   data() {
     return {
       isOptionsExpanded: false,
       selectedOption: '1x',
       options: ['1x', '2x', '3x', '4x or more'],
+      current: 0,
+      direction: 1,
+      transitionName: 'fade',
+      show: false,
     };
   },
   methods: {
@@ -258,6 +288,17 @@ export default {
       this.selectedOption = option;
       this.isOptionsExpanded = false;
     },
+    slide(dir) {
+      this.direction = dir;
+      dir === 1
+        ? (this.transitionName = 'slide-next')
+        : (this.transitionName = 'slide-prev');
+      var len = this.slides.length;
+      this.current = (this.current + (dir % len) + len) % len;
+    },
+  },
+  mounted() {
+    this.show = true;
   },
 };
 </script>
