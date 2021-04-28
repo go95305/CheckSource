@@ -52,7 +52,12 @@ export default {
       });
     },
     login() {
-      this.isLogin = false;
+      this.$store
+        .dispatch("LOGIN", this.loginInfo)
+        .then(() => this.showInfo())
+        .catch(() => {
+          alert("실패");
+        });
     },
   },
 };
