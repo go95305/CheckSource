@@ -2,7 +2,7 @@
     <div>
         <my-project-path :department="'마이페이지'" />
         <h1 id="mypage-scm-title">SCM 관리</h1>
-        <tab id="my-project-result-tab" :list="tabList" />
+        <tab id="mypage-scm-tab" :list="tabList" />
         <router-view></router-view>
     </div>
 </template>
