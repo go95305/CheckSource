@@ -28,9 +28,13 @@
                 class="mypage-gitlab-button new-button"
                 @click="CheckNewAccount"
             >
-                <div>
-                    <i class="material-icons"> {{ newAccountButtonIcon }} </i>
-                    <span>{{ newAccountButtonText }}</span>
+                <div v-if="newAccount.length > 0 || !isCurrentAccount">
+                    <i class="material-icons"> check </i>
+                    <span>연동하기</span>
+                </div>
+                <div v-else>
+                    <i class="material-icons"> swap_horiz </i>
+                    <span>다른 계정으로 연동하기</span>
                 </div>
             </button>
             <button
@@ -55,34 +59,16 @@ export default {
             currentAccount: "checksource@gitlab.com",
             openNewAccount: false,
             newAccount: "",
-            newAccountButtonIcon: "swap_horiz",
-            newAccountButtonText: "다른 계정으로 연동하기",
         };
     },
     watch: {
-        newAccount: function () {
-            this.CheckNewAccountButton();
-        },
         openNewAccount: function () {
             if (!this.openNewAccount) {
                 this.newAccount = "";
             }
         },
     },
-    created() {
-        this.CheckNewAccountButton();
-    },
     methods: {
-        CheckNewAccountButton: function () {
-            //새 연동 버튼 상태 처리
-            if (!this.isCurrentAccount || this.newAccount.length > 0) {
-                this.newAccountButtonIcon = "check";
-                this.newAccountButtonText = "연동하기";
-            } else {
-                this.newAccountButtonIcon = "swap_horiz";
-                this.newAccountButtonText = "다른 계정으로 연동하기";
-            }
-        },
         CheckNewAccount: function () {
             //새 계정 입력에 따른 연산
             if (!this.openNewAccount || this.newAccount.length == 0) {
