@@ -152,10 +152,7 @@ export default {
             const path = this.$route.path.split("/");
             this.currentPathName = path[1];
             this.currentSubPathName = path[2];
-            this.currentThirdPathName = "";
-            if (this.currentSubPathName == "main") {
-                this.currentThirdPathName = path[3];
-            }
+            this.currentThirdPathName = path[3];
         },
     },
 };
