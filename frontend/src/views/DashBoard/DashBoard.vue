@@ -220,6 +220,7 @@
                 <thead class="dash-thead-css">
                   <tr>
                     <th scope="col">Repository</th>
+                    <th scope="col">Department</th>
                     <th scope="col">Project</th>
                     <th scope="col">OpenSource</th>
                     <th scope="col">License</th>
@@ -237,12 +238,14 @@
                 <tbody>
                   <tr>
                     <td>gitlab#1</td>
+                    <td>ICT운영부</td>
                     <td>ASC project</td>
                     <td>Elasticsearch Extra Plugins</td>
                     <td>GPL</td>
                   </tr>
                   <tr>
                     <td>gitlab#3</td>
+                    <td>ICT운영부</td>
                     <td>MinorLoan</td>
                     <td>H2</td>
                     <td>GPL</td>
