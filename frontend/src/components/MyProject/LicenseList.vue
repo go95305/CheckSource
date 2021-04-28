@@ -1,9 +1,9 @@
 <template>
   <div class="container">
     <div class="table-header">
-      <div class="title title-1">Name</div>
-      <div class="title title-2">URL</div>
-      <div class="title title-3">License Obligation</div>
+      <div class="title title-1">라이센스명</div>
+      <div class="title title-2">주소</div>
+      <div class="title title-3">고지 의무</div>
     </div>
     <ul class="responsive-table" :key="index" v-for="(item, index) in list">
       <li class="table-row" :class="{ illegal: list[index].illegal }">
