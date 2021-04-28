@@ -13,6 +13,7 @@ import MyProject from "@/views/MyProject/MyProject";
 import MyProjectMain from "@/views/MyProject/MyProjectMain";
 import MyProjectStatus from "@/views/MyProject/MyProjectStatus";
 import MyProjectResult from "@/views/MyProject/MyProjectResult";
+import MyProjectEdit from "@/views/MyProject/MyProjectEdit";
 import LicenseList from "@/components/MyProject/LicenseList";
 
 import MyPage from "@/views/MyPage/MyPage";
@@ -74,6 +75,11 @@ const routes = [
                                 path: "github",
                                 name: "GitHub",
                                 component: DashBoard,
+                            },
+                            {
+                                path: "edit",
+                                name: "MyProjectEdit",
+                                component: MyProjectEdit,
                             },
                         ],
                     },
