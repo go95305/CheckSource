@@ -7,11 +7,28 @@
                 <section class="mypage-section-image">
                     <img
                         id="mypage-profile-image"
-                        src="http://placehold.it/130x130"
-                        alt="profileImage"
+                        :src="imageList[profile.image - 1].url"
+                        :alt="imageList[profile.image - 1].alt"
                     />
                 </section>
-                <section class="mypage-section-table">
+                <section class="mypage-section-info">
+                    <div
+                        class="mypage-profile-info-image"
+                        v-for="(image, index) in imageList"
+                        :key="`${index + 1}_imageList`"
+                    >
+                        <input
+                            :id="`profile-image-${index + 1}`"
+                            type="radio"
+                            :value="index + 1"
+                            v-model="profile.image"
+                        />
+                        <label :for="`profile-image-${index + 1}`">
+                            <div>
+                                <img :src="image.url" :alt="image.alt" />
+                            </div>
+                        </label>
+                    </div>
                     <table id="mypage-profile-table">
                         <tbody>
                             <tr>
@@ -71,7 +88,34 @@ export default {
     components: { MyProjectPath },
     data() {
         return {
+            imageList: [
+                {
+                    url: require("../../assets/images/sol.png"),
+                    alt: "sol",
+                },
+                {
+                    url: require("../../assets/images/moli.png"),
+                    alt: "moli",
+                },
+                {
+                    url: require("../../assets/images/rino.png"),
+                    alt: "rino",
+                },
+                {
+                    url: require("../../assets/images/shoo.png"),
+                    alt: "shoo",
+                },
+                {
+                    url: require("../../assets/images/doremi.png"),
+                    alt: "doremi",
+                },
+                {
+                    url: require("../../assets/images/lululala.png"),
+                    alt: "lululala",
+                },
+            ],
             profile: {
+                image: "1",
                 name: "김신한",
                 department: "2",
                 rank: "1",
