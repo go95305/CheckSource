@@ -13,7 +13,7 @@
             <label
                 id="mypage-gitlab-account-label"
                 for="mypage-gitlab-account-input"
-                >새 계정</label
+                >새 계정(email)</label
             >
             <input
                 id="mypage-gitlab-account-input"
