@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import loginApi from "../api/login";
 import axios from "axios";
+import router from '../router/index'
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -10,16 +11,16 @@ export default new Vuex.Store({
     Name: "",
     userId: "",
   },
-  getters:{
-    getAccessToken(state){
+  getters: {
+    getAccessToken(state) {
       return state.accessToken;
     },
-    getName(state){
+    getName(state) {
       return state.Name;
     },
-    getUserId(state){
+    getUserId(state) {
       return state.userId;
-    }
+    },
   },
   mutations: {
     LOGIN(state, payload) {
@@ -42,19 +43,19 @@ export default new Vuex.Store({
   actions: {
     CHECKUSER(context, userId) {
       loginApi.checkUser(userId).then((response) => {
+        console.log(response.data.token);
         if (response.data.token == null) {
           alert("유저의 데이터가 존재하지 않습니다. 입력 해주세요.");
-          this.$router.push({
+          router.push({
             name: "AfterLogin",
           });
         } else {
-          context.commit("LOGIN", response);
+          alert("존재");
+          context.commit("LOGIN", response.data);
           axios.defaults.headers.common[
             "auth-token"
           ] = `${response.data["token"]}`;
-          this.$router.push({
-            name:"Dashboard"
-          })
+          router.push("/dashboard");
         }
       });
     },

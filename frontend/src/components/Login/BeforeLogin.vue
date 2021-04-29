@@ -52,7 +52,6 @@ export default {
             console.log("해당 유저 존재");
             this.$store
               .dispatch("CHECKUSER", this.loginInfo.userId)
-              .then(() => this.showInfo());
           } else {
             alert("해당 유저는 존재하지 않습니다.");
           }

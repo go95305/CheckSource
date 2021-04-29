@@ -9,7 +9,11 @@ function login(loginInfo) {
 }
 
 function checkUser(userId) {
-  return http.get(`user/checkUser/${userId}`);
+  return http.get(`user/checkUser`, {
+    params: {
+      userId: userId,
+    },
+  });
 }
 
 export default { login, checkUser };
