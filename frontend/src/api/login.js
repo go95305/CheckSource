@@ -1,6 +1,15 @@
 import http from "./http";
 
 //log in api
-export function login(loginInfo) {
-  return http.get(`user/login/${loginInfo}`);
+function login(loginInfo) {
+  return http.post(`user/loginApi`, {
+    password: loginInfo.pw,
+    userId: loginInfo.userId,
+  });
 }
+
+function checkUser(userId) {
+  return http.get(`user/checkUser/${userId}`);
+}
+
+export default { login, checkUser };
