@@ -2,16 +2,16 @@
     <div>
         <my-project-path :department="'프로젝트'" :project="'Edit'" />
         <h1 id="myproject-edit-title">Edit</h1>
-        <article id="myproject-edit-article">
-            <section id="myproject-edit-selected-section">
+        <div id="myproject-edit-container">
+            <div id="myproject-edit-selected-div">
                 <div id="myproject-edit-divider"></div>
                 <my-project-edit-selected></my-project-edit-selected>
-            </section>
-            <section id="myproject-edit-tab-section">
+            </div>
+            <div id="myproject-edit-tab-div">
                 <tab id="myproject-edit-tab" :list="tabList" />
                 <router-view id="myproject-edit-routerview"></router-view>
-            </section>
-        </article>
+            </div>
+        </div>
     </div>
 </template>
 <script>
