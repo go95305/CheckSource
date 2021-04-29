@@ -29,7 +29,7 @@ const routes = [
         component: Login,
         children: [
             {
-                path: "afterLogin/:userId",
+                path: "afterLogin",
                 name: "AfterLogin",
                 component: AfterLogin,
             },

@@ -10,6 +10,17 @@ export default new Vuex.Store({
     Name: "",
     userId: "",
   },
+  getters:{
+    getAccessToken(state){
+      return state.accessToken;
+    },
+    getName(state){
+      return state.Name;
+    },
+    getUserId(state){
+      return state.userId;
+    }
+  },
   mutations: {
     LOGIN(state, payload) {
       state.accessToken = payload["token"];
@@ -35,13 +46,15 @@ export default new Vuex.Store({
           alert("유저의 데이터가 존재하지 않습니다. 입력 해주세요.");
           this.$router.push({
             name: "AfterLogin",
-            params: { userId: userId },
           });
         } else {
           context.commit("LOGIN", response);
           axios.defaults.headers.common[
             "auth-token"
           ] = `${response.data["token"]}`;
+          this.$router.push({
+            name:"Dashboard"
+          })
         }
       });
     },

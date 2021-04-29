@@ -4,7 +4,7 @@
       <div class="login-form-right-side-after">
         <div class="top-logo-wrap"></div>
         <!-- <img id="right-side-logo" src="@/assets/shinhan.png" /> -->
-        <h2>{{ MyInfo.EmployeeNumber }}님 반갑습니다.</h2>
+        <h2>{{ getName }}님 반갑습니다.</h2>
         <p>처음 사용하시는 사원은 개인 정보를 입력해주세요.</p>
       </div>
       <div class="login-form-left-side">
@@ -31,8 +31,8 @@
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 export default {
-  props: ["employeeNumber"],
   name: "AfterLogin",
   data() {
     return {
@@ -43,9 +43,9 @@ export default {
       isLogin: true,
     };
   },
-  created() {
-    this.MyInfo.EmployeeNumber = this.$route.params.employeeNumber;
-  },
+  computed:{
+     ...mapGetters(['getAccessToken', 'getUserId', 'getName']),
+  }
 };
 </script>
 <style scoped src="../../assets/css/Login/Login.css"></style>

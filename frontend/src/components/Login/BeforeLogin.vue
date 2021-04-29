@@ -43,12 +43,6 @@ export default {
     };
   },
   methods: {
-    showInfo() {
-      this.$router.push({
-        name: "AfterLogin",
-        params: { employeeNumber: this.loginInfo.userId },
-      });
-    },
     loginChk() {
       loginApi
         .login(this.loginInfo)
@@ -66,12 +60,6 @@ export default {
         .catch(() => {
           console.log("login error");
         });
-      // this.$store
-      //   .dispatch("LOGIN", this.loginInfo)
-      //   .then(() => this.showInfo())
-      //   .catch(() => {
-      //     alert("실패");
-      //   });
     },
   },
 };
