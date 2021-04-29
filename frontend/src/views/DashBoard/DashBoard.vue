@@ -16,8 +16,9 @@
         <div class="card__main">
           <div class="main-overview">
             <div class="overviewCard">
-              <div class="overviewCard-icon overviewCard-icon--document">
-                <i class="far fa-file-alt"></i>
+              <div class="overviewCard-icon overviewCard-icon--photo">
+                <!-- <i class="far fa-file-alt"></i> -->
+                <span class="material-icons"> description </span>
               </div>
               <div class="overviewCard-description">
                 <h3 class="overviewCard-title text-light">
@@ -28,7 +29,8 @@
             </div>
             <div class="overviewCard">
               <div class="overviewCard-icon overviewCard-icon--calendar">
-                <i class="far fa-envelope"></i>
+                <!-- <i class="far fa-envelope"></i> -->
+                <span class="material-icons"> view_list </span>
               </div>
 
               <div class="overviewCard-description">
@@ -39,8 +41,9 @@
               </div>
             </div>
             <div class="overviewCard">
-              <div class="overviewCard-icon overviewCard-icon--mail">
-                <i class="far fa-envelope"></i>
+              <div class="overviewCard-icon overviewCard-icon--document">
+                <!-- <i class="far fa-envelope"></i> -->
+                <span class="material-icons"> verified </span>
               </div>
               <div class="overviewCard-description">
                 <h3 class="overviewCard-title text-light">
@@ -50,8 +53,9 @@
               </div>
             </div>
             <div class="overviewCard">
-              <div class="overviewCard-icon overviewCard-icon--photo">
-                <i class="far fa-file-image"></i>
+              <div class="overviewCard-icon overviewCard-icon--mail">
+                <!-- <i class="far fa-file-image"></i> -->
+                <span class="material-icons"> report_problem </span>
               </div>
               <div class="overviewCard-description">
                 <h3 class="overviewCard-title text-light">
