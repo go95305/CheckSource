@@ -513,9 +513,12 @@ table caption {
   color: #ff5252;
 }
 
-// tab
-.ease-custom {
-  transition-timing-function: cubic-bezier(0.61, -0.53, 0.43, 1.43);
+// 드롭다운
+.dash-dropdown {
+  display: flex;
+  padding-right: 10px;
+  padding-top: 10px;
+  float: right;
 }
 
 // 뷰 슬라이드
