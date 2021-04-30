@@ -10,7 +10,8 @@
 }
 .common_dropdown_option_list span {
   display: block;
-  width: 100%;
+  position: absolute;
+  width: 140px;
 }
 .common_dropdown_checked {
   width: 100%;
