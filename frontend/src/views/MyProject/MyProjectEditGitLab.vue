@@ -3,9 +3,10 @@
         <repository-card
             v-for="(repository, index) in repositoryList"
             :key="`${index}_repositoryList`"
+            :index="index"
             :repository="repository"
             :choiced="false"
-            :added="true"
+            :added="false"
             @addRepoClick="AddRepoClick(index)"
         ></repository-card>
     </div>
@@ -23,6 +24,9 @@ export default {
                 },
                 {
                     name: "B",
+                },
+                {
+                    name: "C",
                 },
                 {
                     name: "C",

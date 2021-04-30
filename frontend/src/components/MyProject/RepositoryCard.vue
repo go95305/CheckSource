@@ -1,6 +1,6 @@
 <template>
     <div class="repository-card">
-        <p id="repository-name">{{ repository.name }}</p>
+        <p id="repository-name">reporeporeporeporepo</p>
         <div class="back-button-area" :class="{ added: added }">
             <span
                 v-if="choiced"
@@ -18,7 +18,7 @@
         </div>
         <img
             id="scm-icon"
-            src="@/assets/images/gitlab-icon.png"
+            src="@/assets/images/github-icon.png"
             alt="gitlab-icon"
         />
     </div>
@@ -27,6 +27,7 @@
 export default {
     name: "RepositoryCard",
     props: {
+        index: Number,
         repository: Object,
         choiced: Boolean,
         added: Boolean,

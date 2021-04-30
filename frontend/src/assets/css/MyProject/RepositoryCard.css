@@ -24,7 +24,7 @@
 }
 
 .back-button-area.added {
-    background-color: rgb(119, 201, 119);
+    background-color: rgba(119, 201, 119);
 }
 
 .icon {
@@ -58,11 +58,11 @@
 
 #scm-icon {
     position: absolute;
-    right: 10px;
+    right: -50px;
     top: 50%;
-    margin-top: -35px;
-    opacity: 0.5;
-    width: 70px;
-    height: 70px;
+    margin-top: -60px;
+    opacity: 0.3;
+    width: 120px;
+    height: 120px;
     z-index: 1;
 }
