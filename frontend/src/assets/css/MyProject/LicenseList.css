@@ -13,7 +13,8 @@
   justify-content: space-between;
   margin-bottom: 1%;
 }
-.table-header {
+.mapped-table-header {
+  margin-top: 1%;
   font-weight: 400;
   word-break: break-all;
   padding: 8px 90px;
@@ -32,6 +33,28 @@
   text-transform: uppercase;
   letter-spacing: 0.03em;
 }
+
+.unmapped-table-header {
+  margin-top: 1%;
+  font-weight: 400;
+  word-break: break-all;
+  padding: 8px 90px;
+  border-radius: 9px;
+  position: relative;
+  display: flex;
+  /* border: 2px solid; */
+  /* border-color: #00a3e2; */
+  /* border-bottom: ; */
+  margin-bottom: 1%;
+  color: rgb(255, 255, 255);
+  /* border-bottom: solid 1px #ccc; */
+  justify-content: space-between;
+  background: rgb(114, 129, 61);
+  /* background: linear-gradient(-45deg, #f3f5f0 50%, #dfe8eb 50%); */
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
 .responsive-table .table-row {
   word-break: break-all;
   font-size: 90%;
@@ -106,4 +129,19 @@ li.illegal::before {
   border-radius: 9px;
   background: red;
   box-shadow: 0 0 5px red;
+}
+
+.mapped-component{
+  border-bottom: 1px solid;
+  width: 10%;
+}
+
+.unmapped-component{
+  border-bottom: 1px solid;
+  width: 11%;
+
+}
+
+.add-component{
+  margin-top: 1%;
 }
