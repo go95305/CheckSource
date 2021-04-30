@@ -4,6 +4,8 @@
             v-for="(repository, index) in repositoryList"
             :key="`${index}_repositoryList`"
             :repository="repository"
+            :choiced="false"
+            @addRepoClick="AddRepoClick(index)"
         ></repository-card>
     </div>
 </template>
@@ -33,8 +35,25 @@ export default {
                 {
                     name: "F",
                 },
+                {
+                    name: "A",
+                },
+                {
+                    name: "B",
+                },
+                {
+                    name: "C",
+                },
+                {
+                    name: "F",
+                },
             ],
         };
+    },
+    methods: {
+        AddRepoClick: function (index) {
+            this.$emit("addRepoClick", this.repositoryList[index]);
+        },
     },
 };
 </script>

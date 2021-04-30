@@ -1,8 +1,65 @@
 .repository-card {
-    margin: 15px 20px;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    margin: 20px 20px 10px;
     width: 250px;
     height: 70px;
-    text-align: center;
     border-radius: 5px;
-    box-shadow: 0px 2px 5px #ccc;
+    box-shadow: 0px 4px 5px #ddd;
+}
+
+/* .repository-card:hover {
+    box-shadow: 0px 4px 5px #ccc;
+} */
+
+.back-button-area {
+    display: inline-block;
+    position: absolute;
+    left: 0px;
+    width: 30px;
+    height: 70px;
+    background-color: #eee;
+    z-index: 1;
+}
+
+.back-arrow-icon {
+    color: #bbb;
+    position: relative;
+    top: 50%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+}
+
+.add-arrow-icon:hover,
+.back-arrow-icon:hover {
+    color: #999;
+}
+
+.add-arrow-icon {
+    color: #bbb;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#repository-name {
+    position: absolute;
+    z-index: 2;
+    font-weight: 300;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#scm-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin-top: -35px;
+    opacity: 0.5;
+    width: 70px;
+    height: 70px;
+    z-index: 1;
 }
