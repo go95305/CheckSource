@@ -80,7 +80,6 @@
             <button id="submit-button" @click="ChangeProfile">확인</button>
         </div>
     </div>
-  </div>
 </template>
 <script>
 import MyProjectPath from "../../components/MyProject/MyProjectPath.vue";
