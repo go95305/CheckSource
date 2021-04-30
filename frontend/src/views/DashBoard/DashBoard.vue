@@ -16,8 +16,9 @@
         <div class="card__main">
           <div class="main-overview">
             <div class="overviewCard">
-              <div class="overviewCard-icon overviewCard-icon--document">
-                <i class="far fa-file-alt"></i>
+              <div class="overviewCard-icon overviewCard-icon--photo">
+                <!-- <i class="far fa-file-alt"></i> -->
+                <span class="material-icons"> description </span>
               </div>
               <div class="overviewCard-description">
                 <h3 class="overviewCard-title text-light">
@@ -28,7 +29,8 @@
             </div>
             <div class="overviewCard">
               <div class="overviewCard-icon overviewCard-icon--calendar">
-                <i class="far fa-envelope"></i>
+                <!-- <i class="far fa-envelope"></i> -->
+                <span class="material-icons"> view_list </span>
               </div>
 
               <div class="overviewCard-description">
@@ -39,8 +41,9 @@
               </div>
             </div>
             <div class="overviewCard">
-              <div class="overviewCard-icon overviewCard-icon--mail">
-                <i class="far fa-envelope"></i>
+              <div class="overviewCard-icon overviewCard-icon--document">
+                <!-- <i class="far fa-envelope"></i> -->
+                <span class="material-icons"> verified </span>
               </div>
               <div class="overviewCard-description">
                 <h3 class="overviewCard-title text-light">
@@ -50,8 +53,9 @@
               </div>
             </div>
             <div class="overviewCard">
-              <div class="overviewCard-icon overviewCard-icon--photo">
-                <i class="far fa-file-image"></i>
+              <div class="overviewCard-icon overviewCard-icon--mail">
+                <!-- <i class="far fa-file-image"></i> -->
+                <span class="material-icons"> report_problem </span>
               </div>
               <div class="overviewCard-description">
                 <h3 class="overviewCard-title text-light">
@@ -157,6 +161,11 @@
             오픈소스 <strong>TOP5</strong>
           </div>
         </div>
+        <div>
+          <div class="dash-dropdown">
+            <DropDown />
+          </div>
+        </div>
         <TopFiveGraph />
       </div>
 
@@ -168,43 +177,9 @@
           </div>
         </div>
         <div id="chartdiv">
-          <!-- tab -->
-          <div class="relative text-lg w-48">
-            <button
-              class=""
-              @click="isOptionsExpanded = !isOptionsExpanded"
-              @blur="isOptionsExpanded = false"
-            >
-              <span>{{ selectedOption }}</span>
-              <svg
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                class="ease-in-out"
-                :class="isOptionsExpanded ? 'rotate-180' : 'rotate-0'"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            </button>
-            <transition>
-              <ul v-show="isOptionsExpanded" class="overflow-hidden">
-                <li
-                  v-for="(option, index) in options"
-                  :key="index"
-                  class="px-3 py-2 transition-colors duration-300 hover:bg-gray-200"
-                  @mousedown.prevent="setOption(option)"
-                >
-                  {{ option }}
-                </li>
-              </ul>
-            </transition>
+          <div class="dash-dropdown">
+            <DropDown />
           </div>
-          <!-- tab end -->
 
           <div class="dashboard-table-warning">
             <div class="d-tbl-header">
@@ -264,6 +239,7 @@
 import '@/assets/css/DashBoard/DashBoard.scss';
 import TopFiveGraph from '@/components/DashBoard/TopFiveGraph.vue';
 import VerifyCard from '@/components/DashBoard/VerifyCard.vue';
+import DropDown from '@/components/DropDown/DropDown.vue';
 import 'vueperslides/dist/vueperslides.css';
 
 export default {
@@ -271,6 +247,7 @@ export default {
   components: {
     TopFiveGraph,
     VerifyCard,
+    DropDown,
   },
   data() {
     return {
