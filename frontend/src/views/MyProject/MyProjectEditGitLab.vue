@@ -5,6 +5,7 @@
             :key="`${index}_repositoryList`"
             :repository="repository"
             :choiced="false"
+            :added="true"
             @addRepoClick="AddRepoClick(index)"
         ></repository-card>
     </div>

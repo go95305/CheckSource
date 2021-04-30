@@ -23,25 +23,28 @@
     z-index: 1;
 }
 
-.back-arrow-icon {
-    color: #bbb;
-    position: relative;
-    top: 50%;
-    left: 70%;
-    transform: translate(-50%, -50%);
+.back-button-area.added {
+    background-color: rgb(119, 201, 119);
 }
 
-.add-arrow-icon:hover,
-.back-arrow-icon:hover {
-    color: #999;
-}
-
-.add-arrow-icon {
-    color: #bbb;
+.icon {
     position: relative;
     top: 50%;
     left: 50%;
+    color: #bbb;
     transform: translate(-50%, -50%);
+}
+
+.back-arrow-icon {
+    left: 70%;
+}
+
+.icon:hover {
+    color: #999;
+}
+
+.done-icon {
+    color: green;
 }
 
 #repository-name {

@@ -1,19 +1,18 @@
 <template>
     <div class="repository-card">
         <p id="repository-name">{{ repository.name }}</p>
-        <div class="back-button-area">
+        <div class="back-button-area" :class="{ added: added }">
             <span
                 v-if="choiced"
-                class="back-arrow-icon material-icons"
+                class="icon back-arrow-icon material-icons"
                 @click="SelectedRepoClick"
             >
                 arrow_back_ios
             </span>
-            <span
-                v-else
-                class="add-arrow-icon material-icons"
-                @click="AddRepoClick"
-            >
+            <span v-else-if="added" class="icon done-icon material-icons">
+                done
+            </span>
+            <span v-else class="icon material-icons" @click="AddRepoClick">
                 add
             </span>
         </div>
@@ -30,6 +29,7 @@ export default {
     props: {
         repository: Object,
         choiced: Boolean,
+        added: Boolean,
     },
     methods: {
         SelectedRepoClick: function () {
