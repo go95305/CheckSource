@@ -128,7 +128,6 @@ export default {
             alert("프로필 수정");
         },
     },
-  },
 };
 </script>
 <style scoped src="@/assets/css/MyPage/MyPageProfile.css"></style>

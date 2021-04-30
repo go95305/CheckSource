@@ -2,11 +2,7 @@
     <nav class="sidenav">
         <profile id="nav-profile" />
         <ul class="nav-ul">
-            <li
-                class="nav-li"
-                @click="MenuClickHandler"
-                :class="{ sidenav_choiced: currentPathName == 'dashboard' }"
-            >
+            <li class="nav-li" @click="MenuClickHandler">
                 <router-link to="/dashboard">대시보드</router-link>
             </li>
             <li class="nav-li">
@@ -15,33 +11,18 @@
                         class="dropbtn"
                         @click="MenuClickHandler"
                         :class="{
-                            sidenav_choiced: currentPathName == 'project',
+                            'router-link-active': currentPathName == 'project',
                         }"
                         >프로젝트</span
                     >
                     <div class="dropdown-content">
-                        <router-link
-                            to="/project/main/status"
-                            :class="{
-                                sidenav_choiced:
-                                    currentThirdPathName == 'status',
-                            }"
+                        <router-link to="/project/main/status"
                             >Status</router-link
                         >
-                        <router-link
-                            to="/project/main/gitlab"
-                            :class="{
-                                sidenav_choiced:
-                                    currentThirdPathName == 'gitlab',
-                            }"
+                        <router-link to="/project/main/gitlab"
                             >GitLab</router-link
                         >
-                        <router-link
-                            to="/project/main/github"
-                            :class="{
-                                sidenav_choiced:
-                                    currentThirdPathName == 'github',
-                            }"
+                        <router-link to="/project/main/github"
                             >GitHab</router-link
                         >
                     </div>
@@ -53,7 +34,8 @@
                         class="dropbtn"
                         @click="MenuClickHandler"
                         :class="{
-                            sidenav_choiced: currentPathName == 'totallist',
+                            'router-link-active':
+                                currentPathName == 'totallist',
                         }"
                         >전체목록</span
                     >
@@ -73,26 +55,13 @@
                         class="dropbtn"
                         @click="MenuClickHandler"
                         :class="{
-                            sidenav_choiced: currentPathName == 'mypage',
+                            'router-link-active': currentPathName == 'mypage',
                         }"
                         >마이페이지</span
                     >
                     <div class="dropdown-content">
-                        <router-link
-                            to="/mypage/profile"
-                            :class="{
-                                sidenav_choiced:
-                                    currentSubPathName == 'profile',
-                            }"
-                            >Profile</router-link
-                        >
-                        <router-link
-                            to="/mypage/scm/gitlab"
-                            :class="{
-                                sidenav_choiced: currentSubPathName == 'scm',
-                            }"
-                            >SCM</router-link
-                        >
+                        <router-link to="/mypage/profile">Profile</router-link>
+                        <router-link to="/mypage/scm/gitlab">SCM</router-link>
                     </div>
                 </div>
             </li>
@@ -123,8 +92,6 @@ export default {
     data() {
         return {
             currentPathName: "",
-            currentSubPathName: "",
-            currentThirdPathName: "",
         };
     },
     watch: {
@@ -151,10 +118,6 @@ export default {
             //경로 이동 시 해당 경로 이름 설정
             const path = this.$route.path.split("/");
             this.currentPathName = path[1];
-            this.currentSubPathName = path[2];
-            if (this.currentSubPathName == "main") {
-                this.currentThirdPathName = path[3];
-            }
         },
     },
 };

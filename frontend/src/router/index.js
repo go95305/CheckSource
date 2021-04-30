@@ -13,6 +13,8 @@ import MyProject from "@/views/MyProject/MyProject";
 import MyProjectMain from "@/views/MyProject/MyProjectMain";
 import MyProjectStatus from "@/views/MyProject/MyProjectStatus";
 import MyProjectResult from "@/views/MyProject/MyProjectResult";
+import MyProjectEdit from "@/views/MyProject/MyProjectEdit";
+import MyProjectEditGitLab from "@/views/MyProject/MyProjectEditGitLab";
 import LicenseList from "@/components/MyProject/LicenseList";
 
 import MyPage from "@/views/MyPage/MyPage";
@@ -75,6 +77,22 @@ const routes = [
                                 name: "GitHub",
                                 component: DashBoard,
                             },
+                            {
+                                path: "edit",
+                                name: "MyProjectEdit",
+                                component: MyProjectEdit,
+                                children: [
+                                    {
+                                        path: "",
+                                        redirect: "gitlab",
+                                    },
+                                    {
+                                        path: "gitlab",
+                                        name: "MyProjectEditGitLab",
+                                        component: MyProjectEditGitLab,
+                                    },
+                                ],
+                            },
                         ],
                     },
                     {
@@ -115,7 +133,7 @@ const routes = [
                         path: "scm",
                         name: "MyPageSCM",
                         component: MyPageSCM,
-                        children:[
+                        children: [
                             {
                                 path: "gitlab",
                                 name: "MyPageGitLab",
@@ -132,7 +150,7 @@ const routes = [
 const router = new VueRouter({
     mode: "history",
     base: process.env.BASE_URL,
-    linkActiveClass: "active",
+    // linkActiveClass: "active",
     routes,
 });
 

@@ -44,6 +44,7 @@
     height: 60px;
     margin: 5px;
     overflow: hidden;
+    cursor: pointer;
     display: flex;
     justify-content: center;
 }
