@@ -10,16 +10,12 @@
       <div class="login-input-container">
         <div class="login-input-wrap input-id">
           <i class="far fa-envelope"></i>
-          <input
-            v-model="loginInfo.EmployeeNumber"
-            placeholder="사번"
-            type="text"
-          />
+          <input v-model="loginInfo.userId" placeholder="사번" type="text" />
         </div>
         <div class="login-input-wrap input-password">
           <i class="fas fa-key"></i>
           <input
-            v-model="loginInfo.Password"
+            v-model="loginInfo.pw"
             placeholder="비밀번호"
             type="password"
           />
@@ -27,32 +23,42 @@
         <p v-if="!isLogin">로그인 정보가 틀렸습니다. 다시 입력해주세요.</p>
       </div>
       <div class="login-btn-wrap">
-        <button class="login-btn" @click="showInfo">Login</button>
+        <button class="login-btn" @click="loginChk">Login</button>
       </div>
     </div>
   </div>
 </template>
 <script>
+// import http from "../../api/http.js";
+import loginApi from "../../api/login.js";
 export default {
   name: "BeforeLogin",
   data() {
     return {
       loginInfo: {
-        EmployeeNumber: "",
-        Password: "",
+        userId: "",
+        pw: "",
       },
       isLogin: true,
     };
   },
   methods: {
-    showInfo() {
-      this.$router.push({
-        name: "AfterLogin",
-        params: { employeeNumber: this.loginInfo.EmployeeNumber },
-      });
-    },
-    login() {
-      this.isLogin = false;
+    loginChk() {
+      loginApi
+        .login(this.loginInfo)
+        .then((response) => {
+          alert(response.data);
+          if (response.data == true) {
+            console.log("해당 유저 존재");
+            this.$store
+              .dispatch("CHECKUSER", this.loginInfo.userId)
+          } else {
+            alert("해당 유저는 존재하지 않습니다.");
+          }
+        })
+        .catch(() => {
+          console.log("login error");
+        });
     },
   },
 };
