@@ -1,20 +1,18 @@
 <template>
     <div class="repository-card">
         <p id="repository-name">reporeporeporeporepo</p>
-        <div class="back-button-area" :class="{ checked: checked }">
-            <span
-                v-if="selected"
-                class="icon back-arrow-icon material-icons"
-                @click="SelectedRepoClick"
-            >
+        <div
+            class="button-area"
+            :class="{ checked: checked }"
+            @click="CardClick"
+        >
+            <span v-if="selected" class="icon back-arrow-icon material-icons">
                 arrow_back_ios
             </span>
             <span v-else-if="checked" class="icon done-icon material-icons">
                 done
             </span>
-            <span v-else class="icon material-icons" @click="AddRepoClick">
-                add
-            </span>
+            <span v-else class="icon material-icons"> add </span>
         </div>
         <img
             v-if="repository.gittype == 1"
@@ -44,13 +42,14 @@ export default {
         },
     },
     methods: {
-        SelectedRepoClick: function () {
-            //선택된 레포지토리 제거
-            this.$emit("selectedRepoClick", this.repository.project_id);
-        },
-        AddRepoClick: function () {
-            //레포지토리 추가
-            this.$emit("addRepoClick", this.repository);
+        CardClick: function () {
+            if (this.selected) {
+                //선택된 레포지토리 제거
+                this.$emit("selectedRepoClick", this.repository.project_id);
+            } else if (!this.checked) {
+                //레포지토리 추가
+                this.$emit("addRepoClick", this.repository);
+            }
         },
     },
 };
