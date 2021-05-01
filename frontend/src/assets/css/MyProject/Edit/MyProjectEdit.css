@@ -6,47 +6,69 @@
     padding-top: 10px;
 }
 
-@media (min-width: 700px) {
+#myproject-edit-container {
+    display: flex;
+    flex-flow: row-reverse wrap;
+    justify-content: flex-start;
+}
+
+#myproject-edit-tab-div {
+    display: flex;
+    flex: 1 1 300px;
+    flex-wrap: wrap;
+    align-self: flex-start;
+}
+
+#myproject-edit-tab {
+    flex: 0 0 100%;
+}
+
+#myproject-edit-selected-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: sticky;
+    max-height: 600px;
+    padding: 30px;
+    top: 50px;
+    bottom: 0px;
+    flex: 0 0 300px;
+    border-left: 1px solid rgb(221, 221, 221);
+}
+
+#myproject-edit-selected-title {
+    align-self: flex-start;
+}
+
+#myproject-edit-selected-button {
+    width: 200px;
+    margin-top: 30px;
+    padding: 10px;
+    font-size: large;
+    font-weight: 700;
+    border: 1px solid #eee;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0px 4px 5px #ddd;
+}
+
+#myproject-edit-selected-button:hover {
+    box-shadow: 0px 4px 5px #ccc;
+}
+
+/* @media (max-width: 700px) {
     #myproject-edit-container {
-        display: flex;
-        flex-direction: row-reverse;
-        flex-wrap: wrap;
+        display: block;
     }
 
     #myproject-edit-tab-div {
-        display: inline-block;
-        flex: 2;
-    }
-
-    #myproject-edit-selected-div {
-        display: inline-block;
-        position: sticky;
-        max-height: 600px;
-        padding: 30px;
-        top: 50px;
-        bottom: 0px;
-        flex: 1;
-        border-left: 1px solid rgb(221, 221, 221);
-    }
-}
-
-@media (max-width: 700px) {
-    #myproject-edit-container {
-        display: block;
-        flex-direction: row-reverse;
-    }
-
-    #myproject-edit-tab-div {
         display: block;
     }
 
     #myproject-edit-selected-div {
         display: block;
-        position: sticky;
+        white-space: nowrap;
         max-height: 600px;
         padding: 30px;
-        top: 50px;
-        bottom: 0px;
-        /* border-left: 1px solid rgb(221, 221, 221); */
     }
-}
+} */
