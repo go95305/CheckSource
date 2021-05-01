@@ -5,9 +5,9 @@
             :key="`${index}_repositoryList`"
             :index="index"
             :repository="repository"
-            :choiced="false"
-            :added="false"
-            @addRepoClick="AddRepoClick(index)"
+            :selected="false"
+            :checked="IsSelected(repository.project_id)"
+            @addRepoClick="AddRepoClick"
         ></repository-card>
     </div>
 </template>
@@ -18,46 +18,44 @@ export default {
     name: "MyProjectEditGitLab",
     data() {
         return {
-            repositoryList: [
-                {
-                    name: "A",
-                },
-                {
-                    name: "B",
-                },
-                {
-                    name: "C",
-                },
-                {
-                    name: "C",
-                },
-                {
-                    name: "D",
-                },
-                {
-                    name: "E",
-                },
-                {
-                    name: "F",
-                },
-                {
-                    name: "A",
-                },
-                {
-                    name: "B",
-                },
-                {
-                    name: "C",
-                },
-                {
-                    name: "F",
-                },
-            ],
+            repositoryList: [],
         };
     },
+    props: {
+        selectedRepositoryList: Array,
+    },
+    created() {
+        this.GetRepositories();
+    },
     methods: {
-        AddRepoClick: function (index) {
-            this.$emit("addRepoClick", this.repositoryList[index]);
+        GetRepositories: function () {
+            //레포지토리 얻어오기
+            this.repositoryList = [
+                {
+                    project_id: "111",
+                    name: "project1",
+                    gittype: 1,
+                },
+                {
+                    project_id: "112",
+                    name: "project2",
+                    gittype: 1,
+                },
+            ];
+        },
+        IsSelected: function (project_id) {
+            //선택된 레포지토리인지 확인
+            if (
+                this.selectedRepositoryList.findIndex(
+                    (i) => i.project_id == project_id
+                ) == -1
+            ) {
+                return false;
+            }
+            return true;
+        },
+        AddRepoClick: function (repo) {
+            this.$emit("addRepoClick", repo);
         },
     },
 };

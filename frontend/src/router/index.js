@@ -90,6 +90,7 @@ const routes = [
                                         path: "gitlab",
                                         name: "MyProjectEditGitLab",
                                         component: MyProjectEditGitLab,
+                                        props: true,
                                     },
                                 ],
                             },

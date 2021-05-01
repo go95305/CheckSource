@@ -23,7 +23,7 @@
     z-index: 1;
 }
 
-.back-button-area.added {
+.back-button-area.checked {
     background-color: rgba(119, 201, 119);
 }
 
@@ -43,7 +43,8 @@
     color: #999;
 }
 
-.done-icon {
+.done-icon,
+.done-icon:hover {
     color: green;
 }
 
