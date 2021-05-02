@@ -59,6 +59,10 @@ def pushImage() {
 
 def deploy() {
     stage('Deploy') {
+        sh "docker container stop backend"
+        sh "docker container rm backend"
+        sh "docker container stop frontend"
+        sh "docker container rm frontend"
         sh "docker run -itd --name backend -p 8080:8080 -u root backend"
         sh "docker run -itd --name frontend -p 80:80 -u root frontend"
     }
