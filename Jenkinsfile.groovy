@@ -52,6 +52,7 @@ def pushImage() {
             sh "docker push 378668795069.dkr.ecr.ap-northeast-2.amazonaws.com/checksource:frontend"
             sh "docker tag backend:backend 378668795069.dkr.ecr.ap-northeast-2.amazonaws.com/checksource:backend"
             sh "docker push 378668795069.dkr.ecr.ap-northeast-2.amazonaws.com/checksource:backend"
+
         }
     }
 }
