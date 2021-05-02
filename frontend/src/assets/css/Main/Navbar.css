@@ -1,0 +1,82 @@
+/* navbar */
+.sidenav {
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background: linear-gradient(#153081, #00a3e2);
+    overflow-x: hidden;
+    box-shadow: 3px 0px 10px rgba(200, 200, 200, 0.5);
+}
+
+/* navbar profile */
+#nav-profile {
+    padding: 20px 0px;
+}
+
+/* navbar router-link */
+.sidenav a {
+    /* margin: 0px 10px; */
+    padding: 8px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #ffffff;
+    text-align: center;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    /* background-color: #0ba9dd70; */
+    text-shadow: 0px 0px 10px white;
+}
+
+.router-link-active {
+    text-shadow: 0px 0px 5px white;
+    /* background-color: #0ba9dd70 !important; */
+}
+
+.nav-ul {
+    list-style: none;
+    padding: 0;
+}
+
+.dropbtn {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #ffffff;
+    text-align: center;
+    display: block;
+    cursor: pointer;
+}
+
+.dropbtn:hover {
+    text-shadow: 0px 0px 10px white;
+}
+
+.dropdown-content {
+    max-height: 0px;
+    overflow: hidden;
+    background-color: #1530818f;
+    transition: max-height 0.7s;
+}
+
+.dropbtn.choice + .dropdown-content {
+    max-height: 250px;
+}
+
+.dropdown-content a {
+    font-size: medium;
+}
+
+/* navbar logo */
+#nav-logo {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    padding-bottom: 20px;
+    text-align: center;
+}
