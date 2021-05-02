@@ -58,6 +58,5 @@ def deploy() {
     stage('Deploy') {
         sh "docker run -itd --name backend -p 8080:8080 -u root backend"
         sh "docker run -itd --name frontend -p 80:80 -u root frontend"
-
     }
 }
