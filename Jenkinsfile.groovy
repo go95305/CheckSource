@@ -29,6 +29,7 @@ def build() {
         sh "chmod +x ./backend/checksource/gradlew"
         sh 'rm -rf ./backend/checksource/build/libs/*'
         sh "cd ./backend/checksource && ./gradlew build"
+
     }
 }
 
