@@ -4,6 +4,13 @@ spring:
     username: checksource
     password: checksourceC101
     driver-class-name: org.mariadb.jdbc.Driver
+  restTemplate:
+    factory:
+      readTimeout: 5000 #읽기 타임아웃
+      connectTimeout: 3000 #연결 타임아웃
+    httpClient:
+      maxConnTotal: 100 #연결을 유지할 최대 숫자
+      maxConnPerRoute: 5 #특정 경로당 최대 숫자
   jpa:
     hibernate:
       ddl-auto: update

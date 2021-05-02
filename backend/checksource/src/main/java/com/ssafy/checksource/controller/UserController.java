@@ -8,6 +8,7 @@ import com.ssafy.checksource.model.dto.UserUpdateDTO;
 import org.springframework.web.bind.annotation.*;
 
 import com.ssafy.checksource.model.dto.SsoDTO;
+import com.ssafy.checksource.service.GitService;
 import com.ssafy.checksource.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
@@ -20,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 
 	private final UserService userService;
+	
 	
 	@ApiOperation(value = "테스트")
 	@PostMapping("/test")
