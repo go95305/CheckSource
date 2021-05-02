@@ -35,8 +35,8 @@ def build() {
 
 def buildImage() {
     stage('BuildImage') {
-        sh "docker build -t frontend ./frontend/."
-        sh "docker build -t backend ./backend/checksource/."
+        sh "docker build --tag frontend:frontend ./frontend/."
+        sh "docker build --tag backend:backend ./backend/checksource/."
     }
 }
 
@@ -48,10 +48,10 @@ def pushImage() {
         sh 'rm ~/.docker/config.json || true'
 
         docker.withRegistry('https://378668795069.dkr.ecr.ap-northeast-2.amazonaws.com', 'ecr:ap-northeast-2:again09-ecr-connector') {
-            sh "docker tag frontend:latest 378668795069.dkr.ecr.ap-northeast-2.amazonaws.com/checksource:latest"
-            sh "docker push 378668795069.dkr.ecr.ap-northeast-2.amazonaws.com/checksource:latest"
-            sh "docker tag backend:latest 378668795069.dkr.ecr.ap-northeast-2.amazonaws.com/checksource:latest"
-            sh "docker push 378668795069.dkr.ecr.ap-northeast-2.amazonaws.com/checksource:latest"
+            sh "docker tag frontend:frontend 378668795069.dkr.ecr.ap-northeast-2.amazonaws.com/checksource:frontend"
+            sh "docker push 378668795069.dkr.ecr.ap-northeast-2.amazonaws.com/checksource:frontend"
+            sh "docker tag backend:backend 378668795069.dkr.ecr.ap-northeast-2.amazonaws.com/checksource:backend"
+            sh "docker push 378668795069.dkr.ecr.ap-northeast-2.amazonaws.com/checksource:backend"
         }
     }
 }
@@ -60,6 +60,5 @@ def deploy() {
     stage('Deploy') {
         sh "docker run -itd --name backend -p 8080:8080 -u root backend"
         sh "docker run -itd --name frontend -p 80:80 -u root frontend"
-
     }
 }
