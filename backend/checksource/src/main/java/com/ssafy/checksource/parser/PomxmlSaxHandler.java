@@ -16,6 +16,8 @@ public class PomxmlSaxHandler extends DefaultHandler{
 	
 	private String str;
 	
+	private boolean isDepen = false;
+	
 	public PomxmlSaxHandler() {
 		depenList = new ArrayList<DependencyDTO>();
 	}
@@ -25,6 +27,7 @@ public class PomxmlSaxHandler extends DefaultHandler{
 		
 		if(name.equals("dependency")) {
 			depen = new DependencyDTO();
+			isDepen = true;
 		}
 		
 	}
@@ -33,8 +36,10 @@ public class PomxmlSaxHandler extends DefaultHandler{
 	public void endElement(String uri, String localName, String name) throws SAXException {
 		if(name.equals("dependency")) {
 			depenList.add(depen);
+			isDepen = false;
 		}
-		
+		if(!isDepen)
+			return;
 		if(name.equals("groupId")) {
 			depen.setGroupId(str);
 		}
@@ -48,6 +53,11 @@ public class PomxmlSaxHandler extends DefaultHandler{
 	@Override
 	public void characters(char[] ch, int start, int length) throws SAXException {
 		str = new String(ch,start,length);
+	}
+	
+	public List<DependencyDTO> getDepenList(){
+		
+		return depenList;
 	}
 	
 }
