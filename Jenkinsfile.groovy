@@ -29,6 +29,7 @@ def build() {
         sh "chmod +x ./backend/checksource/gradlew"
         sh 'rm -rf ./backend/checksource/build/libs/*'
         sh "cd ./backend/checksource && ./gradlew build"
+
     }
 }
 
@@ -47,9 +48,7 @@ def pushImage() {
         sh 'rm ~/.docker/config.json || true'
 
         docker.withRegistry('https://378668795069.dkr.ecr.ap-northeast-2.amazonaws.com', 'ecr:ap-northeast-2:again09-ecr-connector') {
-            sh "docker tag frontend:latest 378668795069.dkr.ecr.ap-northeast-2.amazonaws.com/frontend:latest"
             sh "docker push 378668795069.dkr.ecr.ap-northeast-2.amazonaws.com/frontend:latest"
-            sh "docker tag backend:latest 378668795069.dkr.ecr.ap-northeast-2.amazonaws.com/backend:latest"
             sh "docker push 378668795069.dkr.ecr.ap-northeast-2.amazonaws.com/backend:latest"
         }
     }
