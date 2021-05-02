@@ -1,9 +1,5 @@
 <template>
   <div>
-    <!-- <h1>
-      대시보드대시보드대시보드대시보드대시보드대시보드대시보드대시보드대시보드대시보드
-    </h1> -->
-
     <div class="main__cards">
       <!-- 저장소(부서) 별 정보 -->
       <div class="card">
@@ -14,117 +10,9 @@
         </div>
         <!-- 총 갯수 -->
         <div class="card__main">
-          <div class="main-overview">
-            <div class="overviewCard">
-              <div class="overviewCard-icon overviewCard-icon--photo">
-                <!-- <i class="far fa-file-alt"></i> -->
-                <span class="material-icons"> description </span>
-              </div>
-              <div class="overviewCard-description">
-                <h3 class="overviewCard-title text-light">
-                  <strong>26</strong>
-                </h3>
-                <p class="overviewCard-subtitle">Projects</p>
-              </div>
-            </div>
-            <div class="overviewCard">
-              <div class="overviewCard-icon overviewCard-icon--calendar">
-                <!-- <i class="far fa-envelope"></i> -->
-                <span class="material-icons"> view_list </span>
-              </div>
-
-              <div class="overviewCard-description">
-                <h3 class="overviewCard-title text-light">
-                  <strong>12</strong>
-                </h3>
-                <p class="overviewCard-subtitle">OpenSource</p>
-              </div>
-            </div>
-            <div class="overviewCard">
-              <div class="overviewCard-icon overviewCard-icon--document">
-                <!-- <i class="far fa-envelope"></i> -->
-                <span class="material-icons"> verified </span>
-              </div>
-              <div class="overviewCard-description">
-                <h3 class="overviewCard-title text-light">
-                  <strong>11</strong>
-                </h3>
-                <p class="overviewCard-subtitle">License</p>
-              </div>
-            </div>
-            <div class="overviewCard">
-              <div class="overviewCard-icon overviewCard-icon--mail">
-                <!-- <i class="far fa-file-image"></i> -->
-                <span class="material-icons"> report_problem </span>
-              </div>
-              <div class="overviewCard-description">
-                <h3 class="overviewCard-title text-light">
-                  <strong>14</strong>
-                </h3>
-                <p class="overviewCard-subtitle">Warning</p>
-              </div>
-            </div>
-          </div>
-          <!-- 총 갯수 end -->
-          <div class="dashboard-table">
-            <div class="d-tbl-header">
-              <table
-                class="dash-table"
-                cellpadding="0"
-                cellspacing="0"
-                border="0"
-              >
-                <thead class="dash-thead-css">
-                  <tr>
-                    <th scope="col">저장소</th>
-                    <th scope="col">부서</th>
-                    <th scope="col">프로젝트</th>
-                    <th scope="col">오픈소스</th>
-                    <th scope="col">라이선스</th>
-                    <th scope="col">Warning</th>
-                  </tr>
-                </thead>
-              </table>
-            </div>
-            <div class="d-tbl-content">
-              <table
-                class="dash-table"
-                cellpadding="0"
-                cellspacing="0"
-                border="0"
-              >
-                <tbody>
-                  <tr>
-                    <td>gitlab#1</td>
-                    <td>ICT운영부</td>
-                    <td>21</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>11</td>
-                  </tr>
-                  <tr>
-                    <td>gitlab#1</td>
-                    <td>ICT운영부</td>
-                    <td>21</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>11</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <!-- table end -->
-
-          <!-- <VerifyCard /> -->
-          <!-- <div class="project-title">
-            <vueper-slides fractions progress>
-              <vueper-slide v-for="i in 5" :key="i" />
-              <template v-slot:content>
-                <VerifyCard />
-              </template>
-            </vueper-slides>
-          </div> -->
+          <!-- <DashBoardOverview /> -->
+          <dash-board-overview :status="status"> </dash-board-overview>
+          <DashBoardTable />
 
           <div id="slider">
             <transition-group
@@ -166,7 +54,7 @@
             <DropDown />
           </div>
         </div>
-        <TopFiveGraph />
+        <top-five-graph :labels="labels" :dataList="dataList"> </top-five-graph>
       </div>
 
       <!-- warning -->
@@ -240,6 +128,8 @@ import '@/assets/css/DashBoard/DashBoard.scss';
 import TopFiveGraph from '@/components/DashBoard/TopFiveGraph.vue';
 import VerifyCard from '@/components/DashBoard/VerifyCard.vue';
 import DropDown from '@/components/DropDown/DropDown.vue';
+import DashBoardTable from '@/components/DashBoard/DashBoardTable.vue';
+import DashBoardOverview from '@/components/DashBoard/DashBoardOverview.vue';
 import 'vueperslides/dist/vueperslides.css';
 
 export default {
@@ -248,23 +138,21 @@ export default {
     TopFiveGraph,
     VerifyCard,
     DropDown,
+    DashBoardTable,
+    DashBoardOverview,
   },
   data() {
     return {
-      isOptionsExpanded: false,
-      selectedOption: '1x',
-      options: ['1x', '2x', '3x', '4x or more'],
       current: 0,
       direction: 1,
       transitionName: 'fade',
       show: false,
+      status: { project: '31', opensource: '29', license: '7', warning: '15' },
+      labels: ['Apache-2.0', 'Ruby', 'MIT', 'JSON', 'JSON'],
+      dataList: [12, 19, 15, 21, 2],
     };
   },
   methods: {
-    setOption(option) {
-      this.selectedOption = option;
-      this.isOptionsExpanded = false;
-    },
     slide(dir) {
       this.direction = dir;
       dir === 1
