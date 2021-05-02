@@ -54,7 +54,7 @@
             <DropDown />
           </div>
         </div>
-        <TopFiveGraph />
+        <top-five-graph :labels="labels" :dataList="dataList"> </top-five-graph>
       </div>
 
       <!-- warning -->
@@ -148,6 +148,8 @@ export default {
       transitionName: 'fade',
       show: false,
       status: { project: '31', opensource: '29', license: '7', warning: '15' },
+      labels: ['Apache-2.0', 'Ruby', 'MIT', 'JSON', 'JSON'],
+      dataList: [12, 19, 15, 21, 2],
     };
   },
   methods: {
