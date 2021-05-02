@@ -28,7 +28,7 @@ def build() {
         sh 'rm -rf ./backend/checksource/src/test'
         sh "chmod +x ./backend/checksource/gradlew"
         sh 'rm -rf ./backend/checksource/build/libs/*'
-        sh "./backend/checksource/gradlew build"
+        sh "cd ./backend/checksource && ./gradlew build"
     }
 }
 
@@ -59,5 +59,6 @@ def deploy() {
     stage('Deploy') {
         sh "docker run -itd --name backend -p 8080:8080 -u root backend"
         sh "docker run -itd --name frontend -p 80:80 -u root frontend"
+
     }
 }
