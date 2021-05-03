@@ -12,9 +12,14 @@
                     :selected="true"
                     @selectedRepoClick="SelectedRepoClick"
                 ></repository-card>
-                <button id="myproject-edit-selected-button">검증하기</button>
+                <button id="myproject-edit-selected-button" @click="GoVerify">
+                    검증하기
+                </button>
             </div>
             <div id="myproject-edit-tab-div">
+                <button id="myproject-edit-scm-button">
+                    <span class="material-icons"> settings </span>
+                </button>
                 <tab id="myproject-edit-tab" :list="tabList" />
                 <router-view
                     id="myproject-edit-routerview"
@@ -81,6 +86,13 @@ export default {
         AddRepoClick: function (repo) {
             //레포지토리 클릭 => selectedList에 추가
             this.selectedRepositoryList.push(repo);
+        },
+        GoVerify: function () {
+            if (this.selectedRepositoryList.length == 0) {
+                alert("검증할 프로젝트를 선택해주세요.");
+            } else {
+                this.$router.push("/project/main/status");
+            }
         },
     },
 };
