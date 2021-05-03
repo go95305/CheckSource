@@ -1,6 +1,6 @@
 <template>
     <div class="repository-card">
-        <p id="repository-name">reporeporeporeporepo</p>
+        <p id="repository-name">{{ repository.name }}</p>
         <div
             class="button-area"
             :class="{ checked: checked }"
