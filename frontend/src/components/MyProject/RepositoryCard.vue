@@ -1,5 +1,6 @@
 <template>
     <div class="repository-card">
+        <div v-if="verified" class="verified"></div>
         <p id="repository-name">{{ repository.name }}</p>
         <div
             class="button-area"
@@ -32,11 +33,20 @@
 export default {
     name: "RepositoryCard",
     props: {
+        //레포지토리 정보
         repository: Object,
+
         //selected칸에 포함된 카드
         selected: Boolean,
-        //형상관리툴 안에 있는 카드 중 selected된 카드
+
+        //형상관리칸에 있는 카드 중 selected된 카드
         checked: {
+            type: Boolean,
+            default: false,
+        },
+
+        //이미 검증된 레포지토리
+        verified: {
             type: Boolean,
             default: false,
         },
