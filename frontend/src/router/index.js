@@ -17,6 +17,10 @@ import MyProjectEdit from "@/views/MyProject/MyProjectEdit";
 import MyProjectEditGitLab from "@/views/MyProject/MyProjectEditGitLab";
 import LicenseList from "@/components/MyProject/LicenseList";
 
+import OSSMain from "@/views/OSS/OSSMain";
+import OSSOpenSource from "@/views/OSS/OpenSource";
+import OSSLicense from "@/views/OSS/License";
+
 import MyPage from "@/views/MyPage/MyPage";
 import MyPageProfile from "@/views/MyPage/MyPageProfile";
 import MyPageSCM from "@/views/MyPage/MyPageSCM";
@@ -117,6 +121,23 @@ const routes = [
                                 component: LicenseList,
                             },
                         ],
+                    },
+                ],
+            },
+            {
+                path: "list",
+                name: "OSSMain",
+                component: OSSMain,
+                children: [
+                    {
+                        path: "opensource",
+                        name: "OSSOpenSource",
+                        component: OSSOpenSource,
+                    },
+                    {
+                        path: "license",
+                        name: "OSSLicense",
+                        component: OSSLicense,
                     },
                 ],
             },

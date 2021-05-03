@@ -23,7 +23,7 @@
                             >GitLab</router-link
                         >
                         <router-link to="/project/main/github"
-                            >GitHab</router-link
+                            >GitHub</router-link
                         >
                     </div>
                 </div>
@@ -34,18 +34,15 @@
                         class="dropbtn"
                         @click="MenuClickHandler"
                         :class="{
-                            'router-link-active':
-                                currentPathName == 'totallist',
+                            'router-link-active': currentPathName == 'list',
                         }"
                         >전체목록</span
                     >
                     <div class="dropdown-content">
-                        <router-link to="/myproject/main/status"
+                        <router-link to="/list/opensource"
                             >Open Source</router-link
                         >
-                        <router-link to="/myproject/main/gitlab"
-                            >License</router-link
-                        >
+                        <router-link to="/list/license">License</router-link>
                     </div>
                 </div>
             </li>
