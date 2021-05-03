@@ -17,9 +17,9 @@
                 </button>
             </div>
             <div id="myproject-edit-tab-div">
-                <button id="myproject-edit-scm-button">
+                <!-- <button id="myproject-edit-scm-button">
                     <span class="material-icons"> settings </span>
-                </button>
+                </button> -->
                 <tab id="myproject-edit-tab" :list="tabList" />
                 <router-view
                     id="myproject-edit-routerview"
@@ -57,22 +57,22 @@ export default {
                 {
                     project_id: "111",
                     name: "project1",
-                    gittype: 1,
+                    gittype: 2,
                 },
                 {
                     project_id: "114",
                     name: "project4",
-                    gittype: 2,
+                    gittype: 1,
                 },
                 {
                     project_id: "112",
                     name: "project2",
-                    gittype: 1,
+                    gittype: 2,
                 },
                 {
                     project_id: "113",
                     name: "project3",
-                    gittype: 2,
+                    gittype: 1,
                 },
             ];
         },
