@@ -23,10 +23,10 @@
     <div class="unmapped-component">
       <p>unmapped component</p>
     </div>
-    <button class="add-component">추가</button>
+    <button class="add-component" @click="addComponent">Component 추가</button>
     <div class="unmapped-table-header" :class="{ sideBar: containerWidth }">
-      <div class="title title-1">Dependency</div>
-      <div class="title title-2">위치</div>
+      <div class="title utitle-1">Dependency</div>
+      <div class="title utitle-2">위치</div>
     </div>
     <ul
       class="responsive-table"
@@ -35,13 +35,18 @@
       :class="{ sideBar: containerWidth }"
     >
       <li class="table-row">
-        <div class="col col-1">{{ item.name }}</div>
-        <div class="col col-2">{{ item.origin }}</div>
+        <div class="col ucol-1">{{ item.name }}</div>
+        <div class="col ucol-2">{{ item.origin }}</div>
       </li>
     </ul>
     <div class="component-specific" v-if="sidebarShow">
-      <a href="#" class="closebtn" @click="closeSideBar">&times;</a>
-      <a href="#">{{version}}</a>
+      <div>
+        <button class="closebtn" @click="closeSideBar">&times;</button>
+      </div>
+      <div class="component-version">
+        <p>License Version</p>
+        <p class="version">{{ version }}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -51,7 +56,7 @@ export default {
     return {
       sidebarShow: false,
       containerWidth: false,
-      version: '',
+      version: "",
       list: [
         {
           name: "Apache License 2.0",
@@ -98,6 +103,9 @@ export default {
       this.sidebarShow = false;
       this.containerWidth = false;
     },
+    addComponent(){
+      this.$router.push('addComponent');
+    }
   },
 };
 </script>

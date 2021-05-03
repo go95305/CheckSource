@@ -20,6 +20,7 @@ import MyPageProfile from "@/views/MyPage/MyPageProfile";
 import MyPageSCM from "@/views/MyPage/MyPageSCM";
 import MyPageGitLab from "@/views/MyPage/MyPageGitLab";
 import OpensourceList from "@/components/MyProject/OpensourceList";
+import AddComponent from "@/components/MyProject/AddComponent";
 Vue.use(VueRouter);
 
 const routes = [
@@ -87,15 +88,21 @@ const routes = [
                 name: "Summary",
                 component: DashBoard,
               },
+
+              {
+                path: "license",
+                name: "License",
+                component: LicenseList,
+              },
               {
                 path: "component",
                 name: "Component",
                 component: OpensourceList,
               },
               {
-                path: "license",
-                name: "License",
-                component: LicenseList,
+                path: "addComponent",
+                name: "AddComponent",
+                component: AddComponent,
               },
             ],
           },
