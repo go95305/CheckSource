@@ -2,10 +2,10 @@
 	padding: 20px 0px;
 }
 
-.oss-table th:nth-child(2) {
-	flex-grow: 2;
+.oss-table-thead > th:nth-child(2) {
+	flex-grow: 3;
 }
 
-.oss-table td:nth-child(2) {
-	flex-grow: 2;
+.oss-table-tr > td:nth-child(2) {
+	flex-grow: 3;
 }

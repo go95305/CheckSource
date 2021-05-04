@@ -5,7 +5,7 @@
 	margin-top: 20px;
 }
 
-.oss-table thead {
+.oss-table-thead {
 	display: flex;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
@@ -14,31 +14,31 @@
 	padding: 10px 0px;
 }
 
-.oss-table th {
+.oss-table-thead > th {
 	flex: 1 0 0;
 	font-weight: 300;
 }
 
-.oss-table tbody {
+.oss-table-tbody {
 	display: block;
 	border: 1px solid rgb(250, 250, 250);
 }
 
-.oss-table tbody tr:nth-child(even) {
+.oss-table-tr:nth-child(even) {
 	background-color: rgb(250, 250, 250);
 }
 
-.oss-table tbody tr {
+.oss-table-tr {
 	display: flex;
 	padding: 10px 0px;
 }
 
-.oss-table tbody tr:hover {
+.oss-table-tr:hover {
 	background-color: #eee;
 	cursor: pointer;
 }
 
-.oss-table td {
+.oss-table-tr > td {
 	text-align: center;
 	align-self: center;
 	word-break: break-word;

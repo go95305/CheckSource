@@ -8,14 +8,15 @@
 		</div>
 		<div>
 			<table class="oss-table">
-				<thead>
+				<thead class="oss-table-thead">
 					<th>NAME</th>
 					<th>URL</th>
 					<th>LICENSE</th>
 					<th>COPYRIGHT</th>
 				</thead>
-				<tbody>
+				<tbody class="oss-table-tbody">
 					<tr
+						class="oss-table-tr"
 						v-for="(opensource, index) in openSourceList"
 						:key="`${index}_openSourceList`"
 					>
@@ -30,7 +31,6 @@
 	</div>
 </template>
 <script>
-import "@/assets/css/OSS/OSSOpenSource.css";
 import "@/assets/css/OSS/OSSTable.css";
 import SearchBar from "../../components/SearchBar/SearchBar.vue";
 export default {
@@ -110,3 +110,4 @@ export default {
 	},
 };
 </script>
+<style scoped src="@/assets/css/OSS/OSSOpenSource.css"></style>
