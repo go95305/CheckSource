@@ -1,11 +1,18 @@
 .title,
 .dependency-title {
-  margin-top: 4%;
+  margin-top: 1%;
 }
 .dependency-title {
+  width: 9%;
   border-bottom: 1px solid rgba(0, 0, 0, 0.5);
   opacity: 0.7;
+  margin-left: 35%;
 }
+.dependency {
+  margin-top: 1%;
+  margin-left: 35%;
+}
+
 input {
   box-sizing: border-box;
   display: inline-block;
@@ -14,12 +21,30 @@ input {
   padding: 4px 11px;
   transition: all 0.3s;
 }
-label {
+.dependency-label {
   max-width: 16.7%;
+  display: inline-block;
+  width: 10%;
   text-align: right;
+  margin-bottom: 1%;
+  margin-right: 1%;
 }
-.component{
-  margin-top: 20%;
+.component-label {
+  max-width: 16.7%;
+  display: inline-block;
+  width: 10%;
+  text-align: right;
+  margin-bottom: 1%;
+  margin-right: 1%;
+}
+.component {
+  margin-top: 1%;
+  margin-left: 35%;
+}
+.component-title {
+  margin-top: 10%;
+  width: 9%;
   border-bottom: 1px solid rgba(0, 0, 0, 0.5);
   opacity: 0.7;
+  margin-left: 35%;
 }
