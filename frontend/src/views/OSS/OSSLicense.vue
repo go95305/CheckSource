@@ -1,8 +1,8 @@
 <template>
-    <div>오픈소스</div>
+	<div>라이선스</div>
 </template>
 <script>
 export default {
-    name: "OSSOpenSource",
+	name: "OSSLicense",
 };
 </script>

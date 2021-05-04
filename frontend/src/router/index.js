@@ -18,8 +18,9 @@ import MyProjectEditGitLab from "@/views/MyProject/MyProjectEditGitLab";
 import LicenseList from "@/components/MyProject/LicenseList";
 
 import OSSMain from "@/views/OSS/OSSMain";
-import OSSOpenSource from "@/views/OSS/OpenSource";
-import OSSLicense from "@/views/OSS/License";
+import OSSList from "@/views/OSS/OSSList";
+import OSSOpenSource from "@/views/OSS/OSSOpenSource";
+import OSSLicense from "@/views/OSS/OSSLicense";
 
 import MyPage from "@/views/MyPage/MyPage";
 import MyPageProfile from "@/views/MyPage/MyPageProfile";
@@ -29,151 +30,162 @@ import MyPageGitLab from "@/views/MyPage/MyPageGitLab";
 Vue.use(VueRouter);
 
 const routes = [
-    {
-        path: "/",
-        name: "Login",
-        component: Login,
-        children: [
-            {
-                path: "afterLogin",
-                name: "AfterLogin",
-                component: AfterLogin,
-            },
-            {
-                path: "",
-                name: "BeforeLogin",
-                component: BeforeLogin,
-            },
-        ],
-    },
-    {
-        path: "/",
-        name: "Index",
-        component: Index,
-        children: [
-            {
-                path: "dashboard",
-                name: "DashBoard",
-                component: DashBoard,
-            },
-            {
-                path: "project",
-                name: "Project",
-                component: MyProject,
-                children: [
-                    {
-                        path: "main",
-                        name: "MyProjectMain",
-                        component: MyProjectMain,
-                        children: [
-                            {
-                                path: "status",
-                                name: "Status",
-                                component: MyProjectStatus,
-                            },
-                            {
-                                path: "gitlab",
-                                name: "GitLab",
-                                component: DashBoard,
-                            },
-                            {
-                                path: "github",
-                                name: "GitHub",
-                                component: DashBoard,
-                            },
-                            {
-                                path: "edit",
-                                name: "MyProjectEdit",
-                                component: MyProjectEdit,
-                                children: [
-                                    {
-                                        path: "",
-                                        redirect: "gitlab",
-                                    },
-                                    {
-                                        path: "gitlab",
-                                        name: "MyProjectEditGitLab",
-                                        component: MyProjectEditGitLab,
-                                        props: true,
-                                    },
-                                ],
-                            },
-                        ],
-                    },
-                    {
-                        path: "result",
-                        name: "MyProjectResult",
-                        component: MyProjectResult,
-                        children: [
-                            {
-                                path: "summary",
-                                name: "Summary",
-                                component: DashBoard,
-                            },
-                            {
-                                path: "component",
-                                name: "Component",
-                                component: DashBoard,
-                            },
-                            {
-                                path: "license",
-                                name: "License",
-                                component: LicenseList,
-                            },
-                        ],
-                    },
-                ],
-            },
-            {
-                path: "list",
-                name: "OSSMain",
-                component: OSSMain,
-                children: [
-                    {
-                        path: "opensource",
-                        name: "OSSOpenSource",
-                        component: OSSOpenSource,
-                    },
-                    {
-                        path: "license",
-                        name: "OSSLicense",
-                        component: OSSLicense,
-                    },
-                ],
-            },
-            {
-                path: "mypage",
-                name: "MyPage",
-                component: MyPage,
-                children: [
-                    {
-                        path: "profile",
-                        name: "MyPageProfile",
-                        component: MyPageProfile,
-                    },
-                    {
-                        path: "scm",
-                        name: "MyPageSCM",
-                        component: MyPageSCM,
-                        children: [
-                            {
-                                path: "gitlab",
-                                name: "MyPageGitLab",
-                                component: MyPageGitLab,
-                            },
-                        ],
-                    },
-                ],
-            },
-        ],
-    },
+	{
+		path: "/",
+		name: "Login",
+		component: Login,
+		children: [
+			{
+				path: "afterLogin",
+				name: "AfterLogin",
+				component: AfterLogin,
+			},
+			{
+				path: "",
+				name: "BeforeLogin",
+				component: BeforeLogin,
+			},
+		],
+	},
+	{
+		path: "/",
+		name: "Index",
+		component: Index,
+		children: [
+			{
+				path: "dashboard",
+				name: "DashBoard",
+				component: DashBoard,
+			},
+			{
+				path: "project",
+				name: "Project",
+				component: MyProject,
+				children: [
+					{
+						path: "main",
+						name: "MyProjectMain",
+						component: MyProjectMain,
+						children: [
+							{
+								path: "status",
+								name: "Status",
+								component: MyProjectStatus,
+							},
+							{
+								path: "gitlab",
+								name: "GitLab",
+								component: DashBoard,
+							},
+							{
+								path: "github",
+								name: "GitHub",
+								component: DashBoard,
+							},
+							{
+								path: "edit",
+								name: "MyProjectEdit",
+								component: MyProjectEdit,
+								children: [
+									{
+										path: "",
+										redirect: "gitlab",
+									},
+									{
+										path: "gitlab",
+										name: "MyProjectEditGitLab",
+										component: MyProjectEditGitLab,
+										props: true,
+									},
+								],
+							},
+						],
+					},
+					{
+						path: "result",
+						name: "MyProjectResult",
+						component: MyProjectResult,
+						children: [
+							{
+								path: "summary",
+								name: "Summary",
+								component: DashBoard,
+							},
+							{
+								path: "component",
+								name: "Component",
+								component: DashBoard,
+							},
+							{
+								path: "license",
+								name: "License",
+								component: LicenseList,
+							},
+						],
+					},
+				],
+			},
+			{
+				path: "list",
+				name: "OSSMain",
+				component: OSSMain,
+				children: [
+					{
+						path: "",
+						name: "OSSList",
+						component: OSSList,
+						children: [
+							{
+								path: "",
+								redirect: "opensource",
+							},
+							{
+								path: "opensource",
+								name: "OSSOpenSource",
+								component: OSSOpenSource,
+							},
+							{
+								path: "license",
+								name: "OSSLicense",
+								component: OSSLicense,
+							},
+						],
+					},
+				],
+			},
+			{
+				path: "mypage",
+				name: "MyPage",
+				component: MyPage,
+				children: [
+					{
+						path: "profile",
+						name: "MyPageProfile",
+						component: MyPageProfile,
+					},
+					{
+						path: "scm",
+						name: "MyPageSCM",
+						component: MyPageSCM,
+						children: [
+							{
+								path: "gitlab",
+								name: "MyPageGitLab",
+								component: MyPageGitLab,
+							},
+						],
+					},
+				],
+			},
+		],
+	},
 ];
 
 const router = new VueRouter({
-    mode: "history",
-    base: process.env.BASE_URL,
-    // linkActiveClass: "active",
-    routes,
+	mode: "history",
+	base: process.env.BASE_URL,
+	// linkActiveClass: "active",
+	routes,
 });
 
 export default router;
