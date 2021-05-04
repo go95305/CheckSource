@@ -146,18 +146,13 @@ li.illegal::before {
 
 .component-specific {
   background: rgb(221, 221, 221);
-  border-top-left-radius: 2%;
   border:none;
-  border-bottom-left-radius: 2%;
   height: 10vh;
   width: 18vw;
   position: fixed;
   right: 0;
   top: 28%;
   bottom: 80%;
-  float: right;
-  /* border: 1px solid; */
-  /* z-index: ; */
 }
 /* .closebtn {
   float: right;
