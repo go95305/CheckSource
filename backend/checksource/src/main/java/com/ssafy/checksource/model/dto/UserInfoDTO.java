@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class UserInfoDTO {
 
-	private String gitlabId;
+	//private String gitlabId;
 	private String name;
 	private Long depart;
 	private Long job;

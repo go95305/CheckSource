@@ -33,8 +33,8 @@ public class User implements UserDetails{
 	private String token;
     @Column(columnDefinition = "boolean default false")
 	private boolean flag; //회원정보 입력 여부
-	@Column(name = "gitlab_id")
-	private String gitlabId;
+//	@Column(name = "gitlab_id")
+//	private String gitlabId;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "depart_id")
@@ -44,6 +44,8 @@ public class User implements UserDetails{
 	@JoinColumn(name = "job_id")
 	private Job job;
 
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<GitLab> gitLab = new ArrayList<>();
 	
 	@ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default

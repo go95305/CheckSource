@@ -107,7 +107,7 @@ public class UserService {
 		Job job = jobRepository.findById(userUpdateDto.getJob()).orElseThrow(() -> new IllegalArgumentException("no job data"));
 		user.setDepart(depart);
 		user.setJob(job);
-		user.setGitlabId(userUpdateDto.getGitlabId());
+		//user.setGitlabId(userUpdateDto.getGitlabId());
 		user.setName(userUpdateDto.getName());
 		userRepository.save(user);
 		
