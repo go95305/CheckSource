@@ -2,9 +2,13 @@ package com.ssafy.checksource.controller;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.checksource.model.dto.AnalyzeDataDTO;
+import com.ssafy.checksource.model.dto.PomXmlDepenDTO;
 import com.ssafy.checksource.service.AnalyzeService;
 
 import io.swagger.annotations.ApiOperation;
@@ -21,111 +25,24 @@ public class AnalyzeController {
 	@ApiOperation(value = "테스트")
 	@GetMapping("/test")
 	public void test() {
-		String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
-				"<project xmlns=\"http://maven.apache.org/POM/4.0.0\"\r\n" + 
-				"	xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n" + 
-				"	xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd\">\r\n" + 
-				"	<modelVersion>4.0.0</modelVersion>\r\n" + 
-				"	<parent>\r\n" + 
-				"		<groupId>org.springframework.boot</groupId>\r\n" + 
-				"		<artifactId>spring-boot-starter-parent</artifactId>\r\n" + 
-				"		<!-- <version>2.3.0.RELEASE</version> -->\r\n" + 
-				"		<version>2.4.1</version>\r\n" + 
-				"		<relativePath /> <!-- lookup parent from repository -->\r\n" + 
-				"	</parent>\r\n" + 
-				"	<groupId>com.web</groupId>\r\n" + 
-				"	<artifactId>backendsub</artifactId>\r\n" + 
-				"	<version>0.0.1-SNAPSHOT</version>\r\n" + 
-				"	<name>backendsub</name>\r\n" + 
-				"	<description>ssafy sub pjt1</description>\r\n" + 
-				"\r\n" + 
-				"	<properties>\r\n" + 
-				"		<java.version>1.8</java.version>\r\n" + 
-				"	</properties>\r\n" + 
-				"\r\n" + 
-				"	<dependencies>\r\n" + 
-				"		<dependency>\r\n" + 
-				"			<groupId>org.springframework.boot</groupId>\r\n" + 
-				"			<artifactId>spring-boot-starter-web</artifactId>\r\n" + 
-				"		</dependency>\r\n" + 
-				"		<dependency>\r\n" + 
-				"			<groupId>org.mybatis.spring.boot</groupId>\r\n" + 
-				"			<artifactId>mybatis-spring-boot-starter</artifactId>\r\n" + 
-				"			<version>2.1.4</version>\r\n" + 
-				"		</dependency>\r\n" + 
-				"\r\n" + 
-				"		<dependency>\r\n" + 
-				"			<groupId>org.springframework.boot</groupId>\r\n" + 
-				"			<artifactId>spring-boot-devtools</artifactId>\r\n" + 
-				"			<scope>runtime</scope>\r\n" + 
-				"			<optional>true</optional>\r\n" + 
-				"		</dependency>\r\n" + 
-				"		<dependency>\r\n" + 
-				"			<groupId>mysql</groupId>\r\n" + 
-				"			<artifactId>mysql-connector-java</artifactId>\r\n" + 
-				"			<scope>runtime</scope>\r\n" + 
-				"		</dependency>\r\n" + 
-				"		<dependency>\r\n" + 
-				"			<groupId>org.springframework.boot</groupId>\r\n" + 
-				"			<artifactId>spring-boot-starter-test</artifactId>\r\n" + 
-				"			<scope>test</scope>\r\n" + 
-				"		</dependency>\r\n" + 
-				"\r\n" + 
-				"		<!-- jwt 로그인 -->\r\n" + 
-				"		<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->\r\n" + 
-				"		<dependency>\r\n" + 
-				"			<groupId>io.jsonwebtoken</groupId>\r\n" + 
-				"			<artifactId>jjwt</artifactId>\r\n" + 
-				"			<version>0.9.1</version>\r\n" + 
-				"		</dependency>\r\n" + 
-				"		<!-- API, java.xml.bind module -->\r\n" + 
-				"		<dependency>\r\n" + 
-				"			<groupId>jakarta.xml.bind</groupId>\r\n" + 
-				"			<artifactId>jakarta.xml.bind-api</artifactId>\r\n" + 
-				"		</dependency>\r\n" + 
-				"		<!-- Runtime, com.sun.xml.bind module -->\r\n" + 
-				"		<dependency>\r\n" + 
-				"			<groupId>org.glassfish.jaxb</groupId>\r\n" + 
-				"			<artifactId>jaxb-runtime</artifactId>\r\n" + 
-				"		</dependency>\r\n" + 
-				"\r\n" + 
-				"		<!-- swagger -->\r\n" + 
-				"		<!-- springfox-swagger2 -->\r\n" + 
-				"		<dependency>\r\n" + 
-				"			<groupId>io.springfox</groupId>\r\n" + 
-				"			<artifactId>springfox-swagger-ui</artifactId>\r\n" + 
-				"			<version>2.9.2</version>\r\n" + 
-				"		</dependency>\r\n" + 
-				"		<!-- springfox-swager-ui -->\r\n" + 
-				"		<dependency>\r\n" + 
-				"			<groupId>io.springfox</groupId>\r\n" + 
-				"			<artifactId>springfox-swagger2</artifactId>\r\n" + 
-				"			<version>2.9.2</version>\r\n" + 
-				"		</dependency>\r\n" + 
-				"		\r\n" + 
-				"		<!-- json -->\r\n" + 
-				"		<dependency>\r\n" + 
-				"			<groupId>com.google.code.gson</groupId>\r\n" + 
-				"			<artifactId>gson</artifactId>\r\n" + 
-				"		</dependency>\r\n" + 
-				"	</dependencies>\r\n" + 
-				"\r\n" + 
-				"	<build>\r\n" + 
-				"		<plugins>\r\n" + 
-				"			<plugin>\r\n" + 
-				"				<groupId>org.springframework.boot</groupId>\r\n" + 
-				"				<artifactId>spring-boot-maven-plugin</artifactId>\r\n" + 
-				"			</plugin>\r\n" + 
-				"		</plugins>\r\n" + 
-				"	</build>\r\n" + 
-				"\r\n" + 
-				"</project>\r\n" + 
-				"";
+		String xml = "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHByb2plY3QgeG1sbnM9Imh0dHA6Ly9tYXZlbi5hcGFjaGUub3JnL1BPTS80LjAuMCIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIKCXhzaTpzY2hlbWFMb2NhdGlvbj0iaHR0cDovL21hdmVuLmFwYWNoZS5vcmcvUE9NLzQuMC4wIGh0dHBzOi8vbWF2ZW4uYXBhY2hlLm9yZy94c2QvbWF2ZW4tNC4wLjAueHNkIj4KCTxtb2RlbFZlcnNpb24+NC4wLjA8L21vZGVsVmVyc2lvbj4KCTxwYXJlbnQ+CgkJPGdyb3VwSWQ+b3JnLnNwcmluZ2ZyYW1ld29yay5ib290PC9ncm91cElkPgoJCTxhcnRpZmFjdElkPnNwcmluZy1ib290LXN0YXJ0ZXItcGFyZW50PC9hcnRpZmFjdElkPgoJCTx2ZXJzaW9uPjIuMi43LlJFTEVBU0U8L3ZlcnNpb24+CgkJPHJlbGF0aXZlUGF0aC8+IDwhLS0gbG9va3VwIHBhcmVudCBmcm9tIHJlcG9zaXRvcnkgLS0+Cgk8L3BhcmVudD4KCTxncm91cElkPmNvbS5zc2FmeTwvZ3JvdXBJZD4KCTxhcnRpZmFjdElkPlZ1ZUFwaTwvYXJ0aWZhY3RJZD4KCTx2ZXJzaW9uPjAuMC4xLVNOQVBTSE9UPC92ZXJzaW9uPgoJPHBhY2thZ2luZz53YXI8L3BhY2thZ2luZz4KCTxuYW1lPlZ1ZUFwaTwvbmFtZT4KCTxkZXNjcmlwdGlvbj5WdWVBcGk8L2Rlc2NyaXB0aW9uPgoKCTxwcm9wZXJ0aWVzPgoJCTxqYXZhLnZlcnNpb24+MS44PC9qYXZhLnZlcnNpb24+Cgk8L3Byb3BlcnRpZXM+CgoJPGRlcGVuZGVuY2llcz4KCQk8ZGVwZW5kZW5jeT4KCQkJPGdyb3VwSWQ+b3JnLnNwcmluZ2ZyYW1ld29yay5ib290PC9ncm91cElkPgoJCQk8YXJ0aWZhY3RJZD5zcHJpbmctYm9vdC1zdGFydGVyLXdlYjwvYXJ0aWZhY3RJZD4KCQk8L2RlcGVuZGVuY3k+CgkJPGRlcGVuZGVuY3k+CgkJCTxncm91cElkPm9yZy5zcHJpbmdmcmFtZXdvcmsuYm9vdDwvZ3JvdXBJZD4KCQkJPGFydGlmYWN0SWQ+c3ByaW5nLWJvb3Qtc3RhcnRlci13ZWItc2VydmljZXM8L2FydGlmYWN0SWQ+CgkJPC9kZXBlbmRlbmN5PgoKCQk8ZGVwZW5kZW5jeT4KCQkJPGdyb3VwSWQ+b3JnLnNwcmluZ2ZyYW1ld29yay5ib290PC9ncm91cElkPgoJCQk8YXJ0aWZhY3RJZD5zcHJpbmctYm9vdC1kZXZ0b29sczwvYXJ0aWZhY3RJZD4KCQkJPHNjb3BlPnJ1bnRpbWU8L3Njb3BlPgoJCQk8b3B0aW9uYWw+dHJ1ZTwvb3B0aW9uYWw+CgkJPC9kZXBlbmRlbmN5PgoJCTxkZXBlbmRlbmN5PgoJCQk8Z3JvdXBJZD5vcmcuc3ByaW5nZnJhbWV3b3JrLmJvb3Q8L2dyb3VwSWQ+CgkJCTxhcnRpZmFjdElkPnNwcmluZy1ib290LXN0YXJ0ZXItdGVzdDwvYXJ0aWZhY3RJZD4KCQkJPHNjb3BlPnRlc3Q8L3Njb3BlPgoJCQk8ZXhjbHVzaW9ucz4KCQkJCTxleGNsdXNpb24+CgkJCQkJPGdyb3VwSWQ+b3JnLmp1bml0LnZpbnRhZ2U8L2dyb3VwSWQ+CgkJCQkJPGFydGlmYWN0SWQ+anVuaXQtdmludGFnZS1lbmdpbmU8L2FydGlmYWN0SWQ+CgkJCQk8L2V4Y2x1c2lvbj4KCQkJPC9leGNsdXNpb25zPgoJCTwvZGVwZW5kZW5jeT4KCQkKCQk8IS0tIERCIOyEpOyglSAtLT4KCQk8ZGVwZW5kZW5jeT4KCQkJPGdyb3VwSWQ+b3JnLnNwcmluZ2ZyYW1ld29yay5ib290PC9ncm91cElkPgoJCQk8YXJ0aWZhY3RJZD5zcHJpbmctYm9vdC1zdGFydGVyLWpkYmM8L2FydGlmYWN0SWQ+CgkJPC9kZXBlbmRlbmN5PgoJCTxkZXBlbmRlbmN5PgoJCQk8Z3JvdXBJZD5teXNxbDwvZ3JvdXBJZD4KCQkJPGFydGlmYWN0SWQ+bXlzcWwtY29ubmVjdG9yLWphdmE8L2FydGlmYWN0SWQ+CgkJPC9kZXBlbmRlbmN5PgoJCTxkZXBlbmRlbmN5PgoJCQk8Z3JvdXBJZD5vcmcubXliYXRpcy5zcHJpbmcuYm9vdDwvZ3JvdXBJZD4KCQkJPGFydGlmYWN0SWQ+bXliYXRpcy1zcHJpbmctYm9vdC1zdGFydGVyPC9hcnRpZmFjdElkPgoJCQk8dmVyc2lvbj4xLjMuMDwvdmVyc2lvbj4KCQk8L2RlcGVuZGVuY3k+CgkJCgkJPCEtLSBKU09OIENvbnZlcnRlcijsu6jtirjroaTrn6zsl5DshJwg7KCE64us7ZWcIFZP642w7J207YSw66W8IEpTT07snLzroZwg67OA6rK97ZWY6riwIOychO2VtCDsgqzsmqkpIC0tPgoJCTxkZXBlbmRlbmN5PgoJCSAgIDxncm91cElkPmNvbS5mYXN0ZXJ4bWwuamFja3Nvbi5jb3JlPC9ncm91cElkPgoJCSAgIDxhcnRpZmFjdElkPmphY2tzb24tZGF0YWJpbmQ8L2FydGlmYWN0SWQ+CgkJPC9kZXBlbmRlbmN5PgoJCQoJCQoJICAgIDwhLS0gU1dhZ2dlciAyIOy2lOqwgCAtLT4KCQk8ZGVwZW5kZW5jeT4KCQkJPGdyb3VwSWQ+aW8uc3ByaW5nZm94PC9ncm91cElkPgoJCQk8YXJ0aWZhY3RJZD5zcHJpbmdmb3gtc3dhZ2dlcjI8L2FydGlmYWN0SWQ+CgkJCTx2ZXJzaW9uPjIuOS4yPC92ZXJzaW9uPgoJCTwvZGVwZW5kZW5jeT4KCgkJPGRlcGVuZGVuY3k+CgkJCTxncm91cElkPmlvLnNwcmluZ2ZveDwvZ3JvdXBJZD4KCQkJPGFydGlmYWN0SWQ+c3ByaW5nZm94LXN3YWdnZXItdWk8L2FydGlmYWN0SWQ+CgkJCTx2ZXJzaW9uPjIuOS4yPC92ZXJzaW9uPgoJCTwvZGVwZW5kZW5jeT4KCQkKCQkJCTxkZXBlbmRlbmN5PgoJCSAgICA8Z3JvdXBJZD5pby5qc29ud2VidG9rZW48L2dyb3VwSWQ+CgkJICAgIDxhcnRpZmFjdElkPmpqd3Q8L2FydGlmYWN0SWQ+CgkJICAgIDx2ZXJzaW9uPjAuOS4xPC92ZXJzaW9uPgoJCTwvZGVwZW5kZW5jeT4KCQkKCTwvZGVwZW5kZW5jaWVzPgoJPGJ1aWxkPgoJCTxwbHVnaW5zPgoJCQk8cGx1Z2luPgoJCQkJPGdyb3VwSWQ+b3JnLnNwcmluZ2ZyYW1ld29yay5ib290PC9ncm91cElkPgoJCQkJPGFydGlmYWN0SWQ+c3ByaW5nLWJvb3QtbWF2ZW4tcGx1Z2luPC9hcnRpZmFjdElkPgoJCQk8L3BsdWdpbj4KCQk8L3BsdWdpbnM+Cgk8L2J1aWxkPgoKPC9wcm9qZWN0Pgo=";
 		try {
-		analyzeService.pomxmlParsing(xml);
+		analyzeService.analyze("pom.xml", xml);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@ApiOperation(value = "content에서 오픈소스 목록 뽑기",notes = "- packageManager = 'pom.xml' \n - content = base64 encoded data")
+	@PostMapping("/getopensource")
+	public Object getopensource(@RequestBody AnalyzeDataDTO analyzeData) {
+		try {
+			return analyzeService.analyze(analyzeData.getPackageManager(), analyzeData.getContent());
+	
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

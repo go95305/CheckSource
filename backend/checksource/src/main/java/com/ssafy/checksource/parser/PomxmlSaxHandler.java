@@ -7,27 +7,30 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.ssafy.checksource.model.dto.DependencyDTO;
+import com.ssafy.checksource.model.dto.PomXmlDepenDTO;
 
 public class PomxmlSaxHandler extends DefaultHandler{
-	private List<DependencyDTO> depenList;
+	private List<PomXmlDepenDTO> depenList;
 	
-	private DependencyDTO depen;
+	private PomXmlDepenDTO depen;
 	
 	private String str;
 	
 	private boolean isDepen = false;
 	
 	public PomxmlSaxHandler() {
-		depenList = new ArrayList<DependencyDTO>();
+		depenList = new ArrayList<PomXmlDepenDTO>();
 	}
 	
 	@Override
 	public void startElement(String uri, String localName, String name, Attributes attributes) throws SAXException {
 		
 		if(name.equals("dependency")) {
-			depen = new DependencyDTO();
+			depen = new PomXmlDepenDTO();
 			isDepen = true;
+		}
+		if(name.equals("exclusions")) {
+			isDepen= false;
 		}
 		
 	}
@@ -37,6 +40,9 @@ public class PomxmlSaxHandler extends DefaultHandler{
 		if(name.equals("dependency")) {
 			depenList.add(depen);
 			isDepen = false;
+		}
+		if(name.equals("exclusions")) {
+			isDepen= true;
 		}
 		if(!isDepen)
 			return;
@@ -55,7 +61,7 @@ public class PomxmlSaxHandler extends DefaultHandler{
 		str = new String(ch,start,length);
 	}
 	
-	public List<DependencyDTO> getDepenList(){
+	public List<PomXmlDepenDTO> getDepenList(){
 		
 		return depenList;
 	}
