@@ -25,31 +25,99 @@ import MyPage from "@/views/MyPage/MyPage";
 import MyPageProfile from "@/views/MyPage/MyPageProfile";
 import MyPageSCM from "@/views/MyPage/MyPageSCM";
 import MyPageGitLab from "@/views/MyPage/MyPageGitLab";
-
+import OpensourceList from "@/components/MyProject/OpensourceList";
+import AddComponent from "@/components/MyProject/AddComponent";
 Vue.use(VueRouter);
 
 const routes = [
-    {
-        path: "/",
-        name: "Login",
-        component: Login,
+  {
+    path: "/",
+    name: "Login",
+    component: Login,
+    children: [
+      {
+        path: "afterLogin",
+        name: "AfterLogin",
+        component: AfterLogin,
+      },
+      {
+        path: "",
+        name: "BeforeLogin",
+        component: BeforeLogin,
+      },
+    ],
+  },
+  {
+    path: "/",
+    name: "Index",
+    component: Index,
+    children: [
+      {
+        path: "dashboard",
+        name: "DashBoard",
+        component: DashBoard,
+      },
+      {
+        path: "project",
+        name: "Project",
+        component: MyProject,
         children: [
-            {
-                path: "afterLogin",
-                name: "AfterLogin",
-                component: AfterLogin,
-            },
-            {
-                path: "",
-                name: "BeforeLogin",
-                component: BeforeLogin,
-            },
+          {
+            path: "main",
+            name: "MyProjectMain",
+            component: MyProjectMain,
+            children: [
+              {
+                path: "status",
+                name: "Status",
+                component: MyProjectStatus,
+              },
+              {
+                path: "gitlab",
+                name: "GitLab",
+                component: DashBoard,
+              },
+              {
+                path: "github",
+                name: "GitHub",
+                component: DashBoard,
+              },
+            ],
+          },
+          {
+            path: "result",
+            name: "MyProjectResult",
+            component: MyProjectResult,
+            children: [
+              {
+                path: "summary",
+                name: "Summary",
+                component: DashBoard,
+              },
+
+              {
+                path: "license",
+                name: "License",
+                component: LicenseList,
+              },
+              {
+                path: "component",
+                name: "Component",
+                component: OpensourceList,
+              },
+              {
+                path: "addComponent",
+                name: "AddComponent",
+                component: AddComponent,
+              },
+            ],
+          },
         ],
-    },
-    {
-        path: "/",
-        name: "Index",
-        component: Index,
+      },
+      {
+        path: "mypage",
+        name: "MyPage",
+        component: MyPage,
         children: [
             {
                 path: "dashboard",
@@ -166,7 +234,9 @@ const routes = [
                 ],
             },
         ],
-    },
+      },
+    ],
+  },
 ];
 
 const router = new VueRouter({

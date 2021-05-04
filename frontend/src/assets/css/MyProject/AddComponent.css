@@ -1,0 +1,25 @@
+.title,
+.dependency-title {
+  margin-top: 4%;
+}
+.dependency-title {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  opacity: 0.7;
+}
+input {
+  box-sizing: border-box;
+  display: inline-block;
+  margin: 0;
+  min-width: 0;
+  padding: 4px 11px;
+  transition: all 0.3s;
+}
+label {
+  max-width: 16.7%;
+  text-align: right;
+}
+.component{
+  margin-top: 20%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  opacity: 0.7;
+}

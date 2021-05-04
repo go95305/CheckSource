@@ -10,41 +10,44 @@
       <div class="login-form-left-side">
         <div class="login-top-wrap"></div>
         <div class="login-input-container">
+          <div class="title-name">
+            <h3>이름</h3>
+          </div>
           <div class="login-input-wrap input-name">
-            <i class="far fa-envelope"></i>
             <input placeholder="성명" type="text" />
           </div>
-          <div class="login-input-wrap input-department">
-            <i class="fas fa-key"></i>
-            <select
-              name="department"
-              id="mypage-select"
-              v-model="profile.department"
+          <div class="title-name">
+            <h3>부서</h3>
+          </div>
+          <div class="login-input-wrap input-department" >
+            <label class="custom-select" for="styledSelect1"
+              ><select id="styledSelect1" name="options" v-model="profile.department">
+                <option value="">금융개발부</option>
+                <option value="1">금융개발부</option>
+                <option value="2">디지털개발부</option>
+                <option value="3">글로벌개발부</option>
+                <option value="4">기관개발부</option>
+                <option value="4">정보개발부</option>
+                <option value="4">ICT운영부</option>
+                <option value="4">ICT기획부</option>
+              </select></label
             >
-              <option value="1">금융개발부</option>
-              <option value="2">디지털개발부</option>
-              <option value="3">글로벌개발부</option>
-              <option value="4">기관개발부</option>
-              <option value="5">정보개발부</option>
-              <option value="6">ICT운영부</option>
-              <option value="7">ICT기획부</option>
-            </select>
           </div>
-          <div class="login-input-wrap input-rank">
-            <i class="fas fa-key"></i>
-            <select name="rank" id="mypage-select" v-model="profile.rank">
-              <option value="1">선임</option>
-              <option value="2">수석</option>
-              <option value="3">부장</option>
-            </select>
+          <div class="title-name">
+            <h3>직급</h3>
           </div>
-          <div class="login-input-wrap input-gitlabId">
-            <i class="fas fa-key"></i>
-            <input placeholder="GitLab 아이디(선택)" type="text" />
+          <div class="login-input-wrap input-department" >
+            <label class="custom-select" for="styledSelect1"
+              ><select id="styledSelect1" name="options" v-model="profile.rank">
+                <option value="">선임</option>
+                <option value="1">사원</option>
+                <option value="2">대리</option>
+              </select></label
+            >
           </div>
         </div>
         <div class="login-btn-wrap">
-          <button class="login-btn">등록</button>
+          <button class="login-btn" @click="insert">등록</button>
         </div>
       </div>
     </div>
@@ -56,12 +59,14 @@ export default {
   data() {
     return {
       profile: {
-        name: "김신한",
-        department: "2",
-        rank: "1",
+        name: "",
+        department: "",
+        rank: "",
       },
     };
   },
+  methods: {
+  },
 };
 </script>
-<style scoped src="../../assets/css/Login/Login.css"></style>
+<style scoped src="../../assets/css/Login/AfterLogin.css"></style>
