@@ -2,67 +2,108 @@ import Vue from "vue";
 import Vuex from "vuex";
 import loginApi from "../api/login";
 import axios from "axios";
-import router from '../router/index'
+import router from "../router/index";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {
-    accessToken: null,
-    Name: "",
-    userId: "",
-  },
-  getters: {
-    getAccessToken(state) {
-      return state.accessToken;
+    state: {
+        accessToken: null,
+        userId: "",
+        name: "",
+        job: "",
+        department: "",
+        userImg: "",
+        gitlabId: "",
     },
-    getName(state) {
-      return state.Name;
+    getters: {
+        getAccessToken(state) {
+            return state.accessToken;
+        },
+        getUserId(state) {
+            return state.userId;
+        },
+        getName(state) {
+            return state.name;
+        },
+        getJob(state) {
+            return state.job;
+        },
+        getDepartment(state) {
+            return state.getDepartment;
+        },
+        getUserImg(state) {
+            return state.userImg;
+        },
+        getGitLabId(state) {
+            return state.gitlabId;
+        },
     },
-    getUserId(state) {
-      return state.userId;
+    mutations: {
+        LOGIN(state, payload) {
+            state.accessToken = payload["token"];
+            state.userId = payload["userId"];
+            state.job = payload["job"];
+            state.userImg = payload["userImg"];
+            state.gitlabId = payload["gitlabId"];
+            state.name = payload["name"];
+            state.department = payload["depart"];
+            localStorage.setItem("token", state.accessToken);
+            localStorage.setItem("userId", state.userId);
+        },
+        LOGOUT(state) {
+            state.accessToken = null;
+            state.userId = "";
+            state.job = "";
+            state.userImg = "";
+            state.gitlabId = "";
+            state.name = "";
+            state.department = "";
+            localStorage.removeItem("token");
+            localStorage.removeItem("userId");
+        },
     },
-  },
-  mutations: {
-    LOGIN(state, payload) {
-      state.accessToken = payload["token"];
-      state.departName = payload["depart"];
-      state.userName = payload["name"];
-      localStorage.setItem("key", state.accessToken);
-      localStorage.setItem("name", state.userName);
-      localStorage.setItem("department", state.departName);
+    actions: {
+        CHECKUSER(context, userId) {
+            //사용자 정보 유무 확인
+            loginApi.checkUser(userId).then((response) => {
+                console.log(response.data.flag);
+                if (!response.data.flag) {
+                    //사용자 정보가 있으면
+                    context.commit("LOGIN", response.data);
+                    axios.defaults.headers.common[
+                        "auth-token"
+                    ] = `${response.data["token"]}`;
+                    router.push("/dashboard");
+                } else {
+                    //사용자 정보가 없으면
+                    router.push("/afterLogin");
+                }
+            });
+        },
+        USERFORM(context, userform) {
+            //사용자 초기 정보 입력
+            loginApi
+                .userForm(userform)
+                .then((response) => {
+                    if (response.data.flag) {
+                        //입력 완료
+                        context.commit("LOGIN", response.data);
+                        axios.defaults.headers.common[
+                            "auth-token"
+                        ] = `${response.data["token"]}`;
+                        router.push("/dashboard");
+                    } else {
+                        alert("사용자 정보 입력에 실패했습니다.");
+                    }
+                })
+                .catch((error) => {
+                    alert("사용자 정보 입력에 실패했습니다.");
+                });
+        },
+        LOGOUT(context) {
+            //로그아웃
+            context.commit("LOGOUT");
+            axios.defaults.headers.common["auth-token"] = undefined;
+        },
     },
-    LOGOUT(state) {
-      state.accessToken = null;
-      state.departName = "";
-      state.userName = "";
-      localStorage.removeItem("key");
-      localStorage.removeItem("name");
-      localStorage.removeItem("department");
-    },
-  },
-  actions: {
-    CHECKUSER(context, userId) {
-      loginApi.checkUser(userId).then((response) => {
-        console.log(response.data.token);
-        if (response.data.token == null) {
-          alert("유저의 데이터가 존재하지 않습니다. 입력 해주세요.");
-          router.push({
-            name: "AfterLogin",
-          });
-        } else {
-          alert("존재");
-          context.commit("LOGIN", response.data);
-          axios.defaults.headers.common[
-            "auth-token"
-          ] = `${response.data["token"]}`;
-          router.push("/dashboard");
-        }
-      });
-    },
-    LOGOUT(context) {
-      context.commit("LOGOUT");
-      axios.defaults.headers.common["auth-token"] = undefined;
-    },
-  },
-  modules: {},
 });

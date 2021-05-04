@@ -26,7 +26,8 @@ import MyPage from "@/views/MyPage/MyPage";
 import MyPageProfile from "@/views/MyPage/MyPageProfile";
 import MyPageSCM from "@/views/MyPage/MyPageSCM";
 import MyPageGitLab from "@/views/MyPage/MyPageGitLab";
-
+import OpensourceList from "@/components/MyProject/OpensourceList";
+import AddComponent from "@/components/MyProject/AddComponent";
 Vue.use(VueRouter);
 
 const routes = [
