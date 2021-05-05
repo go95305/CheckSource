@@ -122,6 +122,16 @@ const routes = [
 								name: "License",
 								component: LicenseList,
 							},
+							{
+								path: "component",
+								name: "Component",
+								component: OpensourceList,
+							},
+							{
+								path: "addComponent",
+								name: "AddComponent",
+								component: AddComponent,
+							},
 						],
 					},
 				],
