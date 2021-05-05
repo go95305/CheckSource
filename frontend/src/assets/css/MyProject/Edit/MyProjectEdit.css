@@ -23,6 +23,11 @@
     flex: 0 0 100%;
 }
 
+#myproject-edit-scm-button {
+    position: relative;
+    right: 0px;
+}
+
 #myproject-edit-selected-div {
     display: flex;
     flex-direction: column;
