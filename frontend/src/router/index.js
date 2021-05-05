@@ -113,11 +113,6 @@ const routes = [
 								component: DashBoard,
 							},
 							{
-								path: "component",
-								name: "Component",
-								component: DashBoard,
-							},
-							{
 								path: "license",
 								name: "License",
 								component: LicenseList,
