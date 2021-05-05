@@ -28,14 +28,22 @@
 				</tbody>
 			</table>
 		</div>
+		<div class="oss-pagination">
+			<pagination-remote
+				:currentPage="page"
+				:lastPage="20"
+				@changePage="ChangePage"
+			></pagination-remote>
+		</div>
 	</div>
 </template>
 <script>
 import "@/assets/css/OSS/OSSTable.css";
 import SearchBar from "../../components/SearchBar/SearchBar.vue";
+import PaginationRemote from "../../components/Pagination/PaginationRemote.vue";
 export default {
 	name: "OSSOpenSource",
-	components: { SearchBar },
+	components: { SearchBar, PaginationRemote },
 	data() {
 		return {
 			filterList: ["NAME", "URL"],
@@ -46,10 +54,10 @@ export default {
 	},
 	created() {
 		if (this.$route.query.page) {
-			this.page = this.$route.query.page;
+			this.page = Number(this.$route.query.page);
 		}
 		if (this.$route.query.size) {
-			this.size = this.$route.query.size;
+			this.size = Number(this.$route.query.size);
 		}
 
 		this.GetList();
@@ -106,6 +114,12 @@ export default {
 					copyright: "Copyright 2008-2016",
 				},
 			];
+		},
+		ChangePage: function (page) {
+			this.page = page;
+			this.$router.push({
+				query: { page: page, size: this.size },
+			});
 		},
 	},
 };
