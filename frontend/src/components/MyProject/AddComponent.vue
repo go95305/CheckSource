@@ -41,7 +41,11 @@
         <input v-model="component.license" type="text" placeholder="License" />
       </div>
     </form>
-    <button @click="addComponent">추가</button>
+    <div class="box-3">
+  <div class="btn btn-three">
+    <span>추가</span>
+  </div>
+</div>
   </div>
 </template>
 <script>
