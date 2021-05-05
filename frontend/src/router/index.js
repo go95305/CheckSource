@@ -77,7 +77,7 @@ const routes = [
 							{
 								path: "gitlab",
 								name: "GitLab",
-								component: DashBoard,
+								component: MyProjectGitlab,
 							},
 							{
 								path: "github",
