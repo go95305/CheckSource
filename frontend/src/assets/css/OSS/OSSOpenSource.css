@@ -9,3 +9,7 @@
 .oss-table-tr > td:nth-child(2) {
 	flex-grow: 3;
 }
+
+.oss-pagination {
+	margin: 20px 0px;
+}
