@@ -15,6 +15,7 @@ import MyProjectStatus from "@/views/MyProject/MyProjectStatus";
 import MyProjectResult from "@/views/MyProject/MyProjectResult";
 import MyProjectEdit from "@/views/MyProject/MyProjectEdit";
 import MyProjectEditGitLab from "@/views/MyProject/MyProjectEditGitLab";
+import MyProjectGitlab from "@/views/MyProject/MyProjectGitlab";
 import LicenseList from "@/components/MyProject/LicenseList";
 
 import OSSMain from "@/views/OSS/OSSMain";
