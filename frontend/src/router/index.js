@@ -21,6 +21,7 @@ import MyPageSCM from "@/views/MyPage/MyPageSCM";
 import MyPageGitLab from "@/views/MyPage/MyPageGitLab";
 import OpensourceList from "@/components/MyProject/OpensourceList";
 import AddComponent from "@/components/MyProject/AddComponent";
+import OpensourceMain from "@/views/MyProject/OpensourceMain"
 Vue.use(VueRouter);
 
 const routes = [
@@ -97,12 +98,19 @@ const routes = [
               {
                 path: "component",
                 name: "Component",
-                component: OpensourceList,
-              },
-              {
-                path: "addComponent",
-                name: "AddComponent",
-                component: AddComponent,
+                component: OpensourceMain,
+                children: [
+                  {
+                    path: "addComponent",
+                    name: "AddComponent",
+                    component: AddComponent,
+                  },
+                  {
+                    path: "",
+                    name: "ComponentList",
+                    component: OpensourceList,
+                  },
+                ],
               },
             ],
           },

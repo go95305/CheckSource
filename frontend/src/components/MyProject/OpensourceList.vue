@@ -103,9 +103,9 @@ export default {
       this.sidebarShow = false;
       this.containerWidth = false;
     },
-    addComponent(){
-      this.$router.push('addComponent');
-    }
+    addComponent() {
+      this.$router.push({name:"AddComponent"});
+    },
   },
 };
 </script>
