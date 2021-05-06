@@ -25,8 +25,8 @@ export default {
 				path: "/project/result/summary",
 			},
 			{
-				name: "Component",
-				path: "/project/result/component",
+				name: "OpenSource",
+				path: "/project/result/opensource",
 			},
 			{
 				name: "License",
