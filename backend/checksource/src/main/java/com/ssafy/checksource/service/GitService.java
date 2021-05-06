@@ -200,7 +200,7 @@ public class GitService {
 			String projectId = gitLabProjectDTO.getId();
 			String projectName = gitLabProjectDTO.getName();
 			
-			String url = baseUrl + "projects/" + 26342734 + "/repository/tree?recursive=true&per_page=50000";
+			String url = baseUrl + "projects/" + projectId + "/repository/tree?recursive=true&per_page=50000";
 			GitLab gitLab = gitLabRepository.findByGitlabId(gitlabId);
 			
 			List<RepositoryTreeDTO> repositoryTreeList = new ArrayList<RepositoryTreeDTO>();
