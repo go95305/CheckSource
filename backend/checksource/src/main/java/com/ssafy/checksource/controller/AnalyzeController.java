@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.checksource.model.dto.AnalyzeDataDTO;
-import com.ssafy.checksource.model.dto.PomXmlDepenDTO;
+import com.ssafy.checksource.model.dto.AnalyzeDTO;
+import com.ssafy.checksource.model.dto.OpensourceDTO;
+import com.ssafy.checksource.model.dto.ParsingDTO;
 import com.ssafy.checksource.service.AnalyzeService;
 
 import io.swagger.annotations.ApiOperation;
@@ -33,11 +34,11 @@ public class AnalyzeController {
 		}
 	}
 	
-	@ApiOperation(value = "content에서 오픈소스 목록 뽑기",notes = "- packageManager = 'pom.xml' \n - content = base64 encoded data")
+	@ApiOperation(value = "content에서 오픈소스 목록 뽑기",notes = "- PackageType = 'pom.xml' \n - content = base64 encoded data")
 	@PostMapping("/getopensource")
-	public Object getopensource(@RequestBody AnalyzeDataDTO analyzeData) {
+	public Object getopensource(@RequestBody AnalyzeDTO analyzeData) {
 		try {
-			return analyzeService.analyze(analyzeData.getPackageManager(), analyzeData.getContent());
+			return analyzeService.analyze(analyzeData.getPackageType(), analyzeData.getContent());
 	
 		}catch (Exception e) {
 			e.printStackTrace();
