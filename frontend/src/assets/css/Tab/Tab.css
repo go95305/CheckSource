@@ -25,7 +25,7 @@ a:hover {
     border-color: rgb(221, 221, 221);
 }
 
-a.router-link-exact-active {
+a.router-link-active {
     background: white;
     border: 1px solid rgb(221, 221, 221);
     border-bottom-color: white;

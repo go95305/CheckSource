@@ -1,0 +1,34 @@
+#my-project-status-title {
+  margin: 15px 0px;
+}
+
+.status-header {
+  position: relative;
+  border: 2px solid #eee;
+  margin-right: 20px;
+  border-radius: 14px;
+  //   width: 100%;
+}
+
+.status-overview {
+  //   position: absolute;
+}
+
+.status-body {
+  position: relative;
+  display: flex;
+}
+
+.status-graph {
+  //   position: absolute;
+  float: left;
+  padding-top: 30px;
+  width: 650px;
+  height: 650px;
+  display: inline-block;
+}
+
+.status-table {
+  display: inline-block;
+  width: 60%;
+}
