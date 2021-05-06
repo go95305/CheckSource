@@ -5,8 +5,7 @@ import lombok.Data;
 @Data
 public class GitLabConnectDTO {
 	
-	private boolean checkId;
-	private boolean checkAccessToken;
-	private String gitId;
+	private boolean flag;
+	private String gitlabId;
 	private String username;
 }

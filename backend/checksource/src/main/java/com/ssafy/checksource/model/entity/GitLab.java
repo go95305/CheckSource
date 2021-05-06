@@ -31,8 +31,6 @@ public class GitLab {
 	@Column(name = "web_url")
 	private String webUrl;
 	
-	private String accessToken;
-	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
