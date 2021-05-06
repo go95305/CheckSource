@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Bean;
 @Configuration
 public class RestTemplateConfig {
 
+	
 	//application.yml파일에 적어놓은 세팅 사용
 	@Value("${spring.restTemplate.factory.readTimeout}")
     private int READ_TIMEOUT;

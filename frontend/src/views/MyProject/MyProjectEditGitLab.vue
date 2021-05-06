@@ -34,12 +34,12 @@ export default {
                 {
                     project_id: "111",
                     name: "project1",
-                    gittype: 1,
+                    gittype: 2,
                 },
                 {
                     project_id: "112",
                     name: "project2",
-                    gittype: 1,
+                    gittype: 2,
                 },
             ];
         },

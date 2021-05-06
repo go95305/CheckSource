@@ -8,6 +8,10 @@
 import Chart from 'chart.js/auto';
 
 export default {
+  props: {
+    labels: Array,
+    dataList: Array,
+  },
   methods: {
     createChart() {
       var ctx = document.getElementById('myChart');
@@ -15,11 +19,11 @@ export default {
       new Chart(ctx, {
         type: 'doughnut',
         data: {
-          labels: ['Apache-2.0', 'Ruby', 'MIT', 'JSON', 'JSON'],
+          labels: this.labels,
           datasets: [
             {
               label: '# of Votes',
-              data: [12, 19, 15, 21, 2],
+              data: this.dataList,
               backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
