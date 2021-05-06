@@ -31,10 +31,10 @@ public class User implements UserDetails{
 	private String userId;
 	private String name;
 	private String token;
+	@Column(name = "user_img")
+	private Integer userImg;
     @Column(columnDefinition = "boolean default false")
 	private boolean flag; //회원정보 입력 여부
-	@Column(name = "gitlab_id")
-	private String gitlabId;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "depart_id")
@@ -44,6 +44,13 @@ public class User implements UserDetails{
 	@JoinColumn(name = "job_id")
 	private Job job;
 
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<GitLab> gitLab = new ArrayList<>();
+	
+	
+	@OneToMany(mappedBy = "user")
+    private List<Project> project = new ArrayList<>();
+	
 	
 	@ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
@@ -71,7 +78,7 @@ public class User implements UserDetails{
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Override
     public String getUsername() {
-        return this.name;
+        return null;
     }
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

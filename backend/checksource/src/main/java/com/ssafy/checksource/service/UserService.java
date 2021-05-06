@@ -2,12 +2,13 @@ package com.ssafy.checksource.service;
 
 import com.ssafy.checksource.config.security.JwtTokenProvider;
 import com.ssafy.checksource.model.dto.UserDTO;
-import com.ssafy.checksource.model.dto.UserInfoDTO;
 import com.ssafy.checksource.model.dto.UserInputDTO;
 import com.ssafy.checksource.model.dto.UserUpdateDTO;
 import com.ssafy.checksource.model.entity.Depart;
+import com.ssafy.checksource.model.entity.GitLab;
 import com.ssafy.checksource.model.entity.Job;
 import com.ssafy.checksource.model.repository.DepartRepository;
+import com.ssafy.checksource.model.repository.GitLabRepository;
 import com.ssafy.checksource.model.repository.JobRepository;
 import com.ssafy.checksource.model.repository.UserRepository;
 
@@ -31,6 +32,7 @@ public class UserService {
 	private final UserRepository userRepository;
 	private final JwtTokenProvider jwtTokenProvider;
 	private final DepartRepository departRepository;
+	private final GitLabRepository gitLabRepository;
 	private final JobRepository jobRepository;
 	private final ModelMapper modelMapper = new ModelMapper();
 
@@ -51,11 +53,16 @@ public class UserService {
 
 		if (user != null) {// 최초로그인 x
 			if (user.getFlag()) {// 회원 정보 o -> 로그인 성공
-				// 토큰 새로 발급
-				String token = jwtTokenProvider.generateToken(user.getUserId());
+				String token = jwtTokenProvider.generateToken(user.getUserId()); // 토큰 새로 발급
 				user.setToken(token);
 				userRepository.save(user);
 				userDto = modelMapper.map(user, UserDTO.class);
+				//깃 아이디, 깃 유저 네임
+				GitLab gitLab = gitLabRepository.findByUser(user);
+				if(gitLab != null) {//깃 연동 했을 경우
+					userDto.setGitlabId(gitLab.getGitlabId());
+					userDto.setUsername(gitLab.getUsername());
+				}
 				return userDto;
 			}
 			//최초로그인은 아니지만 회원정보 미입력시 flag = false
@@ -70,22 +77,24 @@ public class UserService {
 		return userDto;
 	}
 
-	//회원정보 입력 -> 로그인 성공시 회원정보 반환
+	
+	//회원정보 최초 입력 -> 로그인 성공시 회원정보 반환
 	public UserDTO saveUserForm(UserInputDTO userInputDto) {
 		User user = userRepository.findById(userInputDto.getUserId()).orElseThrow(() -> new IllegalArgumentException("no user data"));
 		UserDTO userDto = new UserDTO();
 
-		String token = jwtTokenProvider.generateToken(user.getUserId());
+		String token = jwtTokenProvider.generateToken(user.getUserId()); //토큰생성
 		user = modelMapper.map(userInputDto, User.class);
 		user.setToken(token);
 		Depart depart = departRepository.findById(userInputDto.getDepart()).orElseThrow(() -> new IllegalArgumentException("no depart data"));
 		Job job = jobRepository.findById(userInputDto.getJob()).orElseThrow(() -> new IllegalArgumentException("no job data"));
 		user.setDepart(depart);
 		user.setJob(job);
+		user.setUserImg(1); //기본 이미지 1로 설정
 		user.setFlag(true); //회원정보 입력시 flag = true
 		userRepository.save(user);
-		
 		userDto = modelMapper.map(user, UserDTO.class);
+		
 		return userDto;
 	}
 	
@@ -102,26 +111,24 @@ public class UserService {
 		String userId = jwtTokenProvider.getUserId(token);
 		User user = userRepository.findByUserId(userId);
 		UserDTO userDto = new UserDTO();
-		
+
 		Depart depart = departRepository.findById(userUpdateDto.getDepart()).orElseThrow(() -> new IllegalArgumentException("no depart data"));
 		Job job = jobRepository.findById(userUpdateDto.getJob()).orElseThrow(() -> new IllegalArgumentException("no job data"));
 		user.setDepart(depart);
 		user.setJob(job);
-		user.setGitlabId(userUpdateDto.getGitlabId());
 		user.setName(userUpdateDto.getName());
+		user.setUserImg(userUpdateDto.getUserImg());
 		userRepository.save(user);
 		
 		userDto = modelMapper.map(user, UserDTO.class);
-			
+		//깃 아이디, 깃 유저 네임
+		GitLab gitLab = gitLabRepository.findByUser(user);
+		if(gitLab != null) {//깃 연동 했을 경우
+			userDto.setGitlabId(gitLab.getGitlabId());
+			userDto.setUsername(gitLab.getUsername());
+		}
+		
 		return userDto;
 	}
-	
-	//회원 정보 보여주기
-	public UserInfoDTO getUserInfo (String token) {
-		String userId = jwtTokenProvider.getUserId(token);
-		User user = userRepository.findByUserId(userId);
-		UserInfoDTO userInfoDto = new UserInfoDTO();
-		userInfoDto = modelMapper.map(user, UserInfoDTO.class);
-		return userInfoDto;
-	}
+
 }
