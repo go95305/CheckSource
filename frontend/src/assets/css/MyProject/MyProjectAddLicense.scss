@@ -75,7 +75,6 @@ h2.heading {
     width: 100%;
     margin-bottom: 18px;
     color: #888;
-    font-family: 'Lato', 'sans-serif';
     font-size: 16px;
     font-weight: 300;
     background-color: #fff;
@@ -126,12 +125,24 @@ h2.heading {
   }
   button {
     cursor: pointer;
-    background-color: $aqua;
+    background-color: $blue;
     border: none;
     color: #fff;
     padding: 12px 0;
     &:hover {
-      background-color: lighten($aqua, 5%);
+      background-color: lighten($blue, 5%);
     }
   }
+}
+
+.floatLabel:focus + .form-control-placeholder,
+.floatLabel:active + .form-control-placeholder,
+.floatLabel:valid + .form-control-placeholder {
+  font-size: 75%;
+  transform: translate3d(0, -100%, 0);
+  opacity: 1;
+  //   transition: (color 0.3s, top 0.3s, background-color 0.8s);
+  //   top: -13px;
+  color: #555;
+  background-color: rgba(255, 255, 255, 1);
 }
