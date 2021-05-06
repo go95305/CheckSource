@@ -36,7 +36,6 @@ public class GitController {
 	@ApiOperation(value = "테스트")
 	@GetMapping("/test")
 	public void test() {
-		
 		//gitService.getProjects();
 	}
 	
