@@ -29,7 +29,7 @@ export default new Vuex.Store({
 			return state.job;
 		},
 		getDepartment(state) {
-			return state.getDepartment;
+			return state.department;
 		},
 		getUserImg(state) {
 			return state.userImg;
@@ -39,9 +39,11 @@ export default new Vuex.Store({
 		},
 	},
 	mutations: {
+		SAVEUSERID(state, userId) {
+			state.userId = userId;
+		},
 		LOGIN(state, payload) {
 			state.accessToken = payload["token"];
-			state.userId = payload["userId"];
 			state.job = payload["job"];
 			state.userImg = payload["userImg"];
 			state.gitlabId = payload["gitlabId"];
@@ -66,8 +68,9 @@ export default new Vuex.Store({
 		CHECKUSER(context, userId) {
 			//사용자 정보 유무 확인
 			loginApi.checkUser(userId).then((response) => {
-				console.log(response.data.flag);
-				if (!response.data.flag) {
+				context.commit("SAVEUSERID", userId);
+				console.log(response.data);
+				if (response.data.flag) {
 					//사용자 정보가 있으면
 					context.commit("LOGIN", response.data);
 					axios.defaults.headers.common[
