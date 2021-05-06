@@ -1,0 +1,9 @@
+
+.color-gray{
+    color: rgb(185, 185, 185);
+}
+
+.my-project-move:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}

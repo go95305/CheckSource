@@ -1,0 +1,33 @@
+ul {
+    list-style: none;
+    padding: 0px;
+    margin: 0px 30px 0px 0px;
+    border-bottom: 1px solid rgb(221, 221, 221);
+}
+
+ul li {
+    display: inline-block;
+    margin-bottom: -1px;
+}
+
+a {
+    display: inline-block;
+    text-decoration: none;
+    padding: 12px 15px;
+    border: 1px solid rgb(221, 221, 221);
+    border-color: white white rgb(221, 221, 221) white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color: gray;
+}
+
+a:hover {
+    border-color: rgb(221, 221, 221);
+}
+
+a.router-link-active {
+    background: white;
+    border: 1px solid rgb(221, 221, 221);
+    border-bottom-color: white;
+    color: black;
+}

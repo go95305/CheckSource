@@ -1,0 +1,45 @@
+.pagination {
+	display: flex;
+	justify-content: center;
+	margin: 0 auto;
+}
+
+.arrow-icon {
+	cursor: pointer;
+	color: #153081;
+	vertical-align: middle;
+}
+
+.arrow-icon:hover {
+	color: gray;
+}
+
+.pagination-list {
+	display: inline-block;
+	width: 24px;
+	height: 24px;
+	text-align: center;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+.pagination-input {
+	display: none;
+}
+
+.pagination-label {
+	display: inline-block;
+	cursor: pointer;
+	width: 100%;
+	height: 100%;
+	border-radius: 5px;
+}
+
+.pagination-label:hover {
+	background-color: #00a2e25e;
+	color: white;
+}
+
+.pagination-input:checked + .pagination-label {
+	color: #00a3e2;
+}

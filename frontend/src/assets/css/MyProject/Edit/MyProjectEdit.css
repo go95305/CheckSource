@@ -1,0 +1,79 @@
+#myproject-edit-title {
+    margin: 15px 0px;
+}
+
+#myproject-edit-tab {
+    padding-top: 10px;
+}
+
+#myproject-edit-container {
+    display: flex;
+    flex-flow: row-reverse wrap;
+    justify-content: flex-start;
+}
+
+#myproject-edit-tab-div {
+    display: flex;
+    flex: 1 1 300px;
+    flex-wrap: wrap;
+    align-self: flex-start;
+}
+
+#myproject-edit-tab {
+    flex: 0 0 100%;
+}
+
+#myproject-edit-scm-button {
+    position: relative;
+    right: 0px;
+}
+
+#myproject-edit-selected-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: sticky;
+    max-height: 600px;
+    padding: 30px;
+    top: 50px;
+    bottom: 0px;
+    flex: 0 0 300px;
+    border-left: 1px solid rgb(221, 221, 221);
+}
+
+#myproject-edit-selected-title {
+    align-self: flex-start;
+}
+
+#myproject-edit-selected-button {
+    width: 200px;
+    margin-top: 30px;
+    padding: 10px;
+    font-size: large;
+    font-weight: 700;
+    border: 1px solid #eee;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0px 4px 5px #ddd;
+}
+
+#myproject-edit-selected-button:hover {
+    box-shadow: 0px 4px 5px #ccc;
+}
+
+/* @media (max-width: 700px) {
+    #myproject-edit-container {
+        display: block;
+    }
+
+    #myproject-edit-tab-div {
+        display: block;
+    }
+
+    #myproject-edit-selected-div {
+        display: block;
+        white-space: nowrap;
+        max-height: 600px;
+        padding: 30px;
+    }
+} */

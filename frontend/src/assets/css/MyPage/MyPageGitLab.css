@@ -1,0 +1,106 @@
+#mypage-gitlab-container {
+    max-width: 500px;
+    padding: 30px 60px 30px 30px;
+}
+
+#mypage-gitlab-current {
+    background-color: #eee;
+    text-align: center;
+    padding: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    border-radius: 5px;
+}
+
+#mypage-gitlab-current-title {
+    font-weight: 500;
+    font-size: larger;
+    display: inline;
+}
+
+#mypage-gitlab-current-account {
+    font-weight: 300;
+    font-size: larger;
+    display: inline;
+}
+
+#mypage-gitlab-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.mypage-gitlab-button {
+    cursor: pointer;
+    margin: 0px 5px;
+    padding: 10px;
+    font-weight: 500;
+    border-radius: 5px;
+    border: 1px solid #eee;
+    background-color: white;
+    font-size: medium;
+    box-shadow: 0px 4px 5px #ddd;
+}
+
+.mypage-gitlab-button div {
+    display: flex;
+}
+
+.mypage-gitlab-button.new-button {
+    color: #153081;
+}
+
+.mypage-gitlab-button.close-button {
+    color: rgb(207, 27, 27);
+}
+
+.mypage-gitlab-button:hover {
+    box-shadow: 0px 4px 5px #ccc;
+}
+
+.mypage-gitlab-button:active,
+.mypage-gitlab-button:focus {
+    outline: none;
+}
+
+.mypage-gitlab-button i {
+    margin-right: 5px;
+}
+
+.mypage-gitlab-button span {
+    align-self: center;
+}
+
+#mypage-gitlab-new-account {
+    margin-top: 15px;
+    text-align: center;
+    height: 0px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: height 1s;
+}
+
+#mypage-gitlab-new-account.open {
+    height: 100px;
+}
+
+#mypage-gitlab-account-label {
+    text-align: left;
+}
+
+#mypage-gitlab-account-input {
+    align-self: center;
+    width: 100%;
+    padding: 14px 10px;
+    font-size: medium;
+    background-color: rgb(246, 246, 246);
+    border: 1px solid #eee;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+#mypage-gitlab-account-input:active,
+#mypage-gitlab-account-input:focus {
+    outline: none;
+}
