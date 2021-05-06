@@ -9,7 +9,8 @@
 		<div>
 			<table class="oss-table">
 				<thead class="oss-table-thead">
-					<th>NAME</th>
+					<th>FULL NAME</th>
+					<th>IDENTIFIER</th>
 					<th>URL</th>
 					<th>RISK</th>
 					<th>NOTICE</th>
@@ -21,7 +22,9 @@
 						:key="`${index}_openSourceList`"
 					>
 						<td>{{ license.name }}</td>
+						<td>identifier</td>
 						<td>{{ license.url }}</td>
+
 						<td>{{ license.license }}</td>
 						<td>{{ license.copyright }}</td>
 					</tr>
@@ -46,7 +49,7 @@ export default {
 	components: { SearchBar, PaginationRemote },
 	data() {
 		return {
-			filterList: ["NAME", "URL"],
+			filterList: ["NAME", "IDENTIFIER"],
 			licenseList: [],
 			page: 1,
 			size: 20,
