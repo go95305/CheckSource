@@ -13,7 +13,7 @@
             <label
                 id="mypage-gitlab-account-label"
                 for="mypage-gitlab-account-input"
-                >새 계정</label
+                >새 계정(UserName)</label
             >
             <input
                 id="mypage-gitlab-account-input"
@@ -56,7 +56,7 @@ export default {
     data() {
         return {
             isCurrentAccount: true,
-            currentAccount: "checksource@gitlab.com",
+            currentAccount: "checksource",
             openNewAccount: false,
             newAccount: "",
         };

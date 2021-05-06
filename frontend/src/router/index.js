@@ -13,7 +13,15 @@ import MyProject from "@/views/MyProject/MyProject";
 import MyProjectMain from "@/views/MyProject/MyProjectMain";
 import MyProjectStatus from "@/views/MyProject/MyProjectStatus";
 import MyProjectResult from "@/views/MyProject/MyProjectResult";
+import MyProjectEdit from "@/views/MyProject/MyProjectEdit";
+import MyProjectEditGitLab from "@/views/MyProject/MyProjectEditGitLab";
+import MyProjectGitlab from "@/views/MyProject/MyProjectGitlab";
 import LicenseList from "@/components/MyProject/LicenseList";
+
+import OSSMain from "@/views/OSS/OSSMain";
+import OSSList from "@/views/OSS/OSSList";
+import OSSOpenSource from "@/views/OSS/OSSOpenSource";
+import OSSLicense from "@/views/OSS/OSSLicense";
 
 import MyPage from "@/views/MyPage/MyPage";
 import MyPageProfile from "@/views/MyPage/MyPageProfile";
@@ -25,6 +33,7 @@ import OpensourceMain from "@/views/MyProject/OpensourceMain"
 Vue.use(VueRouter);
 
 const routes = [
+<<<<<<< HEAD
   {
     path: "/",
     name: "Login",
@@ -142,13 +151,169 @@ const routes = [
       },
     ],
   },
+=======
+	{
+		path: "/",
+		name: "Login",
+		component: Login,
+		children: [
+			{
+				path: "afterLogin",
+				name: "AfterLogin",
+				component: AfterLogin,
+			},
+			{
+				path: "",
+				name: "BeforeLogin",
+				component: BeforeLogin,
+			},
+		],
+	},
+	{
+		path: "/",
+		name: "Index",
+		component: Index,
+		children: [
+			{
+				path: "dashboard",
+				name: "DashBoard",
+				component: DashBoard,
+			},
+			{
+				path: "project",
+				name: "Project",
+				component: MyProject,
+				children: [
+					{
+						path: "main",
+						name: "MyProjectMain",
+						component: MyProjectMain,
+						children: [
+							{
+								path: "status",
+								name: "Status",
+								component: MyProjectStatus,
+							},
+							{
+								path: "gitlab",
+								name: "GitLab",
+								component: MyProjectGitlab,
+							},
+							{
+								path: "github",
+								name: "GitHub",
+								component: DashBoard,
+							},
+							{
+								path: "edit",
+								name: "MyProjectEdit",
+								component: MyProjectEdit,
+								children: [
+									{
+										path: "",
+										redirect: "gitlab",
+									},
+									{
+										path: "gitlab",
+										name: "MyProjectEditGitLab",
+										component: MyProjectEditGitLab,
+										props: true,
+									},
+								],
+							},
+						],
+					},
+					{
+						path: "result",
+						name: "MyProjectResult",
+						component: MyProjectResult,
+						children: [
+							{
+								path: "summary",
+								name: "Summary",
+								component: DashBoard,
+							},
+							{
+								path: "license",
+								name: "License",
+								component: LicenseList,
+							},
+							{
+								path: "component",
+								name: "Component",
+								component: OpensourceList,
+							},
+							{
+								path: "addComponent",
+								name: "AddComponent",
+								component: AddComponent,
+							},
+						],
+					},
+				],
+			},
+			{
+				path: "list",
+				name: "OSSMain",
+				component: OSSMain,
+				children: [
+					{
+						path: "",
+						name: "OSSList",
+						component: OSSList,
+						children: [
+							{
+								path: "",
+								redirect: "opensource",
+							},
+							{
+								path: "opensource",
+								name: "OSSOpenSource",
+								component: OSSOpenSource,
+							},
+							{
+								path: "license",
+								name: "OSSLicense",
+								component: OSSLicense,
+							},
+						],
+					},
+				],
+			},
+			{
+				path: "mypage",
+				name: "MyPage",
+				component: MyPage,
+				children: [
+					{
+						path: "profile",
+						name: "MyPageProfile",
+						component: MyPageProfile,
+					},
+					{
+						path: "scm",
+						name: "MyPageSCM",
+						component: MyPageSCM,
+						children: [
+							{
+								path: "gitlab",
+								name: "MyPageGitLab",
+								component: MyPageGitLab,
+							},
+						],
+					},
+				],
+			},
+		],
+	},
+>>>>>>> frontend
 ];
 
 const router = new VueRouter({
-  mode: "history",
-  base: process.env.BASE_URL,
-  linkActiveClass: "active",
-  routes,
+	mode: "history",
+	base: process.env.BASE_URL,
+	// linkActiveClass: "active",
+	routes,
 });
 
 export default router;
