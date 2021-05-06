@@ -45,6 +45,6 @@ public class License {
 	private boolean is_status;
 	
 	@OneToMany(mappedBy = "license")
-    private List<LicenseinOpensource> opensources = new ArrayList<>();
+    private List<LicenseToOpensource> opensources = new ArrayList<>();
 
 }

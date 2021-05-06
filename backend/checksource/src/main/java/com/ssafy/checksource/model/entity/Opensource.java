@@ -35,7 +35,7 @@ public class Opensource {
 	private String artifactId;
 	
 	@OneToMany(mappedBy = "opensource")
-    private List<LicenseinOpensource> licenses = new ArrayList<>();
+    private List<LicenseToOpensource> licenses = new ArrayList<>();
 	
 }
 //
