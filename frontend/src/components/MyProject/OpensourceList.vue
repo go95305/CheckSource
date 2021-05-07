@@ -3,7 +3,7 @@
     <div class="mapped-component">
       <p>mapped component</p>
     </div>
-    <div class="mapped-table-header" >
+    <div class="mapped-table-header">
       <div class="title title-1">오픈소스명</div>
       <div class="title title-2">주소</div>
       <div class="title title-3">라이선스</div>
@@ -19,13 +19,12 @@
         <div class="col col-3">{{ item.obligation }}</div>
       </li>
 
-        <div class="component-specific">
-            <p class="version">License Version: {{ item.version }}</p>
-            <p class="package-type">Packge Type: {{ item.packageType }}</p>
-            <p class="artifact-id">Artifact Id: {{ item.artifactId }}</p>
-            <p class="group-id">Group Id: {{ item.groupId }}</p>
-        </div>
-
+      <div class="component-specific">
+        <p class="version">License Version: {{ item.version }}</p>
+        <p class="package-type">Packge Type: {{ item.packageType }}</p>
+        <p class="artifact-id">Artifact Id: {{ item.artifactId }}</p>
+        <p class="group-id">Group Id: {{ item.groupId }}</p>
+      </div>
     </ul>
     <div class="unmapped-component">
       <p>unmapped component</p>
@@ -104,20 +103,27 @@ export default {
   },
   methods: {
     sidebar(event) {
-      if(event.target.classList.contains("choice")){
-        event.target.classList.remove("choice");
-      }else{
-        let dropbtns = this.$el.getElementsByClassName("choice");
-        for(let i =0;i<dropbtns.length;i++){
-          dropbtns[i].classList.remove("choice");
+      let elem=event.target;
+      while(!elem.classList.contains('table-row')){
+        elem=elem.parentNode;
+
+        if(elem.nodeName=='BODY'){
+          elem=null;
+          return;
         }
-        event.target.classList.add("choice");
       }
-      // this.sidebarShow[index] = !this.sidebarShow[index];
-      // this.version = item.version;
-      // this.packageType = item.packageType;
-      // this.artifactId = item.artifactId;
-      // this.groupId = item.groupId;
+      console.log(elem.classList.contains('choice'));
+      // console.log(event.target);
+      if (elem.classList.contains("choice")) {
+        elem.classList.remove("choice");
+      } else {
+        
+        // let dropbtns = this.$el.getElementsByClassName("choice");
+        // for (let i = 0; i < dropbtns.length; i++) {
+        //   dropbtns[i].classList.remove("choice");
+        // }
+        elem.classList.add("choice");
+      }
     },
     closeSideBar() {
       this.sidebarShow = false;
