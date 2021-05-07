@@ -41,7 +41,8 @@
     <div class="unmapped-component">
       <p>unmapped component</p>
     </div>
-    <button class="add-component" @click="addComponent">Component 추가</button>
+    <button class="add-component"  @click="addComponent">추가</button>
+    <!-- <button class="add-component" @click="addComponent">Component 추가</button> -->
     <div class="unmapped-table-header">
       <div class="title utitle-1">Dependency</div>
       <div class="title utitle-2">위치</div>
