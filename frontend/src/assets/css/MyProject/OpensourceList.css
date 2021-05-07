@@ -63,13 +63,13 @@
   /* flex-basis: 13%; */
   width: 16%;
 }
-.ucol-1{
-  width:30%
+.ucol-1 {
+  width: 30%;
 }
-.ucol-2{
-  width:35%;
+.ucol-2 {
+  width: 35%;
 }
-.utitle-2{
+.utitle-2 {
   width: 34%;
 }
 
@@ -145,20 +145,32 @@ li.illegal::before {
 }
 
 .component-specific {
-  background: rgb(221, 221, 221);
-  border:none;
-  height: 10vh;
-  width: 18vw;
-  position: fixed;
-  right: 0;
-  top: 28%;
-  bottom: 80%;
+  max-height: 0px;
+  overflow: hidden;
+  transition: max-height 0.7s;
+  margin-left: 49px;
+  
 }
-/* .closebtn {
-  float: right;
-} */
-.sideBar {
-  width: 70%;
+
+.table-row.choice + .component-specific {
+  max-height: 250px;
+  
+}
+.table-row.choice .component-specific p{
+  transform-origin: bottom;
+  animation: enter 0.2s ease forwards;
+}
+.table-row.choice + .component-specific:nth-child(1) {
+  animation-duration: 0.2s;
+  animation-delay: 0s;
+}
+.table-row.choice + .component-specific:nth-child(2) {
+  animation-duration: 0.3s;
+  animation-delay: 0.1s;
+}
+.table-row.choice + .component-specific:nth-child(3) {
+  animation-duration: 0.4s;
+  animation-delay: 0.2s;
 }
 .add-component {
   border: none;
@@ -170,8 +182,4 @@ li.illegal::before {
 }
 .add-component:hover {
   border-radius: 15px 0;
-}
-.version{
-  font-size: small;
-  
 }
