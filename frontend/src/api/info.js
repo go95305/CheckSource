@@ -11,24 +11,61 @@ let departmentList = [
 let jobList = ["선임", "수석", "부장"];
 
 let profileImageList = [
-	"@/assets/images/sol.png",
-	"@/assets/images/moli.png",
-	"@/assets/images/rino.png",
-	"@/assets/images/shoo.png",
-	"@/assets/images/doremi.png",
-	"@/assets/images/lululala.png",
+	{
+		url: require("@/assets/images/sol.png"),
+		alt: "sol",
+	},
+	{
+		url: require("@/assets/images/moli.png"),
+		alt: "moli",
+	},
+	{
+		url: require("@/assets/images/rino.png"),
+		alt: "rino",
+	},
+	{
+		url: require("@/assets/images/shoo.png"),
+		alt: "shoo",
+	},
+	{
+		url: require("@/assets/images/doremi.png"),
+		alt: "doremi",
+	},
+	{
+		url: require("@/assets/images/lululala.png"),
+		alt: "lululala",
+	},
 ];
+
+function GetDepartmentList() {
+	return departmentList;
+}
 
 function GetDepartmentName(index) {
 	return departmentList[index];
+}
+
+function GetJobList() {
+	return jobList;
 }
 
 function GetJobName(index) {
 	return jobList[index];
 }
 
+function GetProfileImageList() {
+	return profileImageList;
+}
+
 function GetProfileImage(index) {
 	return profileImageList[index];
 }
 
-export default { GetDepartmentName, GetJobName, GetProfileImage };
+export default {
+	GetDepartmentList,
+	GetDepartmentName,
+	GetJobList,
+	GetJobName,
+	GetProfileImageList,
+	GetProfileImage,
+};

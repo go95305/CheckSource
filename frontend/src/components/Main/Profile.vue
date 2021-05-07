@@ -1,10 +1,6 @@
 <template>
 	<div>
-		<img
-			id="profile-image"
-			:src="require(`@/assets/images/shoo.png`)"
-			alt="ProfileImage"
-		/>
+		<img id="profile-image" :src="image.url" :alt="image.src" />
 		<div id="profile-info">
 			<p id="profile-info__name">{{ name }}</p>
 			<span id="profile-info__department">{{ department }}</span>
@@ -29,14 +25,25 @@ export default {
 	computed: {
 		...mapGetters(["getName", "getJob", "getDepartment", "getUserImg"]),
 	},
+	watch: {
+		getName: function () {
+			this.name = this.getName;
+		},
+		getJob: function () {
+			this.job = Info.GetJobName(this.getJob - 1);
+		},
+		getDepartment: function () {
+			this.department = Info.GetDepartmentName(this.getDepartment - 1);
+		},
+		getUserImg: function () {
+			this.image = Info.GetProfileImage(this.getUserImg - 1);
+		},
+	},
 	created() {
-		// const img = new URL("@/assets/images/shoo.png");
-		// console.log(typeof Info.GetProfileImage(this.getUserImg));
-		// console.log(typeof "@/assets/images/shoo.png");
-		// this.image = require(Info.GetProfileImage(this.getUserImg));
+		this.image = Info.GetProfileImage(this.getUserImg - 1);
 		this.name = this.getName;
-		this.department = Info.GetDepartmentName(this.getDepartment);
-		this.job = Info.GetJobName(this.getJob);
+		this.department = Info.GetDepartmentName(this.getDepartment - 1);
+		this.job = Info.GetJobName(this.getJob - 1);
 	},
 };
 </script>

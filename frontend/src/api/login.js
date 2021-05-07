@@ -19,4 +19,8 @@ function userForm(userInfo) {
 	return http.post(`user/userForm`, userInfo);
 }
 
-export default { login, checkUser, userForm };
+function userUpdate(userInfo) {
+	return http.put(`user/update`, userInfo);
+}
+
+export default { login, checkUser, userForm, userUpdate };
