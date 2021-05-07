@@ -73,9 +73,7 @@ export default new Vuex.Store({
 				if (response.data.flag) {
 					//사용자 정보가 있으면
 					context.commit("LOGIN", response.data);
-					axios.defaults.headers.common[
-						"auth-token"
-					] = `${response.data["token"]}`;
+					axios.defaults.headers.common["TOKEN"] = `${response.data["token"]}`;
 					router.push("/dashboard");
 				} else {
 					//사용자 정보가 없으면
@@ -92,7 +90,7 @@ export default new Vuex.Store({
 						//입력 완료
 						context.commit("LOGIN", response.data);
 						axios.defaults.headers.common[
-							"auth-token"
+							"TOKEN"
 						] = `${response.data["token"]}`;
 						router.push("/dashboard");
 					} else {
@@ -104,10 +102,30 @@ export default new Vuex.Store({
 					alert("사용자 정보 입력에 실패했습니다.");
 				});
 		},
+		UPDATEUSER(context, userform) {
+			loginApi
+				.userUpdate(userform)
+				.then((response) => {
+					console.log(response);
+					if (response.data.flag) {
+						//입력 완료
+						context.commit("LOGIN", response.data);
+						axios.defaults.headers.common[
+							"TOKEN"
+						] = `${response.data["token"]}`;
+						alert("변경 성공");
+					} else {
+						alert("사용자 정보 변경에 실패했습니다.");
+					}
+				})
+				.catch((error) => {
+					console.log(error.response);
+				});
+		},
 		LOGOUT(context) {
 			//로그아웃
 			context.commit("LOGOUT");
-			axios.defaults.headers.common["auth-token"] = undefined;
+			axios.defaults.headers.common["TOKEN"] = undefined;
 		},
 	},
 });
