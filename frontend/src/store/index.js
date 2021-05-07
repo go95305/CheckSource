@@ -1,11 +1,13 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import createPersistedState from "vuex-persistedstate";
 import loginApi from "../api/login";
-import axios from "axios";
 import router from "../router/index";
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+	plugins: [createPersistedState()],
 	state: {
 		accessToken: null,
 		userId: "",
@@ -29,7 +31,7 @@ export default new Vuex.Store({
 			return state.job;
 		},
 		getDepartment(state) {
-			return state.getDepartment;
+			return state.department;
 		},
 		getUserImg(state) {
 			return state.userImg;
@@ -39,16 +41,16 @@ export default new Vuex.Store({
 		},
 	},
 	mutations: {
+		SAVEUSERID(state, userId) {
+			state.userId = userId;
+		},
 		LOGIN(state, payload) {
 			state.accessToken = payload["token"];
-			state.userId = payload["userId"];
 			state.job = payload["job"];
 			state.userImg = payload["userImg"];
 			state.gitlabId = payload["gitlabId"];
 			state.name = payload["name"];
 			state.department = payload["depart"];
-			localStorage.setItem("token", state.accessToken);
-			localStorage.setItem("userId", state.userId);
 		},
 		LOGOUT(state) {
 			state.accessToken = null;
@@ -58,21 +60,18 @@ export default new Vuex.Store({
 			state.gitlabId = "";
 			state.name = "";
 			state.department = "";
-			localStorage.removeItem("token");
-			localStorage.removeItem("userId");
+			localStorage.clear();
 		},
 	},
 	actions: {
 		CHECKUSER(context, userId) {
 			//사용자 정보 유무 확인
 			loginApi.checkUser(userId).then((response) => {
-				console.log(response.data.flag);
-				if (!response.data.flag) {
+				context.commit("SAVEUSERID", userId);
+				console.log(response.data);
+				if (response.data.flag) {
 					//사용자 정보가 있으면
 					context.commit("LOGIN", response.data);
-					axios.defaults.headers.common[
-						"auth-token"
-					] = `${response.data["token"]}`;
 					router.push("/dashboard");
 				} else {
 					//사용자 정보가 없으면
@@ -88,9 +87,6 @@ export default new Vuex.Store({
 					if (response.data.flag) {
 						//입력 완료
 						context.commit("LOGIN", response.data);
-						axios.defaults.headers.common[
-							"auth-token"
-						] = `${response.data["token"]}`;
 						router.push("/dashboard");
 					} else {
 						alert("사용자 정보 입력에 실패했습니다.");
@@ -101,10 +97,26 @@ export default new Vuex.Store({
 					alert("사용자 정보 입력에 실패했습니다.");
 				});
 		},
+		UPDATEUSER(context, userform) {
+			loginApi
+				.userUpdate(userform)
+				.then((response) => {
+					console.log(response);
+					if (response.data.flag) {
+						//입력 완료
+						context.commit("LOGIN", response.data);
+						alert("변경 성공");
+					} else {
+						alert("사용자 정보 변경에 실패했습니다.");
+					}
+				})
+				.catch((error) => {
+					console.log(error.response);
+				});
+		},
 		LOGOUT(context) {
 			//로그아웃
 			context.commit("LOGOUT");
-			axios.defaults.headers.common["auth-token"] = undefined;
 		},
 	},
 });

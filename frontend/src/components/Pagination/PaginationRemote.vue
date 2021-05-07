@@ -6,7 +6,7 @@
 		</span>
 
 		<!-- 첫 페이지 -->
-		<span class="pagination-list" v-show="displayFirstNum">
+		<span class="pagination-list" v-if="displayFirstNum">
 			<input
 				class="pagination-input"
 				type="radio"
@@ -18,7 +18,7 @@
 			/>
 			<label :for="`pagination-first`" class="pagination-label"> 1 </label>
 		</span>
-		<span class="pagination-list" v-show="displayFirstNum">...</span>
+		<span class="pagination-list" v-if="displayFirstNum">...</span>
 
 		<!-- 페이지 리스트 -->
 		<span
@@ -41,8 +41,8 @@
 		</span>
 
 		<!-- 마지막 페이지 -->
-		<span class="pagination-list" v-show="displayLastNum">...</span>
-		<span class="pagination-list" v-show="displayLastNum">
+		<span class="pagination-list" v-if="displayLastNum">...</span>
+		<span class="pagination-list" v-if="displayLastNum">
 			<input
 				class="pagination-input"
 				type="radio"

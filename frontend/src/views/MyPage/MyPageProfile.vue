@@ -7,8 +7,8 @@
 				<section class="mypage-section-image">
 					<img
 						id="mypage-profile-image"
-						:src="imageList[profile.image - 1].url"
-						:alt="imageList[profile.image - 1].alt"
+						:src="imageList[profile.userImg - 1].url"
+						:alt="imageList[profile.userImg - 1].alt"
 					/>
 				</section>
 				<section class="mypage-section-info">
@@ -21,7 +21,7 @@
 							:id="`profile-image-${index + 1}`"
 							type="radio"
 							:value="index + 1"
-							v-model="profile.image"
+							v-model="profile.userImg"
 						/>
 						<label :for="`profile-image-${index + 1}`">
 							<div>
@@ -43,25 +43,35 @@
 									<select
 										name="department"
 										id="mypage-select"
-										v-model="profile.department"
+										v-model="profile.depart"
+										required
 									>
-										<option value="1">금융개발부</option>
-										<option value="2">디지털개발부</option>
-										<option value="3">글로벌개발부</option>
-										<option value="4">기관개발부</option>
-										<option value="5">정보개발부</option>
-										<option value="6">ICT운영부</option>
-										<option value="7">ICT기획부</option>
+										<option
+											v-for="(value, index) in departmentList"
+											:key="`${index}_departmentList`"
+											:value="index + 1"
+										>
+											{{ value }}
+										</option>
 									</select>
 								</td>
 							</tr>
 							<tr>
 								<td class="table-left">직급</td>
 								<td class="table-right">
-									<select name="rank" id="mypage-select" v-model="profile.rank">
-										<option value="1">선임</option>
-										<option value="2">수석</option>
-										<option value="3">부장</option>
+									<select
+										name="job"
+										id="mypage-select"
+										v-model="profile.job"
+										required
+									>
+										<option
+											v-for="(value, index) in jobList"
+											:key="`${index}_jobList`"
+											:value="index + 1"
+										>
+											{{ value }}
+										</option>
 									</select>
 								</td>
 							</tr>
@@ -74,50 +84,41 @@
 	</div>
 </template>
 <script>
+import Info from "@/api/info.js";
+import { mapGetters } from "vuex";
 import MyProjectPath from "../../components/MyProject/MyProjectPath.vue";
 export default {
 	name: "MyPageProfile",
 	components: { MyProjectPath },
 	data() {
 		return {
-			imageList: [
-				{
-					url: require("../../assets/images/sol.png"),
-					alt: "sol",
-				},
-				{
-					url: require("../../assets/images/moli.png"),
-					alt: "moli",
-				},
-				{
-					url: require("../../assets/images/rino.png"),
-					alt: "rino",
-				},
-				{
-					url: require("../../assets/images/shoo.png"),
-					alt: "shoo",
-				},
-				{
-					url: require("../../assets/images/doremi.png"),
-					alt: "doremi",
-				},
-				{
-					url: require("../../assets/images/lululala.png"),
-					alt: "lululala",
-				},
-			],
+			imageList: [],
+			departmentList: [],
+			jobList: [],
 			profile: {
-				image: "1",
+				userImg: 1,
 				name: "김신한",
-				department: "2",
-				rank: "1",
+				depart: 1,
+				job: 1,
 			},
 		};
 	},
 	methods: {
 		ChangeProfile: function () {
-			alert("프로필 수정");
+			this.$store.dispatch("UPDATEUSER", this.profile);
 		},
+	},
+	computed: {
+		...mapGetters(["getName", "getJob", "getDepartment", "getUserImg"]),
+	},
+	created() {
+		this.imageList = Info.GetProfileImageList();
+		this.departmentList = Info.GetDepartmentList();
+		this.jobList = Info.GetJobList();
+		this.profile.userImg = this.getUserImg;
+		this.profile.name = this.getName;
+		this.profile.depart = this.getDepartment;
+		this.profile.job = this.getJob;
 	},
 };
 </script>

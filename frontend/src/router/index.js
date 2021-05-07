@@ -29,6 +29,7 @@ import MyPageSCM from "@/views/MyPage/MyPageSCM";
 import MyPageGitLab from "@/views/MyPage/MyPageGitLab";
 import OpensourceList from "@/components/MyProject/OpensourceList";
 import AddComponent from "@/components/MyProject/AddComponent";
+import OpensourceMain from "@/views/MyProject/OpensourceMain";
 Vue.use(VueRouter);
 
 const routes = [
@@ -119,14 +120,21 @@ const routes = [
 								component: LicenseList,
 							},
 							{
-								path: "component",
-								name: "Component",
-								component: OpensourceList,
-							},
-							{
-								path: "addComponent",
-								name: "AddComponent",
-								component: AddComponent,
+								path: "opensource",
+								name: "ResultOpenSource",
+								component: OpensourceMain,
+								children: [
+									{
+										path: "add-opensource",
+										name: "AddOpenSource",
+										component: AddComponent,
+									},
+									{
+										path: "",
+										name: "OpenSourceList",
+										component: OpensourceList,
+									},
+								],
 							},
 						],
 					},
@@ -194,5 +202,14 @@ const router = new VueRouter({
 	// linkActiveClass: "active",
 	routes,
 });
+
+// router.beforeEach((to, from, next) => {
+// 	if (to.path != "/") {
+// 		if (!localStorage.getItem("token")) {
+// 			next("/");
+// 		}
+// 	}
+// 	next();
+// });
 
 export default router;
