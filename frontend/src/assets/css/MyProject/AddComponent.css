@@ -1,6 +1,6 @@
 .title,
 .dependency-title {
-  margin-top: 1%;
+  margin-top: 16px;
 }
 .dependency-title {
   width: 9%;
@@ -43,7 +43,7 @@ input {
   margin-left: 30%;
 }
 .component-title {
-  margin-top: 10%;
+  margin-top: 3%;
   width: 9%;
   border-bottom: 1px solid rgba(0, 0, 0, 0.5);
   opacity: 0.7;
@@ -51,15 +51,6 @@ input {
 }
 
 
-
-div[class*=box] {
-	height: 33.33%;
-	width: 188px; 
-  display: inline-block;
-  justify-content: center;
-  align-items: center;
-  margin-left: 40%;
-}
 
 /* .box-3 { background-color: #898a8b; } */
 
@@ -79,51 +70,20 @@ div[class*=box] {
 */
 .btn-three {
 	transition: all 0.5s;
-	position: absolute;
+	/* position: absolute; */
   font: inherit;
   line-height: 3.2;
   cursor: pointer;
   color: white;
-  font-weight: bold;
-  width: 7%;
-  /* bottom:0.5%; */
-  margin-left: auto;
+  width: 80px;
+  margin: 0px auto;
   font-weight: bold;
   padding-left: 2em;
   padding-right: 2em;
   background: #58adf3;
 }
-.btn-three::before {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	z-index: 1;
-	background-color: rgba(255,255,255,0.1);
-	transition: all 0.3s;
-}
-.btn-three:hover::before {
-	opacity: 0 ;
-	transform: scale(0.5,0.5);
-}
-.btn-three::after {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 0%;
-	z-index: 1;
-	opacity: 0;
-	transition: all 0.3s;
-	transform: scale(1.2,1.2);
-}
-.btn-three:hover::after {
-	opacity: 1;
-	transform: scale(1,1);
-}
+
+
 span{
   margin-right: 5%;
 }
@@ -160,11 +120,10 @@ form .button,.form .text-input,.form .label {
 .form .text-input {
   font: inherit;
   line-height: normal;
-  width: 90%;
+  width: 100%;
   box-sizing: border-box;
-  background: #000000;
-  color: white;
-  position: relative;
+  background: #eeeeee;
+  color: rgb(37, 37, 37);
 }
 .form .text-input:placeholder{
   color: white;
@@ -182,17 +141,16 @@ form .button,.form .text-input,.form .label {
   background-repeat: repeat;
 }
 .form:not(.has-magic-focus) .customSelect.customSelectFocus, .form:not(.has-magic-focus) .customSelect:active, .form:not(.has-magic-focus) .select:active, .form:not(.has-magic-focus) .textarea:active, .form:not(.has-magic-focus) .text-input:active, .form:not(.has-magic-focus) .option-input + label:active, .form:not(.has-magic-focus) .checkbox-input + label:active, .form:not(.has-magic-focus) .customSelect:focus, .form:not(.has-magic-focus) .select:focus, .form:not(.has-magic-focus) .textarea:focus, .form:not(.has-magic-focus) .text-input:focus, .form:not(.has-magic-focus) .option-input + label:focus, .form:not(.has-magic-focus) .checkbox-input + label:focus {
-  background: #4E4E4E;
+  background: #b8b8b8;
 }
 
 .form {
-  max-width: 40em;
+  max-width: 32em;
   margin: 0 auto;
   position: relative;
   display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  align-items: flex-end;
+  flex-flow: column wrap;
+  margin-top: 26px;
 }
 .form .field {
   width: 100%;

@@ -3,65 +3,83 @@
     <div class="title">
       <h2>새로운 Component 추가</h2>
     </div>
-    <div class="dependency-title">
-      <h3>Dependency</h3>
-    </div>
     <form action="" class="form">
       <p class="field required">
-        <label class="label required" for="name">path</label>
+        <label class="label required" for="name">오픈소스 이름</label>
         <input
           class="text-input"
           id="name"
           name="name"
           required
           type="text"
-          placeholder="입력"
+          placeholder="오픈소스 이름"
         />
       </p>
-      <p class="field required half">
-        <label class="label" for="email">version</label>
+      <p class="field required">
+        <label class="label" for="email">URL</label>
         <input
           class="text-input"
           id="email"
           name="email"
           required
           type="email"
+          placeholder="URL"
         />
       </p>
-      <p class="field half">
-        <label class="label" for="phone">ComplianceUrl</label>
-        <input class="text-input" id="phone" name="phone" type="phone" />
-      </p>
-    </form>
-
-    <div class="component-title">
-      <h3>Component 생성</h3>
-    </div>
-    <form action="" class="form">
       <p class="field required">
-        <label class="label required" for="name">path</label>
+        <label class="label required" for="name">Copyright</label>
         <input
           class="text-input"
           id="name"
           name="name"
           required
           type="text"
-          value="path 입력"
+          placeholder="Copyright"
         />
       </p>
-      <p class="field required half">
-        <label class="label" for="email">version</label>
+      <p class="field required">
+        <label class="label required" for="name">Version</label>
         <input
           class="text-input"
-          id="email"
-          name="email"
+          id="name"
+          name="name"
           required
-          type="email"
+          type="text"
+          placeholder="Version"
         />
       </p>
-      <p class="field half">
-        <label class="label" for="phone">ComplianceUrl</label>
-        <input class="text-input" id="phone" name="phone" type="phone" />
+      <p class="field required">
+        <label class="label required" for="name">Package Type</label>
+        <input
+          class="text-input"
+          id="name"
+          name="name"
+          required
+          type="text"
+          placeholder="package type"
+        />
+      </p>
+      <p class="field required">
+        <label class="label required" for="name">Artifact Id</label>
+        <input
+          class="text-input"
+          id="name"
+          name="name"
+          required
+          type="text"
+          placeholder="Artifact Id"
+        />
+      </p>
+      <p class="field required">
+        <label class="label required" for="name">Group Id</label>
+        <input
+          class="text-input"
+          id="name"
+          name="name"
+          required
+          type="text"
+          placeholder="Group Id"
+        />
       </p>
     </form>
 

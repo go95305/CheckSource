@@ -128,6 +128,7 @@ li::after {
 .unmapped-component {
   border-bottom: 1px solid;
   width: 12%;
+  display: inline-block;
 }
 
 .add-component {
@@ -150,35 +151,35 @@ li::after {
 }
 
 .add-component{
-  border-radius: 6%;
+  /* border-radius: 3%; */
   padding: 16px 42px;
   line-height: 0.1;
+  left:80%;
   background: #ffffff;
-  text-decoration: none;
   color: rgb(0, 0, 0);
-  font-size: 15px solid;
-  width: 8%;
-  /* letter-spacing: 0.08em; */
-  text-transform: uppercase;
+  font-weight: bold;
+  /* text-transform: uppercase; */
   position: relative;
   transition: background-color 0.6s ease;
   overflow: hidden;
 }
 .add-component:after {
   content: "";
-  position: absolute;
+  /* position: absolute; */
   width: 0;
+  
   height: 0;
   top: 50%;
   left: 50%;
   transform-style: flat;
   transform: translate3d(-50%, -50%, 0);
-  background: rgba(0, 15, 155, 0.87);
+  background: rgba(194, 194, 194, 0.87);
   border-radius: 100%;
   transition: width 0.3s ease, height 0.3s ease;
 }
 .add-component:focus, .add-component:hover {
-  background: #4f4ea8;
+  background: #949497;
+  color:white;
 }
 .add-component:active:after {
   width: 200px;
