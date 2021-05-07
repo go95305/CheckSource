@@ -9,5 +9,5 @@ import com.ssafy.checksource.model.entity.Project;
 public interface ProjectRepository extends JpaRepository<Project, String>{
 	
 	Project findByProjectId (String projectId);
-
+	
 }
