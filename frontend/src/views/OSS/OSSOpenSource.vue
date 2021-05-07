@@ -46,10 +46,10 @@ export default {
 	components: { SearchBar, PaginationRemote },
 	data() {
 		return {
-			filterList: ["NAME", "URL"],
+			filterList: ["NAME", "LICENSE"],
 			openSourceList: [],
 			page: 1,
-			size: 20,
+			size: 10,
 		};
 	},
 	created() {

@@ -38,6 +38,7 @@ public class Project {
 	
 	@CreationTimestamp
 	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm", timezone="Asia/Seoul")
+	@Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
 	private LocalDateTime date;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -47,6 +48,6 @@ public class Project {
     
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
-	private User user; //양방향 매핑 안 시켜놓음
+	private User user; 
 	
 }

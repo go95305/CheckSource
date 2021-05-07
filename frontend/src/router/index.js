@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import store from "../store";
 // login
 import Login from "@/views/Login/Login";
 import AfterLogin from "@/components/Login/AfterLogin";
@@ -29,6 +30,7 @@ import MyPageSCM from "@/views/MyPage/MyPageSCM";
 import MyPageGitLab from "@/views/MyPage/MyPageGitLab";
 import OpensourceList from "@/components/MyProject/OpensourceList";
 import AddComponent from "@/components/MyProject/AddComponent";
+import OpensourceMain from "@/views/MyProject/OpensourceMain";
 Vue.use(VueRouter);
 
 const routes = [
@@ -119,14 +121,21 @@ const routes = [
 								component: LicenseList,
 							},
 							{
-								path: "component",
-								name: "Component",
-								component: OpensourceList,
-							},
-							{
-								path: "addComponent",
-								name: "AddComponent",
-								component: AddComponent,
+								path: "opensource",
+								name: "ResultOpenSource",
+								component: OpensourceMain,
+								children: [
+									{
+										path: "add-opensource",
+										name: "AddOpenSource",
+										component: AddComponent,
+									},
+									{
+										path: "",
+										name: "OpenSourceList",
+										component: OpensourceList,
+									},
+								],
 							},
 						],
 					},
@@ -191,8 +200,16 @@ const routes = [
 const router = new VueRouter({
 	mode: "history",
 	base: process.env.BASE_URL,
-	// linkActiveClass: "active",
 	routes,
+});
+
+router.beforeEach((to, from, next) => {
+	if (to.path != "/") {
+		if (!store.getters.getAccessToken) {
+			next("/");
+		}
+	}
+	next();
 });
 
 export default router;
