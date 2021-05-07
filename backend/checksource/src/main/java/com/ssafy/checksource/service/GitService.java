@@ -227,6 +227,18 @@ public class GitService {
 		}
 	}
 
+	// 프로젝트 삭제하기
+	public boolean deleteProject(String token, String projectId) {
+		String userId = jwtTokenProvider.getUserId(token);
+		User user = userRepository.findByUserId(userId);
+		Project project = projectRepository.findByProjectId(projectId);
+		if(user.getDepart().getDepartId() == project.getDepart().getDepartId()) {
+			projectRepository.delete(project);
+			return true;
+		}
+		return false;
+	}
+	
 	// 프로젝트 추가하기 - 검증
 	public void addProject(String token, List<GitLabProjectDTO> projectList, String gitlabId) {
 
@@ -234,7 +246,7 @@ public class GitService {
 		User user = userRepository.findByUserId(userId);
 		Depart depart = user.getDepart();
 
-		// 검증전 추가 - status 검증전
+		// 검증전 프로젝트 추가 - status 검증전 세팅 flase
 		for (GitLabProjectDTO gitLabProjectDTO : projectList) {
 			String projectId = gitLabProjectDTO.getId();
 			Project project = new Project();
