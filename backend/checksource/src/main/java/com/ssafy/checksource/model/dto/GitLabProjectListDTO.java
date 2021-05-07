@@ -8,6 +8,5 @@ import lombok.Data;
 public class GitLabProjectListDTO {
 
 	private boolean accessflag;
-	private List<GitLabProjectDTO> verifiedList;
-	private List<GitLabProjectDTO> unverifiedList;
+	private List<GitLabProjectDTO> projectList;
 }
