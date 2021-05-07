@@ -20,10 +20,22 @@
       </li>
 
       <div class="component-specific">
-        <p class="version">License Version: {{ item.version }}</p>
-        <p class="package-type">Packge Type: {{ item.packageType }}</p>
-        <p class="artifact-id">Artifact Id: {{ item.artifactId }}</p>
-        <p class="group-id">Group Id: {{ item.groupId }}</p>
+        <div class="specific-row">
+          <p class="specific-title">License Version:</p>
+          <p>{{ item.version }}</p>
+        </div>
+        <div class="specific-row">
+          <p class="specific-title">Packge Type:</p>
+          <p>{{ item.packageType }}</p>
+        </div>
+        <div class="specific-row">
+          <p class="specific-title">Artifact Id:</p>
+          <p>{{ item.artifactId }}</p>
+        </div>
+        <div class="specific-row">
+          <p class="specific-title">Group Id:</p>
+          <p>{{ item.groupId }}</p>
+        </div>
       </div>
     </ul>
     <div class="unmapped-component">
@@ -103,21 +115,19 @@ export default {
   },
   methods: {
     sidebar(event) {
-      let elem=event.target;
-      while(!elem.classList.contains('table-row')){
-        elem=elem.parentNode;
+      let elem = event.target;
+      while (!elem.classList.contains("table-row")) {
+        elem = elem.parentNode;
 
-        if(elem.nodeName=='BODY'){
-          elem=null;
+        if (elem.nodeName == "BODY") {
+          elem = null;
           return;
         }
       }
-      console.log(elem.classList.contains('choice'));
 
       if (elem.classList.contains("choice")) {
         elem.classList.remove("choice");
       } else {
-  
         elem.classList.add("choice");
       }
     },
