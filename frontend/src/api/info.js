@@ -1,3 +1,10 @@
+/*
+  공통된 정보를 모아두기 위한 JS 파일
+  
+  @version 21-05-07
+  @author 남우진
+*/
+
 let departmentList = [
 	"금융개발부",
 	"디지털개발부",

@@ -79,7 +79,14 @@
 					</table>
 				</section>
 			</div>
-			<button id="submit-button" @click="ChangeProfile">확인</button>
+			<div class="profile-button-div">
+				<button class="profile-button submit-button" @click="ChangeProfile">
+					확인
+				</button>
+				<button class="profile-button logout-button" @click="Logout">
+					로그아웃
+				</button>
+			</div>
 		</div>
 	</div>
 </template>
@@ -105,7 +112,13 @@ export default {
 	},
 	methods: {
 		ChangeProfile: function () {
+			console.log(this.profile);
 			this.$store.dispatch("UPDATEUSER", this.profile);
+		},
+		Logout: function () {
+			if (confirm("정말 로그아웃 하시겠습니까?")) {
+				this.$store.dispatch("LOGOUT");
+			}
 		},
 	},
 	computed: {

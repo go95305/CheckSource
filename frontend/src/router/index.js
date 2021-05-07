@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import store from "../store";
 // login
 import Login from "@/views/Login/Login";
 import AfterLogin from "@/components/Login/AfterLogin";
@@ -199,17 +200,16 @@ const routes = [
 const router = new VueRouter({
 	mode: "history",
 	base: process.env.BASE_URL,
-	// linkActiveClass: "active",
 	routes,
 });
 
-// router.beforeEach((to, from, next) => {
-// 	if (to.path != "/") {
-// 		if (!localStorage.getItem("token")) {
-// 			next("/");
-// 		}
-// 	}
-// 	next();
-// });
+router.beforeEach((to, from, next) => {
+	if (to.path != "/") {
+		if (!store.getters.getAccessToken) {
+			next("/");
+		}
+	}
+	next();
+});
 
 export default router;

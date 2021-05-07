@@ -2,12 +2,12 @@ import http from "./http";
 
 //로그인
 function login(loginInfo) {
-	return http.post(`user/loginApi`, loginInfo);
+	return http.post(`/user/loginApi`, loginInfo);
 }
 
 //회원정보 조회
 function checkUser(userId) {
-	return http.get(`user/checkUser`, {
+	return http.get(`/user/checkUser`, {
 		params: {
 			userId: userId,
 		},
@@ -16,11 +16,16 @@ function checkUser(userId) {
 
 //회원정보 입력
 function userForm(userInfo) {
-	return http.post(`user/userForm`, userInfo);
+	return http.post(`/user/userForm`, userInfo);
 }
 
+//회원정보 수정
 function userUpdate(userInfo) {
-	return http.put(`user/update`, userInfo);
+	return http.put(`/user/update`, userInfo);
 }
 
-export default { login, checkUser, userForm, userUpdate };
+function userLogout() {
+	return http.get(`/user/logout`);
+}
+
+export default { login, checkUser, userForm, userUpdate, userLogout };

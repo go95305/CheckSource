@@ -16,6 +16,7 @@ export default new Vuex.Store({
 		department: "",
 		userImg: "",
 		gitlabId: "",
+		username: "",
 	},
 	getters: {
 		getAccessToken(state) {
@@ -39,10 +40,21 @@ export default new Vuex.Store({
 		getGitLabId(state) {
 			return state.gitlabId;
 		},
+		getUserName(state) {
+			return state.username;
+		},
 	},
 	mutations: {
 		SAVEUSERID(state, userId) {
 			state.userId = userId;
+		},
+		CONNECTGITLAB(state, payload) {
+			state.gitlabId = payload["gitlabId"];
+			state.username = payload["username"];
+		},
+		DISCONNECTGITLAB(state) {
+			state.gitlabId = null;
+			state.username = null;
 		},
 		LOGIN(state, payload) {
 			state.accessToken = payload["token"];
@@ -51,16 +63,17 @@ export default new Vuex.Store({
 			state.gitlabId = payload["gitlabId"];
 			state.name = payload["name"];
 			state.department = payload["depart"];
+			state.username = payload["username"];
 		},
 		LOGOUT(state) {
 			state.accessToken = null;
 			state.userId = "";
 			state.job = "";
 			state.userImg = "";
-			state.gitlabId = "";
+			state.gitlabId = null;
 			state.name = "";
 			state.department = "";
-			localStorage.clear();
+			state.username = null;
 		},
 	},
 	actions: {
@@ -101,7 +114,6 @@ export default new Vuex.Store({
 			loginApi
 				.userUpdate(userform)
 				.then((response) => {
-					console.log(response);
 					if (response.data.flag) {
 						//입력 완료
 						context.commit("LOGIN", response.data);
@@ -111,12 +123,20 @@ export default new Vuex.Store({
 					}
 				})
 				.catch((error) => {
-					console.log(error.response);
+					console.log(error);
 				});
 		},
 		LOGOUT(context) {
 			//로그아웃
-			context.commit("LOGOUT");
+			loginApi
+				.userLogout()
+				.then(() => {
+					context.commit("LOGOUT");
+					router.push("/");
+				})
+				.catch((error) => {
+					console.log(error.response);
+				});
 		},
 	},
 });
