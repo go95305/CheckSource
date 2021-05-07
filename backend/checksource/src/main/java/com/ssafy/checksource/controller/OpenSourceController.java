@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.checksource.model.dto.OpensourceDTO;
 import com.ssafy.checksource.service.OpensourceService;
 
 import io.swagger.annotations.ApiOperation;
@@ -28,5 +29,8 @@ public class OpenSourceController {
 		return opensourceService.getAllOpensource();
 	}
 	
-	
+	@GetMapping("/getDetail/{opensourceId}")
+	public OpensourceDTO getDetail(long opensourceId) {
+		return opensourceService.getDetailOpensource(opensourceId);
+	}
 }

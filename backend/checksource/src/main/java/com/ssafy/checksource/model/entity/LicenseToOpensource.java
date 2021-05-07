@@ -10,6 +10,7 @@ import javax.persistence.Table;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "licensetoopensource")
@@ -29,4 +30,10 @@ public class LicenseToOpensource {
 	@JoinColumn(name = "license_id")
 	private License license;
 
+	@Override
+	public String toString() {
+		return "";
+	}
+	
+	
 }
