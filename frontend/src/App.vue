@@ -6,6 +6,12 @@
 <script>
 export default {
 	name: "App",
+	created() {
+		const userToken = JSON.parse(localStorage.getItem("vuex")).accessToken;
+		if (userToken != null) {
+			this.$router.push("/dashboard");
+		}
+	},
 };
 </script>
 <style>
