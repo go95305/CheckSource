@@ -1,6 +1,7 @@
 package com.ssafy.checksource.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import javax.websocket.server.PathParam;
@@ -60,7 +61,7 @@ public class GitController {
 	}
 	
 	
-	@ApiOperation(value = "프로젝트 목록 가져오기", notes = "- 기존 깃랩 계정의 gitlabId, 해당유저의 jwtToken을 담아 보낸다. \n - accessflag가 false일 경우 깃토큰이 유효하지 않는 경우이므로, 깃토큰을 새로 발급해야한다는 메세지를 보내야한다. ")
+	@ApiOperation(value = "프로젝트 목록 가져오기", notes = "- 기존 깃랩 계정의 gitlabId, 해당유저의 jwtToken을 담아 보낸다. \n - accessflag가 false일 경우 깃토큰이 유효하지 않는 경우이므로, 깃토큰을 새로 발급해야한다는 메세지를 보내야한다. \n - 프로젝트 리스트가 아예 없을때는 null이 아니라, [] <- 이런형태로 옴")
 	@GetMapping("/projects")
 	public GitLabProjectListDTO getProjects(@RequestHeader("TOKEN") String token, @RequestParam String gitlabId) {
 		return gitService.getProjects(token, gitlabId);
@@ -68,8 +69,14 @@ public class GitController {
 	
 	@ApiOperation(value = "프로젝트 추가하기-검증 ")
 	@PostMapping("/projects")
-	public void addProjects(@RequestHeader("TOKEN") String token, @RequestBody List<GitLabProjectDTO> projectList,@RequestParam String gitlabId) {
-		gitService.addProject(token, projectList, gitlabId);
+	public boolean addProjects(@RequestHeader("TOKEN") String token, @RequestBody List<GitLabProjectDTO> projectList,@RequestParam String gitlabId) throws URISyntaxException, UnsupportedEncodingException {
+		return gitService.addProject(token, projectList, gitlabId);
+	}
+	
+	@ApiOperation(value = "프로젝트 삭제하기", notes = "- 삭제할 projectId와 유저의 jwttoken을 헤더에 담아 보낸다. \n - 프로젝트의 부서와 지우려는 유저의 부서가 일치해야 지워진다. \n - 성공적으로 지워지면 true, 실패시 false 반환 ")
+	@DeleteMapping("/projects")
+	public boolean deleteProject(@RequestHeader("TOKEN") String token, @RequestParam String projectId) {
+		return gitService.deleteProject(token, projectId);
 	}
 	
 
