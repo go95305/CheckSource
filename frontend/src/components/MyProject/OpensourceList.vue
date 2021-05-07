@@ -113,15 +113,11 @@ export default {
         }
       }
       console.log(elem.classList.contains('choice'));
-      // console.log(event.target);
+
       if (elem.classList.contains("choice")) {
         elem.classList.remove("choice");
       } else {
-        
-        // let dropbtns = this.$el.getElementsByClassName("choice");
-        // for (let i = 0; i < dropbtns.length; i++) {
-        //   dropbtns[i].classList.remove("choice");
-        // }
+  
         elem.classList.add("choice");
       }
     },
