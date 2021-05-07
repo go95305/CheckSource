@@ -115,7 +115,7 @@ export default {
 		this.imageList = Info.GetProfileImageList();
 		this.departmentList = Info.GetDepartmentList();
 		this.jobList = Info.GetJobList();
-		this.profile.image = this.getUserImg;
+		this.profile.userImg = this.getUserImg;
 		this.profile.name = this.getName;
 		this.profile.depart = this.getDepartment;
 		this.profile.job = this.getJob;
