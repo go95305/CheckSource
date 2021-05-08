@@ -18,7 +18,7 @@
 					<div class="dropdown-content">
 						<router-link to="/project/main/status">Status</router-link>
 						<router-link to="/project/main/gitlab">GitLab</router-link>
-						<router-link to="/project/main/github">GitHub</router-link>
+						<!-- <router-link to="/project/main/github">GitHub</router-link> -->
 					</div>
 				</div>
 			</li>
