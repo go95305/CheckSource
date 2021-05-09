@@ -4,6 +4,7 @@
             <search-bar
                 :placeHolderText="'검색할 오픈소스를 입력하세요.'"
                 :filterList="filterList"
+                @doSearch="DoSearch"
             ></search-bar>
         </div>
         <div>
@@ -23,7 +24,15 @@
                     >
                         <td>{{ opensource.name }}</td>
                         <td>{{ opensource.url }}</td>
-                        <td>{{ opensource.license }}</td>
+                        <td>
+                            <span
+                                v-for="(
+                                    licenseName, index
+                                ) in opensource.licenseNameList"
+                                :key="`${index}_licenseNameList`"
+                                >{{ licenseName }}</span
+                            >
+                        </td>
                         <td>{{ opensource.copyright }}</td>
                     </tr>
                 </tbody>
@@ -32,7 +41,7 @@
         <div class="oss-pagination">
             <pagination-remote
                 :currentPage="page"
-                :lastPage="20"
+                :lastPage="totalPage"
                 @changePage="ChangePage"
             ></pagination-remote>
         </div>
@@ -40,6 +49,7 @@
 </template>
 <script>
 import "@/assets/css/OSS/OSSTable.css";
+import opensourceApi from "@/api/opensource.js";
 import SearchBar from "../../components/SearchBar/SearchBar.vue";
 import PaginationRemote from "../../components/Pagination/PaginationRemote.vue";
 export default {
@@ -47,10 +57,13 @@ export default {
     components: { SearchBar, PaginationRemote },
     data() {
         return {
-            filterList: ["NAME", "LICENSE"],
+            filterList: ["Name", "License"],
             openSourceList: [],
             page: 1,
             size: 10,
+            totalPage: 10,
+            typeFilter: 1,
+            keyword: "",
         };
     },
     created() {
@@ -65,64 +78,24 @@ export default {
     },
     methods: {
         GetList: function () {
-            this.openSourceList = [
-                {
-                    id: "1111",
-                    name: "GLEW",
-                    url: "https://github.com/nigels-com/glew",
-                    license: "GLEW Modified BSD3 License",
-                    copyright: "Copyright 2008-2016",
-                },
-                {
-                    id: "1112",
-                    name: "httpx",
-                    url: "https://github.com/encode/httpx",
-                    license: "GLEW Modified BSD3 License",
-                    copyright: "Copyright 2008-2016",
-                },
-                {
-                    id: "1113",
-                    name: "GLEW",
-                    url: "https://github.com/nigels-com/glew",
-                    license: "GLEW Modified BSD3 License",
-                    copyright: "Copyright 2008-2016",
-                },
-                {
-                    id: "1114",
-                    name: "httpx",
-                    url: "https://github.com/encode/httpx",
-                    license: "GLEW Modified BSD3 License",
-                    copyright: "Copyright 2008-2016",
-                },
-                {
-                    id: "1115",
-                    name: "GLEW",
-                    url: "https://github.com/nigels-com/glew",
-                    license: "GLEW Modified BSD3 License",
-                    copyright: "Copyright 2008-2016",
-                },
-                {
-                    id: "1116",
-                    name: "httpx",
-                    url: "https://github.com/encode/httpx",
-                    license: "GLEW Modified BSD3 License",
-                    copyright: "Copyright 2008-2016",
-                },
-                {
-                    id: "1117",
-                    name: "GLEW",
-                    url: "https://github.com/nigels-com/glew",
-                    license: "GLEW Modified BSD3 License",
-                    copyright: "Copyright 2008-2016",
-                },
-                {
-                    id: "1118",
-                    name: "httpx",
-                    url: "https://github.com/encode/httpx",
-                    license: "GLEW Modified BSD3 License",
-                    copyright: "Copyright 2008-2016",
-                },
-            ];
+            opensourceApi
+                .readOpenSourceList(
+                    this.keyword,
+                    this.page,
+                    this.size,
+                    this.filterList[this.typeFilter - 1]
+                )
+                .then((response) => {
+                    this.openSourceList = response.data.list;
+                    console.log(this.openSourceList);
+                    this.totalPage = response.data.totalPage;
+                })
+                .catch();
+        },
+        DoSearch: function (filter, keyword) {
+            this.typeFilter = filter;
+            this.keyword = keyword;
+            this.GetList();
         },
         ChangePage: function (page) {
             this.page = page;
@@ -133,7 +106,7 @@ export default {
         GoDetail: function (opensource) {
             this.$router.push({
                 name: "OSSDetailOpenSource",
-                query: { id: opensource.id },
+                query: { id: opensource.opensourceId },
             });
         },
     },

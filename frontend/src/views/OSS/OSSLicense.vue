@@ -4,6 +4,7 @@
             <search-bar
                 :placeHolderText="'검색할 라이선스를 입력하세요.'"
                 :filterList="filterList"
+                @doSearch="DoSearch"
             ></search-bar>
         </div>
         <div>
@@ -50,10 +51,13 @@ export default {
     components: { SearchBar, PaginationRemote },
     data() {
         return {
-            filterList: ["NAME", "IDENTIFIER"],
+            filterList: ["Name", "IDENTIFIER"],
             licenseList: [],
             page: 1,
             size: 20,
+            totalPage: 10,
+            typeFilter: 1,
+            keyword: "",
         };
     },
     created() {
@@ -82,6 +86,11 @@ export default {
                     copyright: "Copyright 2008-2016",
                 },
             ];
+        },
+        DoSearch: function (filter, keyword) {
+            this.typeFilter = filter;
+            this.keyword = keyword;
+            this.GetList();
         },
         ChangePage: function (page) {
             this.page = page;
