@@ -37,7 +37,7 @@ def buildImage() {
         sh "docker build --tag frontend:frontend ./frontend/."
         sh "docker build --tag backend:backend ./backend/checksource/."
 
-	sh "docker image prune"
+	sh "docker image prune && y"
     }
 }
 
