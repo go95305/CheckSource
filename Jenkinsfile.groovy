@@ -22,6 +22,7 @@ def clone(String branch) {
 
 def build() {
     stage('Build') {
+	sh 'rm -rf ./frontend/dist'
         sh 'cd frontend && yarn install'
         sh 'cd frontend && yarn build'
         sh 'rm -rf ./backend/checksource/src/test'
@@ -47,7 +48,6 @@ def deploy() {
         sh "docker rm frontend"
 
 	sh "docker image prune"
-	sh "y"
 
         sh "docker run -itd --name backend -p 8080:8080 -u root backend:backend"
         sh "docker run -itd --name frontend -p 80:80 -u root frontend:frontend"
