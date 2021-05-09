@@ -1,0 +1,72 @@
+.sum-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+}
+.summary-card {
+  background-color: #fff;
+  max-width: 800px;
+  box-shadow: 2px 2px 5px #9e9e9e, -1px -1px 5px #9e9e9e;
+  border-radius: 3px;
+  display: grid;
+  //   grid-template-column: repeat(5, 1fr);
+}
+.summary-card .img-container {
+  width: 200px;
+  height: 100%;
+  grid-column: 2;
+  background-color: linear-gradient(180deg, #21c8f6, #637bff);
+  background-size: cover;
+  background-position: center center;
+  text-align: center;
+}
+
+.verifycard-aside-detail {
+  justify-content: space-between;
+}
+
+.verifycard-skill {
+  text-decoration: none;
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.2);
+  font-size: 0.8em;
+  border-radius: 100px;
+  padding: 4px 10px;
+}
+
+.verifycard-difficulty {
+  color: inherit;
+  font-size: 2.5em;
+}
+
+.card-content {
+  grid-column: 3 / 5;
+  padding: 10px 30px;
+  border-left: 1px solid #ccc;
+}
+h2 {
+  text-transform: uppercase;
+  color: #555;
+}
+.card-content .author {
+  border-top: 1px solid #cdcdcd;
+  font-weight: 700;
+  margin-top: 25px;
+  padding: 25px 0 10px 0;
+  color: #555;
+}
+
+@media only screen and (max-width: 600px) {
+  .summary-card {
+    display: block;
+  }
+  .summary-card .img-container {
+    height: 250px;
+    width: 100%;
+  }
+  .card-content {
+    border: 0;
+    border-top: 1px solid #ccc;
+  }
+}
