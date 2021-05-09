@@ -7,7 +7,6 @@ node {
         clone(branchName)
         build()
         buildImage()
-        pushImage()
         deploy()
     } catch (env) {
         throw env
@@ -39,22 +38,6 @@ def buildImage() {
 
         sh "docker build --tag frontend:frontend ./frontend/."
         sh "docker build --tag backend:backend ./backend/checksource/."
-    }
-}
-
-def pushImage() {
-    stage('pushImage') {
-
-        sh 'rm  ~/.dockercfg || true'
-        sh 'rm ~/.docker/config.json || true'
-
-        docker.withRegistry('https://378668795069.dkr.ecr.ap-northeast-2.amazonaws.com', 'ecr:ap-northeast-2:again09-ecr-connector') {
-            sh "docker tag frontend:frontend 378668795069.dkr.ecr.ap-northeast-2.amazonaws.com/checksource:frontend"
-            sh "docker push 378668795069.dkr.ecr.ap-northeast-2.amazonaws.com/checksource:frontend"
-            sh "docker tag backend:backend 378668795069.dkr.ecr.ap-northeast-2.amazonaws.com/checksource:backend"
-            sh "docker push 378668795069.dkr.ecr.ap-northeast-2.amazonaws.com/checksource:backend"
-
-        }
     }
 }
 
