@@ -55,10 +55,9 @@ public class GitService {
 	private final UserRepository userRepository;
 	private final ProjectRepository projectRepository;
 	private final DepartRepository departRepository;
-	private final OpensourceRepository opensourceRepository;
 	private final String baseUrl = "https://gitlab.com/api/v4/"; // 기본 public url
-	
 	private final AnalyzeService analyzeService;
+	
 	// gitlab 계정 연동 체크
 	public GitLabConnectDTO gitConnect(String username, String token, String accessToken) {
 		String url = baseUrl + "users?username=";
@@ -367,13 +366,5 @@ public class GitService {
 		return true;
 	}
 
-	
-	
-	//test
-	public void del (Long opensourceId) {
-		opensourceRepository.deleteById(opensourceId);
-	}
-	
-	
 	//재검증
 }

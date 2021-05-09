@@ -38,7 +38,7 @@ public class GitController {
 	@ApiOperation(value = "테스트")
 	@GetMapping("/test/{id}")
 	public void test(@PathVariable Long id) {
-		gitService.del(id);
+		
 	}
 	
 	
