@@ -1,5 +1,5 @@
 import axios from "axios";
-// import router from "../router";
+import router from "../router";
 import store from "../store";
 const instance = axios.create({
     // baseURL: process.env.VUE_APP_BASE_URL,
@@ -28,7 +28,8 @@ instance.interceptors.response.use(
     (error) => {
         if (error.response.status == "403") {
             alert("토큰 기한이 만료되었습니다.");
-            store.dispatch("LOGOUT");
+            store.commit("LOGOUT");
+            router.push("/");
             return Promise.reject(error);
         }
     }

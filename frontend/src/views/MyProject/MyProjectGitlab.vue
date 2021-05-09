@@ -13,7 +13,6 @@
         <hr class="verify-header" />
         <div class="verify-body">
             <VerifyCard />
-            <VerifyCard />
         </div>
     </div>
 </template>

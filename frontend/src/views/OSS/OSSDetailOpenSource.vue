@@ -6,12 +6,12 @@
             rootPath="/list/opensource"
         />
         <h1 class="oss-detail-title">{{ opensource.name }}</h1>
-        <div class="oss-detail-info-table">
+        <div class="oss-detail-table">
             <OSSDetailOpenSourceTable
                 :opensource="opensource"
             ></OSSDetailOpenSourceTable>
         </div>
-        <h3 class="oss-dependency-title">Dependency</h3>
+        <h3 class="oss-detail-info-title">Dependency</h3>
         <div>
             <OSSDetailDependencyTable
                 :opensourceList="opensourceList"
@@ -23,7 +23,6 @@
 import MyProjectPath from "@/components/MyProject/MyProjectPath.vue";
 import OSSDetailOpenSourceTable from "@/components/OSS/OSSDetailOpenSourceTable.vue";
 import OSSDetailDependencyTable from "../../components/OSS/OSSDetailDependencyTable.vue";
-// import Tab from "@/components/Tab/Tab.vue";
 export default {
     name: "OSSDetailOpenSource",
     components: {
