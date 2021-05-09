@@ -35,7 +35,7 @@ public class GitController {
 	
 	private final GitService gitService;
 	
-	@ApiOperation(value = "테스트")
+	@ApiOperation(value = "테스트 눈으로")
 	@GetMapping("/test")
 	public void test() {
 		
