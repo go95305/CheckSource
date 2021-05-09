@@ -1,0 +1,34 @@
+#profile-image {
+    margin: 0 10px 0 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 65px;
+    object-fit: contain;
+    box-shadow: 0px 0px 10px rgba(0, 10, 98, 0.664);
+}
+
+#profile-info {
+    display: inline-block;
+    vertical-align: top;
+}
+
+#profile-info p,
+#profile-info span {
+    color: white;
+}
+
+#profile-info span {
+    font-size: small;
+    font-weight: 300;
+}
+#profile-info__department {
+    margin-right: 5px;
+}
+
+#profile-hr {
+    height: 3px;
+    margin: 20px 25px 0px 25px;
+    background-color: rgba(255, 255, 255, 0.534);
+    box-shadow: 0px 0px 8px rgba(255, 255, 255, 0.534);
+    border-radius: 90%;
+}

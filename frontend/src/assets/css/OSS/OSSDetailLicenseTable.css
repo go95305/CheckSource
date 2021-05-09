@@ -1,0 +1,29 @@
+.detail-table-tr:nth-child(1) {
+    grid-column: auto / span 2;
+    grid-row: auto;
+}
+
+.detail-table-tr:nth-child(2) {
+    grid-column: auto / span 4;
+    grid-row: auto;
+}
+
+.detail-table-tr:nth-child(3) {
+    grid-column: auto / span 2;
+    grid-row: auto;
+}
+
+.detail-table-tr:nth-child(4) {
+    grid-column: auto / span 2;
+    grid-row: auto;
+}
+
+.detail-table-tr:nth-child(5) {
+    grid-column: auto;
+    grid-row: auto;
+}
+
+.detail-table-tr:nth-child(6) {
+    grid-column: auto;
+    grid-row: auto;
+}
