@@ -40,8 +40,8 @@ public class AnalyzeService {
 
 	// packageManager = "pom.xml"
 	// content = base64 encoding data
-	public Object analyze(int projectId,String fileName, String content,String filePath) throws Exception {
-		Object list = null;
+	public Object analyze(String projectId,String fileName, String content,String filePath) throws Exception {
+		List<Long> list = null;
 		byte[] decoded = Base64.getDecoder().decode(content);
 		content = new String(decoded, StandardCharsets.UTF_8);
 		if (fileName.equals("pom.xml")) {
@@ -49,7 +49,7 @@ public class AnalyzeService {
 			
 		} else {
 		}
-		//insert 치세오
+		//list에 opensourceid list있으니 가지고 insert 치세오
 		return list;
 	}
 
@@ -71,7 +71,7 @@ public class AnalyzeService {
 		return list;
 	}
 	
-	// opensourceId 찾아오기
+	//groupId와 artifactId로 opensourceId 찾아오기
 	public List<Long> getOpensourceId(List<ParsingDTO> list){
 		List<Long> opensourceList = new ArrayList<Long>();
 		for (ParsingDTO dto : list) {
@@ -85,6 +85,7 @@ public class AnalyzeService {
 		}
 		return opensourceList;
 	}
+	//나중에 상세보기로 쓸거 미완성
 	// groupId, artifactId, version을 가지고 opensource 테이블에서 데이터를 받아옴
 	public List<OpensourceDTO> pomXmlMatchingLicense(List<ParsingDTO> list) {
 		List<OpensourceDTO> opensourceList = new ArrayList<OpensourceDTO>();
