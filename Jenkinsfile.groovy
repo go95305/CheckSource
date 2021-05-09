@@ -35,6 +35,8 @@ def build() {
 
 def buildImage() {
     stage('BuildImage') {
+	sh "docker image prune"
+
         sh "docker build --tag frontend:frontend ./frontend/."
         sh "docker build --tag backend:backend ./backend/checksource/."
     }
@@ -42,7 +44,6 @@ def buildImage() {
 
 def pushImage() {
     stage('pushImage') {
-        sh 'docker image prune'
 
         sh 'rm  ~/.dockercfg || true'
         sh 'rm ~/.docker/config.json || true'
