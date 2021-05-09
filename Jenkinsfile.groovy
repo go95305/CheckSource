@@ -47,6 +47,7 @@ def deploy() {
         sh "docker stop frontend"
         sh "docker rm frontend"
 	sh "docker image prune"
+	sh ""
 
         sh "docker run -itd --name backend -p 8080:8080 -u root backend:backend"
         sh "docker run -itd --name frontend -p 80:80 -u root frontend:frontend"
