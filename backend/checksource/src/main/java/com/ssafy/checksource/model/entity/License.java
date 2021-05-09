@@ -25,8 +25,8 @@ public class License {
 	@Column(name = "license_id")
 	private long licenseId;
 	
+	private String name;
 	private String identifier;
-	
 	@Column(columnDefinition = "TEXT")
 	private String contents;
 	private String url;

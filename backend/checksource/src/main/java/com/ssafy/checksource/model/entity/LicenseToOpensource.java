@@ -1,33 +1,38 @@
 package com.ssafy.checksource.model.entity;
 
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.ssafy.checksource.model.key.OpensourceLicenseKey;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Entity
-@Table(name = "licensetoopensource")
-@NoArgsConstructor
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Table(name = "licensetoopensource")
 public class LicenseToOpensource {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+    @EmbeddedId
+    @Column(name = "opslic_id", unique = true)
+    private OpensourceLicenseKey opslic_id = new OpensourceLicenseKey();
 
-	@ManyToOne
-	@JoinColumn(name = "opensource_id")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "opensource_id",insertable=false, updatable=false)
 	private Opensource opensource;
 
-	@ManyToOne
-	@JoinColumn(name = "license_id")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "license_id",insertable=false, updatable=false)
 	private License license;
 
 	@Override

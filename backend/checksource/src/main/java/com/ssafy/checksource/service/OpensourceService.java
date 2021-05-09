@@ -2,7 +2,6 @@ package com.ssafy.checksource.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -10,10 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.checksource.model.dto.LicenseDTO;
 import com.ssafy.checksource.model.dto.OpensourceDTO;
+import com.ssafy.checksource.model.dto.OpensourcelistDTO;
 import com.ssafy.checksource.model.dto.OpensourcesaveDTO;
 import com.ssafy.checksource.model.entity.License;
 import com.ssafy.checksource.model.entity.LicenseToOpensource;
 import com.ssafy.checksource.model.entity.Opensource;
+import com.ssafy.checksource.model.key.OpensourceLicenseKey;
+import com.ssafy.checksource.model.repository.LicenseToOpensourceRepository;
 import com.ssafy.checksource.model.repository.OpensourceRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -22,19 +24,21 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Transactional
 public class OpensourceService {
+	
 	private final OpensourceRepository opensourceRepository;
 	private final ModelMapper modelMapper = new ModelMapper();
-
-	public List<OpensourceDTO> getAllOpensource() {
-		List<OpensourceDTO> list = new ArrayList<OpensourceDTO>();
+	private final LicenseToOpensourceRepository licenseToopensourceRepository;
+	
+	public List<OpensourcelistDTO> getAllOpensource() {
+		List<OpensourcelistDTO> list = new ArrayList<OpensourcelistDTO>();
 		for (Opensource ops : opensourceRepository.findAll()) {
-			OpensourceDTO opsDto = modelMapper.map(ops, OpensourceDTO.class);
-			List<LicenseDTO> licenseList = new ArrayList<LicenseDTO>();
+			OpensourcelistDTO opsDto = modelMapper.map(ops, OpensourcelistDTO.class);
+			List<String> licenseNameList = new ArrayList<String>();
 			for (LicenseToOpensource licenseopensource : ops.getLicenses()) {
 				License license = licenseopensource.getLicense();
-				licenseList.add(modelMapper.map(license, LicenseDTO.class));
+				licenseNameList.add(license.getName());
 			}
-			opsDto.setLicenseList(licenseList);
+			opsDto.setLicenseNameList(licenseNameList);
 			
 			list.add(opsDto);
 		}
@@ -47,14 +51,7 @@ public class OpensourceService {
 		OpensourceDTO opsDto = modelMapper.map(ops, OpensourceDTO.class);
 		return opsDto;
 	}
-//	private String name;
-//	private String url;
-//	private String copyright;
-//	private String version;
-//	private String packageType;
-//	private String groupId;
-//	private String artifactId;
-//	private List<Long> licenseId;
+
 	public void save(OpensourcesaveDTO ossSave) {
 		Opensource saveEntity = new Opensource();
 		saveEntity.setArtifactId(ossSave.getArtifactId());
@@ -65,7 +62,19 @@ public class OpensourceService {
 		saveEntity.setUrl(ossSave.getUrl());
 		saveEntity.setVersion(ossSave.getVersion());
 		
-		opensourceRepository.save(saveEntity);
+		Opensource ops = opensourceRepository.save(saveEntity);
+		
+		long opsId = ops.getOpensourceId();
+		for(long licenseId : ossSave.getLicenseId() ) {
+			LicenseToOpensource licops = new LicenseToOpensource();
+			OpensourceLicenseKey opslickey = new OpensourceLicenseKey();
+			opslickey.setOpensourceId(opsId);
+			opslickey.setLicenseId(licenseId);
+			licops.setOpslic_id(opslickey);
+			licenseToopensourceRepository.save(licops);
+		}
+		
+		
 		
 		
 	}
