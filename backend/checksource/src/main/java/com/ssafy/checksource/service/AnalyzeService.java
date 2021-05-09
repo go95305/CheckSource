@@ -18,10 +18,10 @@ import com.ssafy.checksource.model.dto.LicenseDTO;
 import com.ssafy.checksource.model.dto.OpensourceDTO;
 import com.ssafy.checksource.model.dto.ParsingDTO;
 import com.ssafy.checksource.model.entity.License;
-import com.ssafy.checksource.model.entity.LicenseToOpensource;
+import com.ssafy.checksource.model.entity.LicenseOpensource;
 import com.ssafy.checksource.model.entity.Opensource;
+import com.ssafy.checksource.model.repository.LicenseOpensourceRepository;
 import com.ssafy.checksource.model.repository.LicenseRepository;
-import com.ssafy.checksource.model.repository.LicenseToOpensourceRepository;
 import com.ssafy.checksource.model.repository.OpensourceRepository;
 import com.ssafy.checksource.parser.PomxmlSaxHandler;
 
@@ -35,21 +35,21 @@ public class AnalyzeService {
 	private final ModelMapper modelMapper = new ModelMapper();
 
 	private final OpensourceRepository opensourceRepository;
-	private final LicenseToOpensourceRepository licenseToopensourceRepository;
+	private final LicenseOpensourceRepository licenseopensourceRepository;
 	private final LicenseRepository licenseRepository;
 
 	// packageManager = "pom.xml"
 	// content = base64 encoding data
-	public Object analyze(String packageManager, String content) throws Exception {
+	public Object analyze(int projectId,String fileName, String content,String filePath) throws Exception {
 		Object list = null;
 		byte[] decoded = Base64.getDecoder().decode(content);
 		content = new String(decoded, StandardCharsets.UTF_8);
-		if (packageManager.equals("pom.xml")) {
-			list = pomXmlMatchingLicense(pomxmlParsing(content));
-			// list = pomxmlParsing(content);
+		if (fileName.equals("pom.xml")) {
+			list = getOpensourceId(pomxmlParsing(content));
+			
 		} else {
 		}
-
+		//insert 치세오
 		return list;
 	}
 
@@ -70,7 +70,21 @@ public class AnalyzeService {
 
 		return list;
 	}
-
+	
+	// opensourceId 찾아오기
+	public List<Long> getOpensourceId(List<ParsingDTO> list){
+		List<Long> opensourceList = new ArrayList<Long>();
+		for (ParsingDTO dto : list) {
+			Opensource ops = opensourceRepository.findByGroupIdAndArtifactId(dto.getGroupId(), dto.getArtifactId());
+			OpensourceDTO opsDto;
+			if (ops != null) {
+				opensourceList.add(ops.getOpensourceId());
+			}else { //db에 오픈소스 없는 경우
+				
+			}
+		}
+		return opensourceList;
+	}
 	// groupId, artifactId, version을 가지고 opensource 테이블에서 데이터를 받아옴
 	public List<OpensourceDTO> pomXmlMatchingLicense(List<ParsingDTO> list) {
 		List<OpensourceDTO> opensourceList = new ArrayList<OpensourceDTO>();
@@ -81,7 +95,7 @@ public class AnalyzeService {
 			if (ops != null) {
 				opsDto = modelMapper.map(ops, OpensourceDTO.class);
 				List<LicenseDTO> licenseList = new ArrayList<LicenseDTO>();
-				for (LicenseToOpensource licenseopensource : ops.getLicenses()) {
+				for (LicenseOpensource licenseopensource : ops.getLicenses()) {
 					License license = licenseopensource.getLicense();
 					licenseList.add(modelMapper.map(license, LicenseDTO.class));
 				}

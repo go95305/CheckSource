@@ -20,8 +20,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "licensetoopensource")
-public class LicenseToOpensource {
+@Table(name = "license_opensource")
+public class LicenseOpensource {
 
     @EmbeddedId
     @Column(name = "opslic_id", unique = true)
