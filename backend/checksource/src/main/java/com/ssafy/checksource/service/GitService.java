@@ -342,8 +342,10 @@ public class GitService {
 					PackageManageFileDTO packageManageFileDto =  gson.fromJson(responseEntity.getBody(), PackageManageFileDTO.class);
 					//contents 뽑음
 					String contents = packageManageFileDto.getContent();
-					
+					String filePath = packageManageFileDto.getFile_path();
+					String fileName = packageManageFileDto.getFile_name();
 					// 4. base64 - decoding 등 승환 코드
+					
 							
 				} catch (HttpClientErrorException e) {
 					//토큰이 유효하지 않을 경우 401
