@@ -3,6 +3,7 @@ package com.ssafy.checksource.model.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,8 +26,8 @@ public class License {
 	@Column(name = "license_id")
 	private long licenseId;
 	
+	private String name;
 	private String identifier;
-	
 	@Column(columnDefinition = "TEXT")
 	private String contents;
 	private String url;
@@ -44,7 +45,7 @@ public class License {
 	private boolean is_continue;
 	private boolean is_status;
 	
-	@OneToMany(mappedBy = "license")
-    private List<LicenseToOpensource> opensources = new ArrayList<>();
+	@OneToMany(mappedBy = "license", cascade = CascadeType.ALL)
+    private List<LicenseOpensource> opensources = new ArrayList<>();
 
 }

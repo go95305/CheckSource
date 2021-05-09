@@ -57,7 +57,8 @@ public class GitService {
 	private final DepartRepository departRepository;
 	private final OpensourceRepository opensourceRepository;
 	private final String baseUrl = "https://gitlab.com/api/v4/"; // 기본 public url
-
+	
+	private final AnalyzeService analyzeService;
 	// gitlab 계정 연동 체크
 	public GitLabConnectDTO gitConnect(String username, String token, String accessToken) {
 		String url = baseUrl + "users?username=";
@@ -240,7 +241,7 @@ public class GitService {
 	}
 	
 	// 프로젝트 추가하기 - 검증
-	public boolean addProject(String token, List<GitLabProjectDTO> projectList, String gitlabId) throws URISyntaxException, UnsupportedEncodingException {
+	public boolean addProject(String token, List<GitLabProjectDTO> projectList, String gitlabId) throws Exception {
 
 		String userId = jwtTokenProvider.getUserId(token);
 		User user = userRepository.findByUserId(userId);
@@ -347,7 +348,7 @@ public class GitService {
 					String filePath = packageManageFileDto.getFile_path();
 					String fileName = packageManageFileDto.getFile_name();
 					// 4. base64 - decoding 등 승환 코드
-					
+					analyzeService.analyze(projectId, fileName, contents, filePath);
 							
 				} catch (HttpClientErrorException e) {
 					//토큰이 유효하지 않을 경우 401

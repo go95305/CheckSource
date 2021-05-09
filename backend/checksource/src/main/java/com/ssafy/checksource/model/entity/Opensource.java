@@ -35,8 +35,8 @@ public class Opensource {
 	@Column(name = "artifact_id")
 	private String artifactId;
 	
-	@OneToMany(mappedBy = "opensource")
-    private List<LicenseToOpensource> licenses = new ArrayList<>();
+	@OneToMany(mappedBy = "opensource", cascade = CascadeType.ALL)
+    private List<LicenseOpensource> licenses = new ArrayList<>();
 	
 	
 	@OneToMany(mappedBy = "opensource", cascade = CascadeType.ALL)
