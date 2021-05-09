@@ -40,7 +40,7 @@ public class AnalyzeService {
 
 	// packageManager = "pom.xml"
 	// content = base64 encoding data
-	public Object analyze(String projectId,String fileName, String content,String filePath) throws Exception {
+	public void analyze(String projectId,String fileName, String content,String filePath) throws Exception {
 		List<Long> list = null;
 		byte[] decoded = Base64.getDecoder().decode(content);
 		content = new String(decoded, StandardCharsets.UTF_8);
@@ -50,7 +50,6 @@ public class AnalyzeService {
 		} else {
 		}
 		//list에 opensourceid list있으니 가지고 insert 치세오
-		return list;
 	}
 
 	// pom.xml Parsing
@@ -64,9 +63,6 @@ public class AnalyzeService {
 
 		parser.parse(inputSource, handler);
 		List<ParsingDTO> list = handler.getDepenList();
-		for (ParsingDTO i : list) {
-			System.out.println(i);
-		}
 
 		return list;
 	}
