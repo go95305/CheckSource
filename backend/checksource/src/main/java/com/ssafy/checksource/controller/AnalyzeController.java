@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.checksource.model.dto.AnalyzeDTO;
-import com.ssafy.checksource.model.dto.OpensourceDTO;
+import com.ssafy.checksource.model.dto.OpensourceDetailDTO;
 import com.ssafy.checksource.model.dto.ParsingDTO;
 import com.ssafy.checksource.service.AnalyzeService;
 

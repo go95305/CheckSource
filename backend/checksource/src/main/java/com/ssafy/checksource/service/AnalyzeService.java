@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.xml.sax.InputSource;
 
 import com.ssafy.checksource.model.dto.LicenseDTO;
-import com.ssafy.checksource.model.dto.OpensourceDTO;
+import com.ssafy.checksource.model.dto.OpensourceDetailDTO;
 import com.ssafy.checksource.model.dto.ParsingDTO;
 import com.ssafy.checksource.model.entity.License;
 import com.ssafy.checksource.model.entity.LicenseOpensource;
@@ -72,7 +72,7 @@ public class AnalyzeService {
 		List<Long> opensourceList = new ArrayList<Long>();
 		for (ParsingDTO dto : list) {
 			Opensource ops = opensourceRepository.findByGroupIdAndArtifactId(dto.getGroupId(), dto.getArtifactId());
-			OpensourceDTO opsDto;
+			OpensourceDetailDTO opsDto;
 			if (ops != null) {
 				opensourceList.add(ops.getOpensourceId());
 			}else { //db에 오픈소스 없는 경우
@@ -83,14 +83,14 @@ public class AnalyzeService {
 	}
 	//나중에 상세보기로 쓸거 미완성
 	// groupId, artifactId, version을 가지고 opensource 테이블에서 데이터를 받아옴
-	public List<OpensourceDTO> pomXmlMatchingLicense(List<ParsingDTO> list) {
-		List<OpensourceDTO> opensourceList = new ArrayList<OpensourceDTO>();
+	public List<OpensourceDetailDTO> pomXmlMatchingLicense(List<ParsingDTO> list) {
+		List<OpensourceDetailDTO> opensourceList = new ArrayList<OpensourceDetailDTO>();
 
 		for (ParsingDTO dto : list) {
 			Opensource ops = opensourceRepository.findByGroupIdAndArtifactId(dto.getGroupId(), dto.getArtifactId());
-			OpensourceDTO opsDto;
+			OpensourceDetailDTO opsDto;
 			if (ops != null) {
-				opsDto = modelMapper.map(ops, OpensourceDTO.class);
+				opsDto = modelMapper.map(ops, OpensourceDetailDTO.class);
 				List<LicenseDTO> licenseList = new ArrayList<LicenseDTO>();
 				for (LicenseOpensource licenseopensource : ops.getLicenses()) {
 					License license = licenseopensource.getLicense();
@@ -98,7 +98,7 @@ public class AnalyzeService {
 				}
 				opsDto.setLicenseList(licenseList);
 			}else {
-				opsDto = new OpensourceDTO();
+				opsDto = new OpensourceDetailDTO();
 				opsDto.setGroupId(dto.getGroupId());
 				opsDto.setArtifactId(dto.getArtifactId());
 			}
