@@ -35,11 +35,10 @@ public class GitController {
 	
 	private final GitService gitService;
 	
-	@ApiOperation(value = "테스트 눈으로")
-	@GetMapping("/test")
-	public void test() {
+	@ApiOperation(value = "테스트")
+	@GetMapping("/test/{id}")
+	public void test(@PathVariable Long id) {
 		
-		//gitService.getProjects();
 	}
 	
 	
@@ -71,7 +70,12 @@ public class GitController {
 	@ApiOperation(value = "프로젝트 추가하기-검증 ")
 	@PostMapping("/projects")
 	public boolean addProjects(@RequestHeader("TOKEN") String token, @RequestBody List<GitLabProjectDTO> projectList,@RequestParam String gitlabId) throws URISyntaxException, UnsupportedEncodingException {
-		return gitService.addProject(token, projectList, gitlabId);
+		try {
+			return gitService.addProject(token, projectList, gitlabId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 	
 	@ApiOperation(value = "프로젝트 삭제하기", notes = "- 삭제할 projectId와 유저의 jwttoken을 헤더에 담아 보낸다. \n - 프로젝트의 부서와 지우려는 유저의 부서가 일치해야 지워진다. \n - 성공적으로 지워지면 true, 실패시 false 반환 ")
