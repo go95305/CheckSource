@@ -36,9 +36,9 @@ public class GitController {
 	private final GitService gitService;
 	
 	@ApiOperation(value = "테스트")
-	@GetMapping("/test")
-	public void test() {
-		//gitService.getProjects();
+	@GetMapping("/test/{id}")
+	public void test(@PathVariable Long id) {
+		
 	}
 	
 	

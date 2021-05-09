@@ -36,6 +36,7 @@ import com.ssafy.checksource.model.entity.Project;
 import com.ssafy.checksource.model.entity.User;
 import com.ssafy.checksource.model.repository.DepartRepository;
 import com.ssafy.checksource.model.repository.GitLabRepository;
+import com.ssafy.checksource.model.repository.OpensourceRepository;
 import com.ssafy.checksource.model.repository.ProjectRepository;
 import com.ssafy.checksource.model.repository.UserRepository;
 
@@ -55,8 +56,8 @@ public class GitService {
 	private final ProjectRepository projectRepository;
 	private final DepartRepository departRepository;
 	private final String baseUrl = "https://gitlab.com/api/v4/"; // 기본 public url
-	
 	private final AnalyzeService analyzeService;
+	
 	// gitlab 계정 연동 체크
 	public GitLabConnectDTO gitConnect(String username, String token, String accessToken) {
 		String url = baseUrl + "users?username=";

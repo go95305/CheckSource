@@ -38,5 +38,8 @@ public class Opensource {
 	@OneToMany(mappedBy = "opensource", cascade = CascadeType.ALL)
     private List<LicenseOpensource> licenses = new ArrayList<>();
 	
+	
+	@OneToMany(mappedBy = "opensource", cascade = CascadeType.ALL)
+    private List<OpensourceProject> opensourceProject = new ArrayList<>();
 }
 //

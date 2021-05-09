@@ -50,4 +50,7 @@ public class Project {
 	@JoinColumn(name = "user_id")
 	private User user; 
 	
+	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private List<OpensourceProject> opensourceProject = new ArrayList<>();
+	
 }
