@@ -36,17 +36,19 @@ def buildImage() {
     stage('BuildImage') {
         sh "docker build --tag frontend:frontend ./frontend/."
         sh "docker build --tag backend:backend ./backend/checksource/."
-
-	sh "docker image prune && y"
     }
 }
 
 def deploy() {
     stage('Deploy') {
-        sh "docker container stop backend"
-        sh "docker container rm backend"
-        sh "docker container stop frontend"
-        sh "docker container rm frontend"
+        sh "docker stop backend"
+        sh "docker rm backend"
+        sh "docker stop frontend"
+        sh "docker rm frontend"
+
+	sh "docker image prune"
+	sh "y"
+
         sh "docker run -itd --name backend -p 8080:8080 -u root backend:backend"
         sh "docker run -itd --name frontend -p 80:80 -u root frontend:frontend"
 
