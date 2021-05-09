@@ -3,7 +3,7 @@
 		<profile id="nav-profile" />
 		<ul class="nav-ul">
 			<li class="nav-li" @click="MenuClickHandler">
-				<router-link to="/dashboard">대시보드</router-link>
+				<router-link to="/dashboard">대지보드</router-link>
 			</li>
 			<li class="nav-li">
 				<div class="dropdown">
