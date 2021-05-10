@@ -4,26 +4,31 @@
 			<search-bar
 				:placeHolderText="'검색할 라이선스를 입력하세요.'"
 				:filterList="filterList"
+				@doSearch="DoSearch"
 			></search-bar>
 		</div>
 		<div>
 			<table class="oss-table">
 				<thead class="oss-table-thead">
-					<th>NAME</th>
+					<th>FULL NAME</th>
+					<th>IDENTIFIER</th>
 					<th>URL</th>
-					<th>RISK</th>
-					<th>NOTICE</th>
+					<th>CODE OPEN</th>
 				</thead>
 				<tbody class="oss-table-tbody">
 					<tr
 						class="oss-table-tr"
 						v-for="(license, index) in licenseList"
 						:key="`${index}_openSourceList`"
+						@click="GoDetail(license)"
 					>
 						<td>{{ license.name }}</td>
+						<td>{{ license.identifier }}</td>
 						<td>{{ license.url }}</td>
-						<td>{{ license.license }}</td>
-						<td>{{ license.copyright }}</td>
+						<td v-if="license.sourceopen.length != 0">
+							{{ license.sourceopen }}
+						</td>
+						<td v-else>의무 없음</td>
 					</tr>
 				</tbody>
 			</table>
@@ -31,7 +36,7 @@
 		<div class="oss-pagination">
 			<pagination-remote
 				:currentPage="page"
-				:lastPage="4"
+				:lastPage="totalPage"
 				@changePage="ChangePage"
 			></pagination-remote>
 		</div>
@@ -39,6 +44,7 @@
 </template>
 <script>
 import "@/assets/css/OSS/OSSTable.css";
+import licenseApi from "@/api/license.js";
 import SearchBar from "../../components/SearchBar/SearchBar.vue";
 import PaginationRemote from "../../components/Pagination/PaginationRemote.vue";
 export default {
@@ -46,10 +52,13 @@ export default {
 	components: { SearchBar, PaginationRemote },
 	data() {
 		return {
-			filterList: ["NAME", "URL"],
+			filterList: ["Name", "Identifier"],
 			licenseList: [],
 			page: 1,
 			size: 20,
+			totalPage: 10,
+			typeFilter: 1,
+			keyword: "",
 		};
 	},
 	created() {
@@ -64,25 +73,34 @@ export default {
 	},
 	methods: {
 		GetList: function () {
-			this.licenseList = [
-				{
-					name: "GLEW",
-					url: "https://github.com/nigels-com/glew",
-					license: "GLEW Modified BSD3 License",
-					copyright: "Copyright 2008-2016",
-				},
-				{
-					name: "httpx",
-					url: "https://github.com/encode/httpx",
-					license: "GLEW Modified BSD3 License",
-					copyright: "Copyright 2008-2016",
-				},
-			];
+			licenseApi
+				.readLicenseList(
+					this.keyword,
+					this.page,
+					this.size,
+					this.filterList[this.typeFilter - 1]
+				)
+				.then((response) => {
+					this.licenseList = response.data.licenseList;
+					this.totalPage = response.data.totalPage;
+				})
+				.catch();
+		},
+		DoSearch: function (filter, keyword) {
+			this.typeFilter = filter;
+			this.keyword = keyword;
+			this.GetList();
 		},
 		ChangePage: function (page) {
 			this.page = page;
 			this.$router.push({
 				query: { page: page, size: this.size },
+			});
+		},
+		GoDetail: function (license) {
+			this.$router.push({
+				name: "OSSDetailLicenseContent",
+				query: { id: license.licenseId },
 			});
 		},
 	},
