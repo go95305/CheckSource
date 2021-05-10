@@ -92,26 +92,26 @@
 </template>
 <script>
 export default {
-  name: "AddComponent",
-  data() {
-    return {
-      dependency: {
-        path: "",
-        version: "",
-        complianceUrl: "",
-      },
-      component: {
-        name: "",
-        url: "",
-        license: "",
-      },
-    };
-  },
-  methods: {
-    addComponent() {
-      alert(this.dependency.path);
-    },
-  },
+	name: "AddComponent",
+	data() {
+		return {
+			dependency: {
+				path: "",
+				version: "",
+				complianceUrl: "",
+			},
+			component: {
+				name: "",
+				url: "",
+				license: "",
+			},
+		};
+	},
+	methods: {
+		addComponent() {
+			alert(this.dependency.path);
+		},
+	},
 };
 </script>
 <style scoped src="../../assets/css/MyProject/AddComponent.css"></style>

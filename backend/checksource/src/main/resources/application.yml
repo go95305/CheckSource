@@ -1,0 +1,33 @@
+spring:
+  datasource:
+    url: jdbc:mariadb://3.36.168.178:3306/checksource?useUnicode=yes&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    username: checksource
+    password: checksourceC101
+    driver-class-name: org.mariadb.jdbc.Driver
+  restTemplate:
+    factory:
+      readTimeout: 5000 #읽기 타임아웃
+      connectTimeout: 3000 #연결 타임아웃
+    httpClient:
+      maxConnTotal: 100 #연결을 유지할 최대 숫자
+      maxConnPerRoute: 5 #특정 경로당 최대 숫자
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    generate-ddl: true
+    open-in-view: false
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enable: true
