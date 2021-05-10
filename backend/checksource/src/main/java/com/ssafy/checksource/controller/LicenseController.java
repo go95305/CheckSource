@@ -2,19 +2,14 @@ package com.ssafy.checksource.controller;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.checksource.model.dto.LicenseDetailDTO;
 import com.ssafy.checksource.model.dto.LicenseListDTO;
-import com.ssafy.checksource.model.dto.OpensourceDetailDTO;
-import com.ssafy.checksource.model.dto.OpensourceListDTO;
-import com.ssafy.checksource.model.dto.OpensourcesaveDTO;
 import com.ssafy.checksource.service.LicenseService;
-import com.ssafy.checksource.service.OpensourceService;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -36,7 +31,7 @@ public class LicenseController {
 			@ApiImplicitParam(name = "pageSize", value = "페이지당 보여줄 컨텐츠 갯수", defaultValue = "10", required = true),
 			@ApiImplicitParam(name = "page", value = "기본-1 ex) 1-(1~10) 2-(11~20)", defaultValue = "1", required = true) })
 	@GetMapping("/getList")
-	public LicenseListDTO getList(@RequestParam String typeFilter, @RequestParam String keyword, @RequestParam int pageSize,
+	public LicenseListDTO getList(@RequestHeader("TOKEN") String token,@RequestParam String typeFilter, @RequestParam String keyword, @RequestParam int pageSize,
 			@RequestParam int page) {
 		System.out.println(keyword);
 		return licenseService.getLicenseList(typeFilter, keyword, pageSize, page);
@@ -45,7 +40,7 @@ public class LicenseController {
 
 	@ApiOperation(value = "라이선스 하나의 상세정보 불러오기")
 	@GetMapping("/getDetail/{licenseId}")
-	public LicenseDetailDTO getDetail(long licenseId) {
+	public LicenseDetailDTO getDetail(@RequestHeader("TOKEN") String token,long licenseId) {
 		return licenseService.getDetailLicense(licenseId);
 	}
 }
