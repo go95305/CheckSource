@@ -96,6 +96,7 @@ export default {
 			this.$router.push({
 				query: { page: page, size: this.size },
 			});
+			this.GetList();
 		},
 		GoDetail: function (license) {
 			this.$router.push({
