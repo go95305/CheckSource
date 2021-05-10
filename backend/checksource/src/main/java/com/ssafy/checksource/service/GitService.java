@@ -317,7 +317,7 @@ public class GitService {
 			analyProjectList.add(analyProjectListDto);
 		}//end project for문
 
-		System.out.println(analyProjectList);
+		//System.out.println(analyProjectList);
 		
 		//3. 프로젝트별 패키지매니저 파일 리스트에서 패키지 매니터 파일의 contents 뽑기
 		for (AnalyProjectListDTO analyProjectListDto : analyProjectList) {
