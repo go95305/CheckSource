@@ -18,6 +18,7 @@ const MyProjectEdit = () => import("@/views/MyProject/MyProjectEdit");
 const MyProjectEditGitLab = () =>
 	import("@/views/MyProject/MyProjectEditGitLab");
 const MyProjectGitlab = () => import("@/views/MyProject/MyProjectGitlab");
+const MyProjectAddLicense = () => import("@/components/MyProject/MyProjectAddLicense");
 const LicenseList = () => import("@/components/MyProject/LicenseList");
 const Summary = () => import("@/components/MyProject/Summary");
 
@@ -38,6 +39,7 @@ const MyPageGitLab = () => import("@/views/MyPage/MyPageGitLab");
 const OpensourceList = () => import("@/components/MyProject/OpensourceList");
 const AddComponent = () => import("@/components/MyProject/AddComponent");
 const OpensourceMain = () => import("@/views/MyProject/OpensourceMain");
+const LicenseMain = () => import("@/views/MyProject/LicenseMain");
 Vue.use(VueRouter);
 
 const routes = [
@@ -124,8 +126,20 @@ const routes = [
 							},
 							{
 								path: "license",
-								name: "License",
-								component: LicenseList,
+								name: "ResultLicense",
+								component: LicenseMain,
+								children: [
+									{
+										path: "addLicense",
+										name: "MyProjectAddLicense",
+										component: MyProjectAddLicense,
+									},
+									{
+										path: "",
+										name: "License",
+										component: LicenseList,
+									},
+								],
 							},
 							{
 								path: "opensource",
@@ -143,11 +157,6 @@ const routes = [
 										component: OpensourceList,
 									},
 								],
-							},
-							{
-								path: "addLicense",
-								name: "MyProjectAddLicense",
-								component: MyProjectAddLicense,
 							},
 
 						],
