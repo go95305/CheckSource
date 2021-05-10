@@ -9,6 +9,7 @@ public class LicenseDTO {
 	private String name;
 	private String identifier;
 	private String sourceopen;
+	private String url;
 	
 }
 

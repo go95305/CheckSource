@@ -42,7 +42,7 @@ public class LicenseService {
 		Page<License> licensePagedata = null;
 		Pageable paging = PageRequest.of(page-1, pageSize,Direction.ASC,"name");
 		
-		if(keyword.equals(".")) {
+		if(keyword.equals(".")|| keyword.equals("")) {
 			licensePagedata = licenseRepository.findAll(paging);
 		}else if(typeFilter.equals("Name")) {
 			licensePagedata = licenseRepository.findByNameLike("%"+keyword+"%",paging);

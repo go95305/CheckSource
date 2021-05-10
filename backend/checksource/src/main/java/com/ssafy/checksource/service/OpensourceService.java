@@ -41,7 +41,7 @@ public class OpensourceService {
 		Page<Opensource> opensourcePagedata = null;
 		Pageable paging = PageRequest.of(page-1, pageSize,Direction.ASC,"name");
 		
-		if(keyword.equals(".")) {
+		if(keyword.equals(".") || keyword.equals("")) {
 			opensourcePagedata = opensourceRepository.findAll(paging);
 		}else if(typeFilter.equals("Name")) {
 			opensourcePagedata = opensourceRepository.findByNameLike("%"+keyword+"%",paging);
