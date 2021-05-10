@@ -84,6 +84,9 @@ export default {
 		page: function () {
 			this.CalculatePageList();
 		},
+		lastPage: function () {
+			this.CalculatePageList();
+		},
 	},
 	created() {
 		this.page = this.currentPage;
@@ -92,7 +95,7 @@ export default {
 		CalculatePageList: function () {
 			//페이지 목록 연산
 			let list = [];
-
+			this.pageList = null;
 			if (this.lastPage < 8) {
 				//전체 리스트 만들기
 				this.displayFirstNum = false;

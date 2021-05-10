@@ -3,6 +3,7 @@ package com.ssafy.checksource.model.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,26 +26,43 @@ public class License {
 	@Column(name = "license_id")
 	private long licenseId;
 	
+	//이름
+	private String name;
+	//줄임말
 	private String identifier;
-	
+	//전문
 	@Column(columnDefinition = "TEXT")
 	private String contents;
+	//url
 	private String url;
+	//osi승인여부
 	private boolean is_osi;
-	private boolean is_copyright;
-	private boolean is_license;
-	private boolean is_commercial;
-	private boolean is_distribute;
+	//복제, 배포, 수정의 권한 허용
 	private boolean is_modify;
-	private boolean is_private;
-	private boolean is_patent;
-	private boolean is_respon;
+	//배포시 라이선스 사본 첨부
+	private boolean is_license;
+	//저작권 고지사항 또는 Attribution 고지사항 유지
+	private boolean is_copyright;
+	//배포시 소스코드 제공의무(Reciprocity)와 범위
+	private String sourceopen;
+	//조합저작물(Lager Work) 작성 및 타 라이선스 배포 허용
+	private boolean is_anotherlicense;
+	//수정 시 수정내용 고지
+	private boolean is_modify_notice;
+	//보증의 부인
 	private boolean is_warranty;
-	private boolean is_sourceopen;
+	//책임의 제한
+	private boolean is_respon;
+	//상업적 사용 가능
+	private boolean is_commercial;
+	//동일한 라이선스 유지
 	private boolean is_continue;
-	private boolean is_status;
+	//특허권 사용 여부
+	private boolean is_patent;
+	//비공개 사용 여부
+	private boolean is_private;
 	
-	@OneToMany(mappedBy = "license")
-    private List<LicenseToOpensource> opensources = new ArrayList<>();
+	@OneToMany(mappedBy = "license", cascade = CascadeType.ALL)
+    private List<LicenseOpensource> opensources = new ArrayList<>();
 
 }
