@@ -120,7 +120,7 @@ const routes = [
 							{
 								path: "summary",
 								name: "Summary",
-								// component: DashBoard,
+								component: Summary,
 							},
 							{
 								path: "license",
