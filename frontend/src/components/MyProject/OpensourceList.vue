@@ -109,7 +109,7 @@ export default {
 	methods: {
 		getList: function () {
 			verifyApi.readVerifiedOpenSourceList(this.projectId).then((response) => {
-				this.list = response.data;
+				if (response.data) this.list = response.data;
 			});
 		},
 		sidebar(versions) {
