@@ -144,6 +144,12 @@ const routes = [
 									},
 								],
 							},
+							{
+								path: "addLicense",
+								name: "MyProjectAddLicense",
+								component: MyProjectAddLicense,
+							},
+
 						],
 					},
 				],
