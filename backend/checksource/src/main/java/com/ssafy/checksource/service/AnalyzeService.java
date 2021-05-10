@@ -20,9 +20,13 @@ import com.ssafy.checksource.model.dto.ParsingDTO;
 import com.ssafy.checksource.model.entity.License;
 import com.ssafy.checksource.model.entity.LicenseOpensource;
 import com.ssafy.checksource.model.entity.Opensource;
+import com.ssafy.checksource.model.entity.OpensourceProject;
+import com.ssafy.checksource.model.entity.Project;
 import com.ssafy.checksource.model.repository.LicenseOpensourceRepository;
 import com.ssafy.checksource.model.repository.LicenseRepository;
+import com.ssafy.checksource.model.repository.OpensourceProjectRepository;
 import com.ssafy.checksource.model.repository.OpensourceRepository;
+import com.ssafy.checksource.model.repository.ProjectRepository;
 import com.ssafy.checksource.parser.PomxmlSaxHandler;
 
 import lombok.RequiredArgsConstructor;
@@ -37,6 +41,8 @@ public class AnalyzeService {
 	private final OpensourceRepository opensourceRepository;
 	private final LicenseOpensourceRepository licenseopensourceRepository;
 	private final LicenseRepository licenseRepository;
+	private final OpensourceProjectRepository opensourceProjectRepository;
+	private final ProjectRepository projectRepository;
 
 	// packageManager = "pom.xml"
 	// content = base64 encoding data
@@ -50,6 +56,19 @@ public class AnalyzeService {
 		} else {
 		}
 		//list에 opensourceid list있으니 가지고 insert 치세오
+		//System.out.println(list.toString());
+		for (Long opensourceId : list) {
+			//기존꺼 지움
+			opensourceProjectRepository.deleteByOpensourceIdAndProjectId(opensourceId, projectId);
+			OpensourceProject opensourceProject = new OpensourceProject();
+			Opensource opensource = opensourceRepository.findByOpensourceId(opensourceId);
+			Project project = projectRepository.findByProjectId(projectId);
+			opensourceProject.setOpensource(opensource);
+			opensourceProject.setProject(project);
+			opensourceProject.setPath(filePath);
+			opensourceProjectRepository.save(opensourceProject);
+		}
+		
 	}
 
 	// pom.xml Parsing
