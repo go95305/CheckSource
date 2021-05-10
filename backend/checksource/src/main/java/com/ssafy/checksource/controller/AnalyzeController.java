@@ -26,17 +26,17 @@ public class AnalyzeController {
 	private final ProjectService projectService;
 	
 	
-	@ApiOperation(value = "분석된 프로젝트의 오픈소스 목록")
-	@GetMapping("/opensourceList")
-	public void getOpensourceListByProject(@RequestHeader("TOKEN") String token, @RequestParam String projectId) {
-		projectService.getOpensourceListByProject(projectId);
-	}
-	
-	@ApiOperation(value = "분석된 프로젝트의 라이선스 목록")
-	@GetMapping("/opensourceList")
-	public void getLicenseListByProject(@RequestHeader("TOKEN") String token, @RequestParam String projectId) {
-		projectService.getLicenseListByProject(projectId);
-	}
+//	@ApiOperation(value = "분석된 프로젝트의 오픈소스 목록")
+//	@GetMapping("/opensourceList")
+//	public void getOpensourceListByProject(@RequestHeader("TOKEN") String token, @RequestParam String projectId) {
+//		//projectService.getOpensourceListByProject(projectId);
+//	}
+//	
+//	@ApiOperation(value = "분석된 프로젝트의 라이선스 목록")
+//	@GetMapping("/opensourceList")
+//	public void getLicenseListByProject(@RequestHeader("TOKEN") String token, @RequestParam String projectId) {
+//		//projectService.getLicenseListByProject(projectId);
+//	}
 	
 
 
