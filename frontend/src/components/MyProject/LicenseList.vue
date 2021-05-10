@@ -55,7 +55,7 @@ export default {
 	methods: {
 		getList: function () {
 			verifyApi.readVerifiedLicenseList(this.projectId).then((response) => {
-				this.list = response.data;
+				if (response.data) this.list = response.data;
 			});
 		},
 	},
