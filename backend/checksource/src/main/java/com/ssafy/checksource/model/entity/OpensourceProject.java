@@ -35,4 +35,6 @@ public class OpensourceProject {
 	@JoinColumn(name = "project_id")
 	private Project project;
 	
+	private String path;
+	
 }
