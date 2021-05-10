@@ -18,7 +18,8 @@ const MyProjectEdit = () => import("@/views/MyProject/MyProjectEdit");
 const MyProjectEditGitLab = () =>
 	import("@/views/MyProject/MyProjectEditGitLab");
 const MyProjectGitlab = () => import("@/views/MyProject/MyProjectGitlab");
-const MyProjectAddLicense = () => import("@/components/MyProject/MyProjectAddLicense");
+const MyProjectAddLicense = () =>
+	import("@/components/MyProject/MyProjectAddLicense");
 const LicenseList = () => import("@/components/MyProject/LicenseList");
 const Summary = () => import("@/components/MyProject/Summary");
 
@@ -31,6 +32,8 @@ const OSSDetailOpenSource = () => import("@/views/OSS/OSSDetailOpenSource");
 const OSSDetailLicense = () => import("@/views/OSS/OSSDetailLicense");
 const OSSDetailLicenseContent = () =>
 	import("@/views/OSS/OSSDetailLicenseContent");
+const OSSDetailLicenseInformation = () =>
+	import("@/views/OSS/OSSDetailLicenseInformation");
 
 const MyPage = () => import("@/views/MyPage/MyPage");
 const MyPageProfile = () => import("@/views/MyPage/MyPageProfile");
@@ -158,7 +161,6 @@ const routes = [
 									},
 								],
 							},
-
 						],
 					},
 				],
@@ -210,7 +212,12 @@ const routes = [
 								children: [
 									{
 										path: "",
-										redirect: "content",
+										redirect: "information",
+									},
+									{
+										path: "information",
+										name: "OSSDetailLicenseInformation",
+										component: OSSDetailLicenseInformation,
 									},
 									{
 										path: "content",
