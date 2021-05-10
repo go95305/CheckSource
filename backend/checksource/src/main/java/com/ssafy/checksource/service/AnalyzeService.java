@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.xml.sax.InputSource;
 
-import com.ssafy.checksource.model.dto.LicenseDTO;
+import com.ssafy.checksource.model.dto.LicenseDetailDTO;
 import com.ssafy.checksource.model.dto.OpensourceDetailDTO;
 import com.ssafy.checksource.model.dto.ParsingDTO;
 import com.ssafy.checksource.model.entity.License;
@@ -91,10 +91,10 @@ public class AnalyzeService {
 			OpensourceDetailDTO opsDto;
 			if (ops != null) {
 				opsDto = modelMapper.map(ops, OpensourceDetailDTO.class);
-				List<LicenseDTO> licenseList = new ArrayList<LicenseDTO>();
+				List<LicenseDetailDTO> licenseList = new ArrayList<LicenseDetailDTO>();
 				for (LicenseOpensource licenseopensource : ops.getLicenses()) {
 					License license = licenseopensource.getLicense();
-					licenseList.add(modelMapper.map(license, LicenseDTO.class));
+					licenseList.add(modelMapper.map(license, LicenseDetailDTO.class));
 				}
 				opsDto.setLicenseList(licenseList);
 			}else {
