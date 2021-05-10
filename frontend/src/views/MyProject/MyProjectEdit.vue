@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<my-project-path :department="'프로젝트'" :project="'Edit'" />
-		<h1 id="myproject-edit-title">Edit</h1>
+		<my-project-path :department="'프로젝트'" :project="'New Project'" />
+		<h1 id="myproject-edit-title">New Project</h1>
 		<div id="myproject-edit-container">
 			<div id="myproject-edit-selected-div">
 				<h3 id="myproject-edit-selected-title">선택된 프로젝트</h3>
@@ -25,6 +25,7 @@
                     <span class="material-icons"> settings </span>
                 </button> -->
 				<tab id="myproject-edit-tab" :list="tabList" />
+
 				<router-view
 					id="myproject-edit-routerview"
 					:selectedRepositoryList="selectedRepositoryList"

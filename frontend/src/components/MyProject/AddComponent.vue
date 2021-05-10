@@ -1,52 +1,94 @@
 <template>
-	<div class="form-section">
-		<div class="title">
-			<h2>새로운 OpenSource 추가</h2>
-		</div>
-		<div class="dependency-title">
-			<h3>Dependency</h3>
-		</div>
-		<form class="dependency">
-			<div class="path">
-				<label class="dependency-label">path</label>
-				<input v-model="dependency.path" type="text" placeholder="path" />
-			</div>
-			<div class="version">
-				<label class="dependency-label">version</label>
-				<input v-model="dependency.version" type="text" placeholder="version" />
-			</div>
-			<div class="complianceUrl">
-				<label class="dependency-label">ComplianceUrl</label>
-				<input
-					v-model="dependency.complianceUrl"
-					type="text"
-					placeholder="ComplianceUrl"
-				/>
-			</div>
-		</form>
-		<div class="component-title">
-			<h3>OpenSource 생성</h3>
-		</div>
-		<form class="component">
-			<div class="name">
-				<label class="component-label">name</label>
-				<input v-model="component.name" type="text" placeholder="name" />
-			</div>
-			<div class="url">
-				<label class="component-label">url</label>
-				<input v-model="component.url" type="text" placeholder="url" />
-			</div>
-			<div class="License">
-				<label class="component-label">License</label>
-				<input v-model="component.license" type="text" placeholder="License" />
-			</div>
-		</form>
-		<div class="box-3">
-			<div class="btn btn-three">
-				<span>추가</span>
-			</div>
-		</div>
-	</div>
+  <div class="form-section">
+    <div class="title">
+      <h2>새로운 OpenSource 추가</h2>
+    </div>
+    <form action="" class="form">
+      <p class="field required">
+        <label class="label required" for="name">오픈소스 이름</label>
+        <input
+          class="text-input"
+          id="name"
+          name="name"
+          required
+          type="text"
+          placeholder="오픈소스 이름"
+        />
+      </p>
+      <p class="field required">
+        <label class="label" for="email">URL</label>
+        <input
+          class="text-input"
+          id="email"
+          name="email"
+          required
+          type="email"
+          placeholder="URL"
+        />
+      </p>
+      <p class="field required">
+        <label class="label required" for="name">Copyright</label>
+        <input
+          class="text-input"
+          id="name"
+          name="name"
+          required
+          type="text"
+          placeholder="Copyright"
+        />
+      </p>
+      <p class="field required">
+        <label class="label required" for="name">Version</label>
+        <input
+          class="text-input"
+          id="name"
+          name="name"
+          required
+          type="text"
+          placeholder="Version"
+        />
+      </p>
+      <p class="field required">
+        <label class="label required" for="name">Package Type</label>
+        <input
+          class="text-input"
+          id="name"
+          name="name"
+          required
+          type="text"
+          placeholder="package type"
+        />
+      </p>
+      <p class="field required">
+        <label class="label required" for="name">Artifact Id</label>
+        <input
+          class="text-input"
+          id="name"
+          name="name"
+          required
+          type="text"
+          placeholder="Artifact Id"
+        />
+      </p>
+      <p class="field required">
+        <label class="label required" for="name">Group Id</label>
+        <input
+          class="text-input"
+          id="name"
+          name="name"
+          required
+          type="text"
+          placeholder="Group Id"
+        />
+      </p>
+    </form>
+
+    <div class="box-3">
+      <div class="btn btn-three">
+        <span>추가</span>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
 export default {

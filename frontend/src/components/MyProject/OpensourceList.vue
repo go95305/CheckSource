@@ -4,9 +4,10 @@
 			<p>Mapped OpenSource</p>
 		</div>
 		<div class="mapped-table-header" :class="{ sideBar: containerWidth }">
-			<div class="title title-1">오픈소스명</div>
-			<div class="title title-2">주소</div>
-			<div class="title title-3">라이선스</div>
+			<div class="title title-1">Name</div>
+			<div class="title title-2">Url</div>
+			<div class="title title-3">License</div>
+			<div class="title title-3">Copyright</div>
 		</div>
 		<ul
 			class="responsive-table"
@@ -17,10 +18,17 @@
 			<li class="table-row" @click="sidebar(item.version)">
 				<div class="col col-1">{{ item.name }}</div>
 				<div class="col col-2">{{ item.url }}</div>
-				<div class="col col-3">{{ item.obligation }}</div>
+				<div
+					class="col col-3"
+					v-for="(license, index) in item.licenseNameList"
+					:key="`${index}_list`"
+				>
+					{{ license }}
+				</div>
+				<div class="col col-4">{{ item.copyright }}</div>
 			</li>
 		</ul>
-		<div class="unmapped-component">
+		<!-- <div class="unmapped-component">
 			<p>Unmapped OpenSource</p>
 		</div>
 		<button class="add-component" @click="addComponent">OpenSource 추가</button>
@@ -38,7 +46,7 @@
 				<div class="col ucol-1">{{ item.name }}</div>
 				<div class="col ucol-2">{{ item.origin }}</div>
 			</li>
-		</ul>
+		</ul> -->
 		<div class="component-specific" v-if="sidebarShow">
 			<div>
 				<button class="closebtn" @click="closeSideBar">&times;</button>
@@ -51,9 +59,11 @@
 	</div>
 </template>
 <script>
+import verifyApi from "@/api/verify.js";
 export default {
 	data() {
 		return {
+			projectId: this.$route.query.projectId,
 			sidebarShow: false,
 			containerWidth: false,
 			version: "",
@@ -93,7 +103,15 @@ export default {
 			],
 		};
 	},
+	created() {
+		this.getList();
+	},
 	methods: {
+		getList: function () {
+			verifyApi.readVerifiedOpenSourceList(this.projectId).then((response) => {
+				this.list = response.data;
+			});
+		},
 		sidebar(versions) {
 			this.sidebarShow = true;
 			this.containerWidth = true;
