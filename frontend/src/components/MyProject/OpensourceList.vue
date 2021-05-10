@@ -28,7 +28,7 @@
 				<div class="col col-4">{{ item.copyright }}</div>
 			</li>
 		</ul>
-		<!-- <div class="unmapped-component">
+		<div class="unmapped-component">
 			<p>Unmapped OpenSource</p>
 		</div>
 		<button class="add-component" @click="addComponent">OpenSource 추가</button>
@@ -36,7 +36,7 @@
 			<div class="title utitle-1">Dependency</div>
 			<div class="title utitle-2">위치</div>
 		</div>
-		<ul
+		<!-- <ul
 			class="responsive-table"
 			:key="`${idx}_unmapped`"
 			v-for="(item, idx) in unmappedList"
