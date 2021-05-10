@@ -1,9 +1,9 @@
 <template>
 	<div class="container">
 		<div class="mapped-component">
-			<p>Mapped OpenSource</p>
+			<p>mapped opensource</p>
 		</div>
-		<div class="mapped-table-header" :class="{ sideBar: containerWidth }">
+		<div class="mapped-table-header">
 			<div class="title title-1">오픈소스명</div>
 			<div class="title title-2">주소</div>
 			<div class="title title-3">라이선스</div>
@@ -12,19 +12,38 @@
 			class="responsive-table"
 			:key="`${index}_mapped`"
 			v-for="(item, index) in list"
-			:class="{ sideBar: containerWidth }"
 		>
-			<li class="table-row" @click="sidebar(item.version)">
+			<li class="table-row" @click="sidebar">
 				<div class="col col-1">{{ item.name }}</div>
 				<div class="col col-2">{{ item.url }}</div>
 				<div class="col col-3">{{ item.obligation }}</div>
 			</li>
+
+			<div class="component-specific">
+				<div class="specific-row">
+					<p class="specific-title">License Version:</p>
+					<p>{{ item.version }}</p>
+				</div>
+				<div class="specific-row">
+					<p class="specific-title">Packge Type:</p>
+					<p>{{ item.packageType }}</p>
+				</div>
+				<div class="specific-row">
+					<p class="specific-title">Artifact Id:</p>
+					<p>{{ item.artifactId }}</p>
+				</div>
+				<div class="specific-row">
+					<p class="specific-title">Group Id:</p>
+					<p>{{ item.groupId }}</p>
+				</div>
+			</div>
 		</ul>
 		<div class="unmapped-component">
-			<p>Unmapped OpenSource</p>
+			<p>unmapped opensource</p>
 		</div>
-		<button class="add-component" @click="addComponent">OpenSource 추가</button>
-		<div class="unmapped-table-header" :class="{ sideBar: containerWidth }">
+		<button class="add-component" @click="addComponent">Add</button>
+		<!-- <button class="add-component" @click="addComponent">Component 추가</button> -->
+		<div class="unmapped-table-header">
 			<div class="title utitle-1">Dependency</div>
 			<div class="title utitle-2">위치</div>
 		</div>
@@ -32,49 +51,53 @@
 			class="responsive-table"
 			:key="`${idx}_unmapped`"
 			v-for="(item, idx) in unmappedList"
-			:class="{ sideBar: containerWidth }"
 		>
 			<li class="table-row">
 				<div class="col ucol-1">{{ item.name }}</div>
 				<div class="col ucol-2">{{ item.origin }}</div>
 			</li>
 		</ul>
-		<div class="component-specific" v-if="sidebarShow">
-			<div>
-				<button class="closebtn" @click="closeSideBar">&times;</button>
-			</div>
-			<div class="component-version">
-				<p>License Version</p>
-				<p class="version">{{ version }}</p>
-			</div>
-		</div>
 	</div>
 </template>
 <script>
 export default {
+	name: "OpensourceList",
 	data() {
 		return {
-			sidebarShow: false,
+			projectId: this.$route.query.projectId,
+			sidebarShow: [],
 			containerWidth: false,
 			version: "",
+			packageType: "",
+			artifactId: "",
+			groupId: "",
 			list: [
 				{
 					name: "Apache License 2.0",
 					url: "http://www.apache.org/licenses/LICENSE-2.0",
 					obligation: "Apache License 2.0",
 					version: "apache.0.1",
+					packageType: "s",
+					artifactId: "a",
+					groupId: "g",
 				},
 				{
 					name: "GNU General Public License v2.0 or later",
 					url: "https://opensource.org/licenses/BSD-3-Clause",
 					obligation: "Apache License 2.0",
 					version: "apache.2",
+					packageType: "s",
+					artifactId: "a",
+					groupId: "g",
 				},
 				{
 					name: "Eclipse Public License 2.0",
 					url: "https://www.eclipse.org/legal/epl-2.0",
 					obligation: "Apache License 2.0",
 					version: "axios.0.1",
+					packageType: "s",
+					artifactId: "a",
+					groupId: "g",
 				},
 			],
 			unmappedList: [
@@ -93,11 +116,24 @@ export default {
 			],
 		};
 	},
+
 	methods: {
-		sidebar(versions) {
-			this.sidebarShow = true;
-			this.containerWidth = true;
-			this.version = versions;
+		sidebar(event) {
+			let elem = event.target;
+			while (!elem.classList.contains("table-row")) {
+				elem = elem.parentNode;
+
+				if (elem.nodeName == "BODY") {
+					elem = null;
+					return;
+				}
+			}
+
+			if (elem.classList.contains("choice")) {
+				elem.classList.remove("choice");
+			} else {
+				elem.classList.add("choice");
+			}
 		},
 		closeSideBar() {
 			this.sidebarShow = false;

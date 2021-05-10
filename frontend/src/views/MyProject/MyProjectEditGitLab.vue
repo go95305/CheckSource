@@ -1,14 +1,19 @@
 <template>
-	<div class="myproject-edit-gitlab">
-		<repository-card
-			v-for="(repository, index) in repositoryList"
-			:key="`${index}_repositoryList`"
-			:index="index"
-			:repository="repository"
-			:selected="false"
-			:checked="IsSelected(repository.id)"
-			@addRepoClick="AddRepoClick"
-		></repository-card>
+	<div class="myproject-edit">
+		<router-link class="myproject-edit-scm-router-link" to="/mypage/scm/gitlab"
+			><span class="material-icons"> edit </span>계정 설정</router-link
+		>
+		<div class="myproject-edit-gitlab">
+			<repository-card
+				v-for="(repository, index) in repositoryList"
+				:key="`${index}_repositoryList`"
+				:index="index"
+				:repository="repository"
+				:selected="false"
+				:checked="IsSelected(repository.id)"
+				@addRepoClick="AddRepoClick"
+			></repository-card>
+		</div>
 	</div>
 </template>
 <script>

@@ -13,7 +13,7 @@
 					<th>FULL NAME</th>
 					<th>IDENTIFIER</th>
 					<th>URL</th>
-					<th>Code Open</th>
+					<th>CODE OPEN</th>
 				</thead>
 				<tbody class="oss-table-tbody">
 					<tr
