@@ -57,7 +57,7 @@ export default {
 	},
 	methods: {
 		GoReport: function () {
-			this.$emit("goReport", "26430578");
+			this.$emit("goReport", "26342734");
 		},
 	},
 };
