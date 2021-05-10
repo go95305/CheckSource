@@ -1,15 +1,19 @@
 <template>
 	<div>
-		<table>
+		<table class="oss-license-info-table">
 			<tr
+				class="oss-license-info-table-tr"
 				v-for="(information, index) in informationList"
 				:key="`${index}_informationList`"
 			>
-				<td>{{ information.name }}</td>
-				<td v-if="getValue(information.value)">
+				<td class="oss-license-info-table-td-title">{{ information.name }}</td>
+				<td
+					class="oss-license-info-table-td-value"
+					v-if="getValue(information.value)"
+				>
 					<span class="material-icons"> done </span>
 				</td>
-				<td v-else>
+				<td class="oss-license-info-table-td-value" v-else>
 					<span class="material-icons"> close </span>
 				</td>
 			</tr>
@@ -18,7 +22,7 @@
 </template>
 <script>
 export default {
-	name: "OSSDetailLicenseContent",
+	name: "OSSDetailLicenseInformation",
 	data() {
 		return {
 			informationList: [
@@ -80,3 +84,4 @@ export default {
 	},
 };
 </script>
+<style scoped src="@/assets/css/OSS/OSSDetailLicenseInformation.css"></style>
