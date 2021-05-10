@@ -1,7 +1,7 @@
 <template>
   <div class="form-section">
     <div class="title">
-      <h2>새로운 Component 추가</h2>
+      <h2>새로운 OpenSource 추가</h2>
     </div>
     <form action="" class="form">
       <p class="field required">

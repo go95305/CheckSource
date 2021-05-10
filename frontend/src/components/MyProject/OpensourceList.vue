@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="mapped-component">
-      <p>mapped component</p>
+      <p>mapped opensource</p>
     </div>
     <div class="mapped-table-header">
       <div class="title title-1">오픈소스명</div>
@@ -39,7 +39,7 @@
       </div>
     </ul>
     <div class="unmapped-component">
-      <p>unmapped component</p>
+      <p>unmapped opensource</p>
     </div>
     <button class="add-component"  @click="addComponent">Add</button>
     <!-- <button class="add-component" @click="addComponent">Component 추가</button> -->
@@ -137,7 +137,7 @@ export default {
       this.containerWidth = false;
     },
     addComponent() {
-      this.$router.push({ name: "AddComponent" });
+      this.$router.push({ name: "AddOpenSource" });
     },
   },
 };
