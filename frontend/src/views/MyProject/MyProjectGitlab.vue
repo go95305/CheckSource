@@ -26,8 +26,7 @@ export default {
 	},
 	methods: {
 		GoReport: function (projectId) {
-			console.log(projectId);
-			this.$router.push({ name: "Summary", query: { projectId: "26430578" } });
+			this.$router.push({ name: "Summary", query: { projectId: projectId } });
 		},
 	},
 };
