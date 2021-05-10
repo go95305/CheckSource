@@ -46,7 +46,7 @@ public class LicenseService {
 			licensePagedata = licenseRepository.findAll(paging);
 		}else if(typeFilter.equals("Name")) {
 			licensePagedata = licenseRepository.findByNameLike("%"+keyword+"%",paging);
-		}else if(typeFilter.equals("Identyfier")) {
+		}else if(typeFilter.equals("Identifier")) {
 			licensePagedata = licenseRepository.findByIdentifierLike("%"+keyword+"%",paging);
 		}
 		
