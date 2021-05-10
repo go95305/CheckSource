@@ -18,6 +18,7 @@ const MyProjectEdit = () => import("@/views/MyProject/MyProjectEdit");
 const MyProjectEditGitLab = () =>
 	import("@/views/MyProject/MyProjectEditGitLab");
 const MyProjectGitlab = () => import("@/views/MyProject/MyProjectGitlab");
+const MyProjectAddLicense = () => import("@/views/MyProject/MyProjectAddLicense");
 const LicenseList = () => import("@/components/MyProject/LicenseList");
 const Summary = () => import("@/components/MyProject/Summary");
 
