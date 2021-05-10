@@ -40,25 +40,25 @@ public class ProjectService {
 	}
 
 	// 분석된 프로젝트의 오픈소스 목록
-	public void getOpensourceListByProject(String projectId) {
-		
-		List<LicenseOpensource> licenseOpensourceList = new ArrayList<LicenseOpensource>();
-		licenseOpensourceList = licenseOpensourceRepository.findAllByProjectId(projectId);
-		for (LicenseOpensource licenseOpensource : licenseOpensourceList) {
-			//OpensourcelistDTO opensourcelistDto = new OpensourcelistDTO();
-			Opensource opensouece = licenseOpensource.getOpensource();
-			//opensourcelistDto = modelMapper.map(opensouece, OpensourcelistDTO.class);
-			//오픈소스 - 라이선스 매핑 리스트 어떻게?
-		}
-	}
-
-	// 분석된 프로젝트의 라이선스 목록
-	public void getLicenseListByProject(String projectId) {
-		List<LicenseOpensource> licenseOpensourceList = new ArrayList<LicenseOpensource>();
-		licenseOpensourceList = licenseOpensourceRepository.findAllByProjectId(projectId);
-		
-		List<LicenseDTO> licenseList = new ArrayList<LicenseDTO>();
-		
-		
-	}
+//	public void getOpensourceListByProject(String projectId) {
+//		
+//		List<LicenseOpensource> licenseOpensourceList = new ArrayList<LicenseOpensource>();
+//		licenseOpensourceList = licenseOpensourceRepository.findAllByProjectId(projectId);
+//		for (LicenseOpensource licenseOpensource : licenseOpensourceList) {
+//			//OpensourcelistDTO opensourcelistDto = new OpensourcelistDTO();
+//			Opensource opensouece = licenseOpensource.getOpensource();
+//			//opensourcelistDto = modelMapper.map(opensouece, OpensourcelistDTO.class);
+//			//오픈소스 - 라이선스 매핑 리스트 어떻게?
+//		}
+//	}
+//
+//	// 분석된 프로젝트의 라이선스 목록
+//	public void getLicenseListByProject(String projectId) {
+//		List<LicenseOpensource> licenseOpensourceList = new ArrayList<LicenseOpensource>();
+//		licenseOpensourceList = licenseOpensourceRepository.findAllByProjectId(projectId);
+//		
+//		List<LicenseDTO> licenseList = new ArrayList<LicenseDTO>();
+//		
+//		
+//	}
 }
