@@ -19,6 +19,7 @@ const MyProjectEditGitLab = () =>
 	import("@/views/MyProject/MyProjectEditGitLab");
 const MyProjectGitlab = () => import("@/views/MyProject/MyProjectGitlab");
 const LicenseList = () => import("@/components/MyProject/LicenseList");
+const Summary = () => import("@/components/MyProject/Summary");
 
 const OSSMain = () => import("@/views/OSS/OSSMain");
 const OSSList = () => import("@/views/OSS/OSSList");
