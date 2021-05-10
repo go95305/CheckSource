@@ -33,7 +33,7 @@ public class OpensourceService {
 
 	private final OpensourceRepository opensourceRepository;
 	private final ModelMapper modelMapper = new ModelMapper();
-	private final LicenseOpensourceRepository licenseToopensourceRepository;
+	private final LicenseOpensourceRepository licenseopensourceRepository;
 
 	public OpensourceListDTO getOpensourceList(String typeFilter, String keyword, int pageSize, int page) {
 		OpensourceListDTO opsListDto = new OpensourceListDTO();
@@ -41,10 +41,9 @@ public class OpensourceService {
 		Page<Opensource> opensourcePagedata = null;
 		Pageable paging = PageRequest.of(page-1, pageSize,Direction.ASC,"name");
 		
-		if(keyword.equals(".")) {
+		if(keyword.equals(".") || keyword.equals("")) {
 			opensourcePagedata = opensourceRepository.findAll(paging);
 		}else if(typeFilter.equals("Name")) {
-			
 			opensourcePagedata = opensourceRepository.findByNameLike("%"+keyword+"%",paging);
 		}else if(typeFilter.equals("License")) {
 			
@@ -91,7 +90,7 @@ public class OpensourceService {
 			opslickey.setOpensourceId(opsId);
 			opslickey.setLicenseId(licenseId);
 			licops.setOpslic_id(opslickey);
-			licenseToopensourceRepository.save(licops);
+			licenseopensourceRepository.save(licops);
 		}
 
 	}

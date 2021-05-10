@@ -15,6 +15,6 @@ public class OpensourceDetailDTO {
 	private String packageType;
 	private String groupId;
 	private String artifactId;
-	private List<LicenseDTO> licenseList; 
+	private List<LicenseDetailDTO> licenseList; 
 }
 
