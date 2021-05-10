@@ -3,6 +3,7 @@ package com.ssafy.checksource.model.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,8 +35,11 @@ public class Opensource {
 	@Column(name = "artifact_id")
 	private String artifactId;
 	
-	@OneToMany(mappedBy = "opensource")
-    private List<LicenseToOpensource> licenses = new ArrayList<>();
+	@OneToMany(mappedBy = "opensource", cascade = CascadeType.ALL)
+    private List<LicenseOpensource> licenses = new ArrayList<>();
 	
+	
+	@OneToMany(mappedBy = "opensource", cascade = CascadeType.ALL)
+    private List<OpensourceProject> opensourceProject = new ArrayList<>();
 }
 //

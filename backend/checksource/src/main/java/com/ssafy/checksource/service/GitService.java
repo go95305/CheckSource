@@ -3,16 +3,12 @@ package com.ssafy.checksource.service;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONArray;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -21,18 +17,17 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.ssafy.checksource.config.security.JwtTokenProvider;
 import com.ssafy.checksource.model.dto.AnalyProjectListDTO;
 import com.ssafy.checksource.model.dto.GitLabConnectDTO;
 import com.ssafy.checksource.model.dto.GitLabProjectDTO;
 import com.ssafy.checksource.model.dto.GitLabProjectListDTO;
+import com.ssafy.checksource.model.dto.PackageManageFileDTO;
 import com.ssafy.checksource.model.dto.RepositoryTreeDTO;
 import com.ssafy.checksource.model.dto.UserGitLabDTO;
 import com.ssafy.checksource.model.entity.Depart;
@@ -41,6 +36,7 @@ import com.ssafy.checksource.model.entity.Project;
 import com.ssafy.checksource.model.entity.User;
 import com.ssafy.checksource.model.repository.DepartRepository;
 import com.ssafy.checksource.model.repository.GitLabRepository;
+import com.ssafy.checksource.model.repository.OpensourceRepository;
 import com.ssafy.checksource.model.repository.ProjectRepository;
 import com.ssafy.checksource.model.repository.UserRepository;
 
@@ -60,7 +56,8 @@ public class GitService {
 	private final ProjectRepository projectRepository;
 	private final DepartRepository departRepository;
 	private final String baseUrl = "https://gitlab.com/api/v4/"; // 기본 public url
-
+	private final AnalyzeService analyzeService;
+	
 	// gitlab 계정 연동 체크
 	public GitLabConnectDTO gitConnect(String username, String token, String accessToken) {
 		String url = baseUrl + "users?username=";
@@ -243,7 +240,7 @@ public class GitService {
 	}
 	
 	// 프로젝트 추가하기 - 검증
-	public boolean addProject(String token, List<GitLabProjectDTO> projectList, String gitlabId) throws URISyntaxException, UnsupportedEncodingException {
+	public boolean addProject(String token, List<GitLabProjectDTO> projectList, String gitlabId) throws Exception {
 
 		String userId = jwtTokenProvider.getUserId(token);
 		User user = userRepository.findByUserId(userId);
@@ -260,8 +257,10 @@ public class GitService {
 			projectRepository.save(project);
 		}
 
-		// 검증	
+		//검증할 프로젝트 리스트
 		List<AnalyProjectListDTO> analyProjectList = new ArrayList<AnalyProjectListDTO>();
+		GitLab gitLab = gitLabRepository.findById(gitlabId).orElseThrow(() -> new IllegalArgumentException("no gitlab Id in database"));
+		String accessToken = gitLab.getAccessToken();
 		
 		// 프로젝트별 검증 
 		for (GitLabProjectDTO gitLabProjectDTO : projectList) {
@@ -271,8 +270,7 @@ public class GitService {
 
 			//1. repositoryTree 전체 리스트로 가져오기 - 브런치 받아야함 현재는 master을 기본으로
 			String url = baseUrl + "projects/" + projectId + "/repository/tree?ref=master&recursive=true&per_page=50000";
-			GitLab gitLab = gitLabRepository.findById(gitlabId).orElseThrow(() -> new IllegalArgumentException("no gitlab Id in database"));
-			String accessToken = gitLab.getAccessToken();
+			
 			
 			List<RepositoryTreeDTO> repositoryTreeList = new ArrayList<RepositoryTreeDTO>();
 			RepositoryTreeDTO returnRepositoryDto = new RepositoryTreeDTO();
@@ -293,11 +291,17 @@ public class GitService {
 					return false;
 				}
 				//repository tree가 없을 경우 404
-				if(e.getStatusCode() == HttpStatus.NOT_FOUND)
+				if(e.getStatusCode() == HttpStatus.NOT_FOUND) {
+					//검증할 필요가 없으므로 검증상태 처리 true
+					Project project = projectRepository.findByProjectId(projectId);
+					project.setStatus(true);
+					projectRepository.save(project);
 					continue;
+				}
+					
 			}
 			
-			//2. repositoryTreeList에서 패키지 매니저 파일 뽑음
+			//2. repositoryTreeList에서 패키지 매니저 파일 리스트 뽑음
 			List<RepositoryTreeDTO> packageManageFileList = new ArrayList<RepositoryTreeDTO>();
 			for (RepositoryTreeDTO repositoryTree : repositoryTreeList) {
 				if (repositoryTree.getName().equals("pom.xml")) {
@@ -309,71 +313,58 @@ public class GitService {
 			//set
 			analyProjectListDto.setProjectId(projectId);
 			analyProjectListDto.setProjectName(projectName);
-			analyProjectListDto.setPackageManageFileList(packageManageFileList);
+			analyProjectListDto.setPackageManageFileList(packageManageFileList); //패키지매니저파일 리스트
 			analyProjectList.add(analyProjectListDto);
 		}//end project for문
 
 		System.out.println(analyProjectList);
 		
-		//3. 뽑은 패키지매니저의 contents 뽑아서 -> 검증 진행
+		//3. 프로젝트별 패키지매니저 파일 리스트에서 패키지 매니터 파일의 contents 뽑기
 		for (AnalyProjectListDTO analyProjectListDto : analyProjectList) {
 			List<RepositoryTreeDTO> packageManageFileList = analyProjectListDto.getPackageManageFileList();
 			String projectId = analyProjectListDto.getProjectId();
 
-			System.out.println(projectId);
 			//프로젝트별 패키지파일 리스트
-//			for (RepositoryTreeDTO packageManageFile : packageManageFileList) {
-//				String path = packageManageFile.getPath();
-//				String urlEncoding = URLEncoder.encode(path, StandardCharsets.UTF_8.toString());
-//				System.out.println(urlEncoding);
-//			}
-		
+			for (RepositoryTreeDTO packageManageFile : packageManageFileList) {
+				String path = packageManageFile.getPath();
+				
+				//path 경로 url encoding해서 api 요청
+				URI uri = UriComponentsBuilder
+				        .fromUriString(baseUrl+"projects/{projectid}/repository/files/{urlEncoding}?ref=master")
+				        .encode()
+				        .buildAndExpand(projectId, path).toUri();
+				//헤더
+				HttpHeaders headers = new HttpHeaders();
+				headers.setContentType(MediaType.APPLICATION_XML);
+				headers.set("private-token", accessToken);
+				HttpEntity entity = new HttpEntity(headers);	
+				try {
+					ResponseEntity<String> responseEntity = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
+					Gson gson = new Gson();
+					PackageManageFileDTO packageManageFileDto =  gson.fromJson(responseEntity.getBody(), PackageManageFileDTO.class);
+					//contents 뽑음
+					String contents = packageManageFileDto.getContent();
+					String filePath = packageManageFileDto.getFile_path();
+					String fileName = packageManageFileDto.getFile_name();
+					// 4. base64 - decoding 등 승환 코드
+					analyzeService.analyze(projectId, fileName, contents, filePath);
+							
+				} catch (HttpClientErrorException e) {
+					//토큰이 유효하지 않을 경우 401
+					if(e.getStatusCode() == HttpStatus.UNAUTHORIZED) {
+						return false;
+					}
+				}
+			}
+			
+			//5. 검증 완료한 프로젝트 status 업데이트
+			Project project = projectRepository.findByProjectId(projectId);
+			project.setStatus(true);
+			projectRepository.save(project);
 		}
-	
-		
-		// base64
-		// 검증
-		
-	
-		//플젝 status 업데이트
 
 		return true;
 	}
 
-	// 재검증 - 검증시간 업데이트 되는지 확인
-
-	// pom.xml불러오기 예외처리, token처리 필요
-//	public RepositoryTreeDTO getPackgeManageFile(String token, String projectId, String gitlabId)
-//			throws UnsupportedEncodingException {
-//		
-//		// 프로젝트 tree 가져오기 - pom.xml찾기
-//
-//		// https://lab.ssafy.com/api/v4/projects/40557/repository/tree?recursive=true&per_page=9999
-//
-//		String url = baseUrl + "projects/" + projectId + "/repository/tree?recursive=true&per_page=9999";
-//		GitLab gitLab = gitLabRepository.findByGitlabId(gitlabId);
-//		// String accessToken = gitLab.getAccessToken();
-//
-//		RepositoryTreeDTO returnRepositoryDto = new RepositoryTreeDTO();
-//
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.setContentType(MediaType.APPLICATION_XML);
-//		// headers.set("private-token", accessToken);
-//		HttpEntity entity = new HttpEntity(headers);
-//
-//		List<RepositoryTreeDTO> repositoryTreeList = new ArrayList<RepositoryTreeDTO>();
-//		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-//		Gson gson = new Gson();
-//		RepositoryTreeDTO[] repositoryTreeDto = gson.fromJson(responseEntity.getBody(), RepositoryTreeDTO[].class);
-//		repositoryTreeList = Arrays.asList(repositoryTreeDto);
-//		for (RepositoryTreeDTO repositoryTree : repositoryTreeList) {
-//			if (repositoryTree.getName().equals("pom.xml")) {
-//				returnRepositoryDto = repositoryTree;
-//			}
-//		}
-//
-//		// name , contets
-//		return returnRepositoryDto;
-//	}
-
+	//재검증
 }
