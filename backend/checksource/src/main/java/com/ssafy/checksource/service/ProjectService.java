@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ssafy.checksource.config.security.JwtTokenProvider;
 import com.ssafy.checksource.model.dto.AnalyProjectDTO;
 import com.ssafy.checksource.model.dto.LicenseDTO;
-import com.ssafy.checksource.model.dto.OpensourcelistDTO;
 import com.ssafy.checksource.model.entity.LicenseOpensource;
 import com.ssafy.checksource.model.entity.Opensource;
 import com.ssafy.checksource.model.repository.LicenseOpensourceRepository;
@@ -46,9 +45,9 @@ public class ProjectService {
 		List<LicenseOpensource> licenseOpensourceList = new ArrayList<LicenseOpensource>();
 		licenseOpensourceList = licenseOpensourceRepository.findAllByProjectId(projectId);
 		for (LicenseOpensource licenseOpensource : licenseOpensourceList) {
-			OpensourcelistDTO opensourcelistDto = new OpensourcelistDTO();
+			//OpensourcelistDTO opensourcelistDto = new OpensourcelistDTO();
 			Opensource opensouece = licenseOpensource.getOpensource();
-			opensourcelistDto = modelMapper.map(opensouece, OpensourcelistDTO.class);
+			//opensourcelistDto = modelMapper.map(opensouece, OpensourcelistDTO.class);
 			//오픈소스 - 라이선스 매핑 리스트 어떻게?
 		}
 	}
