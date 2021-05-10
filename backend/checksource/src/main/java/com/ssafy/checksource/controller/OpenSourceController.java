@@ -4,11 +4,13 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.checksource.model.dto.OpensourceDTO;
+import com.ssafy.checksource.model.dto.OpensourceDetailDTO;
+import com.ssafy.checksource.model.dto.OpensourceListDTO;
 import com.ssafy.checksource.model.dto.OpensourcesaveDTO;
 import com.ssafy.checksource.service.OpensourceService;
 
@@ -29,14 +31,14 @@ public class OpenSourceController {
 
 	private final OpensourceService opensourceService;
 
-	@ApiOperation(value = "오픈소스 전체 목록 불러오기")
+	@ApiOperation(value = "오픈소스 목록 불러오기")
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "typeFilter", value = "타입필터 - 전체/Name/license", required = true, defaultValue = "전체"),
-			@ApiImplicitParam(name = "keyword", value = "검색키워드 - 없으면 공백 있으면 해당키워드값", defaultValue = "", required = true),
+			@ApiImplicitParam(name = "typeFilter", value = "타입필터 - Name/License", required = true, defaultValue = "Name"),
+			@ApiImplicitParam(name = "keyword", value = "검색키워드 - 없으면 . 있으면 해당키워드값", defaultValue = ".", required = true),
 			@ApiImplicitParam(name = "pageSize", value = "페이지당 보여줄 컨텐츠 갯수", defaultValue = "10", required = true),
 			@ApiImplicitParam(name = "page", value = "기본-1 ex) 1-(1~10) 2-(11~20)", defaultValue = "1", required = true) })
 	@GetMapping("/getList")
-	public Object getList(@RequestParam String typeFilter, @RequestParam String keyword, @RequestParam int pageSize,
+	public OpensourceListDTO getList(@RequestHeader("TOKEN") String token,@RequestParam String typeFilter, @RequestParam String keyword, @RequestParam int pageSize,
 			@RequestParam int page) {
 
 		return opensourceService.getOpensourceList(typeFilter, keyword, pageSize, page);
@@ -45,13 +47,13 @@ public class OpenSourceController {
 
 	@ApiOperation(value = "오픈소스 하나의 상세정보 불러오기")
 	@GetMapping("/getDetail/{opensourceId}")
-	public OpensourceDTO getDetail(long opensourceId) {
+	public OpensourceDetailDTO getDetail(@RequestHeader("TOKEN") String token,long opensourceId) {
 		return opensourceService.getDetailOpensource(opensourceId);
 	}
 
 	@ApiOperation(value = "오픈소스 저장하기")
 	@PostMapping("/addlicense")
-	public void insert(@RequestBody OpensourcesaveDTO opsDto) {
+	public void insert(@RequestHeader("TOKEN") String token,@RequestBody OpensourcesaveDTO opsDto) {
 		opensourceService.save(opsDto);
 	}
 

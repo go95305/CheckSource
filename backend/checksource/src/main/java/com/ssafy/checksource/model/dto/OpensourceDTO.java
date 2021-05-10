@@ -11,10 +11,6 @@ public class OpensourceDTO {
 	private String name;
 	private String url;
 	private String copyright;
-	private String version;
-	private String packageType;
-	private String groupId;
-	private String artifactId;
-	private List<LicenseDTO> licenseList; 
+	private List<String> licenseNameList;
 }
 

@@ -1,17 +1,21 @@
 package com.ssafy.checksource.service;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ssafy.checksource.model.dto.OpensourceDetailDTO;
+import com.ssafy.checksource.model.dto.OpensourceListDTO;
 import com.ssafy.checksource.model.dto.OpensourceDTO;
-import com.ssafy.checksource.model.dto.OpensourcelistDTO;
 import com.ssafy.checksource.model.dto.OpensourcesaveDTO;
 import com.ssafy.checksource.model.entity.License;
 import com.ssafy.checksource.model.entity.LicenseOpensource;
@@ -29,18 +33,24 @@ public class OpensourceService {
 
 	private final OpensourceRepository opensourceRepository;
 	private final ModelMapper modelMapper = new ModelMapper();
-	private final LicenseOpensourceRepository licenseToopensourceRepository;
+	private final LicenseOpensourceRepository licenseopensourceRepository;
 
-	public List<OpensourcelistDTO> getOpensourceList(String typeFilter, String keyword, int pageSize, int page) {
-		List<OpensourcelistDTO> list = new ArrayList<OpensourcelistDTO>();
-		Page<Opensource> Opensourcelist = null;
-		if(typeFilter.equals("전체")) {
-			Opensourcelist = opensourceRepository.findAll(PageRequest.of(page-1, pageSize,Direction.ASC,"name"));
+	public OpensourceListDTO getOpensourceList(String typeFilter, String keyword, int pageSize, int page) {
+		OpensourceListDTO opsListDto = new OpensourceListDTO();
+		List<OpensourceDTO> opensourceList = new ArrayList<OpensourceDTO>();
+		Page<Opensource> opensourcePagedata = null;
+		Pageable paging = PageRequest.of(page-1, pageSize,Direction.ASC,"name");
+		
+		if(keyword.equals(".")) {
+			opensourcePagedata = opensourceRepository.findAll(paging);
+		}else if(typeFilter.equals("Name")) {
+			opensourcePagedata = opensourceRepository.findByNameLike("%"+keyword+"%",paging);
+		}else if(typeFilter.equals("License")) {
+			
 		}
-		System.out.println("---------------------");
-		System.out.println(Opensourcelist.getTotalPages());
-		for (Opensource ops : Opensourcelist) {
-			OpensourcelistDTO opsDto = modelMapper.map(ops, OpensourcelistDTO.class);
+		
+		for (Opensource ops : opensourcePagedata) {
+			OpensourceDTO opsDto = modelMapper.map(ops, OpensourceDTO.class);
 			List<String> licenseNameList = new ArrayList<String>();
 			for (LicenseOpensource licenseopensource : ops.getLicenses()) {
 				License license = licenseopensource.getLicense();
@@ -48,15 +58,16 @@ public class OpensourceService {
 			}
 			opsDto.setLicenseNameList(licenseNameList);
 
-			list.add(opsDto);
+			opensourceList.add(opsDto);
 		}
-
-		return list;
+		opsListDto.setTotalPage(opensourcePagedata.getTotalPages());
+		opsListDto.setList(opensourceList);
+		return opsListDto;
 	}
 
-	public OpensourceDTO getDetailOpensource(long id) {
+	public OpensourceDetailDTO getDetailOpensource(long id) {
 		Opensource ops = opensourceRepository.findById(id);
-		OpensourceDTO opsDto = modelMapper.map(ops, OpensourceDTO.class);
+		OpensourceDetailDTO opsDto = modelMapper.map(ops, OpensourceDetailDTO.class);
 		return opsDto;
 	}
 
@@ -79,7 +90,7 @@ public class OpensourceService {
 			opslickey.setOpensourceId(opsId);
 			opslickey.setLicenseId(licenseId);
 			licops.setOpslic_id(opslickey);
-			licenseToopensourceRepository.save(licops);
+			licenseopensourceRepository.save(licops);
 		}
 
 	}
