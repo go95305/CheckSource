@@ -58,11 +58,12 @@ public class UserService {
 				userRepository.save(user);
 				userDto = modelMapper.map(user, UserDTO.class);
 				//깃 아이디, 깃 유저 네임
-				GitLab gitLab = gitLabRepository.findByUser(user);
-				if(gitLab != null) {//깃 연동 했을 경우
-					userDto.setGitlabId(gitLab.getGitlabId());
-					userDto.setUsername(gitLab.getUsername());
-				}
+				//GitLab gitLab = gitLabRepository.findByUser(user);
+//				if(gitLab != null) {//깃 연동 했을 경우
+//					//깃정보 담아서 줌
+//					//userDto.setGitlabId(gitLab.getGitlabId());
+//					//userDto.setUsername(gitLab.getUsername());
+//				}
 				return userDto;
 			}
 			//최초로그인은 아니지만 회원정보 미입력시 flag = false
@@ -122,11 +123,11 @@ public class UserService {
 		
 		userDto = modelMapper.map(user, UserDTO.class);
 		//깃 아이디, 깃 유저 네임
-		GitLab gitLab = gitLabRepository.findByUser(user);
-		if(gitLab != null) {//깃 연동 했을 경우
-			userDto.setGitlabId(gitLab.getGitlabId());
-			userDto.setUsername(gitLab.getUsername());
-		}
+		//GitLab gitLab = gitLabRepository.findByUser(user);
+		//if(gitLab != null) {//깃 연동 했을 경우
+			//userDto.setGitlabId(gitLab.getGitlabId());
+			//userDto.setUsername(gitLab.getUsername());
+		//}
 		
 		return userDto;
 	}
