@@ -16,8 +16,6 @@ public class UserDTO {
     private Long depart;
     private Long job;
     
-    //깃정보 - 리스트, baseUrl도 
     private List<GitLabDTO> gitlabList;
-   
 }
 

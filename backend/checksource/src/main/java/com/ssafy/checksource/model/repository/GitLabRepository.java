@@ -8,7 +8,5 @@ import com.ssafy.checksource.model.entity.User;
 
 public interface GitLabRepository extends JpaRepository<GitLab, String>{
 
-//	GitLab findByGitlabId (String gitlabId);
-//	GitLab findByGitlabIdAndUser (String gitlabId, User user);
-//	GitLab findByUser (User user);
+
 }

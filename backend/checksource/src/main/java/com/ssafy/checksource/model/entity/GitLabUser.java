@@ -33,4 +33,5 @@ public class GitLabUser {
 	private String userGitlabId;
 	private String username;
 	
+
 }
