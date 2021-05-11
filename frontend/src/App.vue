@@ -1,23 +1,11 @@
 <template>
 	<div id="app">
-		<div v-if="loading" class="loading">
-			<loading></loading>
-		</div>
 		<router-view />
 	</div>
 </template>
 <script>
-import Loading from "@/components/Loading/Loading";
 export default {
 	name: "App",
-	data() {
-		return {
-			loading: false,
-		};
-	},
-	components: {
-		Loading,
-	},
 	created() {
 		//자동로그인
 		const localStorageVuex = localStorage.getItem("vuex");
@@ -41,19 +29,5 @@ export default {
 
 #app {
 	font-family: "Noto Sans KR";
-}
-
-.loading {
-	position: absolute;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	left: 0px;
-	height: 0px;
-	z-index: 10;
-	width: 100vw;
-	height: 100vh;
-	overflow: hidden;
-	background-color: rgba(128, 128, 128, 0.466);
 }
 </style>

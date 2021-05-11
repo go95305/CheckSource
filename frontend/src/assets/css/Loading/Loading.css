@@ -6,7 +6,7 @@
 }
 
 .loading-flex-image {
-	width: 50px;
+	width: 30px;
 	margin: 0px 5px;
 	animation-duration: 0.3s;
 	animation-name: updown;
