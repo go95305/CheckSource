@@ -17,7 +17,7 @@ const MyProjectResult = () => import("@/views/MyProject/MyProjectResult");
 const MyProjectEdit = () => import("@/views/MyProject/MyProjectEdit");
 const MyProjectEditGitLab = () =>
 	import("@/views/MyProject/MyProjectEditGitLab");
-const MyProjectGitlab = () => import("@/views/MyProject/MyProjectGitlab");
+const MyProjects = () => import("@/views/MyProject/MyProjects");
 const MyProjectAddLicense = () =>
 	import("@/components/MyProject/MyProjectAddLicense");
 const LicenseList = () => import("@/components/MyProject/LicenseList");
@@ -90,9 +90,9 @@ const routes = [
 								component: MyProjectStatus,
 							},
 							{
-								path: "gitlab",
-								name: "GitLab",
-								component: MyProjectGitlab,
+								path: "projects",
+								name: "Projects",
+								component: MyProjects,
 							},
 							{
 								path: "github",
