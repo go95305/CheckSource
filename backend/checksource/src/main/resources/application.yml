@@ -13,7 +13,7 @@ spring:
       maxConnPerRoute: 5 #특정 경로당 최대 숫자
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     properties:
       hibernate:
         show_sql: true
