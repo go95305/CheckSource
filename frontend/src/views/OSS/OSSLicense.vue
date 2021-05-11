@@ -100,7 +100,7 @@ export default {
 		},
 		GoDetail: function (license) {
 			this.$router.push({
-				name: "OSSDetailLicenseContent",
+				name: "OSSDetailLicenseInformation",
 				query: { id: license.licenseId },
 			});
 		},

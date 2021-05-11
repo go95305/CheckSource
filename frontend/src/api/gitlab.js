@@ -7,6 +7,12 @@
 
 import http from "./http";
 
+const baseUrl = ["gitlab.com", "lab.ssafy.com"];
+
+function getBaseURL() {
+	return baseUrl;
+}
+
 //gitlab 계정연동
 function createGitLabConnect(account) {
 	return http.get(`/git/gitlabConnect`, {
@@ -42,6 +48,7 @@ function verifyGitLabProjects(gitlabId, projectList) {
 }
 
 export default {
+	getBaseURL,
 	createGitLabConnect,
 	updateGitLabConnect,
 	deleteGitLabConnect,

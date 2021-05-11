@@ -1,0 +1,111 @@
+/* Colors */
+/* ---------------------------------------- */
+$border: #c6c6c6;
+$border-focus: #9fb1c1;
+$blue: #077abc;
+$aqua: #07b3a1;
+$asphalt: #506982;
+
+form {
+  padding: 4em 10%;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+h2.heading {
+  font-size: 18px;
+  text-transform: uppercase;
+  font-weight: 300;
+  text-align: left;
+  color: $asphalt;
+  border-bottom: 1px solid $asphalt;
+  padding-bottom: 3px;
+  margin-bottom: 20px;
+}
+.controls {
+  text-align: left;
+  position: relative;
+  input[type='text'],
+  input[type='email'],
+  input[type='tel'],
+  textarea,
+  button,
+  select {
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid $border;
+    width: 100%;
+    margin-bottom: 18px;
+    color: #888;
+    font-size: 16px;
+    font-weight: 300;
+    background-color: #fff;
+    border-radius: 2px;
+    transition: (all 0.3s);
+
+    &:focus,
+    &:hover {
+      outline: none;
+      border-color: $border-focus;
+      + label {
+        color: $blue;
+        cursor: text;
+      }
+    }
+  }
+  .fa-sort {
+    position: absolute;
+    right: 10px;
+    top: 17px;
+    color: #999;
+  }
+  select {
+    appearance: none;
+    cursor: pointer;
+  }
+  label {
+    position: absolute;
+    left: 8px;
+    top: 12px;
+    color: #999;
+    font-size: 16px;
+    display: inline-block;
+    padding: 4px 10px;
+    font-weight: 400;
+    background-color: rgba(255, 255, 255, 0);
+    pointer-events: none;
+    transition: (color 0.3s, top 0.3s, background-color 0.8s);
+    &.active {
+      top: -11px;
+      color: #555;
+      background-color: rgba(255, 255, 255, 1);
+    }
+  }
+  textarea {
+    resize: none;
+    height: 200px;
+  }
+  button {
+    cursor: pointer;
+    background-color: $blue;
+    border: none;
+    color: #fff;
+    padding: 12px 0;
+    &:hover {
+      background-color: lighten($blue, 5%);
+    }
+  }
+}
+
+// .floatLabel:focus + .form-control-placeholder,
+// .floatLabel:active + .form-control-placeholder,
+// .floatLabel:valid + .form-control-placeholder {
+//   font-size: 75%;
+//   transform: translate3d(0, -100%, 0);
+//   opacity: 1;
+//   //   transition: (color 0.3s, top 0.3s, background-color 0.8s);
+//   //   top: -13px;
+//   color: #555;
+//   background-color: rgba(255, 255, 255, 1);
+// }

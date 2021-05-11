@@ -1,12 +1,35 @@
 <template>
 	<div id="mypage-gitlab-container">
 		<!-- 현재 연동된 계정 정보 -->
-		<div id="mypage-gitlab-current" v-if="currentAccount != null">
-			<span id="mypage-gitlab-current-title">현재 연동된 계정</span>
-			<span id="mypage-gitlab-current-account">{{ currentAccount }}</span>
+		<div v-if="gitlab.length > 0" class="mypage-scm-account-background">
+			<h3 class="mypage-gitlab-title">현재 연동된 계정</h3>
+			<SCMCard
+				v-for="(account, index) in gitlab"
+				:key="`${index}_accountList`"
+				:account="account"
+			></SCMCard>
 		</div>
 
+		<!-- 새로 입력할 계정 정보 -->
 		<div id="mypage-gitlab-new-account" :class="{ open: openInputArea }">
+			<h3 class="mypage-gitlab-title">새로 연동할 계정 정보</h3>
+			<label class="mypage-gitlab-label" for="mypage-gitlab-baseurl"
+				>BaseURL</label
+			>
+			<select
+				v-model="newGitLabAccount.gitlabId"
+				name="gitlab-baseurl"
+				id="mypage-gitlab-baseurl"
+				class="mypage-gitlab-input"
+			>
+				<option
+					v-for="(baseUrl, index) in baseUrlList"
+					:key="`${index}_baseUrlList`"
+					:value="index"
+				>
+					{{ baseUrl }}
+				</option>
+			</select>
 			<label class="mypage-gitlab-label" for="mypage-gitlab-account-input"
 				>UserName</label
 			>
@@ -16,31 +39,27 @@
 				type="text"
 				v-model="newGitLabAccount.username"
 			/>
-			<label class="mypage-gitlab-label" for="mypage-gitlab-token-input"
-				>Access Token</label
-			>
-			<input
-				id="mypage-gitlab-token-input"
-				class="mypage-gitlab-input"
-				type="text"
-				v-model="newGitLabAccount.accessToken"
-			/>
 		</div>
 
 		<!-- 관리 버튼 -->
 		<div id="mypage-gitlab-buttons">
 			<button
-				v-if="
-					currentAccount == null ||
-					(newGitLabAccount.username.length > 0 &&
-						newGitLabAccount.accessToken.length > 0)
-				"
+				v-if="newGitLabAccount.username.length > 0 && openInputArea"
 				class="mypage-gitlab-button new-button"
-				@click="MakeAccount"
+				@click="CreateAccount"
 			>
 				<div>
 					<i class="material-icons"> check </i>
 					<span>연동하기</span>
+				</div></button
+			><button
+				v-else-if="newGitLabAccount.username.length == 0 && openInputArea"
+				class="mypage-gitlab-button new-button"
+				@click="OpenAndCloseInputArea"
+			>
+				<div>
+					<i class="material-icons"> close </i>
+					<span>창 닫기</span>
 				</div>
 			</button>
 			<button
@@ -49,18 +68,8 @@
 				@click="OpenAndCloseInputArea"
 			>
 				<div>
-					<i class="material-icons"> swap_horiz </i>
-					<span>다른 계정으로 연동하기</span>
-				</div>
-			</button>
-			<button
-				v-if="currentAccount != null"
-				class="mypage-gitlab-button close-button"
-				@click="CloseAccout"
-			>
-				<div>
-					<i class="material-icons"> close </i>
-					<span>연동끊기</span>
+					<i class="material-icons"> add </i>
+					<span>계정추가</span>
 				</div>
 			</button>
 		</div>
@@ -69,70 +78,58 @@
 <script>
 import { mapGetters } from "vuex";
 import gitLabApi from "@/api/gitlab.js";
+import SCMCard from "@/components/MyPage/SCMCard.vue";
 export default {
 	name: "MyPageGitLab",
+	components: { SCMCard },
 	data() {
 		return {
-			currentAccount: "checksource",
 			openInputArea: false,
 			newGitLabAccount: {
-				gitlabId: "",
+				gitlabId: 0,
 				username: "",
-				accessToken: "",
 			},
+			gitlab: [
+				{
+					baseurl: "gitlab.com",
+					username: "계정1",
+				},
+				{
+					baseurl: "lab.ssafy.com",
+					username: "계정2",
+				},
+			],
+			baseUrlList: [],
 		};
 	},
 	watch: {
 		openInputArea: function () {
 			if (!this.openInputArea) {
+				//계정 추가 영역 열 때 비우기
 				this.newGitLabAccount.username = "";
-				this.newGitLabAccount.accessToken = "";
+				this.newGitLabAccount.gitlabId = 0;
 			}
 		},
-		getUserName: function () {
-			this.currentAccount = this.getUserName;
-			this.openInputArea = this.currentAccount == null;
-		},
+		// getUserName: function () {
+		// 	this.currentAccount = this.getUserName;
+		// 	this.openInputArea = this.currentAccount == null;
+		// },
 	},
 	created() {
-		this.currentAccount = this.getUserName;
-		if (this.currentAccount == null) {
+		this.baseUrlList = gitLabApi.getBaseURL();
+		if (this.gitlab.length == 0) {
 			this.openInputArea = true;
 		}
 	},
 	methods: {
 		OpenAndCloseInputArea: function () {
+			//계정 추가 영역 열고 닫기
 			this.openInputArea = !this.openInputArea;
-		},
-		MakeAccount: function () {
-			if (this.currentAccount == null) {
-				this.CreateAccount();
-			} else {
-				this.ChangeAccount();
-			}
 		},
 		CreateAccount: function () {
 			//계정 연동
 			gitLabApi
 				.createGitLabConnect(this.newGitLabAccount)
-				.then((response) => {
-					if (response.data.flag && response.data.accessflag) {
-						alert("계정이 연동되었습니다.");
-						this.$store.commit("CONNECTGITLAB", response.data);
-					} else {
-						alert("계정 연동에 실패했습니다.\n다시 한번 확인해주세요.");
-					}
-				})
-				.catch(() => {
-					alert("오류가 발생했습니다.");
-				});
-		},
-		ChangeAccount: function () {
-			//계정 연동 수정
-			this.newGitLabAccount.gitlabId = this.getGitLabId;
-			console.log(this.newGitLabAccount);
-			gitLabApi
-				.updateGitLabConnect(this.newGitLabAccount)
 				.then((response) => {
 					if (response.data.flag && response.data.accessflag) {
 						alert("계정이 연동되었습니다.");

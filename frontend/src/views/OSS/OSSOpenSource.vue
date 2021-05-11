@@ -8,6 +8,7 @@
 			></search-bar>
 		</div>
 		<div>
+			<span class="added added-absolute"> : Added by user</span>
 			<table class="oss-table">
 				<thead class="oss-table-thead">
 					<th>NAME</th>
@@ -22,7 +23,9 @@
 						:key="`${index}_openSourceList`"
 						@click="GoDetail(opensource)"
 					>
-						<td>{{ opensource.name }}</td>
+						<td :class="{ added: added }">
+							{{ opensource.name }}
+						</td>
 						<td>{{ opensource.url }}</td>
 						<td>
 							<span
@@ -62,6 +65,7 @@ export default {
 			totalPage: 10,
 			typeFilter: 1,
 			keyword: "",
+			added: true,
 		};
 	},
 	created() {
