@@ -3,12 +3,16 @@ package com.ssafy.checksource.service;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -30,12 +34,16 @@ import com.ssafy.checksource.model.dto.GitLabProjectListDTO;
 import com.ssafy.checksource.model.dto.PackageManageFileDTO;
 import com.ssafy.checksource.model.dto.RepositoryTreeDTO;
 import com.ssafy.checksource.model.dto.UserGitLabDTO;
+import com.ssafy.checksource.model.dto.UserGitLabTokenDTO;
 import com.ssafy.checksource.model.entity.Depart;
 import com.ssafy.checksource.model.entity.GitLab;
+import com.ssafy.checksource.model.entity.GitLabUser;
 import com.ssafy.checksource.model.entity.Project;
 import com.ssafy.checksource.model.entity.User;
+import com.ssafy.checksource.model.key.GitLabUserKey;
 import com.ssafy.checksource.model.repository.DepartRepository;
 import com.ssafy.checksource.model.repository.GitLabRepository;
+import com.ssafy.checksource.model.repository.GitLabUserRepository;
 import com.ssafy.checksource.model.repository.OpensourceRepository;
 import com.ssafy.checksource.model.repository.ProjectRepository;
 import com.ssafy.checksource.model.repository.UserRepository;
@@ -55,178 +63,152 @@ public class GitService {
 	private final UserRepository userRepository;
 	private final ProjectRepository projectRepository;
 	private final DepartRepository departRepository;
-	private final String baseUrl = "https://gitlab.com/api/v4/"; // 기본 public url
+	private final GitLabUserRepository gitLabUserRepository;
 	private final AnalyzeService analyzeService;
-	
+
 	// gitlab 계정 연동 체크
-//	public GitLabConnectDTO gitConnect(String username, String token, String accessToken) {
-//		String url = baseUrl + "users?username=";
-//		url += username;
-//		GitLabConnectDTO gitLabConnectDto = new GitLabConnectDTO();
-//
-//		String userId = jwtTokenProvider.getUserId(token);
-//		User user = userRepository.findByUserId(userId);
-//
-//		// 헤더에 토큰 담기
-//		String s = null;
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.setContentType(MediaType.APPLICATION_XML);
-//		headers.set("private-token", accessToken);
-//		HttpEntity entity = new HttpEntity(headers);
-//
-//		try {
-//			// api 요청
-//			ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-//			Gson gson = new Gson();
-//			UserGitLabDTO[] userGitLab = gson.fromJson(responseEntity.getBody(), UserGitLabDTO[].class);
-//			List<UserGitLabDTO> list = Arrays.asList(userGitLab);
-//
-//			if (!list.isEmpty()) {
-//				// DB에 insert 후 true 리턴
-//				GitLab gitLab = new GitLab();
-//				UserGitLabDTO gitLabDto = list.get(0);
-//
-//				gitLab = modelMapper.map(gitLabDto, GitLab.class);
-//				gitLab.setGitlabId(gitLabDto.getId());
-//				gitLab.setAvatarUrl(gitLabDto.getAvatar_url());
-//				gitLab.setWebUrl(gitLabDto.getWeb_url());
-//				gitLab.setUser(user);
-//				gitLab.setAccessToken(accessToken);
-//				gitLabRepository.save(gitLab);
-//				gitLabConnectDto = modelMapper.map(gitLab, GitLabConnectDTO.class);
-//				gitLabConnectDto.setAccessflag(true);
-//				gitLabConnectDto.setFlag(true);
-//			} else { // username 사용자가 없을 경우
-//				gitLabConnectDto.setAccessflag(true);
-//				gitLabConnectDto.setFlag(false);
-//			}
-//			return gitLabConnectDto;
-//		} catch (HttpClientErrorException e) { 
-//			// header token이 유효하지 않을 경우
-//			return gitLabConnectDto;
-//		}
-//	}
-//
-//	// gitlab 계정 연동 수정
-//	public GitLabConnectDTO updateGitConnect(String gitlabId, String username, String token, String accessToken) {
-//
-//		String url = baseUrl + "users?username=";
-//		url += username;
-//		GitLabConnectDTO gitLabConnectDto = new GitLabConnectDTO();
-//
-//		String userId = jwtTokenProvider.getUserId(token);
-//		User user = userRepository.findByUserId(userId);
-//		GitLab gitLab = gitLabRepository.findByGitlabIdAndUser(gitlabId, user);
-//
-//		// 헤더에 토큰 담기
-//		String s = null;
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.setContentType(MediaType.APPLICATION_XML);
-//		headers.set("private-token", accessToken);
-//		HttpEntity entity = new HttpEntity(headers);
-//
-//		try {
-//			// api 요청
-//			ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-//			Gson gson = new Gson();
-//			UserGitLabDTO[] userGitLab = gson.fromJson(responseEntity.getBody(), UserGitLabDTO[].class);
-//			List<UserGitLabDTO> list = Arrays.asList(userGitLab);
-//
-//			// DB에서 해당 유저를 찾을 수 없을 때
-//			if (gitLab == null) {
-//				gitLabConnectDto.setAccessflag(true); //토큰은 통과
-//				return gitLabConnectDto;
-//			}
-//			
-//			// 해당 유저가 있다면, gitlab 테이블에 update한 후 true 리턴
-//			if (!list.isEmpty()) {
-//
-//				// 기존 계정 삭제
-//				gitLabRepository.delete(gitLab);
-//				UserGitLabDTO gitLabDto = list.get(0);
-//
-//				gitLab = modelMapper.map(gitLabDto, GitLab.class);
-//				gitLab.setGitlabId(gitLabDto.getId());
-//				gitLab.setAvatarUrl(gitLabDto.getAvatar_url());
-//				gitLab.setWebUrl(gitLabDto.getWeb_url());
-//				gitLab.setUser(user);
-//				gitLab.setAccessToken(accessToken); // 재발급한 토큰도 저장
-//				gitLabRepository.save(gitLab);
-//				gitLabConnectDto = modelMapper.map(gitLab, GitLabConnectDTO.class);
-//				gitLabConnectDto.setAccessflag(true);
-//				gitLabConnectDto.setFlag(true);
-//
-//			} else { // username 사용자가 없을 경우
-//				gitLabConnectDto.setFlag(false);
-//				gitLabConnectDto.setAccessflag(true);
-//			}
-//			return gitLabConnectDto;
-//		} catch (HttpClientErrorException e) { 
-//			// header token이 유효하지 않을 경우
-//			return gitLabConnectDto;
-//		}
-//	}
-//
-//	// gitlab 계정 연결 끊기
-//	public boolean deleteGitConnect(String gitlabId, String token) {
-//		String userId = jwtTokenProvider.getUserId(token);
-//		User user = userRepository.findByUserId(userId);
-//		GitLab gitLab = gitLabRepository.findByGitlabIdAndUser(gitlabId, user);
-//		if (gitLab == null) { // 해당 유저를 찾을 수 없을 때
-//			return false;
-//		}
-//		gitLabRepository.delete(gitLab);
-//		return true;
-//	}
-//
-//	// 프로젝트 목록 가져오기 - 토큰 사용
-//	public GitLabProjectListDTO getProjects(String token, String gitlabId) {
-//		String url = baseUrl + "/projects?membership=true" + "&per_page=50000";
-//
-//		GitLab gitLab = gitLabRepository.findById(gitlabId)
-//				.orElseThrow(() -> new IllegalArgumentException("no gitlab Id in database"));
-//		String accessToken = gitLab.getAccessToken();
-//
-//		//목록
-//		GitLabProjectListDTO returnDto = new GitLabProjectListDTO();
-//		List<GitLabProjectDTO> gitLabProjectList = new ArrayList<GitLabProjectDTO>();
-//
-//		// 헤더 담음
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.setContentType(MediaType.APPLICATION_XML);
-//		headers.set("private-token", accessToken);
-//		HttpEntity entity = new HttpEntity(headers);
-//		List<GitLabProjectDTO> gitLabProjectlist = new ArrayList<GitLabProjectDTO>();
-//		try {
-//			ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-//			Gson gson = new Gson();
-//			GitLabProjectDTO[] gitLabProjectDto = gson.fromJson(responseEntity.getBody(), GitLabProjectDTO[].class);
-//			gitLabProjectlist = Arrays.asList(gitLabProjectDto);
-//
-//			// 검증, 비검증으로 나누기
-//			for (GitLabProjectDTO gitLabProject : gitLabProjectlist) {
-//				String projectId = gitLabProject.getId();
-//				Project project = projectRepository.findByProjectId(projectId);
-//
-//				if (project == null) {//비검증
-//					gitLabProjectList.add(gitLabProject);
-//				} else {//검증
-//					gitLabProject.setVerified(true);
-//					gitLabProjectList.add(gitLabProject);
-//				}
-//			}
-//			returnDto.setAccessflag(true);
-//			returnDto.setProjectList(gitLabProjectList);
-//
-//			return returnDto;
-//		} catch (Exception e) {
-//			// 토큰 유효하지 않는 경우
-//			returnDto.setProjectList(gitLabProjectList);
-//			returnDto.setAccessflag(false);
-//			return returnDto;
-//		}
-//	}
-//
+	public GitLabConnectDTO gitConnect(String username, String token, Long gitlabId) {
+		GitLab gitlab = gitLabRepository.findById(gitlabId)
+				.orElseThrow(() -> new IllegalArgumentException("no gitLab data"));
+		String baseUrl = gitlab.getBaseUrl();
+		String accessToken = gitlab.getRootAccessToken(); // 루트토큰
+
+		String userId = jwtTokenProvider.getUserId(token);
+		User user = userRepository.findByUserId(userId);
+
+		String url = baseUrl + "users?username=";
+		url += username;
+		GitLabConnectDTO gitLabConnectDto = new GitLabConnectDTO();
+
+		// 헤더에 토큰 담기
+		String s = null;
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.set("private-token", accessToken);
+		HttpEntity entity = new HttpEntity(headers);
+
+		try {
+			// api 요청
+			ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+			Gson gson = new Gson();
+			UserGitLabDTO[] userGitLab = gson.fromJson(responseEntity.getBody(), UserGitLabDTO[].class);
+			List<UserGitLabDTO> list = Arrays.asList(userGitLab);
+
+			if (!list.isEmpty()) {
+				UserGitLabDTO gitLabDto = list.get(0);
+				// 0. 해당 유저가 이미 연동되어 있는지 확인
+				// 1. user_access_token 생성
+				// 유저토큰 생성 api 요청
+				String secondUrl = baseUrl + "users/" + gitLabDto.getId() + "/impersonation_tokens";
+				JSONObject parameters = new JSONObject();
+				parameters.put("name", "test");
+				JSONArray array = new JSONArray();
+				array.put("api");
+				parameters.put("scopes", array);
+				HttpEntity requestEntity = new HttpEntity(parameters.toString(), headers);
+				ResponseEntity<String> response = restTemplate.exchange(secondUrl, HttpMethod.POST, requestEntity,
+						String.class);
+				UserGitLabTokenDTO userGitlabTokenDto = gson.fromJson(response.getBody(), UserGitLabTokenDTO.class);
+				String userGitlabToken = userGitlabTokenDto.getToken();
+
+				// 2. DB에 insert 후 true 리턴
+				GitLabUser gitlabUser = new GitLabUser();
+				GitLabUserKey gitlabUserKey = new GitLabUserKey();
+				gitlabUserKey.setGitlabId(gitlabId);
+				gitlabUserKey.setUserId(userId);
+				gitlabUser.setGitlabUserKey(gitlabUserKey);
+				gitlabUser.setUserGitlabId(gitLabDto.getId());
+				gitlabUser.setUsername(gitLabDto.getUsername());
+				gitlabUser.setUserAccessToken(userGitlabToken);
+				GitLabUser gitlabSaveUser = gitLabUserRepository.save(gitlabUser);
+				// set
+				gitLabConnectDto.setGitlabId(gitlabId);
+				gitLabConnectDto.setUserGitlabId(gitlabSaveUser.getUserGitlabId());
+				gitLabConnectDto.setUsername(gitlabSaveUser.getUsername());
+				gitLabConnectDto.setFlag(true);
+			} else {
+				// username 사용자가 없을 경우
+				gitLabConnectDto.setFlag(false);
+			}
+			return gitLabConnectDto;
+		} catch (HttpClientErrorException e) {
+			// accessToken이 유효하지 않을 경우 -> root계정 토큰 만료기간 제한 없으면 상관없음
+			return gitLabConnectDto;
+		} catch (JSONException e) {
+			// json 매핑 오류
+			e.printStackTrace();
+			return gitLabConnectDto;
+		}
+	}
+
+	// gitlab 계정 연결 끊기
+	public void deleteGitConnect(Long gitlabId, String token) {
+		GitLabUser gitlabUser = new GitLabUser();
+		GitLabUserKey gitlabUserKey = new GitLabUserKey();
+		String userId = jwtTokenProvider.getUserId(token);
+		gitLabRepository.findById(gitlabId).orElseThrow(() -> new IllegalArgumentException("no gitlab data"));
+		gitlabUserKey.setGitlabId(gitlabId);
+		gitlabUserKey.setUserId(userId);
+		gitlabUser.setGitlabUserKey(gitlabUserKey);
+		gitLabUserRepository.delete(gitlabUser);
+	}
+
+	// 프로젝트 목록 가져오기 - 유저 토큰 사용
+	public GitLabProjectListDTO getProjects(String token, Long gitlabId) {
+		// 목록
+		GitLabProjectListDTO returnDto = new GitLabProjectListDTO();
+		List<GitLabProjectDTO> gitLabProjectList = new ArrayList<GitLabProjectDTO>();
+
+		String userId = jwtTokenProvider.getUserId(token);
+		User user = userRepository.findByUserId(userId);
+		GitLab gitlab = gitLabRepository.findById(gitlabId)
+				.orElseThrow(() -> new IllegalArgumentException("no gitLab data"));
+		GitLabUser gitlabUser = new GitLabUser();
+		GitLabUserKey gitlabUserKey = new GitLabUserKey();
+
+		gitlabUserKey.setGitlabId(gitlabId);
+		gitlabUserKey.setUserId(userId);
+		gitlabUser.setGitlabUserKey(gitlabUserKey);
+		String userAccessToken = gitLabUserRepository.findByUserAndGitlab(user, gitlab).getUserAccessToken();
+		
+		String baseUrl = gitlab.getBaseUrl();
+		String url = baseUrl + "/projects?membership=true" + "&per_page=50000";
+
+		// 헤더 담음
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.set("private-token", userAccessToken);
+		HttpEntity entity = new HttpEntity(headers);
+		List<GitLabProjectDTO> gitLabProjectlist = new ArrayList<GitLabProjectDTO>();
+		try {
+			ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+			Gson gson = new Gson();
+			GitLabProjectDTO[] gitLabProjectDto = gson.fromJson(responseEntity.getBody(), GitLabProjectDTO[].class);
+			gitLabProjectlist = Arrays.asList(gitLabProjectDto);
+
+			// 검증, 비검증으로 나누기
+			for (GitLabProjectDTO gitLabProject : gitLabProjectlist) {
+				String projectId = gitLabProject.getId();
+				Project project = projectRepository.findByProjectId(projectId);
+
+				if (project == null) {// 비검증
+					gitLabProjectList.add(gitLabProject);
+				} else {// 검증
+					gitLabProject.setVerified(true);
+					gitLabProjectList.add(gitLabProject);
+				}
+			}
+			returnDto.setAccessflag(true);
+			returnDto.setProjectList(gitLabProjectList);
+			return returnDto;
+		} catch (Exception e) {
+			// 유저 토큰 유효하지 않는 경우 - 깃랩 연동 다시 시키기
+			returnDto.setAccessflag(false);
+			returnDto.setProjectList(gitLabProjectList);
+			return returnDto;
+		}
+	}
+
 //	// 프로젝트 삭제하기
 //	public boolean deleteProject(String token, String projectId) {
 //		String userId = jwtTokenProvider.getUserId(token);
@@ -238,7 +220,9 @@ public class GitService {
 //		}
 //		return false;
 //	}
-//	
+
+	// 프로젝트 브런치 가져오기
+
 //	// 프로젝트 추가하기 - 검증
 //	public boolean addProject(String token, List<GitLabProjectDTO> projectList, String gitlabId) throws Exception {
 //
@@ -366,5 +350,5 @@ public class GitService {
 //		return true;
 //	}
 
-	//재검증
+	// 재검증
 }

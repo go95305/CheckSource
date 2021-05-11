@@ -37,8 +37,6 @@ public class ProjectService {
 	private final DepartRepository departRepository;
 	private final LicenseOpensourceRepository licenseOpensourceRepository;
 	
-	
-	
 	// 부서별 분석된 프로젝트 목록
 	public List<ProjectListByDepartDTO> getProjectListByDepart(Long departId) {
 		List<ProjectListByDepartDTO> projectListDto = new ArrayList<ProjectListByDepartDTO>();
