@@ -52,7 +52,6 @@ public class LicenseService {
 		
 		for (License lic : licensePagedata) {
 			LicenseDTO licDto = modelMapper.map(lic, LicenseDTO.class);
-			List<String> licenseNameList = new ArrayList<String>();
 			licenseList.add(licDto);
 		}
 		licenseListDTO.setTotalPage(licensePagedata.getTotalPages());

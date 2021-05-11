@@ -52,8 +52,8 @@ public class AnalyzeService {
 		content = new String(decoded, StandardCharsets.UTF_8);
 		if (fileName.equals("pom.xml")) {
 			list = getOpensourceId(pomxmlParsing(content));
+		} else if(fileName.equals("build.gradle")) {
 			
-		} else {
 		}
 		//list에 opensourceid list있으니 가지고 insert 치세오
 		//System.out.println(list.toString());
@@ -86,6 +86,31 @@ public class AnalyzeService {
 		return list;
 	}
 	
+	// build.gradle Parsing
+	// groupId, artifactId, version만 파싱하여 return
+	public List<ParsingDTO> buildGradleParsing(String gradle) throws Exception {
+		
+
+		return null;
+	}
+
+	// package.json Parsing
+	// artifactId, version만 파싱하여 return
+	public List<ParsingDTO> packageJsonParsing(String xml) throws Exception {
+		SAXParserFactory factory = SAXParserFactory.newInstance();
+
+		SAXParser parser = factory.newSAXParser();
+		PomxmlSaxHandler handler = new PomxmlSaxHandler();
+		InputSource inputSource = new InputSource(new StringReader(xml));
+
+		parser.parse(inputSource, handler);
+		List<ParsingDTO> list = handler.getDepenList();
+
+		return list;
+	}
+
+	
+	
 	//groupId와 artifactId로 opensourceId 찾아오기
 	public List<Long> getOpensourceId(List<ParsingDTO> list){
 		List<Long> opensourceList = new ArrayList<Long>();
@@ -100,6 +125,7 @@ public class AnalyzeService {
 		}
 		return opensourceList;
 	}
+
 	//나중에 상세보기로 쓸거 미완성
 	// groupId, artifactId, version을 가지고 opensource 테이블에서 데이터를 받아옴
 	public List<OpensourceDetailDTO> pomXmlMatchingLicense(List<ParsingDTO> list) {
