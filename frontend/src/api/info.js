@@ -5,7 +5,7 @@
   @author 남우진
 */
 
-let departmentList = [
+const departmentList = [
 	"금융개발부",
 	"디지털개발부",
 	"글로벌개발부",
@@ -15,9 +15,9 @@ let departmentList = [
 	"ICT기획부",
 ];
 
-let jobList = ["선임", "수석", "부장"];
+const jobList = ["선임", "수석", "부장"];
 
-let profileImageList = [
+const profileImageList = [
 	{
 		url: require("@/assets/images/sol.png"),
 		alt: "sol",
