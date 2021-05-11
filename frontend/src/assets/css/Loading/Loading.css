@@ -1,0 +1,38 @@
+.loading-flex {
+	display: flex;
+	height: 60px;
+	justify-content: center;
+	align-items: flex-end;
+}
+
+.loading-flex-image {
+	width: 30px;
+	margin: 0px 5px;
+	animation-duration: 0.3s;
+	animation-name: updown;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+	animation-timing-function: ease-in;
+}
+
+.loading-flex-image:nth-child(1) {
+	animation-delay: 0s;
+}
+
+.loading-flex-image:nth-child(2) {
+	animation-delay: 0.1s;
+}
+
+.loading-flex-image:nth-child(3) {
+	animation-delay: 0.2s;
+}
+
+@keyframes updown {
+	from {
+		transform: translateY(0px);
+	}
+
+	to {
+		transform: translateY(50px);
+	}
+}
