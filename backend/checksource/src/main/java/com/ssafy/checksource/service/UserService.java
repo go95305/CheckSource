@@ -1,25 +1,29 @@
 package com.ssafy.checksource.service;
 
-import com.ssafy.checksource.config.security.JwtTokenProvider;
-import com.ssafy.checksource.model.dto.UserDTO;
-import com.ssafy.checksource.model.dto.UserInputDTO;
-import com.ssafy.checksource.model.dto.UserUpdateDTO;
-import com.ssafy.checksource.model.entity.Depart;
-import com.ssafy.checksource.model.entity.GitLab;
-import com.ssafy.checksource.model.entity.Job;
-import com.ssafy.checksource.model.repository.DepartRepository;
-import com.ssafy.checksource.model.repository.GitLabRepository;
-import com.ssafy.checksource.model.repository.JobRepository;
-import com.ssafy.checksource.model.repository.UserRepository;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ssafy.checksource.config.security.JwtTokenProvider;
+import com.ssafy.checksource.model.dto.GitLabDTO;
 import com.ssafy.checksource.model.dto.SsoDTO;
+import com.ssafy.checksource.model.dto.UserDTO;
+import com.ssafy.checksource.model.dto.UserInputDTO;
+import com.ssafy.checksource.model.dto.UserUpdateDTO;
+import com.ssafy.checksource.model.entity.Depart;
+import com.ssafy.checksource.model.entity.GitLabUser;
+import com.ssafy.checksource.model.entity.Job;
 import com.ssafy.checksource.model.entity.Login;
 import com.ssafy.checksource.model.entity.User;
+import com.ssafy.checksource.model.repository.DepartRepository;
+import com.ssafy.checksource.model.repository.GitLabRepository;
+import com.ssafy.checksource.model.repository.GitLabUserRepository;
+import com.ssafy.checksource.model.repository.JobRepository;
 import com.ssafy.checksource.model.repository.SsoRepository;
+import com.ssafy.checksource.model.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -34,6 +38,7 @@ public class UserService {
 	private final DepartRepository departRepository;
 	private final GitLabRepository gitLabRepository;
 	private final JobRepository jobRepository;
+	private final GitLabUserRepository gitLabUserRepository;
 	private final ModelMapper modelMapper = new ModelMapper();
 
 	//로그인 API요청
@@ -50,20 +55,33 @@ public class UserService {
 	public UserDTO checkUser(String userId) {
 		User user = userRepository.findByUserId(userId);
 		UserDTO userDto = new UserDTO();
+		
 
 		if (user != null) {// 최초로그인 x
 			if (user.getFlag()) {// 회원 정보 o -> 로그인 성공
 				String token = jwtTokenProvider.generateToken(user.getUserId()); // 토큰 새로 발급
 				user.setToken(token);
 				userRepository.save(user);
-				userDto = modelMapper.map(user, UserDTO.class);
-				//깃 아이디, 깃 유저 네임
-				//GitLab gitLab = gitLabRepository.findByUser(user);
-//				if(gitLab != null) {//깃 연동 했을 경우
-//					//깃정보 담아서 줌
-//					//userDto.setGitlabId(gitLab.getGitlabId());
-//					//userDto.setUsername(gitLab.getUsername());
-//				}
+				//userDto set
+				userDto.setToken(user.getToken());
+				userDto.setUserImg(user.getUserImg());
+				userDto.setName(user.getName());
+				userDto.setFlag(user.getFlag());
+				userDto.setJob(user.getJob().getJobId());
+				userDto.setDepart(user.getDepart().getDepartId());
+				
+				//깃랩 정보
+				List<GitLabUser> gitlabList = gitLabUserRepository.findByUser(user);
+				List<GitLabDTO> gitlabListDto = new ArrayList<GitLabDTO>();
+				for (GitLabUser gitlabUser : gitlabList) {
+					GitLabDTO gitlabDto = new GitLabDTO();
+					gitlabDto.setGitlabId(gitlabUser.getGitlab().getGitlabId());
+					gitlabDto.setUserGitlabId(gitlabUser.getUserGitlabId());
+					gitlabDto.setUsername(gitlabUser.getUsername());
+					gitlabDto.setBaseUrl(gitlabUser.getGitlab().getBaseUrl());
+					gitlabListDto.add(gitlabDto);
+				}
+				userDto.setGitlabList(gitlabListDto);
 				return userDto;
 			}
 			//최초로그인은 아니지만 회원정보 미입력시 flag = false
@@ -75,6 +93,7 @@ public class UserService {
 				userRepository.save(newUser);
 			}
 		}
+		
 		return userDto;
 	}
 
@@ -121,13 +140,27 @@ public class UserService {
 		user.setUserImg(userUpdateDto.getUserImg());
 		userRepository.save(user);
 		
-		userDto = modelMapper.map(user, UserDTO.class);
-		//깃 아이디, 깃 유저 네임
-		//GitLab gitLab = gitLabRepository.findByUser(user);
-		//if(gitLab != null) {//깃 연동 했을 경우
-			//userDto.setGitlabId(gitLab.getGitlabId());
-			//userDto.setUsername(gitLab.getUsername());
-		//}
+		//userDto set
+		userDto.setToken(user.getToken());
+		userDto.setUserImg(user.getUserImg());
+		userDto.setName(user.getName());
+		userDto.setFlag(user.getFlag());
+		userDto.setJob(user.getJob().getJobId());
+		userDto.setDepart(user.getDepart().getDepartId());
+		
+		//깃랩 정보
+		List<GitLabUser> gitlabList = gitLabUserRepository.findByUser(user);
+		List<GitLabDTO> gitlabListDto = new ArrayList<GitLabDTO>();
+		for (GitLabUser gitlabUser : gitlabList) {
+			GitLabDTO gitlabDto = new GitLabDTO();
+			gitlabDto.setGitlabId(gitlabUser.getGitlab().getGitlabId());
+			gitlabDto.setUserGitlabId(gitlabUser.getUserGitlabId());
+			gitlabDto.setUsername(gitlabUser.getUsername());
+			gitlabDto.setBaseUrl(gitlabUser.getGitlab().getBaseUrl());
+			gitlabListDto.add(gitlabDto);
+		}
+	
+		userDto.setGitlabList(gitlabListDto);
 		
 		return userDto;
 	}
