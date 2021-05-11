@@ -118,15 +118,17 @@ export default {
 			this.pageList = list;
 		},
 		MovePageForward: function () {
-			if (this.page < this.lastPage) {
-				++this.page;
-				this.AlertPageChange(this.page);
+			let value = this.page;
+			if (value < this.lastPage) {
+				++value;
+				this.AlertPageChange(value);
 			}
 		},
 		MovePageBackward: function () {
-			if (this.page > 1) {
-				--this.page;
-				this.AlertPageChange(this.page);
+			let value = this.page;
+			if (value > 1) {
+				--value;
+				this.AlertPageChange(value);
 			}
 		},
 		AlertPageChange: function (value) {
