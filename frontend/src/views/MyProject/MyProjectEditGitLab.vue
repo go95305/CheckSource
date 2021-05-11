@@ -4,6 +4,7 @@
 			><span class="material-icons"> edit </span>계정 설정</router-link
 		>
 		<div class="myproject-edit-gitlab">
+			<loading v-if="loading"></loading>
 			<repository-card
 				v-for="(repository, index) in repositoryList"
 				:key="`${index}_repositoryList`"
@@ -20,12 +21,14 @@
 import gitLabApi from "@/api/gitlab.js";
 import { mapGetters } from "vuex";
 import RepositoryCard from "../../components/MyProject/RepositoryCard.vue";
+import Loading from "@/components/Loading/Loading.vue";
 export default {
-	components: { RepositoryCard },
 	name: "MyProjectEditGitLab",
+	components: { RepositoryCard, Loading },
 	data() {
 		return {
 			repositoryList: [],
+			loading: false,
 		};
 	},
 	props: {
@@ -37,9 +40,11 @@ export default {
 	methods: {
 		GetRepositories: function () {
 			//레포지토리 얻어오기
+			this.loading = true;
 			gitLabApi
 				.readGitLabProjects(this.getGitLabId)
 				.then((response) => {
+					this.loading = false;
 					if (response.data.accessflag) {
 						this.repositoryList = response.data.projectList;
 					} else {
