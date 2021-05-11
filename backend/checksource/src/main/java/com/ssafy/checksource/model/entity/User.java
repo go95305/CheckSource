@@ -45,7 +45,7 @@ public class User implements UserDetails{
 	private Job job;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<GitLab> gitLab = new ArrayList<>();
+    private List<GitLabUser> gitLabUser = new ArrayList<>();
 	
 	
 	@OneToMany(mappedBy = "user")
