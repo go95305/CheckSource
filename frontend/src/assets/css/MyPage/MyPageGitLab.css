@@ -3,49 +3,17 @@
 	padding: 30px;
 }
 
+.mypage-scm-account-background {
+	margin-bottom: 20px;
+}
+
 .mypage-gitlab-title {
 	font-weight: 500;
-}
-
-.mypage-gitlab-background {
-	margin-top: 10px;
-	display: flex;
-	flex-flow: row nowrap;
-	align-items: center;
-}
-
-.mypage-gitlab-div {
-	padding: 10px;
-	flex: 1 0 0;
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-	border-radius: 5px;
-	background-color: rgb(246, 246, 246);
-	border: 1px solid #eee;
-}
-
-.mypage-gitlab-div span {
-	flex: 1 0 0;
-	display: flex;
-	justify-content: center;
-	font-weight: 300;
-}
-
-.mypage-gitlab-close-button {
-	margin-left: 5px;
-	cursor: pointer;
-	transition: color 0.3s;
-}
-
-.mypage-gitlab-close-button:hover {
-	color: rgb(207, 27, 27);
 }
 
 #mypage-gitlab-buttons {
 	display: flex;
 	justify-content: center;
-	margin-top: 10px;
 }
 
 .mypage-gitlab-button {
@@ -86,7 +54,6 @@
 }
 
 #mypage-gitlab-new-account {
-	margin-top: 25px;
 	height: 0px;
 	overflow: hidden;
 	display: flex;

@@ -1,19 +1,16 @@
 <template>
 	<div id="mypage-gitlab-container">
 		<!-- 현재 연동된 계정 정보 -->
-		<h3 class="mypage-gitlab-title">현재 연동된 계정</h3>
-		<div
-			v-for="(account, index) in gitlab"
-			:key="`${index}_accountList`"
-			class="mypage-gitlab-background"
-		>
-			<div class="mypage-gitlab-div">
-				<span>{{ account.baseurl }}</span>
-				<span>{{ account.username }}</span>
-			</div>
-			<span class="mypage-gitlab-close-button material-icons"> close </span>
+		<div v-if="gitlab.length > 0" class="mypage-scm-account-background">
+			<h3 class="mypage-gitlab-title">현재 연동된 계정</h3>
+			<SCMCard
+				v-for="(account, index) in gitlab"
+				:key="`${index}_accountList`"
+				:account="account"
+			></SCMCard>
 		</div>
 
+		<!-- 새로 입력할 계정 정보 -->
 		<div id="mypage-gitlab-new-account" :class="{ open: openInputArea }">
 			<h3 class="mypage-gitlab-title">새로 연동할 계정 정보</h3>
 			<label class="mypage-gitlab-label" for="mypage-gitlab-baseurl"
@@ -81,11 +78,12 @@
 <script>
 import { mapGetters } from "vuex";
 import gitLabApi from "@/api/gitlab.js";
+import SCMCard from "@/components/MyPage/SCMCard.vue";
 export default {
 	name: "MyPageGitLab",
+	components: { SCMCard },
 	data() {
 		return {
-			baseUrlList: [],
 			openInputArea: false,
 			newGitLabAccount: {
 				gitlabId: 0,
@@ -101,13 +99,15 @@ export default {
 					username: "계정2",
 				},
 			],
+			baseUrlList: [],
 		};
 	},
 	watch: {
 		openInputArea: function () {
 			if (!this.openInputArea) {
+				//계정 추가 영역 열 때 비우기
 				this.newGitLabAccount.username = "";
-				this.newGitLabAccount.accessToken = "";
+				this.newGitLabAccount.gitlabId = 0;
 			}
 		},
 		// getUserName: function () {
@@ -117,13 +117,13 @@ export default {
 	},
 	created() {
 		this.baseUrlList = gitLabApi.getBaseURL();
-		// this.currentAccount = this.getUserName;
-		// if (this.currentAccount == null) {
-		// 	this.openInputArea = true;
-		// }
+		if (this.gitlab.length == 0) {
+			this.openInputArea = true;
+		}
 	},
 	methods: {
 		OpenAndCloseInputArea: function () {
+			//계정 추가 영역 열고 닫기
 			this.openInputArea = !this.openInputArea;
 		},
 		CreateAccount: function () {
