@@ -229,7 +229,7 @@ form .button,
     background: #ddd;
   }
 
-  // Checkmark. Could be replaced with an image
+  // Checkmark.
   &:checked + label:after {
     content: '';
     position: absolute;

@@ -91,6 +91,56 @@
             />
             <label for="codeopen3">표준버전</label>
           </li>
+
+          <li class="add-l-check">
+            <input
+              class="styled-checkbox"
+              id="codeopen4"
+              type="checkbox"
+              value="co3"
+            />
+            <label for="codeopen4">전체코드 공개</label>
+          </li>
+
+          <li class="add-l-check">
+            <input
+              class="styled-checkbox"
+              id="codeopen5"
+              type="checkbox"
+              value="co5"
+            />
+            <label for="codeopen5">2차저작물 공개</label>
+          </li>
+
+          <li class="add-l-check">
+            <input
+              class="styled-checkbox"
+              id="codeopen6"
+              type="checkbox"
+              value="co6"
+            />
+            <label for="codeopen6">파일단위 공개</label>
+          </li>
+
+          <li class="add-l-check">
+            <input
+              class="styled-checkbox"
+              id="codeopen7"
+              type="checkbox"
+              value="co7"
+            />
+            <label for="codeopen7">파일단위 2차 저작물 공개</label>
+          </li>
+
+          <li class="add-l-check">
+            <input
+              class="styled-checkbox"
+              id="codeopen8"
+              type="checkbox"
+              value="co8"
+            />
+            <label for="codeopen8">동봉 SW 공개</label>
+          </li>
         </ul>
       </p>
 
