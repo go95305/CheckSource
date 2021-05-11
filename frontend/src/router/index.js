@@ -39,6 +39,7 @@ const MyPage = () => import("@/views/MyPage/MyPage");
 const MyPageProfile = () => import("@/views/MyPage/MyPageProfile");
 const MyPageSCM = () => import("@/views/MyPage/MyPageSCM");
 const MyPageGitLab = () => import("@/views/MyPage/MyPageGitLab");
+const MyPageGitHub = () => import("@/views/MyPage/MyPageGitHub");
 const OpensourceList = () => import("@/components/MyProject/OpensourceList");
 const AddComponent = () => import("@/components/MyProject/AddComponent");
 const OpensourceMain = () => import("@/views/MyProject/OpensourceMain");
@@ -249,6 +250,11 @@ const routes = [
 								path: "gitlab",
 								name: "MyPageGitLab",
 								component: MyPageGitLab,
+							},
+							{
+								path: "github",
+								name: "MyPageGitHub",
+								component: MyPageGitHub,
 							},
 						],
 					},
