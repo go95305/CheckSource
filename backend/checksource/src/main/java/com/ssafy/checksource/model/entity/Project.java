@@ -53,4 +53,5 @@ public class Project {
 	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<OpensourceProject> opensourceProject = new ArrayList<>();
 	
+	private String branch;
 }
