@@ -52,6 +52,7 @@ public class GitController {
 	@ApiOperation(value = "gitlab 계정 연동 삭제" )
 	@DeleteMapping("/gitlabConnect")
 	public void deleteGitConnect(@RequestParam Long gitlabId, @RequestHeader("TOKEN") String token) {
+		System.out.println(gitlabId+" "+token);
 		gitService.deleteGitConnect(gitlabId, token);
 	}
 	

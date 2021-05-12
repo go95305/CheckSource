@@ -1,48 +1,52 @@
 .mypage-scm-card-background {
-	margin-top: 10px;
+    margin-top: 10px;
 
-	display: flex;
-	flex-flow: row nowrap;
-	align-items: center;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
 }
 
 .mypage-scm-card-div {
-	padding: 10px;
-	flex: 1 0 0;
-	position: relative;
-	overflow: hidden;
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-	border-radius: 5px;
-	background-color: rgb(246, 246, 246);
-	border: 1px solid #eee;
+    padding: 10px;
+    flex: 1 0 0;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 5px;
+    background-color: rgb(246, 246, 246);
+    border: 1px solid #eee;
 }
 
 .mypage-scm-card-div span {
-	flex: 1 0 0;
-	display: flex;
-	justify-content: center;
-	font-weight: 300;
+    flex: 1 0 0;
+    display: flex;
+    justify-content: center;
+    font-weight: 300;
+}
+
+.mypage-scm-card-div span:nth-child(2) {
+    font-weight: 500;
 }
 
 .mypage-scm-card-icon {
-	position: absolute;
-	right: -30px;
-	top: 50%;
-	margin-top: -35px;
-	opacity: 0.3;
-	width: 80px;
-	height: 80px;
-	z-index: 1;
+    position: absolute;
+    right: -30px;
+    top: 50%;
+    margin-top: -35px;
+    opacity: 0.3;
+    width: 80px;
+    height: 80px;
+    z-index: 1;
 }
 
 .mypage-scm-card-close-button {
-	margin-left: 5px;
-	cursor: pointer;
-	transition: color 0.3s;
+    margin-left: 5px;
+    cursor: pointer;
+    transition: color 0.3s;
 }
 
 .mypage-scm-card-close-button:hover {
-	color: rgb(207, 27, 27);
+    color: rgb(207, 27, 27);
 }
