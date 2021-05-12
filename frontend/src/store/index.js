@@ -45,16 +45,26 @@ export default new Vuex.Store({
             state.userId = userId;
         },
         CONNECTGITLAB(state, account) {
+            //flag 요소 지우기
             delete account.flag;
-            const temp = state.gitlabList;
-            temp[account.gitlabId - 1] = account;
+
+            //같은 gitlabid가 있으면 삭제
+            let temp = state.gitlabList;
+            for (let i = 0; i < temp.length; ++i) {
+                if (temp[i].gitlabId == account.gitlabId) {
+                    temp.splice(i, 1);
+                }
+            }
+            //배열에 추가
+            temp.push(account);
+            //gitlabid 순서대로 정렬
+            temp.sort(function (a, b) {
+                return a.gitlabId - b.gitlabId;
+            });
             state.gitlabList = [];
             state.gitlabList = temp;
         },
-        DISCONNECTGITLAB(state, gitlabId) {
-            const index = state.gitlabList.findIndex((item) => {
-                item.gitlabId == gitlabId;
-            });
+        DISCONNECTGITLAB(state, index) {
             state.gitlabList.splice(index, 1);
         },
         LOGIN(state, payload) {

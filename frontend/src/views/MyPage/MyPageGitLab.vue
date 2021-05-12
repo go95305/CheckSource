@@ -6,6 +6,7 @@
             <SCMCard
                 v-for="(account, index) in gitlab"
                 :key="`${index}_accountList`"
+                :index="index"
                 :account="account"
                 @deleteSCM="DeleteAccount"
             ></SCMCard>
@@ -101,7 +102,7 @@ export default {
             if (!this.openInputArea) {
                 //계정 추가 영역 열 때 비우기
                 this.newGitLabAccount.username = "";
-                this.newGitLabAccount.gitlabId = 0;
+                this.newGitLabAccount.gitlabId = 1;
             }
         },
         getGitLabList: {
@@ -133,6 +134,7 @@ export default {
                     if (response.data.flag) {
                         alert("계정이 연동되었습니다.");
                         this.$store.commit("CONNECTGITLAB", response.data);
+                        this.OpenAndCloseInputArea();
                     } else {
                         alert("존재하지 않는 계정입니다.\n다시 확인해주세요.");
                     }
@@ -141,13 +143,14 @@ export default {
                     alert("오류가 발생했습니다.");
                 });
         },
-        DeleteAccount: function (gitlabId) {
+        DeleteAccount: function (index, gitlabId) {
             //연결끊기
+            console.log(gitlabId);
             gitLabApi
                 .deleteGitLabConnect(gitlabId)
                 .then(() => {
                     alert("연동이 중지되었습니다.");
-                    this.$store.commit("DISCONNECTGITLAB", gitlabId);
+                    this.$store.commit("DISCONNECTGITLAB", index);
                 })
                 .catch(() => {
                     alert("오류가 발생했습니다.");

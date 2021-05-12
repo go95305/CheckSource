@@ -25,6 +25,7 @@ import "@/assets/css/MyPage/SCMCard.css";
 export default {
     name: "SCMCard",
     props: {
+        index: Number,
         account: Object,
     },
     methods: {
@@ -32,7 +33,7 @@ export default {
             return gitLabApi.getBaseUrl(index - 1);
         },
         deleteSCMCard: function () {
-            this.$emit("deleteSCM", this.account.gitlabId);
+            this.$emit("deleteSCM", this.index, this.account.gitlabId);
         },
     },
 };
