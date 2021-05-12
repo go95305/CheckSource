@@ -19,6 +19,7 @@
                 @addRepoClick="AddRepoClick"
             ></repository-card>
         </div>
+        <select-branch></select-branch>
     </div>
 </template>
 <script>
@@ -27,9 +28,10 @@ import gitLabApi from "@/api/gitlab.js";
 import RepositoryCard from "../../components/MyProject/RepositoryCard.vue";
 import Loading from "@/components/Loading/Loading.vue";
 import DropDown from "../../components/DropDown/DropDown.vue";
+import SelectBranch from "../../components/MyProject/SelectBranch.vue";
 export default {
     name: "MyProjectEditGitLab",
-    components: { DropDown, RepositoryCard, Loading },
+    components: { DropDown, RepositoryCard, Loading, SelectBranch },
     data() {
         return {
             repositoryList: [],
