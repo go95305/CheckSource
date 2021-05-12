@@ -32,8 +32,8 @@ public class GitLab {
 	
 	private String baseUrl;
 	
-	@Column(name = "access_token")
-	private String accessToken;
+	@Column(name = "root_access_token")
+	private String rootAccessToken;
 
 	@OneToMany(mappedBy = "gitlab", cascade = CascadeType.ALL)
     private List<GitLabUser> gitLabUser = new ArrayList<>();
