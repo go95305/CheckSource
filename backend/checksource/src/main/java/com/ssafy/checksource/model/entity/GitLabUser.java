@@ -32,6 +32,8 @@ public class GitLabUser {
 	@Column(name = "user_gitlab_id")
 	private String userGitlabId;
 	private String username;
+	@Column(name = "user_access_token")
+	private String userAccessToken;
 	
 
 }
