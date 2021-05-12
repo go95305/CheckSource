@@ -39,7 +39,7 @@ public class GitController {
 	@ApiOperation(value = "테스트")
 	@GetMapping("/test/{id}")
 	public void test(@PathVariable Long id) {
-		
+		System.out.println("테스트");
 	}
 	
 	
