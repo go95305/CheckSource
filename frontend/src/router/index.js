@@ -282,7 +282,7 @@ router.beforeEach((to, from, next) => {
 	//로그인 여부 확인
 	if (to.path != "/") {
 		if (!store.getters.getAccessToken) {
-			next("/");
+			// next("/");
 		}
 	}
 	next();
