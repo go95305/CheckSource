@@ -53,9 +53,10 @@ export default {
 					}
 				})
 				.catch(() => {
+					this.loading = false;
+					this.repositoryList = [];
 					alert("프로젝트 목록을 불러오지 못했습니다.");
 				});
-			this.repositoryList = [];
 		},
 		IsSelected: function (id) {
 			//선택된 레포지토리인지 확인

@@ -7,7 +7,10 @@
 
 import http from "./http";
 
-const baseUrl = ["gitlab.com", "lab.ssafy.com"];
+const baseUrl = [
+	"http://gitlab.checksource.io:8081",
+	"http://gitlab.checksource.io:8082",
+];
 
 function getBaseURL() {
 	return baseUrl;
