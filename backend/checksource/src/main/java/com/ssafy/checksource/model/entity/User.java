@@ -51,6 +51,9 @@ public class User implements UserDetails{
 	@OneToMany(mappedBy = "user")
     private List<Project> project = new ArrayList<>();
 	
+	@OneToMany(mappedBy = "user")
+    private List<Opensource> opensource = new ArrayList<>();
+	
 	
 	@ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
