@@ -209,20 +209,34 @@ public class GitService {
 		}
 	}
 
-//	// 프로젝트 삭제하기
-//	public boolean deleteProject(String token, String projectId) {
-//		String userId = jwtTokenProvider.getUserId(token);
-//		User user = userRepository.findByUserId(userId);
-//		Project project = projectRepository.findByProjectId(projectId);
-//		if(user.getDepart().getDepartId() == project.getDepart().getDepartId()) {
-//			projectRepository.delete(project);
-//			return true;
-//		}
-//		return false;
-//	}
+	// 프로젝트 삭제하기
+	public boolean deleteProject(String token, String projectId) {
+		String userId = jwtTokenProvider.getUserId(token);
+		User user = userRepository.findByUserId(userId);
+		Project project = projectRepository.findByProjectId(projectId);
+		if(user.getDepart().getDepartId() == project.getDepart().getDepartId()) {
+			projectRepository.delete(project);
+			return true;
+		}
+		return false;
+	}
 
 	// 프로젝트 브런치 가져오기
-
+	public void getBrunch (String token, String projectId, Long gitlabId) {
+		GitLab gitlab = gitLabRepository.findById(gitlabId)
+				.orElseThrow(() -> new IllegalArgumentException("no gitLab data"));
+		String baseUrl = gitlab.getBaseUrl();
+		String accessToken = gitlab.getRootAccessToken(); // 루트토큰
+		projectRepository.findById(projectId).orElseThrow(() -> new IllegalArgumentException("no project data"));
+		String url = baseUrl + "/projects/" + projectId + "/repository/branches";
+		
+		// 헤더 담음
+				HttpHeaders headers = new HttpHeaders();
+				headers.setContentType(MediaType.APPLICATION_JSON);
+				headers.set("private-token", accessToken);
+				HttpEntity entity = new HttpEntity(headers);
+	}
+	
 //	// 프로젝트 추가하기 - 검증
 //	public boolean addProject(String token, List<GitLabProjectDTO> projectList, String gitlabId) throws Exception {
 //

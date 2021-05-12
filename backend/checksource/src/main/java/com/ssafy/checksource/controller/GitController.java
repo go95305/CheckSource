@@ -72,12 +72,12 @@ public class GitController {
 //		}
 //	}
 //	
-//	@ApiOperation(value = "프로젝트 삭제하기", notes = "- 삭제할 projectId와 유저의 jwttoken을 헤더에 담아 보낸다. \n - 프로젝트의 부서와 지우려는 유저의 부서가 일치해야 지워진다. \n - 성공적으로 지워지면 true, 실패시 false 반환 ")
-//	@DeleteMapping("/projects")
-//	public boolean deleteProject(@RequestHeader("TOKEN") String token, @RequestParam String projectId) {
-//		return gitService.deleteProject(token, projectId);
-//	}
-//	
+	@ApiOperation(value = "프로젝트 삭제하기")
+	@DeleteMapping("/projects")
+	public boolean deleteProject(@RequestHeader("TOKEN") String token, @RequestParam String projectId) {
+		return gitService.deleteProject(token, projectId);
+	}
+	
 
 	
 }
