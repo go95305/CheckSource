@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.checksource.model.dto.GitLabConnectDTO;
 import com.ssafy.checksource.model.dto.GitLabProjectDTO;
 import com.ssafy.checksource.model.dto.GitLabProjectListDTO;
+import com.ssafy.checksource.model.dto.ProjectBranchesDTO;
 import com.ssafy.checksource.model.dto.RepositoryTreeDTO;
 import com.ssafy.checksource.service.GitService;
 
@@ -59,6 +60,12 @@ public class GitController {
 	@GetMapping("/projects")
 	public GitLabProjectListDTO getProjects(@RequestHeader("TOKEN") String token, @RequestParam Long gitlabId) {
 		return gitService.getProjects(token, gitlabId);
+	}
+	
+	@ApiOperation(value = "프로젝트 브랜치 리스트 가져오기")
+	@GetMapping("/branches")
+	public List<ProjectBranchesDTO> getBranches(@RequestHeader("TOKEN") String token,@RequestParam String projectId,@RequestParam Long gitlabId) {
+		return gitService.getBranches(token, projectId, gitlabId);
 	}
 //	
 //	@ApiOperation(value = "프로젝트 추가하기-검증 ")
