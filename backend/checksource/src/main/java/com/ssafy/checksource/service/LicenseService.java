@@ -2,6 +2,7 @@ package com.ssafy.checksource.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -14,10 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ssafy.checksource.model.dto.LicenseDTO;
 import com.ssafy.checksource.model.dto.LicenseDetailDTO;
 import com.ssafy.checksource.model.dto.LicenseListDTO;
-import com.ssafy.checksource.model.dto.OpensourceDTO;
+import com.ssafy.checksource.model.dto.LicenseNameDTO;
+import com.ssafy.checksource.model.dto.LicenseSaveDTO;
 import com.ssafy.checksource.model.entity.License;
-import com.ssafy.checksource.model.entity.LicenseOpensource;
-import com.ssafy.checksource.model.entity.Opensource;
 import com.ssafy.checksource.model.repository.LicenseRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -58,8 +58,14 @@ public class LicenseService {
 		licenseListDTO.setLicenseList(licenseList);
 		return licenseListDTO;
 	}
+	
+	public List<LicenseNameDTO> getLicenseNameList(String keyword) {
+		List<LicenseNameDTO> licenseNameList = licenseRepository.findByNameLike("%"+keyword+"%").stream().map(LicenseNameDTO::new)
+				.collect(Collectors.toList());
+		return licenseNameList;
+	}
 
-	public void save(LicenseDetailDTO licSave) {
+	public void save(LicenseSaveDTO licSave) {
 		License saveEntity = modelMapper.map(licSave, License.class);
 		licenseRepository.save(saveEntity);
 	}
