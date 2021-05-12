@@ -21,9 +21,6 @@
 				</button>
 			</div>
 			<div id="myproject-edit-tab-div">
-				<!-- <button id="myproject-edit-scm-button">
-                    <span class="material-icons"> settings </span>
-                </button> -->
 				<tab id="myproject-edit-tab" :list="tabList" />
 
 				<router-view
@@ -49,7 +46,11 @@ export default {
 			tabList: [
 				{
 					name: "GitLab",
-					path: "/project/main/edit/gitlab",
+					path: "/project/main/newproject/gitlab",
+				},
+				{
+					name: "GitHub",
+					path: "/project/main/newproject/github",
 				},
 			],
 			selectedRepositoryList: [],
