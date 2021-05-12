@@ -27,6 +27,7 @@ import com.ssafy.checksource.model.repository.LicenseRepository;
 import com.ssafy.checksource.model.repository.OpensourceProjectRepository;
 import com.ssafy.checksource.model.repository.OpensourceRepository;
 import com.ssafy.checksource.model.repository.ProjectRepository;
+import com.ssafy.checksource.parser.PackageJsonParser;
 import com.ssafy.checksource.parser.PomxmlSaxHandler;
 
 import lombok.RequiredArgsConstructor;
@@ -54,6 +55,15 @@ public class AnalyzeService {
 			list = getOpensourceId(pomxmlParsing(content));
 		} else if(fileName.equals("build.gradle")) {
 			
+		} else if(fileName.equals("package.json")) {
+			List<ParsingDTO> llist = packageJsonParsing(content);
+			System.out.println("------------------");
+			
+			
+			for(ParsingDTO a : llist) {
+				System.out.println(a);
+			}
+			return;
 		}
 		//list에 opensourceid list있으니 가지고 insert 치세오
 		//System.out.println(list.toString());
@@ -96,17 +106,9 @@ public class AnalyzeService {
 
 	// package.json Parsing
 	// artifactId, version만 파싱하여 return
-	public List<ParsingDTO> packageJsonParsing(String xml) throws Exception {
-		SAXParserFactory factory = SAXParserFactory.newInstance();
-
-		SAXParser parser = factory.newSAXParser();
-		PomxmlSaxHandler handler = new PomxmlSaxHandler();
-		InputSource inputSource = new InputSource(new StringReader(xml));
-
-		parser.parse(inputSource, handler);
-		List<ParsingDTO> list = handler.getDepenList();
-
-		return list;
+	public List<ParsingDTO> packageJsonParsing(String json) throws Exception {
+		PackageJsonParser packageJsonParser = new PackageJsonParser(json);
+		return packageJsonParser.getDepenList();
 	}
 
 	
