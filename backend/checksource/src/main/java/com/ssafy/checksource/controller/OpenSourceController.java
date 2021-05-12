@@ -52,7 +52,7 @@ public class OpenSourceController {
 	}
 
 	@ApiOperation(value = "오픈소스 저장하기")
-	@PostMapping("/addlicense")
+	@PostMapping("/addOpensource")
 	public void insert(@RequestHeader("TOKEN") String token,@RequestBody OpensourcesaveDTO opsDto) {
 		opensourceService.save(opsDto);
 	}
