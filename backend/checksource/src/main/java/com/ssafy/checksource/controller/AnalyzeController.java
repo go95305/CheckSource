@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.checksource.model.dto.AnalyzeDTO;
 import com.ssafy.checksource.model.dto.OpensourceDTO;
 import com.ssafy.checksource.model.dto.ProjectLiceseListDTO;
+import com.ssafy.checksource.model.dto.ProjectListByDepartDTO;
 import com.ssafy.checksource.service.AnalyzeService;
 import com.ssafy.checksource.service.ProjectService;
 
@@ -29,7 +30,11 @@ public class AnalyzeController {
 	private final AnalyzeService analyzeService;
 	private final ProjectService projectService;
 	
-	
+	@ApiOperation(value = "부서별 분석된 프로젝트 목록")
+	@GetMapping("/projectList")
+	public List<ProjectListByDepartDTO> getProjectListByDepart(@RequestHeader("TOKEN") String token, @RequestParam Long departId) {
+		return projectService.getProjectListByDepart(departId);
+	}
 	
 	@ApiOperation(value = "분석된 프로젝트의 오픈소스 목록")
 	@GetMapping("/opensourceList")
