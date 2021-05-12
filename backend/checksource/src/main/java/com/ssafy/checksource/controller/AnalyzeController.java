@@ -48,6 +48,15 @@ public class AnalyzeController {
 		return projectService.getLicenseListByProject(projectId);
 	}
 	
-
+	@ApiOperation(value = "test")
+	@GetMapping("/test")
+	public void test(@RequestParam String projectId,@RequestParam String fileName,@RequestParam String content,@RequestParam String filePath) {
+		try {
+			analyzeService.analyze(projectId, fileName, content, filePath);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 }
