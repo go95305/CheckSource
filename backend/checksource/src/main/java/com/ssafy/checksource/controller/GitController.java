@@ -52,6 +52,7 @@ public class GitController {
 	@ApiOperation(value = "gitlab 계정 연동 삭제" )
 	@DeleteMapping("/gitlabConnect")
 	public void deleteGitConnect(@RequestParam Long gitlabId, @RequestHeader("TOKEN") String token) {
+		System.out.println(gitlabId+" "+token);
 		gitService.deleteGitConnect(gitlabId, token);
 	}
 	
@@ -67,18 +68,18 @@ public class GitController {
 	public List<ProjectBranchesDTO> getBranches(@RequestHeader("TOKEN") String token,@RequestParam String projectId,@RequestParam Long gitlabId) {
 		return gitService.getBranches(token, projectId, gitlabId);
 	}
-//	
-//	@ApiOperation(value = "프로젝트 추가하기-검증 ")
-//	@PostMapping("/projects")
-//	public boolean addProjects(@RequestHeader("TOKEN") String token, @RequestBody List<GitLabProjectDTO> projectList,@RequestParam String gitlabId) throws URISyntaxException, UnsupportedEncodingException {
-//		try {
-//			return gitService.addProject(token, projectList, gitlabId);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return false;
-//		}
-//	}
-//	
+	
+	@ApiOperation(value = "프로젝트 추가하기-검증 ")
+	@PostMapping("/projects")
+	public boolean addProjects(@RequestHeader("TOKEN") String token, @RequestBody List<GitLabProjectDTO> projectList, @RequestParam Long gitlabId, @RequestParam String branch) throws URISyntaxException, UnsupportedEncodingException {
+		try {
+			return gitService.addProject(token, projectList, gitlabId, branch);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	@ApiOperation(value = "프로젝트 삭제하기")
 	@DeleteMapping("/projects")
 	public boolean deleteProject(@RequestHeader("TOKEN") String token, @RequestParam String projectId) {
@@ -86,5 +87,7 @@ public class GitController {
 	}
 	
 
+	
+	
 	
 }

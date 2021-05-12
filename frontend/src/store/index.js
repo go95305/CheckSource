@@ -15,7 +15,7 @@ export default new Vuex.Store({
         job: "",
         department: "",
         userImg: "",
-        gitlabList: "",
+        gitlabList: [],
     },
     getters: {
         getAccessToken(state) {
@@ -44,13 +44,28 @@ export default new Vuex.Store({
         SAVEUSERID(state, userId) {
             state.userId = userId;
         },
-        CONNECTGITLAB(state, payload) {
-            state.gitlabId = payload["gitlabId"];
-            state.username = payload["username"];
+        CONNECTGITLAB(state, account) {
+            //flag 요소 지우기
+            delete account.flag;
+
+            //같은 gitlabid가 있으면 삭제
+            let temp = state.gitlabList;
+            for (let i = 0; i < temp.length; ++i) {
+                if (temp[i].gitlabId == account.gitlabId) {
+                    temp.splice(i, 1);
+                }
+            }
+            //배열에 추가
+            temp.push(account);
+            //gitlabid 순서대로 정렬
+            temp.sort(function (a, b) {
+                return a.gitlabId - b.gitlabId;
+            });
+            state.gitlabList = [];
+            state.gitlabList = temp;
         },
-        DISCONNECTGITLAB(state) {
-            state.gitlabId = null;
-            state.username = null;
+        DISCONNECTGITLAB(state, index) {
+            state.gitlabList.splice(index, 1);
         },
         LOGIN(state, payload) {
             state.accessToken = payload["token"];
@@ -65,7 +80,7 @@ export default new Vuex.Store({
             state.userId = "";
             state.job = "";
             state.userImg = "";
-            state.gitlabList = null;
+            state.gitlabList = [];
             state.name = "";
             state.department = "";
         },

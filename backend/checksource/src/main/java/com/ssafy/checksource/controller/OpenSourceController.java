@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.checksource.model.dto.OpensourceDetailDTO;
 import com.ssafy.checksource.model.dto.OpensourceListDTO;
-import com.ssafy.checksource.model.dto.OpensourcesaveDTO;
+import com.ssafy.checksource.model.dto.OpensourceSaveDTO;
+import com.ssafy.checksource.model.dto.OpensourceUpdateDTO;
 import com.ssafy.checksource.service.OpensourceService;
 
 import io.swagger.annotations.ApiImplicitParam;
@@ -52,9 +53,15 @@ public class OpenSourceController {
 	}
 
 	@ApiOperation(value = "오픈소스 저장하기")
-	@PostMapping("/addlicense")
-	public void insert(@RequestHeader("TOKEN") String token,@RequestBody OpensourcesaveDTO opsDto) {
-		opensourceService.save(opsDto);
+	@PostMapping("/addOpensource")
+	public void insert(@RequestHeader("TOKEN") String token,@RequestBody OpensourceSaveDTO opsDto) {
+		opensourceService.save(token,opsDto);
+	}
+	
+	@ApiOperation(value = "오픈소스 업데이트하기")
+	@PostMapping("/updateOpensource")
+	public void update(@RequestHeader("TOKEN") String token,@RequestBody OpensourceUpdateDTO opsDto) {
+		opensourceService.update(token,opsDto);
 	}
 
 }
