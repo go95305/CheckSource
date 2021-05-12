@@ -32,6 +32,7 @@ import com.ssafy.checksource.model.dto.GitLabConnectDTO;
 import com.ssafy.checksource.model.dto.GitLabProjectDTO;
 import com.ssafy.checksource.model.dto.GitLabProjectListDTO;
 import com.ssafy.checksource.model.dto.PackageManageFileDTO;
+import com.ssafy.checksource.model.dto.ProjectBranchesDTO;
 import com.ssafy.checksource.model.dto.RepositoryTreeDTO;
 import com.ssafy.checksource.model.dto.UserGitLabDTO;
 import com.ssafy.checksource.model.dto.UserGitLabTokenDTO;
@@ -170,7 +171,7 @@ public class GitService {
 		gitlabUserKey.setUserId(userId);
 		gitlabUser.setGitlabUserKey(gitlabUserKey);
 		String userAccessToken = gitLabUserRepository.findByUserAndGitlab(user, gitlab).getUserAccessToken();
-		
+
 		String baseUrl = gitlab.getBaseUrl();
 		String url = baseUrl + "/projects?membership=true" + "&per_page=50000";
 
@@ -209,19 +210,47 @@ public class GitService {
 		}
 	}
 
-//	// 프로젝트 삭제하기
-//	public boolean deleteProject(String token, String projectId) {
-//		String userId = jwtTokenProvider.getUserId(token);
-//		User user = userRepository.findByUserId(userId);
-//		Project project = projectRepository.findByProjectId(projectId);
-//		if(user.getDepart().getDepartId() == project.getDepart().getDepartId()) {
-//			projectRepository.delete(project);
-//			return true;
-//		}
-//		return false;
-//	}
+	// 프로젝트 삭제하기
+	public boolean deleteProject(String token, String projectId) {
+		String userId = jwtTokenProvider.getUserId(token);
+		User user = userRepository.findByUserId(userId);
+		Project project = projectRepository.findByProjectId(projectId);
+		if (user.getDepart().getDepartId() == project.getDepart().getDepartId()) {
+			projectRepository.delete(project);
+			return true;
+		}
+		return false;
+	}
 
 	// 프로젝트 브런치 가져오기
+	public List<ProjectBranchesDTO> getBranches(String token, String projectId, Long gitlabId) {
+		GitLab gitlab = gitLabRepository.findById(gitlabId)
+				.orElseThrow(() -> new IllegalArgumentException("no gitLab data"));
+		String baseUrl = gitlab.getBaseUrl();
+		String accessToken = gitlab.getRootAccessToken(); // 루트토큰
+		String url = baseUrl + "/projects/" + projectId + "/repository/branches";
+		List<ProjectBranchesDTO> projectBranchesList = new ArrayList<ProjectBranchesDTO>();
+		// 헤더 담음
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.set("private-token", accessToken);
+		HttpEntity entity = new HttpEntity(headers);
+
+		try {
+			// api 요청
+			ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+			Gson gson = new Gson();
+			ProjectBranchesDTO[] branchList = gson.fromJson(responseEntity.getBody(), ProjectBranchesDTO[].class);
+			projectBranchesList = Arrays.asList(branchList);
+			System.out.println(projectBranchesList.toString());
+			
+		} catch (HttpClientErrorException e) {
+			// accessToken이 유효하지 않을 경우 -> root계정 토큰 만료기간 제한 없으면 상관없음
+			// 잘못된 프로젝트 id 적을 경우
+			return projectBranchesList;
+		}
+		return projectBranchesList;
+	}
 
 //	// 프로젝트 추가하기 - 검증
 //	public boolean addProject(String token, List<GitLabProjectDTO> projectList, String gitlabId) throws Exception {
