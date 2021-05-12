@@ -1,7 +1,11 @@
 package com.ssafy.checksource.controller;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -9,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.checksource.model.dto.LicenseDetailDTO;
 import com.ssafy.checksource.model.dto.LicenseListDTO;
+import com.ssafy.checksource.model.dto.LicenseNameDTO;
+import com.ssafy.checksource.model.dto.LicenseSaveDTO;
 import com.ssafy.checksource.service.LicenseService;
 
 import io.swagger.annotations.ApiImplicitParam;
@@ -33,14 +39,25 @@ public class LicenseController {
 	@GetMapping("/getList")
 	public LicenseListDTO getList(@RequestHeader("TOKEN") String token,@RequestParam String typeFilter, @RequestParam String keyword, @RequestParam int pageSize,
 			@RequestParam int page) {
-		System.out.println(keyword);
+		
 		return licenseService.getLicenseList(typeFilter, keyword, pageSize, page);
-
+	}
+	
+	@GetMapping("/getNameList")
+	public List<LicenseNameDTO> getNameList(@RequestHeader("TOKEN") String token, @RequestParam String keyword) {
+		
+		return licenseService.getLicenseNameList(keyword);
 	}
 
 	@ApiOperation(value = "라이선스 하나의 상세정보 불러오기")
 	@GetMapping("/getDetail/{licenseId}")
 	public LicenseDetailDTO getDetail(@RequestHeader("TOKEN") String token,long licenseId) {
 		return licenseService.getDetailLicense(licenseId);
+	}
+	
+	@ApiOperation(value = "라이선스 저장하기")
+	@PostMapping("/addLicense")
+	public void insert(@RequestHeader("TOKEN") String token,@RequestBody LicenseSaveDTO licDto) {
+		licenseService.save(token,licDto);
 	}
 }
