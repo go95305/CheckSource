@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.websocket.server.PathParam;
 
+import com.ssafy.checksource.model.dto.*;
+import com.ssafy.checksource.service.GithubService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.checksource.model.dto.GitLabConnectDTO;
-import com.ssafy.checksource.model.dto.GitLabProjectDTO;
-import com.ssafy.checksource.model.dto.GitLabProjectListDTO;
-import com.ssafy.checksource.model.dto.ProjectBranchesDTO;
-import com.ssafy.checksource.model.dto.RepositoryTreeDTO;
 import com.ssafy.checksource.service.GitService;
 
 import io.swagger.annotations.ApiOperation;
@@ -35,6 +32,7 @@ import lombok.RequiredArgsConstructor;
 public class GitController {
 	
 	private final GitService gitService;
+	private final GithubService githubService;
 	
 	@ApiOperation(value = "테스트")
 	@GetMapping("/test/{id}")
@@ -84,7 +82,11 @@ public class GitController {
 	public boolean deleteProject(@RequestHeader("TOKEN") String token, @RequestParam String projectId) {
 		return gitService.deleteProject(token, projectId);
 	}
-	
 
-	
+
+	@ApiOperation(value = "github 계정 연동 ")
+	@GetMapping("/githubConnect")
+	public GitHubConnectDTO githubConnect(@RequestParam String username, @RequestHeader("TOKEN") String token, @RequestParam Long githubId) {
+		return githubService.githubConnect(username, token, githubId);
+	}
 }
