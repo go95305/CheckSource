@@ -15,13 +15,8 @@ public class GithubUser {
     private Long githubId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", insertable=false, updatable=false)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "user_github_id")
-    private String userGithubId;
-
     private String username;
-    @Column(name = "user_access_token")
-    private String userAccessToken;
 }

@@ -17,5 +17,6 @@ public class UserDTO {
     private Long job;
     
     private List<GitLabDTO> gitlabList;
+    private GitHubDTO gitHubDTO;
 }
 

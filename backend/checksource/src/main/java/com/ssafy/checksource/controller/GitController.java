@@ -85,7 +85,12 @@ public class GitController {
 
 	@ApiOperation(value = "github 계정 연동 ")
 	@GetMapping("/githubConnect")
-	public GitHubConnectDTO githubConnect(@RequestParam String username, @RequestHeader("TOKEN") String token, @RequestParam Long githubId) {
-		return githubService.githubConnect(username, token, githubId);
+	public GitHubConnectDTO githubConnect(@RequestParam String username, @RequestHeader("TOKEN") String token, @RequestParam String personalAccessToken) {
+		return githubService.githubConnect(username, token,personalAccessToken);
+	}
+	@ApiOperation(value = "github 계정 연동 삭제" )
+	@DeleteMapping("/githubConnect")
+	public void deleteGitHubConnect(@RequestParam Long githubId, @RequestHeader("TOKEN") String token) {
+		githubService.deleteGitConnect(githubId, token);
 	}
 }
