@@ -67,6 +67,7 @@ public class GitService {
 	private final GitLabUserRepository gitLabUserRepository;
 	private final AnalyzeService analyzeService;
 
+	
 	// gitlab 계정 연동 체크
 	public GitLabConnectDTO gitConnect(String username, String token, Long gitlabId) {
 		GitLab gitlab = gitLabRepository.findById(gitlabId)
