@@ -55,6 +55,9 @@ public class User implements UserDetails{
     private List<Opensource> opensource = new ArrayList<>();
 	
 	
+	@OneToMany(mappedBy = "user")
+	private List<License> license = new ArrayList<>(); 
+	
 	@ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private final List<String> roles = new ArrayList<>();
