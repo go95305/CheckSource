@@ -7,7 +7,6 @@ node {
         clone(branchName)
         build()
         buildImage()
-        pushImage()
         deploy()
     } catch (env) {
         throw env
@@ -23,6 +22,7 @@ def clone(String branch) {
 
 def build() {
     stage('Build') {
+	sh 'rm -rf ./frontend/dist'
         sh 'cd frontend && yarn install'
         sh 'cd frontend && yarn build'
         sh 'rm -rf ./backend/checksource/src/test'
@@ -40,31 +40,15 @@ def buildImage() {
     }
 }
 
-def pushImage() {
-    stage('pushImage') {
-        sh 'docker image prune'
-
-        sh 'rm  ~/.dockercfg || true'
-        sh 'rm ~/.docker/config.json || true'
-
-        docker.withRegistry('https://378668795069.dkr.ecr.ap-northeast-2.amazonaws.com', 'ecr:ap-northeast-2:again09-ecr-connector') {
-            sh "docker tag frontend:frontend 378668795069.dkr.ecr.ap-northeast-2.amazonaws.com/checksource:frontend"
-            sh "docker push 378668795069.dkr.ecr.ap-northeast-2.amazonaws.com/checksource:frontend"
-            sh "docker tag backend:backend 378668795069.dkr.ecr.ap-northeast-2.amazonaws.com/checksource:backend"
-            sh "docker push 378668795069.dkr.ecr.ap-northeast-2.amazonaws.com/checksource:backend"
-
-        }
-    }
-}
-
 def deploy() {
     stage('Deploy') {
-        sh "docker container stop backend"
-        sh "docker container rm backend"
-        sh "docker container stop frontend"
-        sh "docker container rm frontend"
-        sh "docker run -itd --name backend -p 8080:8080 -u root backend"
-        sh "docker run -itd --name frontend -p 80:80 -u root frontend"
+        sh "docker stop backend"
+        sh "docker rm backend"
+        sh "docker stop frontend"
+        sh "docker rm frontend"
+	    sh "docker image prune -f"
+        sh "docker run -itd --name backend -p 8080:8080 -u root backend:backend"
+        sh "docker run -itd --name frontend -p 80:80 -u root frontend:frontend"
 
     }
 }
