@@ -8,52 +8,62 @@
 import http from "./http";
 
 const baseUrl = [
-    "http://gitlab.checksource.io:8081",
-    "http://gitlab.checksource.io:8082",
+	"http://gitlab.checksource.io:8081",
+	"http://gitlab.checksource.io:8082",
 ];
 
 function getBaseUrlList() {
-    return baseUrl;
+	return baseUrl;
 }
 
 function getBaseUrl(index) {
-    return baseUrl[index];
+	return baseUrl[index];
 }
 
 //gitlab 계정연동
 function createGitLabConnect(account) {
-    return http.get(`/git/gitlabConnect`, {
-        params: {
-            gitlabId: account.gitlabId,
-            username: account.username,
-        },
-    });
+	return http.get(`/git/gitlabConnect`, {
+		params: {
+			gitlabId: account.gitlabId,
+			username: account.username,
+		},
+	});
 }
 
 //gitlab 계정연동 수정
 function deleteGitLabConnect(gitlabId) {
-    return http.delete(`/git/gitlabConnect`, {
-        params: { gitlabId: gitlabId },
-    });
+	return http.delete(`/git/gitlabConnect`, {
+		params: { gitlabId: gitlabId },
+	});
 }
 
 function readGitLabProjects(gitlabId) {
-    return http.get("/git/projects", {
-        params: {
-            gitlabId: gitlabId,
-        },
-    });
+	return http.get("/git/projects", {
+		params: {
+			gitlabId: gitlabId,
+		},
+	});
+}
+
+function readProjectBranches(gitlabId, projectId) {
+	return http.get("/git/branches", {
+		params: {
+			gitlabId: gitlabId,
+			projectId: projectId,
+		},
+	});
 }
 
 function verifyGitLabProjects(gitlabId, projectList) {
-    return http.post(`/git/projects?gitlabId=${gitlabId}`, projectList);
+	return http.post(`/git/projects?gitlabId=${gitlabId}`, projectList);
 }
 
 export default {
-    getBaseUrlList,
-    getBaseUrl,
-    createGitLabConnect,
-    deleteGitLabConnect,
-    readGitLabProjects,
-    verifyGitLabProjects,
+	getBaseUrlList,
+	getBaseUrl,
+	createGitLabConnect,
+	deleteGitLabConnect,
+	readGitLabProjects,
+	readProjectBranches,
+	verifyGitLabProjects,
 };
