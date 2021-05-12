@@ -1,6 +1,7 @@
 package com.ssafy.checksource.service;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,7 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.google.gson.Gson;
 import com.ssafy.checksource.config.security.JwtTokenProvider;
