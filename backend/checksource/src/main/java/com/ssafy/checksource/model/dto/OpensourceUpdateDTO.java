@@ -5,8 +5,9 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class OpensourcesaveDTO {
-
+public class OpensourceUpdateDTO {
+	
+	private Long opensourceId;
 	private String name;
 	private String url;
 	private String copyright;

@@ -12,12 +12,14 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ssafy.checksource.config.security.JwtTokenProvider;
 import com.ssafy.checksource.model.dto.LicenseDTO;
 import com.ssafy.checksource.model.dto.LicenseDetailDTO;
 import com.ssafy.checksource.model.dto.LicenseListDTO;
 import com.ssafy.checksource.model.dto.LicenseNameDTO;
 import com.ssafy.checksource.model.dto.LicenseSaveDTO;
 import com.ssafy.checksource.model.entity.License;
+import com.ssafy.checksource.model.entity.User;
 import com.ssafy.checksource.model.repository.LicenseRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -29,6 +31,7 @@ public class LicenseService {
 
 	private final LicenseRepository licenseRepository;
 	private final ModelMapper modelMapper = new ModelMapper();
+	private final JwtTokenProvider jwtTokenProvider;
 	
 	public LicenseDetailDTO getDetailLicense(long id) {
 		License lic = licenseRepository.findByLicenseId(id);
@@ -65,8 +68,12 @@ public class LicenseService {
 		return licenseNameList;
 	}
 
-	public void save(LicenseSaveDTO licSave) {
+	public void save(String token,LicenseSaveDTO licSave) {
 		License saveEntity = modelMapper.map(licSave, License.class);
+		String userId = jwtTokenProvider.getUserId(token);
+		User saveuser = new User();
+		saveuser.setUserId(userId);
+		saveEntity.setUser(saveuser);
 		licenseRepository.save(saveEntity);
 	}
 }
