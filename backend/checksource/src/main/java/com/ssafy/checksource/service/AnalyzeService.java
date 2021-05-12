@@ -22,11 +22,13 @@ import com.ssafy.checksource.model.entity.LicenseOpensource;
 import com.ssafy.checksource.model.entity.Opensource;
 import com.ssafy.checksource.model.entity.OpensourceProject;
 import com.ssafy.checksource.model.entity.Project;
+import com.ssafy.checksource.model.entity.UnmappedOpensource;
 import com.ssafy.checksource.model.repository.LicenseOpensourceRepository;
 import com.ssafy.checksource.model.repository.LicenseRepository;
 import com.ssafy.checksource.model.repository.OpensourceProjectRepository;
 import com.ssafy.checksource.model.repository.OpensourceRepository;
 import com.ssafy.checksource.model.repository.ProjectRepository;
+import com.ssafy.checksource.model.repository.UnmappedOpensourceRepository;
 import com.ssafy.checksource.parser.PackageJsonParser;
 import com.ssafy.checksource.parser.PomxmlSaxHandler;
 
@@ -44,6 +46,7 @@ public class AnalyzeService {
 	private final LicenseRepository licenseRepository;
 	private final OpensourceProjectRepository opensourceProjectRepository;
 	private final ProjectRepository projectRepository;
+	private final UnmappedOpensourceRepository unmappedOpensourceRepository;
 
 	// packageManager = "pom.xml"
 	// content = base64 encoding data
@@ -52,18 +55,11 @@ public class AnalyzeService {
 		byte[] decoded = Base64.getDecoder().decode(content);
 		content = new String(decoded, StandardCharsets.UTF_8);
 		if (fileName.equals("pom.xml")) {
-			list = getOpensourceId(pomxmlParsing(content));
+			list = getOpensourceId(projectId,pomxmlParsing(content));
 		} else if(fileName.equals("build.gradle")) {
 			
 		} else if(fileName.equals("package.json")) {
-			List<ParsingDTO> llist = packageJsonParsing(content);
-			System.out.println("------------------");
-			
-			
-			for(ParsingDTO a : llist) {
-				System.out.println(a);
-			}
-			return;
+			list = getOpensourceId(projectId,packageJsonParsing(content));
 		}
 		//list에 opensourceid list있으니 가지고 insert 치세오
 		//System.out.println(list.toString());
@@ -114,15 +110,21 @@ public class AnalyzeService {
 	
 	
 	//groupId와 artifactId로 opensourceId 찾아오기
-	public List<Long> getOpensourceId(List<ParsingDTO> list){
+	public List<Long> getOpensourceId(String projectId,List<ParsingDTO> list){
 		List<Long> opensourceList = new ArrayList<Long>();
 		for (ParsingDTO dto : list) {
 			Opensource ops = opensourceRepository.findByGroupIdAndArtifactId(dto.getGroupId(), dto.getArtifactId());
-			OpensourceDetailDTO opsDto;
 			if (ops != null) {
 				opensourceList.add(ops.getOpensourceId());
 			}else { //db에 오픈소스 없는 경우
-				
+				UnmappedOpensource unmappedOps = new UnmappedOpensource();
+				unmappedOps.setArtifactId(dto.getArtifactId());
+				unmappedOps.setGroupId(dto.getGroupId());
+				unmappedOps.setVersion(dto.getVersion());
+				Project project = new Project();
+				project.setProjectId(projectId);
+				unmappedOps.setProject(project);
+				unmappedOpensourceRepository.save(unmappedOps);
 			}
 		}
 		return opensourceList;
