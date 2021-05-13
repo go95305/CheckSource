@@ -115,11 +115,10 @@ export default {
     },
     created() {
         this.baseUrlList = gitLabApi.getBaseUrlList();
+        this.gitlab = this.getGitLabList;
         if (this.gitlab.length == 0) {
             this.openInputArea = true;
         }
-
-        this.gitlab = this.getGitLabList;
     },
     methods: {
         OpenAndCloseInputArea: function () {
