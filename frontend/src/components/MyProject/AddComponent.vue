@@ -56,7 +56,7 @@
           name="name"
           required
           type="text"
-          placeholder="package type"
+          placeholder="Package Type"
         />
       </p>
       <p class="field required">
@@ -81,37 +81,68 @@
           placeholder="Group Id"
         />
       </p>
+      <p class="field required">
+        <label class="label required" for="name">License</label>
+        <input
+          class="text-input"
+          @keydown.enter="addTag"
+          @keydown.188="addTag"
+          id="name"
+          name="name"
+          required
+          type="text"
+          placeholder="Enter License"
+        />
+      </p>
+      <div class="tag-input">
+        <div v-for="(tag, index) in tags" :key="tag" class="tag-input__tag">
+          <span @click="removeTag(index)">x</span>
+          {{ tag }}
+        </div>
+      </div>
     </form>
 
     <div class="box-3">
       <div class="btn btn-three">
-        <span>추가</span>
+        <span class="add">추가</span>
       </div>
     </div>
   </div>
 </template>
 <script>
 export default {
-	name: "AddComponent",
-	data() {
-		return {
-			dependency: {
-				path: "",
-				version: "",
-				complianceUrl: "",
-			},
-			component: {
-				name: "",
-				url: "",
-				license: "",
-			},
-		};
-	},
-	methods: {
-		addComponent() {
-			alert(this.dependency.path);
-		},
-	},
+  name: "AddComponent",
+  data() {
+    return {
+      dependency: {
+        path: "",
+        version: "",
+        complianceUrl: "",
+      },
+      component: {
+        name: "",
+        url: "",
+        license: "",
+      },
+      tags: [],
+    };
+  },
+  methods: {
+    addComponent() {
+      alert(this.dependency.path);
+    },
+    addTag(event) {
+      event.preventDefault();
+      var val = event.target.value.trim();
+      if (val.length > 0) {
+        this.tags.push(val);
+        event.target.value = "";
+      }
+    },
+    removeTag(index) {
+      this.tags.splice(index, 1);
+    },
+  },
 };
 </script>
 <style scoped src="../../assets/css/MyProject/AddComponent.css"></style>

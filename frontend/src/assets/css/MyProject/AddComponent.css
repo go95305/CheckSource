@@ -84,7 +84,7 @@ input {
 }
 
 
-span{
+.add{
   margin-right: 5%;
 }
 form .button,.form .text-input,.form .label {
@@ -155,4 +155,28 @@ form .button,.form .text-input,.form .label {
 .form .field {
   width: 100%;
   margin: 0 0 1.5em 0;
+}
+.tag-input__tag {
+  height: 30px;
+  float: left;
+  margin-right: 10px;
+  background-color: #eee;
+  line-height: 30px;
+  padding: 0 5px;
+  border-radius: 5px;
+  background: #174d79;
+  color: white;
+}
+.tag-input {
+  width: 100%;
+  /* border: 1px solid #eee; */
+  font-size: 0.9em;
+  height: 50px;
+  box-sizing: border-box;
+  padding: 0 10px;
+}
+.tag-input__tag > span {
+  cursor: pointer;
+  opacity: 0.75;
+  
 }
