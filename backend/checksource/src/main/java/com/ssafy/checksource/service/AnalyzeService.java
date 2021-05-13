@@ -52,8 +52,6 @@ public class AnalyzeService {
 	// content = base64 encoding data
 	public void analyze(String projectId,String fileName, String content,String filePath) throws Exception {
 		//기존 데이터 삭제
-		unmappedOpensourceRepository.deleteAllByProjectId(projectId);
-		opensourceProjectRepository.deleteAllByProjectId(projectId);
 		
 		List<Long> list = null;
 		byte[] decoded = Base64.getDecoder().decode(content);
@@ -67,12 +65,14 @@ public class AnalyzeService {
 		}
 		//list에 opensourceid list있으니 가지고 insert 치세오
 		//System.out.println(list.toString());
+		
 		for (Long opensourceId : list) {
 			//기존꺼 지움
-			opensourceProjectRepository.deleteByOpensourceIdAndProjectId(opensourceId, projectId);
 			OpensourceProject opensourceProject = new OpensourceProject();
-			Opensource opensource = opensourceRepository.findByOpensourceId(opensourceId);
-			Project project = projectRepository.findByProjectId(projectId);
+			Opensource opensource = new Opensource();
+			opensource.setOpensourceId(opensourceId);
+			Project project = new Project();
+			project.setProjectId(projectId);
 			opensourceProject.setOpensource(opensource);
 			opensourceProject.setProject(project);
 			opensourceProject.setPath(filePath);
