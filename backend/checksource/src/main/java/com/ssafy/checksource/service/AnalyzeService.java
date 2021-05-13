@@ -51,6 +51,10 @@ public class AnalyzeService {
 	// packageManager = "pom.xml"
 	// content = base64 encoding data
 	public void analyze(String projectId,String fileName, String content,String filePath) throws Exception {
+		//기존 데이터 삭제
+		unmappedOpensourceRepository.deleteAllByProjectId(projectId);
+		opensourceProjectRepository.deleteAllByProjectId(projectId);
+		
 		List<Long> list = null;
 		byte[] decoded = Base64.getDecoder().decode(content);
 		content = new String(decoded, StandardCharsets.UTF_8);
