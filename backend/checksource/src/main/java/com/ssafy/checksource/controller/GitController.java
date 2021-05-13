@@ -70,9 +70,9 @@ public class GitController {
 	
 	@ApiOperation(value = "프로젝트 추가하기-검증 ")
 	@PostMapping("/projects")
-	public boolean addProjects(@RequestHeader("TOKEN") String token, @RequestBody List<GitLabProjectDTO> projectList, @RequestParam Long gitlabId, @RequestParam String branch) throws URISyntaxException, UnsupportedEncodingException {
+	public boolean addProjects(@RequestHeader("TOKEN") String token, @RequestBody List<GitLabProjectDTO> projectList, @RequestParam Long gitlabId) throws URISyntaxException, UnsupportedEncodingException {
 		try {
-			return gitService.addProject(token, projectList, gitlabId, branch);
+			return gitService.addProject(token, projectList, gitlabId);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
