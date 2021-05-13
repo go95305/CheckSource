@@ -63,7 +63,7 @@
 
 <script>
 import "@/assets/css/DashBoard/VerifyCard.scss";
-import swal from "@/assets/javascript/alert.js";
+import swal from "@/api/alert.js";
 
 export default {
     name: "VerifyCard",
@@ -76,7 +76,12 @@ export default {
         },
         deleteproject: function () {
             //   swal.success('성공!');
-            swal.inputtext();
+            swal.inputtext(
+                "프로젝트 삭제",
+                "프로젝트 삭제를 위해 프로젝트명을 기입해주세요."
+            ).then((result) => {
+                console.log(result);
+            });
         },
     },
 };
