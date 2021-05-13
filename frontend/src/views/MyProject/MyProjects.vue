@@ -2,7 +2,7 @@
     <div>
         <my-project-path :department="'프로젝트'" />
         <div class="myproject-title-div">
-            <h1>ICT운영부</h1>
+            <h1>{{ departmentName }}</h1>
             <router-link
                 class="myproject-edit-router-link"
                 to="/project/main/newproject"
@@ -27,11 +27,13 @@ import MyProjectPath from "@/components/MyProject/MyProjectPath.vue";
 import VerifyCard from "@/components/DashBoard/VerifyCard.vue";
 import { mapGetters } from "vuex";
 import verifyApi from "@/api/verify.js";
+import Info from "@/api/info.js";
 export default {
     name: "MyProjectSummary",
     components: { MyProjectPath, VerifyCard },
     data() {
         return {
+            departmentName: "",
             projectList: [],
         };
     },
@@ -40,6 +42,7 @@ export default {
     },
     created() {
         this.GetProjectList();
+        this.departmentName = Info.GetDepartmentName(this.getDepartment);
     },
     methods: {
         GoReport: function (projectId) {
