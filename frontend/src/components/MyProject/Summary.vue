@@ -4,7 +4,7 @@
     <div class="sum-container">
       <div class="summary-card">
         <div class="img-container">
-          <span class="su-verifycard-difficulty">12</span>
+          <span class="su-verifycard-difficulty">{{ mapped_component }}</span>
           <span class="su-verifycard-skill">Components</span>
         </div>
         <div class="card-content">
@@ -27,13 +27,13 @@
     <div class="sum-container">
       <div class="summary-card">
         <div class="img-container">
-          <span class="su-verifycard-difficulty">12</span>
-          <span class="su-verifycard-skill">License</span>
+          <span class="su-verifycard-difficulty">{{ mapped_license }}</span>
+          <span class="su-verifycard-skill"> Licenses </span>
         </div>
         <div class="card-content">
           <h2 class="hh2">License</h2>
           <span class="font_red"
-            >확인이 필요한 라이선스 : {{ unmap_component }}개</span
+            >확인이 필요한 라이선스 : {{ unmap_license }}개</span
           >
           <p class="excerpt">
             확인이 필요한 License 가 있습니다. License 의무사항을 확인하고,
@@ -52,7 +52,10 @@ import '@/assets/css/MyProject/Summary.scss';
 export default {
   data() {
     return {
+      mapped_component: 26,
+      mapped_license: 28,
       unmap_component: 15,
+      unmap_license: 12,
     };
   },
 };
