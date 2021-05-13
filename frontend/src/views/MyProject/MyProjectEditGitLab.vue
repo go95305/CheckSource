@@ -27,7 +27,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import gitLabApi from "@/api/git.js";
+import gitApi from "@/api/git.js";
 import swal from "@/api/alert.js";
 import RepositoryCard from "@/components/MyProject/RepositoryCard.vue";
 import Loading from "@/components/Loading/Loading.vue";
@@ -75,7 +75,7 @@ export default {
 				this.gitlabAccountList[i] =
 					this.getGitLabList[i].username +
 					"(" +
-					gitLabApi.getBaseUrl(this.getGitLabList[i].gitlabId - 1) +
+					gitApi.getBaseUrl(this.getGitLabList[i].gitlabId - 1) +
 					")";
 			}
 		},
@@ -86,7 +86,7 @@ export default {
 			//레포지토리 얻어오기
 			this.loading = true;
 			this.repositoryList = [];
-			gitLabApi
+			gitApi
 				.readGitLabProjects(
 					this.getGitLabList[this.gitlabAccountValue].gitlabId
 				)
@@ -119,7 +119,7 @@ export default {
 		},
 		GetRepoBranch: function () {
 			//브랜치 목록 가져오기
-			gitLabApi
+			gitApi
 				.readProjectBranches(
 					this.getGitLabList[this.gitlabAccountValue].gitlabId,
 					this.selectRepo.id

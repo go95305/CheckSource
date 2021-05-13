@@ -48,7 +48,7 @@
 <script>
 import "@/assets/css/MyProject/Edit/MyProjectEdit.css";
 import Loading from "@/components/Loading/Loading.vue";
-import gitLabApi from "@/api/git.js";
+import gitApi from "@/api/git.js";
 import RepositoryCard from "../../components/MyProject/RepositoryCard.vue";
 import MyProjectPath from "../../components/MyProject/MyProjectPath.vue";
 import Tab from "../../components/Tab/Tab.vue";
@@ -100,7 +100,7 @@ export default {
 		GoVerify: function () {
 			//검증 시작
 			this.fullLoading = true;
-			gitLabApi
+			gitApi
 				.verifyGitLabProjects(this.gitlabId, this.selectedRepositoryList)
 				.then(() => {
 					alert("검증이 완료되었습니다.");
