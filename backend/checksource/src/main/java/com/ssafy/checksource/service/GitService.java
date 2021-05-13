@@ -1,9 +1,6 @@
 package com.ssafy.checksource.service;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -45,8 +42,9 @@ import com.ssafy.checksource.model.key.GitLabUserKey;
 import com.ssafy.checksource.model.repository.DepartRepository;
 import com.ssafy.checksource.model.repository.GitLabRepository;
 import com.ssafy.checksource.model.repository.GitLabUserRepository;
-import com.ssafy.checksource.model.repository.OpensourceRepository;
+import com.ssafy.checksource.model.repository.OpensourceProjectRepository;
 import com.ssafy.checksource.model.repository.ProjectRepository;
+import com.ssafy.checksource.model.repository.UnmappedOpensourceRepository;
 import com.ssafy.checksource.model.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -66,7 +64,9 @@ public class GitService {
 	private final DepartRepository departRepository;
 	private final GitLabUserRepository gitLabUserRepository;
 	private final AnalyzeService analyzeService;
-
+	private final UnmappedOpensourceRepository unmappedOpensourceRepository;
+	private final OpensourceProjectRepository opensourceProjectRepository;
+	
 	
 	// gitlab 계정 연동 체크
 	public GitLabConnectDTO gitConnect(String username, String token, Long gitlabId) {
@@ -252,7 +252,7 @@ public class GitService {
 	}
 
 	// 프로젝트 추가하기 - 검증, 재검증
-	public boolean addProject(String token, List<GitLabProjectDTO> projectList, Long gitlabId, String branch) throws Exception {
+	public boolean addProject(String token, List<GitLabProjectDTO> projectList, Long gitlabId) throws Exception {
 
 		String userId = jwtTokenProvider.getUserId(token);
 		User user = userRepository.findByUserId(userId);
@@ -266,7 +266,7 @@ public class GitService {
 			project.setDepart(depart);
 			project.setName(gitLabProjectDTO.getName());
 			project.setProjectId(projectId);
-			project.setBranch(branch);//브랜치 설정
+			project.setBranch(gitLabProjectDTO.getBranch());//브랜치 설정
 			projectRepository.save(project);
 		}
 
@@ -280,7 +280,8 @@ public class GitService {
 			AnalyProjectListDTO analyProjectListDto = new AnalyProjectListDTO();
 			String projectId = gitLabProjectDTO.getId();
 			String projectName = gitLabProjectDTO.getName();
-
+			String branch = gitLabProjectDTO.getBranch();
+			
 			//1. repositoryTree 전체 리스트로 가져오기
 			String url = baseUrl + "projects/" + projectId + "/repository/tree?ref="+ branch +"&recursive=true&per_page=50000";
 			List<RepositoryTreeDTO> repositoryTreeList = new ArrayList<RepositoryTreeDTO>();
@@ -335,7 +336,8 @@ public class GitService {
 		for (AnalyProjectListDTO analyProjectListDto : analyProjectList) {
 			List<RepositoryTreeDTO> packageManageFileList = analyProjectListDto.getPackageManageFileList();
 			String projectId = analyProjectListDto.getProjectId();
-
+			unmappedOpensourceRepository.deleteAllByProjectId(projectId);
+			opensourceProjectRepository.deleteAllByProjectId(projectId);
 			//프로젝트별 패키지파일 리스트
 			for (RepositoryTreeDTO packageManageFile : packageManageFileList) {
 				String path = packageManageFile.getPath();
