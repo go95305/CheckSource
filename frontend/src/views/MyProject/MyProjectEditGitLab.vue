@@ -1,4 +1,5 @@
 <template>
+	<!-- /project/main/newproject/gitlab -->
 	<div class="myproject-edit">
 		<DropDown
 			class="myproject-dropdown"
@@ -22,11 +23,6 @@
 				@addRepoClick="AddRepoClick"
 			></repository-card>
 		</div>
-		<select-branch
-			v-if="selectBranch"
-			@selectOK="SelectBranch"
-			@selectCancel="CancelBranch"
-		></select-branch>
 	</div>
 </template>
 <script>
@@ -35,7 +31,6 @@ import gitLabApi from "@/api/gitlab.js";
 import RepositoryCard from "@/components/MyProject/RepositoryCard.vue";
 import Loading from "@/components/Loading/Loading.vue";
 import DropDown from "@/components/DropDown/DropDown.vue";
-import SelectBranch from "@/components/MyProject/SelectBranch.vue";
 import MyProjectEditNoAccount from "@/components/MyProject/MyProjectEditNoAccount.vue";
 export default {
 	name: "MyProjectEditGitLab",
@@ -43,7 +38,6 @@ export default {
 		DropDown,
 		RepositoryCard,
 		Loading,
-		SelectBranch,
 		MyProjectEditNoAccount,
 	},
 	data() {
@@ -54,7 +48,6 @@ export default {
 			gitlabAccountValue: 0,
 			scmLink: "/mypage/scm/gitlab",
 			branchList: [],
-			selectBranch: false,
 			selectRepo: null,
 		};
 	},
@@ -71,7 +64,10 @@ export default {
 	watch: {
 		gitlabAccountValue: function () {
 			this.GetRepositories();
-			this.$emit("clearRepoList");
+			this.$emit(
+				"changeAccountValue",
+				this.getGitLabList[this.gitlabAccountValue].gitlabId
+			);
 		},
 	},
 	methods: {
@@ -119,28 +115,35 @@ export default {
 		},
 		AddRepoClick: function (repo) {
 			this.selectRepo = repo;
-			this.selectBranch = true;
+			this.GetRepoBranch();
 		},
 		GetRepoBranch: function () {
+			//브랜치 목록 가져오기
 			gitLabApi
 				.readProjectBranches(
 					this.getGitLabList[this.gitlabAccountValue].gitlabId,
 					this.selectRepo.id
 				)
-				.then(() => {})
+				.then((response) => {
+					let branchOption;
+					for (let branch of response.data) {
+						branchOption[branch] = branch;
+					}
+					console.log(branchOption);
+				})
 				.catch(() => {
 					alert("프로젝트 브랜치 목록을 불러오지 못했습니다.");
-					this.selectBranch = false;
 				});
 		},
 		SelectBranch: function (branchName) {
-			this.selectRepo.branch = branchName;
-			this.$emit("addRepoClick", this.selectRepo);
-			this.selectBranch = false;
+			//브랜치 선택 완료
+			let branchRepo = Object.assign({}, this.selectRepo);
+			branchRepo.branch = branchName;
+			this.$emit("addRepoClick", branchRepo);
 		},
 		CancelBranch: function () {
+			//브랜치 선택 취소
 			this.branchList = [];
-			this.selectBranch = false;
 		},
 	},
 };
