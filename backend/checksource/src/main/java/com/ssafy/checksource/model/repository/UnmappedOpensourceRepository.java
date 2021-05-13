@@ -8,5 +8,5 @@ import com.ssafy.checksource.model.entity.UnmappedOpensource;
 
 public interface UnmappedOpensourceRepository extends JpaRepository<UnmappedOpensource, Long>{
 
-	
+	void deleteAllByProjectId(String projectId);
 }
