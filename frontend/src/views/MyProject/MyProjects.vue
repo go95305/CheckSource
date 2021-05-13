@@ -1,9 +1,11 @@
 <template>
 	<div>
 		<my-project-path :department="'프로젝트'" />
-		<div class="myproject-gitlab-title-div">
-			<h1>Gitlab</h1>
-			<router-link class="myproject-edit-router-link" to="/project/main/edit"
+		<div class="myproject-title-div">
+			<h1>ICT운영부</h1>
+			<router-link
+				class="myproject-edit-router-link"
+				to="/project/main/newproject"
 				><span class="material-icons"> add </span>New Project</router-link
 			>
 		</div>
@@ -26,10 +28,9 @@ export default {
 	},
 	methods: {
 		GoReport: function (projectId) {
-			console.log(projectId);
-			this.$router.push({ name: "Summary", query: { projectId: "26430578" } });
+			this.$router.push({ name: "Summary", query: { projectId: projectId } });
 		},
 	},
 };
 </script>
-<style scoped src="@/assets/css/MyProject/MyProjectGitlab.css"></style>
+<style scoped src="@/assets/css/MyProject/MyProjects.css"></style>

@@ -45,12 +45,18 @@ public class User implements UserDetails{
 	private Job job;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<GitLab> gitLab = new ArrayList<>();
+    private List<GitLabUser> gitLabUser = new ArrayList<>();
 	
 	
 	@OneToMany(mappedBy = "user")
     private List<Project> project = new ArrayList<>();
 	
+	@OneToMany(mappedBy = "user")
+    private List<Opensource> opensource = new ArrayList<>();
+	
+	
+	@OneToMany(mappedBy = "user")
+	private List<License> license = new ArrayList<>(); 
 	
 	@ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default

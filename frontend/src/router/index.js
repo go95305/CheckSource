@@ -17,8 +17,11 @@ const MyProjectResult = () => import("@/views/MyProject/MyProjectResult");
 const MyProjectEdit = () => import("@/views/MyProject/MyProjectEdit");
 const MyProjectEditGitLab = () =>
 	import("@/views/MyProject/MyProjectEditGitLab");
-const MyProjectGitlab = () => import("@/views/MyProject/MyProjectGitlab");
-const MyProjectAddLicense = () => import("@/components/MyProject/MyProjectAddLicense");
+const MyProjectEditGitHub = () =>
+	import("@/views/MyProject/MyProjectEditGitHub");
+const MyProjects = () => import("@/views/MyProject/MyProjects");
+const MyProjectAddLicense = () =>
+	import("@/components/MyProject/MyProjectAddLicense");
 const LicenseList = () => import("@/components/MyProject/LicenseList");
 const Summary = () => import("@/components/MyProject/Summary");
 
@@ -31,11 +34,14 @@ const OSSDetailOpenSource = () => import("@/views/OSS/OSSDetailOpenSource");
 const OSSDetailLicense = () => import("@/views/OSS/OSSDetailLicense");
 const OSSDetailLicenseContent = () =>
 	import("@/views/OSS/OSSDetailLicenseContent");
+const OSSDetailLicenseInformation = () =>
+	import("@/views/OSS/OSSDetailLicenseInformation");
 
 const MyPage = () => import("@/views/MyPage/MyPage");
 const MyPageProfile = () => import("@/views/MyPage/MyPageProfile");
 const MyPageSCM = () => import("@/views/MyPage/MyPageSCM");
 const MyPageGitLab = () => import("@/views/MyPage/MyPageGitLab");
+const MyPageGitHub = () => import("@/views/MyPage/MyPageGitHub");
 const OpensourceList = () => import("@/components/MyProject/OpensourceList");
 const AddComponent = () => import("@/components/MyProject/AddComponent");
 const OpensourceMain = () => import("@/views/MyProject/OpensourceMain");
@@ -86,9 +92,9 @@ const routes = [
 								component: MyProjectStatus,
 							},
 							{
-								path: "gitlab",
-								name: "GitLab",
-								component: MyProjectGitlab,
+								path: "projects",
+								name: "Projects",
+								component: MyProjects,
 							},
 							{
 								path: "github",
@@ -96,7 +102,7 @@ const routes = [
 								component: DashBoard,
 							},
 							{
-								path: "edit",
+								path: "newproject",
 								name: "MyProjectEdit",
 								component: MyProjectEdit,
 								children: [
@@ -108,6 +114,12 @@ const routes = [
 										path: "gitlab",
 										name: "MyProjectEditGitLab",
 										component: MyProjectEditGitLab,
+										props: true,
+									},
+									{
+										path: "github",
+										name: "MyProjectEditGitHub",
+										component: MyProjectEditGitHub,
 										props: true,
 									},
 								],
@@ -158,7 +170,6 @@ const routes = [
 									},
 								],
 							},
-
 						],
 					},
 				],
@@ -210,7 +221,12 @@ const routes = [
 								children: [
 									{
 										path: "",
-										redirect: "content",
+										redirect: "information",
+									},
+									{
+										path: "information",
+										name: "OSSDetailLicenseInformation",
+										component: OSSDetailLicenseInformation,
 									},
 									{
 										path: "content",
@@ -243,6 +259,11 @@ const routes = [
 								name: "MyPageGitLab",
 								component: MyPageGitLab,
 							},
+							{
+								path: "github",
+								name: "MyPageGitHub",
+								component: MyPageGitHub,
+							},
 						],
 					},
 				],
@@ -261,7 +282,7 @@ router.beforeEach((to, from, next) => {
 	//로그인 여부 확인
 	if (to.path != "/") {
 		if (!store.getters.getAccessToken) {
-			next("/");
+			// next("/");
 		}
 	}
 	next();

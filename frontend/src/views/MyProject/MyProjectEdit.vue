@@ -5,6 +5,10 @@
 		<div id="myproject-edit-container">
 			<div id="myproject-edit-selected-div">
 				<h3 id="myproject-edit-selected-title">선택된 프로젝트</h3>
+				<span class="myproject-edit-selected-info"
+					><span class="material-icons"> info </span>프로젝트는 한 번에 3개까지
+					선택이 가능합니다.</span
+				>
 				<repository-card
 					v-for="(repository, index) in selectedRepositoryList"
 					:key="`${index}_repositoryList`"
@@ -21,21 +25,20 @@
 				</button>
 			</div>
 			<div id="myproject-edit-tab-div">
-				<!-- <button id="myproject-edit-scm-button">
-                    <span class="material-icons"> settings </span>
-                </button> -->
 				<tab id="myproject-edit-tab" :list="tabList" />
 
 				<router-view
 					id="myproject-edit-routerview"
 					:selectedRepositoryList="selectedRepositoryList"
 					@addRepoClick="AddRepoClick"
+					@clearRepoList="ClearRepoList"
 				></router-view>
 			</div>
 		</div>
 	</div>
 </template>
 <script>
+import "@/assets/css/MyProject/Edit/MyProjectEdit.css";
 import gitLabApi from "@/api/gitlab.js";
 import { mapGetters } from "vuex";
 import RepositoryCard from "../../components/MyProject/RepositoryCard.vue";
@@ -46,10 +49,15 @@ export default {
 	components: { MyProjectPath, Tab, RepositoryCard },
 	data() {
 		return {
+			path: this.$route.path,
 			tabList: [
 				{
 					name: "GitLab",
-					path: "/project/main/edit/gitlab",
+					path: "/project/main/newproject/gitlab",
+				},
+				{
+					name: "GitHub",
+					path: "/project/main/newproject/github",
 				},
 			],
 			selectedRepositoryList: [],
@@ -57,6 +65,12 @@ export default {
 	},
 	created() {
 		this.GetSelectedRepositories();
+	},
+	watch: {
+		$route: function () {
+			//형상관리 툴 변경시 선택된 프로젝트 초기화
+			this.ClearRepoList();
+		},
 	},
 	methods: {
 		GetSelectedRepositories: function () {
@@ -69,7 +83,9 @@ export default {
 		},
 		AddRepoClick: function (repo) {
 			//레포지토리 클릭 => selectedList에 추가
-			this.selectedRepositoryList.push(repo);
+			if (this.selectedRepositoryList.length < 3) {
+				this.selectedRepositoryList.push(repo);
+			}
 		},
 		GoVerify: function () {
 			gitLabApi
@@ -79,10 +95,12 @@ export default {
 					this.$router.push("/project/main/status");
 				});
 		},
+		ClearRepoList: function () {
+			this.selectedRepositoryList = [];
+		},
 	},
 	computed: {
 		...mapGetters(["getGitLabId"]),
 	},
 };
 </script>
-<style scoped src="@/assets/css/MyProject/Edit/MyProjectEdit.css"></style>

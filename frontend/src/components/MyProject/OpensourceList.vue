@@ -1,25 +1,27 @@
 <template>
 	<div class="container">
 		<div class="mapped-component">
-			<p>mapped opensource</p>
+			<p>Mapped OpenSource</p>
 		</div>
 		<div class="mapped-table-header">
-			<div class="title title-1">오픈소스명</div>
-			<div class="title title-2">주소</div>
-			<div class="title title-3">라이선스</div>
+			<div class="title title-1">Name</div>
+			<div class="title title-2">Url</div>
+			<div class="title title-3">License</div>
+			<div class="title title-3">Copyright</div>
 		</div>
 		<ul
 			class="responsive-table"
 			:key="`${index}_mapped`"
 			v-for="(item, index) in list"
+			:class="{ sideBar: containerWidth }"
 		>
-			<li class="table-row" @click="sidebar">
+			<li class="table-row" @click="goOpenSource(item.opensourceId)">
 				<div class="col col-1">{{ item.name }}</div>
 				<div class="col col-2">{{ item.url }}</div>
 				<div class="col col-3">{{ item.obligation }}</div>
 			</li>
 
-			<div class="component-specific">
+			<!-- <div class="component-specific">
 				<div class="specific-row">
 					<p class="specific-title">License Version:</p>
 					<p>{{ item.version }}</p>
@@ -36,70 +38,51 @@
 					<p class="specific-title">Group Id:</p>
 					<p>{{ item.groupId }}</p>
 				</div>
-			</div>
+			</div> -->
 		</ul>
 		<div class="unmapped-component">
-			<p>unmapped opensource</p>
+			<p>Unmapped OpenSource</p>
 		</div>
-		<button class="add-component" @click="addComponent">Add</button>
-		<!-- <button class="add-component" @click="addComponent">Component 추가</button> -->
-		<div class="unmapped-table-header">
+		<button class="add-component" @click="addComponent">OpenSource 추가</button>
+		<div class="unmapped-table-header" :class="{ sideBar: containerWidth }">
 			<div class="title utitle-1">Dependency</div>
 			<div class="title utitle-2">위치</div>
 		</div>
-		<ul
+		<!-- <ul
 			class="responsive-table"
 			:key="`${idx}_unmapped`"
 			v-for="(item, idx) in unmappedList"
+			:class="{ sideBar: containerWidth }"
 		>
 			<li class="table-row">
 				<div class="col ucol-1">{{ item.name }}</div>
 				<div class="col ucol-2">{{ item.origin }}</div>
 			</li>
-		</ul>
+		</ul> -->
+		<div class="component-specific" v-if="sidebarShow">
+			<div>
+				<button class="closebtn" @click="closeSideBar">&times;</button>
+			</div>
+			<div class="component-version">
+				<p>License Version</p>
+				<p class="version">{{ version }}</p>
+			</div>
+		</div>
 	</div>
 </template>
 <script>
+import verifyApi from "@/api/verify.js";
 export default {
-	name: "OpensourceList",
 	data() {
 		return {
 			projectId: this.$route.query.projectId,
-			sidebarShow: [],
+			sidebarShow: false,
 			containerWidth: false,
 			version: "",
 			packageType: "",
 			artifactId: "",
 			groupId: "",
-			list: [
-				{
-					name: "Apache License 2.0",
-					url: "http://www.apache.org/licenses/LICENSE-2.0",
-					obligation: "Apache License 2.0",
-					version: "apache.0.1",
-					packageType: "s",
-					artifactId: "a",
-					groupId: "g",
-				},
-				{
-					name: "GNU General Public License v2.0 or later",
-					url: "https://opensource.org/licenses/BSD-3-Clause",
-					obligation: "Apache License 2.0",
-					version: "apache.2",
-					packageType: "s",
-					artifactId: "a",
-					groupId: "g",
-				},
-				{
-					name: "Eclipse Public License 2.0",
-					url: "https://www.eclipse.org/legal/epl-2.0",
-					obligation: "Apache License 2.0",
-					version: "axios.0.1",
-					packageType: "s",
-					artifactId: "a",
-					groupId: "g",
-				},
-			],
+			list: [],
 			unmappedList: [
 				{
 					name: "Apache License 2.0",
@@ -116,8 +99,18 @@ export default {
 			],
 		};
 	},
-
+	created() {
+		this.getList();
+	},
 	methods: {
+		getList: function () {
+			verifyApi.readVerifiedOpenSourceList(this.projectId).then((response) => {
+				if (response.data) this.list = response.data;
+			});
+		},
+		goOpenSource: function (id) {
+			this.$router.push({ name: "OSSDetailOpenSource", query: { id: id } });
+		},
 		sidebar(event) {
 			let elem = event.target;
 			while (!elem.classList.contains("table-row")) {

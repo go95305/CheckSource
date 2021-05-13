@@ -1,9 +1,17 @@
 <template>
 	<div class="myproject-edit">
-		<router-link class="myproject-edit-scm-router-link" to="/mypage/scm/gitlab"
-			><span class="material-icons"> edit </span>계정 설정</router-link
-		>
-		<div class="myproject-edit-gitlab">
+		<DropDown
+			class="myproject-dropdown"
+			v-if="gitlabAccountList.length > 0"
+			:orderList="gitlabAccountList"
+			@orderItemChange="SetGitLabAccountValue"
+		></DropDown>
+		<MyProjectEditNoAccount
+			v-if="gitlabAccountList.length == 0"
+			:link="scmLink"
+		></MyProjectEditNoAccount>
+		<div v-else class="myproject-edit-gitlab">
+			<loading v-if="loading"></loading>
 			<repository-card
 				v-for="(repository, index) in repositoryList"
 				:key="`${index}_repositoryList`"
@@ -14,32 +22,81 @@
 				@addRepoClick="AddRepoClick"
 			></repository-card>
 		</div>
+		<select-branch
+			v-if="selectBranch"
+			@selectOK="SelectBranch"
+			@selectCancel="CancelBranch"
+		></select-branch>
 	</div>
 </template>
 <script>
-import gitLabApi from "@/api/gitlab.js";
 import { mapGetters } from "vuex";
-import RepositoryCard from "../../components/MyProject/RepositoryCard.vue";
+import gitLabApi from "@/api/gitlab.js";
+import RepositoryCard from "@/components/MyProject/RepositoryCard.vue";
+import Loading from "@/components/Loading/Loading.vue";
+import DropDown from "@/components/DropDown/DropDown.vue";
+import SelectBranch from "@/components/MyProject/SelectBranch.vue";
+import MyProjectEditNoAccount from "@/components/MyProject/MyProjectEditNoAccount.vue";
 export default {
-	components: { RepositoryCard },
 	name: "MyProjectEditGitLab",
+	components: {
+		DropDown,
+		RepositoryCard,
+		Loading,
+		SelectBranch,
+		MyProjectEditNoAccount,
+	},
 	data() {
 		return {
 			repositoryList: [],
+			loading: false,
+			gitlabAccountList: [],
+			gitlabAccountValue: 0,
+			scmLink: "/mypage/scm/gitlab",
+			branchList: [],
+			selectBranch: false,
+			selectRepo: null,
 		};
 	},
 	props: {
 		selectedRepositoryList: Array,
 	},
 	created() {
+		this.GetGitLabAccountList();
 		this.GetRepositories();
 	},
+	computed: {
+		...mapGetters(["getGitLabList"]),
+	},
+	watch: {
+		gitlabAccountValue: function () {
+			this.GetRepositories();
+			this.$emit("clearRepoList");
+		},
+	},
 	methods: {
+		GetGitLabAccountList: function () {
+			for (let i = 0; i < this.getGitLabList.length; ++i) {
+				this.gitlabAccountList[i] =
+					this.getGitLabList[i].username +
+					"(" +
+					gitLabApi.getBaseUrl(this.getGitLabList[i].gitlabId - 1) +
+					")";
+			}
+		},
+		SetGitLabAccountValue: function (value) {
+			this.gitlabAccountValue = value;
+		},
 		GetRepositories: function () {
 			//레포지토리 얻어오기
+			this.loading = true;
+			this.repositoryList = [];
 			gitLabApi
-				.readGitLabProjects(this.getGitLabId)
+				.readGitLabProjects(
+					this.getGitLabList[this.gitlabAccountValue].gitlabId
+				)
 				.then((response) => {
+					this.loading = false;
 					if (response.data.accessflag) {
 						this.repositoryList = response.data.projectList;
 					} else {
@@ -48,9 +105,10 @@ export default {
 					}
 				})
 				.catch(() => {
+					this.loading = false;
+					this.repositoryList = [];
 					alert("프로젝트 목록을 불러오지 못했습니다.");
 				});
-			this.repositoryList = [];
 		},
 		IsSelected: function (id) {
 			//선택된 레포지토리인지 확인
@@ -60,11 +118,30 @@ export default {
 			return true;
 		},
 		AddRepoClick: function (repo) {
-			this.$emit("addRepoClick", repo);
+			this.selectRepo = repo;
+			this.selectBranch = true;
 		},
-	},
-	computed: {
-		...mapGetters(["getGitLabId"]),
+		GetRepoBranch: function () {
+			gitLabApi
+				.readProjectBranches(
+					this.getGitLabList[this.gitlabAccountValue].gitlabId,
+					this.selectRepo.id
+				)
+				.then(() => {})
+				.catch(() => {
+					alert("프로젝트 브랜치 목록을 불러오지 못했습니다.");
+					this.selectBranch = false;
+				});
+		},
+		SelectBranch: function (branchName) {
+			this.selectRepo.branch = branchName;
+			this.$emit("addRepoClick", this.selectRepo);
+			this.selectBranch = false;
+		},
+		CancelBranch: function () {
+			this.branchList = [];
+			this.selectBranch = false;
+		},
 	},
 };
 </script>

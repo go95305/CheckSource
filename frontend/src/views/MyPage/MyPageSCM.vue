@@ -19,6 +19,10 @@ export default {
 					name: "GitLab",
 					path: "/mypage/scm/gitlab",
 				},
+				{
+					name: "GitHub",
+					path: "/mypage/scm/github",
+				},
 			],
 		};
 	},

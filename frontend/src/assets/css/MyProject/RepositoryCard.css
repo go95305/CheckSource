@@ -49,13 +49,17 @@
     color: green !important;
 }
 
-#repository-name {
+.repository-name {
     position: absolute;
     z-index: 2;
     font-weight: 300;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.repository-name-branch {
+    font-size: small;
 }
 
 #scm-icon {
