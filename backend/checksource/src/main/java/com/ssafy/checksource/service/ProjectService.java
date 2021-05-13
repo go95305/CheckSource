@@ -78,11 +78,13 @@ public class ProjectService {
 		AnalyOpensourceListDTO analyOpensourceListDto = new AnalyOpensourceListDTO();	
 		
 		//매핑
+		List<OpensourceProject> opensourceList = new ArrayList<OpensourceProject>();
+		opensourceList = opensourceProjectRepository.findByProject(project);
+		List<OpensourceDTO> mappedopensourceList = new ArrayList<OpensourceDTO>();
+		mappedopensourceList = opensourceList.stream().map(OpensourceDTO::new).collect(Collectors.toList());
+	
 		List<LicenseOpensource> licenseOpensourceList = new ArrayList<LicenseOpensource>();
 		licenseOpensourceList = licenseOpensourceRepository.findAllByProjectId(projectId);
-		List<OpensourceDTO> mappedopensourceList = new ArrayList<OpensourceDTO>();
-		mappedopensourceList = licenseOpensourceList.stream().map(OpensourceDTO::new).distinct().collect(Collectors.toList());
-		
 		for (int i = 0; i < mappedopensourceList.size(); i++) {
 			for (LicenseOpensource licenseOpensource : licenseOpensourceList) {
 				OpensourceDTO opensourceDto = mappedopensourceList.get(i);
