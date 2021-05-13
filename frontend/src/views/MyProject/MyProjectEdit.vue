@@ -43,7 +43,7 @@
 <script>
 import "@/assets/css/MyProject/Edit/MyProjectEdit.css";
 import Loading from "@/components/Loading/Loading.vue";
-import gitLabApi from "@/api/gitlab.js";
+import gitLabApi from "@/api/git.js";
 import RepositoryCard from "../../components/MyProject/RepositoryCard.vue";
 import MyProjectPath from "../../components/MyProject/MyProjectPath.vue";
 import Tab from "../../components/Tab/Tab.vue";

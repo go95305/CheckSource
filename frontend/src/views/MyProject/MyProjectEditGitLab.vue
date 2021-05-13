@@ -32,7 +32,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import gitLabApi from "@/api/gitlab.js";
+import gitLabApi from "@/api/git.js";
 import RepositoryCard from "@/components/MyProject/RepositoryCard.vue";
 import Loading from "@/components/Loading/Loading.vue";
 import DropDown from "@/components/DropDown/DropDown.vue";
