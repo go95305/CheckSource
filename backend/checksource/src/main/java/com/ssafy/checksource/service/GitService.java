@@ -252,7 +252,7 @@ public class GitService {
 	}
 
 	// 프로젝트 추가하기 - 검증, 재검증
-	public boolean addProject(String token, List<GitLabProjectDTO> projectList, Long gitlabId, String branch) throws Exception {
+	public boolean addProject(String token, List<GitLabProjectDTO> projectList, Long gitlabId) throws Exception {
 
 		String userId = jwtTokenProvider.getUserId(token);
 		User user = userRepository.findByUserId(userId);
@@ -266,7 +266,7 @@ public class GitService {
 			project.setDepart(depart);
 			project.setName(gitLabProjectDTO.getName());
 			project.setProjectId(projectId);
-			project.setBranch(branch);//브랜치 설정
+			project.setBranch(gitLabProjectDTO.getBranch());//브랜치 설정
 			projectRepository.save(project);
 		}
 
@@ -280,7 +280,8 @@ public class GitService {
 			AnalyProjectListDTO analyProjectListDto = new AnalyProjectListDTO();
 			String projectId = gitLabProjectDTO.getId();
 			String projectName = gitLabProjectDTO.getName();
-
+			String branch = gitLabProjectDTO.getBranch();
+			
 			//1. repositoryTree 전체 리스트로 가져오기
 			String url = baseUrl + "projects/" + projectId + "/repository/tree?ref="+ branch +"&recursive=true&per_page=50000";
 			List<RepositoryTreeDTO> repositoryTreeList = new ArrayList<RepositoryTreeDTO>();

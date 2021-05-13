@@ -1,13 +1,20 @@
 package com.ssafy.checksource.model.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.ssafy.checksource.model.entity.Opensource;
 import com.ssafy.checksource.model.entity.OpensourceProject;
+import com.ssafy.checksource.model.entity.Project;
 
 public interface OpensourceProjectRepository extends JpaRepository<OpensourceProject, Long>{
 
 	@Query( value = "delete from opensource_project where opensource_id = ?1 and project_id = ?2",nativeQuery = true)
 	void deleteByOpensourceIdAndProjectId (Long opensourceId, String projectId);
+	List<OpensourceProject> findByProject (Project project);
+	@Query( value = "delete from opensource_project where project_id = ?1",nativeQuery = true)
+	void deleteAllByProjectId (String projectId);
+
 }
