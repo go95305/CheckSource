@@ -1,8 +1,8 @@
 <template>
     <!-- /project/main/result/status -->
     <div>
-        <my-project-path :department="'프로젝트'" />
-        <h1 id="my-project-status-title">Status</h1>
+        <my-project-path :department="'내 부서'" />
+        <h1 id="my-project-status-title">통계</h1>
         <div class="status-header">
             <div class="status-overview">
                 <dash-board-overview :status="status"> </dash-board-overview>

@@ -1,7 +1,11 @@
 <template>
     <!-- /project/result-->
     <div>
-        <my-project-path :department="'내 프로젝트'" :project="projectName" />
+        <my-project-path
+            :department="'프로젝트'"
+            :project="projectName"
+            :rootPath="'/project/main/projects'"
+        />
         <h1 id="my-project-result-title">{{ projectName }}</h1>
         <tab id="my-project-result-tab" :list="tabList" />
         <router-view />
