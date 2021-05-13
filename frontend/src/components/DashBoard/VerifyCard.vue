@@ -61,7 +61,7 @@
 
       <!-- down -->
       <div class="verifycard-meta">
-        <div class="verifycard-btn">
+        <div class="verifycard-btn" @click="testing">
           <span class="material-icons"> replay </span>
           <span class="vc-btn-detail">rescan</span>
         </div>
@@ -79,6 +79,7 @@
 
 <script>
 import '@/assets/css/DashBoard/VerifyCard.scss';
+import swal from '@/assets/javascript/alert.js';
 
 export default {
   name: 'VerifyCard',
@@ -93,6 +94,9 @@ export default {
   methods: {
     GoReport: function () {
       this.$emit('goReport', '26430578');
+    },
+    testing: function () {
+      swal.success('성공!');
     },
   },
 };
