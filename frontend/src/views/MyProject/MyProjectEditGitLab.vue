@@ -28,14 +28,13 @@
 <script>
 import { mapGetters } from "vuex";
 import gitLabApi from "@/api/git.js";
+import swal from "@/api/alert.js";
 import RepositoryCard from "@/components/MyProject/RepositoryCard.vue";
 import Loading from "@/components/Loading/Loading.vue";
-import DropDown from "@/components/DropDown/DropDown.vue";
 import MyProjectEditNoAccount from "@/components/MyProject/MyProjectEditNoAccount.vue";
 export default {
 	name: "MyProjectEditGitLab",
 	components: {
-		DropDown,
 		RepositoryCard,
 		Loading,
 		MyProjectEditNoAccount,
@@ -114,6 +113,7 @@ export default {
 			return true;
 		},
 		AddRepoClick: function (repo) {
+			//레포지토리 선택
 			this.selectRepo = repo;
 			this.GetRepoBranch();
 		},
@@ -125,25 +125,28 @@ export default {
 					this.selectRepo.id
 				)
 				.then((response) => {
-					let branchOption;
+					let branchOption = {};
 					for (let branch of response.data) {
-						branchOption[branch] = branch;
+						branchOption[branch.name] = branch.name;
 					}
-					console.log(branchOption);
+					this.SelectBranch(branchOption);
 				})
 				.catch(() => {
 					alert("프로젝트 브랜치 목록을 불러오지 못했습니다.");
 				});
 		},
-		SelectBranch: function (branchName) {
-			//브랜치 선택 완료
-			let branchRepo = Object.assign({}, this.selectRepo);
-			branchRepo.branch = branchName;
-			this.$emit("addRepoClick", branchRepo);
-		},
-		CancelBranch: function () {
-			//브랜치 선택 취소
-			this.branchList = [];
+		SelectBranch: function (branchOption) {
+			//브랜치 선택
+			swal
+				.selectBranch("Branch 선택", "Branch를 선택하세요.", branchOption)
+				.then((result) => {
+					console.log(result);
+					if (result.value) {
+						let branchRepo = Object.assign({}, this.selectRepo);
+						branchRepo.branch = result.value;
+						this.$emit("addRepoClick", branchRepo);
+					}
+				});
 		},
 	},
 };
