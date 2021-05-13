@@ -155,7 +155,7 @@
 </template>
 
 <script>
-import '@/assets/css/MyProject/MyProjectAddLicense.scss';
+// import '@/assets/css/MyProject/MyProjectAddLicense.scss';
 
 export default {
   name: 'MyProjectAddLicense',
@@ -165,3 +165,4 @@ export default {
   methods: {},
 };
 </script>
+<style lang="scss" scoped src="../../assets/css/MyProject/MyProjectAddLicense.scss"></style>
