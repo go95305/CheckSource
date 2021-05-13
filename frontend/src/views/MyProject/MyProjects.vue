@@ -42,7 +42,7 @@ export default {
     },
     created() {
         this.GetProjectList();
-        this.departmentName = Info.GetDepartmentName(this.getDepartment);
+        this.departmentName = Info.GetDepartmentName(this.getDepartment - 1);
     },
     methods: {
         GoReport: function (projectId) {
