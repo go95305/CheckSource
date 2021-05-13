@@ -7,8 +7,10 @@ import com.ssafy.checksource.model.entity.LicenseOpensource;
 import com.ssafy.checksource.model.entity.Opensource;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class OpensourceDTO {
 	
 	private long opensourceId;
