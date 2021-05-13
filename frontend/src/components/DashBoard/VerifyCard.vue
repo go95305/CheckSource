@@ -16,33 +16,11 @@
 
     <!-- right -->
     <div class="verifycard-main">
-      <div class="block" @click.prevent="showModalOne = !showModalOne">
+      <div class="block" @click="deleteproject">
         <i class="hovicon effect-1 sub-a"
           ><span class="material-icons red500"> delete </span>
         </i>
       </div>
-
-      <!-- modal -->
-      <div class="customModal" v-if="showModalOne">
-        <div class="customModalTitle">
-          <button class="close" @click.prevent="showModalOne = !showModalOne">
-            &times;
-          </button>
-          Modal One
-        </div>
-        <div class="customModalBody">
-          <p>삭제할 프로젝트 명을 입력해주세요.</p>
-        </div>
-        <div class="customModalFooter">
-          <button
-            class="btn btn-primary"
-            @click.prevent="showModalOne = !showModalOne"
-          >
-            Cancel
-          </button>
-        </div>
-      </div>
-      <!-- modal end -->
 
       <div class="verifycard-main-first">
         <p class="verifycard-excerpt">gitlab#1</p>
@@ -61,7 +39,7 @@
 
       <!-- down -->
       <div class="verifycard-meta">
-        <div class="verifycard-btn" @click="testing">
+        <div class="verifycard-btn">
           <span class="material-icons"> replay </span>
           <span class="vc-btn-detail">rescan</span>
         </div>
@@ -87,15 +65,13 @@ export default {
     project: Object,
   },
   data() {
-    return {
-      showModalOne: false,
-    };
+    return {};
   },
   methods: {
     GoReport: function () {
       this.$emit('goReport', '26430578');
     },
-    testing: function () {
+    deleteproject: function () {
       //   swal.success('성공!');
       swal.inputtext();
     },
