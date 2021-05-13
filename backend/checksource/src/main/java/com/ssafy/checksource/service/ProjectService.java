@@ -46,6 +46,11 @@ public class ProjectService {
 	
 	//summary
 	
+	//프로젝트 이름
+	public String getProjectName(String projectId) {
+		return projectRepository.findByProjectId(projectId).getName();
+	}
+	
 	// 부서별 분석된 프로젝트 목록
 	public List<ProjectListByDepartDTO> getProjectListByDepart(Long departId) {
 		List<ProjectListByDepartDTO> projectListDto = new ArrayList<ProjectListByDepartDTO>();
@@ -68,6 +73,7 @@ public class ProjectService {
 			projectDto.setUserId(project.getUser().getUserId());
 			projectDto.setUsername(project.getUser().getName());
 			projectListDto.add(projectDto);
+			//깃 정보도 같이 줘야함
 		}
 		return projectListDto;
 	}
@@ -78,11 +84,13 @@ public class ProjectService {
 		AnalyOpensourceListDTO analyOpensourceListDto = new AnalyOpensourceListDTO();	
 		
 		//매핑
+		List<OpensourceProject> opensourceList = new ArrayList<OpensourceProject>();
+		opensourceList = opensourceProjectRepository.findByProject(project);
+		List<OpensourceDTO> mappedopensourceList = new ArrayList<OpensourceDTO>();
+		mappedopensourceList = opensourceList.stream().map(OpensourceDTO::new).collect(Collectors.toList());
+	
 		List<LicenseOpensource> licenseOpensourceList = new ArrayList<LicenseOpensource>();
 		licenseOpensourceList = licenseOpensourceRepository.findAllByProjectId(projectId);
-		List<OpensourceDTO> mappedopensourceList = new ArrayList<OpensourceDTO>();
-		mappedopensourceList = licenseOpensourceList.stream().map(OpensourceDTO::new).distinct().collect(Collectors.toList());
-		
 		for (int i = 0; i < mappedopensourceList.size(); i++) {
 			for (LicenseOpensource licenseOpensource : licenseOpensourceList) {
 				OpensourceDTO opensourceDto = mappedopensourceList.get(i);

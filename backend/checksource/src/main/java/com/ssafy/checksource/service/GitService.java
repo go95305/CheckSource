@@ -1,9 +1,6 @@
 package com.ssafy.checksource.service;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -45,8 +42,9 @@ import com.ssafy.checksource.model.key.GitLabUserKey;
 import com.ssafy.checksource.model.repository.DepartRepository;
 import com.ssafy.checksource.model.repository.GitLabRepository;
 import com.ssafy.checksource.model.repository.GitLabUserRepository;
-import com.ssafy.checksource.model.repository.OpensourceRepository;
+import com.ssafy.checksource.model.repository.OpensourceProjectRepository;
 import com.ssafy.checksource.model.repository.ProjectRepository;
+import com.ssafy.checksource.model.repository.UnmappedOpensourceRepository;
 import com.ssafy.checksource.model.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -66,7 +64,9 @@ public class GitService {
 	private final DepartRepository departRepository;
 	private final GitLabUserRepository gitLabUserRepository;
 	private final AnalyzeService analyzeService;
-
+	private final UnmappedOpensourceRepository unmappedOpensourceRepository;
+	private final OpensourceProjectRepository opensourceProjectRepository;
+	
 	
 	// gitlab 계정 연동 체크
 	public GitLabConnectDTO gitConnect(String username, String token, Long gitlabId) {
@@ -336,7 +336,8 @@ public class GitService {
 		for (AnalyProjectListDTO analyProjectListDto : analyProjectList) {
 			List<RepositoryTreeDTO> packageManageFileList = analyProjectListDto.getPackageManageFileList();
 			String projectId = analyProjectListDto.getProjectId();
-
+			unmappedOpensourceRepository.deleteAllByProjectId(projectId);
+			opensourceProjectRepository.deleteAllByProjectId(projectId);
 			//프로젝트별 패키지파일 리스트
 			for (RepositoryTreeDTO packageManageFile : packageManageFileList) {
 				String path = packageManageFile.getPath();
