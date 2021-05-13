@@ -1,8 +1,9 @@
 <template>
-	<div></div>
+    <!-- /project/main/newproject/github -->
+    <div></div>
 </template>
 <script>
 export default {
-	name: "MyProjectEditGitHub",
+    name: "MyProjectEditGitHub",
 };
 </script>

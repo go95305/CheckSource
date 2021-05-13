@@ -1,4 +1,5 @@
 <template>
+    <!-- /project/result-->
     <div>
         <my-project-path :department="'내 프로젝트'" :project="projectName" />
         <h1 id="my-project-result-title">{{ projectName }}</h1>

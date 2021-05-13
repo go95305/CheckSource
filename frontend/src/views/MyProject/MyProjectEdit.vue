@@ -1,6 +1,11 @@
 <template>
+    <!-- project/main/newproject -->
     <div>
-        <my-project-path :department="'프로젝트'" :project="'New Project'" />
+        <my-project-path
+            :department="'프로젝트'"
+            :project="'New Project'"
+            :rootPath="'/project/main/projects'"
+        />
         <h1 id="myproject-edit-title">New Project</h1>
         <div id="myproject-edit-container">
             <div id="myproject-edit-selected-div">
@@ -95,6 +100,7 @@ export default {
             }
         },
         GoVerify: function () {
+            //검증 시작
             this.fullLoading = true;
             gitLabApi
                 .verifyGitLabProjects(
@@ -112,9 +118,11 @@ export default {
                 });
         },
         ClearRepoList: function () {
+            //선택된 프로젝트 목록 초기화
             this.ChangeAccountValue(1);
         },
         ChangeAccountValue: function (gitlabId) {
+            //선택된 프로젝트 목록 초기화
             this.gitlabId = gitlabId;
             this.selectedRepositoryList = [];
         },

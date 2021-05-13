@@ -1,4 +1,5 @@
 <template>
+    <!-- /project/main/projects -->
     <div>
         <my-project-path :department="'프로젝트'" />
         <div class="myproject-title-div">
