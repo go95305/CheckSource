@@ -27,6 +27,11 @@ public class AnalyzeController {
 	private final AnalyzeService analyzeService;
 	private final ProjectService projectService;
 	
+	@ApiOperation(value = "프로젝트 이름 가져오기")
+	public String getProjectName (@RequestHeader("TOKEN") String token, @RequestParam String projectId) {
+		return projectService.getProjectName(projectId);
+	}
+	
 	@ApiOperation(value = "부서별 분석된 프로젝트 목록")
 	@GetMapping("/projectList")
 	public List<ProjectListByDepartDTO> getProjectListByDepart(@RequestHeader("TOKEN") String token, @RequestParam Long departId) {

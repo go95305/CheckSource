@@ -46,6 +46,11 @@ public class ProjectService {
 	
 	//summary
 	
+	//프로젝트 이름
+	public String getProjectName(String projectId) {
+		return projectRepository.findByProjectId(projectId).getName();
+	}
+	
 	// 부서별 분석된 프로젝트 목록
 	public List<ProjectListByDepartDTO> getProjectListByDepart(Long departId) {
 		List<ProjectListByDepartDTO> projectListDto = new ArrayList<ProjectListByDepartDTO>();
@@ -68,6 +73,7 @@ public class ProjectService {
 			projectDto.setUserId(project.getUser().getUserId());
 			projectDto.setUsername(project.getUser().getName());
 			projectListDto.add(projectDto);
+			//깃 정보도 같이 줘야함
 		}
 		return projectListDto;
 	}
