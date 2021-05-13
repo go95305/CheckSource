@@ -10,6 +10,15 @@ function readVerifiedProjectList(departId) {
 }
 
 //분석된 프로젝트 오픈소스 목록 불러오기
+function readVerifiedProjectName(projectId) {
+    return http.get(`/analyze/projectName`, {
+        params: {
+            projectId: projectId,
+        },
+    });
+}
+
+//분석된 프로젝트 오픈소스 목록 불러오기
 function readVerifiedOpenSourceList(projectId) {
     return http.get(`/analyze/opensourceList`, {
         params: {
@@ -29,6 +38,7 @@ function readVerifiedLicenseList(projectId) {
 
 export default {
     readVerifiedProjectList,
+    readVerifiedProjectName,
     readVerifiedOpenSourceList,
     readVerifiedLicenseList,
 };
