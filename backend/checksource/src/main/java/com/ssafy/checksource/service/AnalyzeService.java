@@ -59,11 +59,11 @@ public class AnalyzeService {
 		byte[] decoded = Base64.getDecoder().decode(content);
 		content = new String(decoded, StandardCharsets.UTF_8);
 		if (fileName.equals("pom.xml")) {
-			list = getOpensourceId(projectId,pomxmlParsing(content));
+			list = getOpensourceId(filePath,projectId,pomxmlParsing(content));
 		} else if(fileName.equals("build.gradle")) {
 			
 		} else if(fileName.equals("package.json")) {
-			list = getOpensourceId(projectId,packageJsonParsing(content));
+			list = getOpensourceId(filePath,projectId,packageJsonParsing(content));
 		}
 		//list에 opensourceid list있으니 가지고 insert 치세오
 		//System.out.println(list.toString());
@@ -114,7 +114,7 @@ public class AnalyzeService {
 	
 	
 	//groupId와 artifactId로 opensourceId 찾아오기
-	public List<Long> getOpensourceId(String projectId,List<ParsingDTO> list){
+	public List<Long> getOpensourceId(String filePath,String projectId,List<ParsingDTO> list){
 		List<Long> opensourceList = new ArrayList<Long>();
 		for (ParsingDTO dto : list) {
 			Opensource ops = opensourceRepository.findByGroupIdAndArtifactId(dto.getGroupId(), dto.getArtifactId());
@@ -125,6 +125,7 @@ public class AnalyzeService {
 				unmappedOps.setArtifactId(dto.getArtifactId());
 				unmappedOps.setGroupId(dto.getGroupId());
 				unmappedOps.setVersion(dto.getVersion());
+				unmappedOps.setPath(filePath);
 				Project project = new Project();
 				project.setProjectId(projectId);
 				unmappedOps.setProject(project);

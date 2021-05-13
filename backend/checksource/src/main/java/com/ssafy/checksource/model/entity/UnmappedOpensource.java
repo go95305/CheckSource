@@ -26,6 +26,7 @@ public class UnmappedOpensource {
 	private String artifactId;
 	@Column(name = "version")
 	private String version;
+	private String path;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "project_id")
