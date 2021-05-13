@@ -166,9 +166,9 @@
 
 .hovicon.effect-1 {
   background: rgba(255, 255, 255, 0.1);
-  -webkit-transition: background 0.2s, color 0.2s;
-  -moz-transition: background 0.2s, color 0.2s;
-  transition: background 0.2s, color 0.2s;
+  -webkit-transition: background(0.2s, color 0.2s);
+  -moz-transition: background(0.2s, color 0.2s);
+  transition: background(0.2s, color 0.2s);
 }
 .hovicon.effect-1:after {
   top: -7px;
