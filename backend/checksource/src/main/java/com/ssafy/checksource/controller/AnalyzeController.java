@@ -28,6 +28,7 @@ public class AnalyzeController {
 	private final ProjectService projectService;
 	
 	@ApiOperation(value = "프로젝트 이름 가져오기")
+	@GetMapping("/projectName")
 	public String getProjectName (@RequestHeader("TOKEN") String token, @RequestParam String projectId) {
 		return projectService.getProjectName(projectId);
 	}
