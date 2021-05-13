@@ -50,16 +50,14 @@ input {
   margin-left: 35%;
 }
 
-
-
 /* .box-3 { background-color: #898a8b; } */
 
 .btn {
-	line-height: 50px;
-	height: 50px;
-	text-align: center;
-	width: 187px;
-	cursor: pointer;
+  line-height: 50px;
+  height: 50px;
+  text-align: center;
+  width: 187px;
+  cursor: pointer;
   border: 1px solid;
 }
 
@@ -69,8 +67,8 @@ input {
 ========================
 */
 .btn-three {
-	transition: all 0.5s;
-	/* position: absolute; */
+  transition: all 0.5s;
+  /* position: absolute; */
   font: inherit;
   line-height: 3.2;
   cursor: pointer;
@@ -83,15 +81,16 @@ input {
   background: #58adf3;
 }
 
-
-.add{
+.add {
   margin-right: 5%;
 }
-form .button,.form .text-input,.form .label {
+form .button,
+.form .text-input,
+.form .label {
   padding: 0.75em 1em;
   -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   outline: none;
   line-height: normal;
   border-radius: 0;
@@ -110,9 +109,10 @@ form .button,.form .text-input,.form .label {
   position: relative;
   z-index: 100;
 }
-.required .form .label:after, .form .required .label:after {
+.required .form .label:after,
+.form .required .label:after {
   content: " *";
-  color: #E8474C;
+  color: #e8474c;
   font-weight: normal;
   font-size: 0.75em;
   vertical-align: top;
@@ -125,7 +125,7 @@ form .button,.form .text-input,.form .label {
   background: #eeeeee;
   color: rgb(37, 37, 37);
 }
-.form .text-input:placeholder{
+.form .text-input:placeholder {
   color: white;
 }
 .form .text-input:-webkit-autofill {
@@ -135,12 +135,34 @@ form .button,.form .text-input,.form .label {
   border-left-color: #111111;
   border-right-color: #111111;
 }
-.form .text-input:not(:focus):not(:active).error{
+.form .text-input:not(:focus):not(:active).error {
   background-size: 8px 8px;
-  background-image: linear-gradient(135deg, rgba(232, 71, 76, 0.5), rgba(232, 71, 76, 0.5) 25%, transparent 25%, transparent 50%, rgba(232, 71, 76, 0.5) 50%, rgba(232, 71, 76, 0.5) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(
+    135deg,
+    rgba(232, 71, 76, 0.5),
+    rgba(232, 71, 76, 0.5) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(232, 71, 76, 0.5) 50%,
+    rgba(232, 71, 76, 0.5) 75%,
+    transparent 75%,
+    transparent
+  );
   background-repeat: repeat;
 }
-.form:not(.has-magic-focus) .customSelect.customSelectFocus, .form:not(.has-magic-focus) .customSelect:active, .form:not(.has-magic-focus) .select:active, .form:not(.has-magic-focus) .textarea:active, .form:not(.has-magic-focus) .text-input:active, .form:not(.has-magic-focus) .option-input + label:active, .form:not(.has-magic-focus) .checkbox-input + label:active, .form:not(.has-magic-focus) .customSelect:focus, .form:not(.has-magic-focus) .select:focus, .form:not(.has-magic-focus) .textarea:focus, .form:not(.has-magic-focus) .text-input:focus, .form:not(.has-magic-focus) .option-input + label:focus, .form:not(.has-magic-focus) .checkbox-input + label:focus {
+.form:not(.has-magic-focus) .customSelect.customSelectFocus,
+.form:not(.has-magic-focus) .customSelect:active,
+.form:not(.has-magic-focus) .select:active,
+.form:not(.has-magic-focus) .textarea:active,
+.form:not(.has-magic-focus) .text-input:active,
+.form:not(.has-magic-focus) .option-input + label:active,
+.form:not(.has-magic-focus) .checkbox-input + label:active,
+.form:not(.has-magic-focus) .customSelect:focus,
+.form:not(.has-magic-focus) .select:focus,
+.form:not(.has-magic-focus) .textarea:focus,
+.form:not(.has-magic-focus) .text-input:focus,
+.form:not(.has-magic-focus) .option-input + label:focus,
+.form:not(.has-magic-focus) .checkbox-input + label:focus {
   background: #b8b8b8;
 }
 
@@ -159,7 +181,7 @@ form .button,.form .text-input,.form .label {
 .tag-input__tag {
   height: 30px;
   float: left;
-  margin-right: 10px;
+  margin: 2px;
   background-color: #eee;
   line-height: 30px;
   padding: 0 5px;
@@ -169,14 +191,20 @@ form .button,.form .text-input,.form .label {
 }
 .tag-input {
   width: 100%;
-  /* border: 1px solid #eee; */
   font-size: 0.9em;
-  height: 50px;
   box-sizing: border-box;
   padding: 0 10px;
 }
 .tag-input__tag > span {
   cursor: pointer;
   opacity: 0.75;
-  
+}
+
+.license-watch {
+  list-style: none;
+  background: #eeeeee;
+  margin: 5px;
+  margin-top: 5px;
+  border-bottom: 1px solid #efefef;
+  cursor: pointer;
 }
