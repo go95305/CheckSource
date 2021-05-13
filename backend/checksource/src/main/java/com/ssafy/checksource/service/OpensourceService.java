@@ -49,7 +49,7 @@ public class OpensourceService {
 		}else if(typeFilter.equals("Name")) {
 			opensourcePagedata = opensourceRepository.findByNameLike("%"+keyword+"%",paging);
 		}else if(typeFilter.equals("License")) {
-			
+			opensourcePagedata = opensourceRepository.findByLicenseLike("%"+keyword+"%", paging);
 		}
 		
 		for (Opensource ops : opensourcePagedata) {
