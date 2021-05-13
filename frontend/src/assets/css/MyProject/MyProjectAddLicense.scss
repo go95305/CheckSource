@@ -1,111 +1,255 @@
-/* Colors */
-/* ---------------------------------------- */
-$border: #c6c6c6;
-$border-focus: #9fb1c1;
-$blue: #077abc;
-$aqua: #07b3a1;
-$asphalt: #506982;
-
-form {
-  padding: 4em 10%;
+.title,
+.dependency-title {
+  margin-top: 16px;
+}
+.dependency-title {
+  width: 9%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  opacity: 0.7;
+  margin-left: 35%;
+}
+.dependency {
+  margin-top: 1%;
+  margin-left: 30%;
 }
 
-.form-group {
-  margin-bottom: 20px;
+input {
+  box-sizing: border-box;
+  display: inline-block;
+  margin: 0;
+  min-width: 0;
+  padding: 4px 11px;
+  transition: all 0.3s;
+  width: 362px;
 }
-h2.heading {
-  font-size: 18px;
-  text-transform: uppercase;
-  font-weight: 300;
-  text-align: left;
-  color: $asphalt;
-  border-bottom: 1px solid $asphalt;
-  padding-bottom: 3px;
-  margin-bottom: 20px;
+.dependency-label {
+  max-width: 16.7%;
+  display: inline-block;
+  width: 10%;
+  text-align: right;
+  margin-bottom: 1%;
+  margin-right: 1%;
 }
-.controls {
-  text-align: left;
+.component-label {
+  max-width: 16.7%;
+  display: inline-block;
+  width: 10%;
+  text-align: right;
+  margin-bottom: 1%;
+  margin-right: 1%;
+}
+.component {
+  margin-top: 1%;
+  margin-left: 30%;
+}
+.component-title {
+  margin-top: 3%;
+  width: 9%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  opacity: 0.7;
+  margin-left: 35%;
+}
+
+/* .box-3 { background-color: #898a8b; } */
+
+.btn {
+  line-height: 50px;
+  height: 50px;
+  text-align: center;
+  width: 187px;
+  cursor: pointer;
+  border: 1px solid;
+}
+
+/* 
+========================
+      BUTTON THREE
+========================
+*/
+.btn-three {
+  transition: all 0.5s;
+  /* position: absolute; */
+  font: inherit;
+  line-height: 3.2;
+  cursor: pointer;
+  color: white;
+  width: 80px;
+  margin: 0px auto;
+  font-weight: bold;
+  padding-left: 2em;
+  padding-right: 2em;
+  background: #58adf3;
+}
+
+span {
+  margin-right: 5%;
+}
+form .button,
+.form .text-input,
+.form .label {
+  padding: 0.75em 1em;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+  line-height: normal;
+  border-radius: 0;
+  border: none;
+  background: none;
+  display: block;
+}
+.form .label {
+  font-weight: bold;
+  color: rgb(0, 0, 0);
+  padding-top: 0;
+  padding-left: 0;
+  letter-spacing: 0.025em;
+  font-size: 1.125em;
+  line-height: 1.25;
   position: relative;
-  input[type='text'],
-  input[type='email'],
-  input[type='tel'],
-  textarea,
-  button,
-  select {
-    padding: 12px;
-    font-size: 14px;
-    border: 1px solid $border;
-    width: 100%;
-    margin-bottom: 18px;
-    color: #888;
-    font-size: 16px;
-    font-weight: 300;
-    background-color: #fff;
-    border-radius: 2px;
-    transition: (all 0.3s);
+  z-index: 100;
+}
+.required .form .label:after,
+.form .required .label:after {
+  content: ' *';
+  color: #e8474c;
+  font-weight: normal;
+  font-size: 0.75em;
+  vertical-align: top;
+}
+.form .text-input {
+  font: inherit;
+  line-height: normal;
+  width: 100%;
+  box-sizing: border-box;
+  background: #eeeeee;
+  color: rgb(37, 37, 37);
+}
+.form .text-input:placeholder {
+  color: white;
+}
+.form .text-input:-webkit-autofill {
+  box-shadow: 0 0 0px 1000px #111111 inset;
+  -webkit-text-fill-color: white;
+  border-top-color: #111111;
+  border-left-color: #111111;
+  border-right-color: #111111;
+}
+.form .text-input:not(:focus):not(:active).error {
+  background-size: 8px 8px;
+  background-image: linear-gradient(
+    135deg,
+    rgba(232, 71, 76, 0.5),
+    rgba(232, 71, 76, 0.5) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(232, 71, 76, 0.5) 50%,
+    rgba(232, 71, 76, 0.5) 75%,
+    transparent 75%,
+    transparent
+  );
+  background-repeat: repeat;
+}
+.form:not(.has-magic-focus) .customSelect.customSelectFocus,
+.form:not(.has-magic-focus) .customSelect:active,
+.form:not(.has-magic-focus) .select:active,
+.form:not(.has-magic-focus) .textarea:active,
+.form:not(.has-magic-focus) .text-input:active,
+.form:not(.has-magic-focus) .option-input + label:active,
+.form:not(.has-magic-focus) .checkbox-input + label:active,
+.form:not(.has-magic-focus) .customSelect:focus,
+.form:not(.has-magic-focus) .select:focus,
+.form:not(.has-magic-focus) .textarea:focus,
+.form:not(.has-magic-focus) .text-input:focus,
+.form:not(.has-magic-focus) .option-input + label:focus,
+.form:not(.has-magic-focus) .checkbox-input + label:focus {
+  background: #b8b8b8;
+}
 
-    &:focus,
-    &:hover {
-      outline: none;
-      border-color: $border-focus;
-      + label {
-        color: $blue;
-        cursor: text;
-      }
-    }
-  }
-  .fa-sort {
-    position: absolute;
-    right: 10px;
-    top: 17px;
-    color: #999;
-  }
-  select {
-    appearance: none;
+.form {
+  max-width: 32em;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  flex-flow: column wrap;
+  margin-top: 26px;
+}
+.form .field {
+  width: 100%;
+  margin: 0 0 1.5em 0;
+}
+
+// 체크박스
+.styled-checkbox {
+  position: absolute; // take it out of document flow
+  opacity: 0; // hide it
+
+  & + label {
+    position: relative;
     cursor: pointer;
+    padding: 0;
   }
-  label {
-    position: absolute;
-    left: 8px;
-    top: 12px;
-    color: #999;
-    font-size: 16px;
+
+  // Box.
+  & + label:before {
+    content: '';
+    margin-right: 10px;
     display: inline-block;
-    padding: 4px 10px;
-    font-weight: 400;
-    background-color: rgba(255, 255, 255, 0);
-    pointer-events: none;
-    transition: (color 0.3s, top 0.3s, background-color 0.8s);
-    &.active {
-      top: -11px;
-      color: #555;
-      background-color: rgba(255, 255, 255, 1);
-    }
+    vertical-align: text-top;
+    width: 20px;
+    height: 20px;
+    background: white;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12);
   }
-  textarea {
-    resize: none;
-    height: 200px;
+
+  // Box hover
+  &:hover + label:before {
+    background: #00a3e2;
   }
-  button {
-    cursor: pointer;
-    background-color: $blue;
-    border: none;
-    color: #fff;
-    padding: 12px 0;
-    &:hover {
-      background-color: lighten($blue, 5%);
-    }
+
+  // Box focus
+  &:focus + label:before {
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
+  }
+
+  // Box checked
+  &:checked + label:before {
+    background: #00a3e2;
+  }
+
+  // Disabled state label.
+  &:disabled + label {
+    color: #b8b8b8;
+    cursor: auto;
+  }
+
+  // Disabled box.
+  &:disabled + label:before {
+    box-shadow: none;
+    background: #ddd;
+  }
+
+  // Checkmark.
+  &:checked + label:after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 9px;
+    background: white;
+    width: 2px;
+    height: 2px;
+    box-shadow: 2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white,
+      4px -6px 0 white, 4px -8px 0 white;
+    transform: rotate(45deg);
   }
 }
 
-// .floatLabel:focus + .form-control-placeholder,
-// .floatLabel:active + .form-control-placeholder,
-// .floatLabel:valid + .form-control-placeholder {
-//   font-size: 75%;
-//   transform: translate3d(0, -100%, 0);
-//   opacity: 1;
-//   //   transition: (color 0.3s, top 0.3s, background-color 0.8s);
-//   //   top: -13px;
-//   color: #555;
-//   background-color: rgba(255, 255, 255, 1);
-// }
+.unstyled {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.add-l-check {
+  margin: 20px 0;
+}

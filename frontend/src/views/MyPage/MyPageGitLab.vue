@@ -81,7 +81,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import gitLabApi from "@/api/gitlab.js";
+import gitLabApi from "@/api/git.js";
 import SCMCard from "@/components/MyPage/SCMCard.vue";
 export default {
     name: "MyPageGitLab",
