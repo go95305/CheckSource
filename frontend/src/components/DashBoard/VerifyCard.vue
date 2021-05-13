@@ -96,7 +96,8 @@ export default {
       this.$emit('goReport', '26430578');
     },
     testing: function () {
-      swal.success('성공!');
+      //   swal.success('성공!');
+      swal.inputtext();
     },
   },
 };
