@@ -67,7 +67,7 @@
           required
           type="text"
           placeholder="Package Type"
-          v-model="opensource.packagetype"
+          v-model="opensource.packageType"
         />
       </p>
       <p class="field required">
@@ -126,7 +126,7 @@
       
       <div class="tag-input">
         <div
-          v-for="(tag, index) in opensource.tags"
+          v-for="(tag, index) in tags"
           :key="tag"
           class="tag-input__tag"
         >
@@ -154,11 +154,11 @@ export default {
         url: "",
         copyright: "",
         version: "",
-        packagetype: "",
+        packageType: "",
         artifactId: "",
-        tags: [],
         licenseId:[],
       },
+      tags: [],
       licenses: [],
       licenseName: "",
       searched: false,
@@ -187,16 +187,18 @@ export default {
       console.log(id)
       var val = name.trim();
       if (val.length > 0) {
-        this.opensource.tags.push(val);
+        this.tags.push(val);
         this.opensource.licenseId.push(id);
       }
     },
     removeTag(index) {
-      this.opensource.tags.splice(index, 1);
+      this.tags.splice(index, 1);
     },
     addOpenSource() {
-      licenseApi.addComponent(this.opensource).then(()=>{
-          alert('Opensource추가 완료')
+      console.log(this.opensource)
+      licenseApi.addOpenSource(this.opensource).then(()=>{
+          alert('Opensource추가 완료');
+          this.$router.go(-1)
       })
     },
     selectValue(keycode,str,id){

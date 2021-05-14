@@ -20,19 +20,8 @@ function getLicenseName(licenseName) {
   });
 }
 
-function addOpensource(opensourceInfo) {
-  return http.get(`/opensource/addOpensource`, {
-    params: {
-      artifactId: opensourceInfo.artifactId,
-      copyright: opensourceInfo.copyright,
-      groupId: opensourceInfo.groupId,
-      licenseId: opensourceInfo.licenseId,
-      name: opensourceInfo.name,
-      packageType: opensourceInfo.packagetype,
-      url: opensourceInfo.url,
-      version: opensourceInfo.version,
-    },
-  });
+function addOpenSource(opensourceInfo) {
+  return http.post(`/opensource/addOpensource`,opensourceInfo);
 }
 
-export default { readOpenSourceList, getLicenseName,addOpensource };
+export default { readOpenSourceList, getLicenseName,addOpenSource };
