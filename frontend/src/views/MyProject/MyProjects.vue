@@ -11,6 +11,12 @@
 			>
 		</div>
 		<hr class="verify-header" />
+		<div class="verify-search-div">
+			<search-bar
+				placeHolderText="검색할 프로젝트명을 입력하세요."
+				@doSearch="DoSearch"
+			></search-bar>
+		</div>
 		<div class="verify-body">
 			<VerifyCard
 				v-for="(project, index) in projectList"
@@ -19,41 +25,100 @@
 				@goReport="GoReport"
 			/>
 		</div>
+		<infinite-loading
+			ref="InfiniteLoading"
+			@infinite="GetProjectList"
+			spinner="circles"
+		>
+			<div class="infinite-loading-message" slot="no-more">
+				<button class="last-list-button" @click="scrollUp">마지막입니다</button>
+			</div>
+			<div class="infinite-loading-message" slot="no-results">
+				결과가 없습니다.
+			</div>
+			<div class="infinite-loading-message" slot="error">
+				불러오지 못했습니다.
+			</div>
+		</infinite-loading>
 	</div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import InfiniteLoading from "vue-infinite-loading";
 import MyProjectPath from "@/components/MyProject/MyProjectPath.vue";
 import VerifyCard from "@/components/DashBoard/VerifyCard.vue";
-import { mapGetters } from "vuex";
+import SearchBar from "@/components/SearchBar/SearchBar.vue";
 import verifyApi from "@/api/verify.js";
 import Info from "@/api/info.js";
 export default {
 	name: "MyProjectSummary",
-	components: { MyProjectPath, VerifyCard },
+	components: { InfiniteLoading, MyProjectPath, VerifyCard, SearchBar },
 	data() {
 		return {
 			departmentName: "",
 			projectList: [],
+			keyword: "",
+			page: 1,
+			boolean: false,
+			currentTime: this.getCurrentDate,
 		};
 	},
 	computed: {
 		...mapGetters(["getDepartment"]),
+		getCurrentDate: function () {
+			return Date.now();
+		},
 	},
 	created() {
-		this.GetProjectList();
 		this.departmentName = Info.GetDepartmentName(this.getDepartment - 1);
 	},
 	methods: {
 		GoReport: function (projectId) {
+			//레포트 페이지로 가기
 			this.$router.push({
 				name: "Summary",
 				query: { projectId: projectId },
 			});
 		},
-		GetProjectList: function () {
+		DoSearch: function (keyword) {
+			//검색 키워드 저장
+			this.keyword = keyword;
+			this.ResetList();
+		},
+		ResetList: function () {
+			//리스트 초기화
+			this.page = 1;
+			this.challengeList = [];
+			this.currentTime = this.getCurrentDate;
+			console.log(this.currentTime);
+			if (this.$refs.InfiniteLoading) {
+				this.$refs.InfiniteLoading.stateChanger.reset();
+			}
+		},
+		GetProjectList: function ($state) {
+			//검증된 프로젝트 리스트 조회
 			verifyApi.readVerifiedProjectList(this.getDepartment).then((response) => {
-				this.projectList = response.data;
+				if (response.data) {
+					this.projectList = this.projectList.concat(response.data);
+					++this.page;
+					// $state.complete();
+					if (this.boolean) {
+						$state.complete();
+					} else {
+						$state.loaded();
+					}
+					this.boolean = true;
+				} else {
+					$state.complete();
+				}
+			});
+		},
+		scrollUp: function () {
+			window.scrollTo({
+				top: 0,
+				left: 0,
+				behavior: "smooth",
 			});
 		},
 	},

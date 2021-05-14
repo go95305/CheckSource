@@ -13,7 +13,7 @@
         <td>버전</td>
         <td></td>
       </th>
-      <tr class="opensource-table-tr" v-for="(item, index) in mappedList"
+      <tr class="opensource-table-tr" v-for="(item, index) in unmappedList"
 			:key="`${index}_mapped`" @click="goOpenSource(item.opensourceId)">
         <td>{{ item.artifactId }}</td>
         <td>{{ item.groupId }}</td>
@@ -46,9 +46,8 @@ export default {
     getList: function () {
 			verifyApi.readVerifiedOpenSourceList(this.projectId).then((response) => {
 				if (response.data) {
-          // this.mappedList = response.data.mappedList;
-					console.log(this.mappedList);
-					this.unmappedList = response.data.unmappedList;
+          this.unmappedList = response.data.unmappedList;
+					console.log(this.unmappedList);
 				}
 			});
 		},
@@ -61,3 +60,6 @@ export default {
   },
 };
 </script>
+<style scoped>
+/* .opensource-table-tr */
+</style>
