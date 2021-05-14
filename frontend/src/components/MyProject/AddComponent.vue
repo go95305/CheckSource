@@ -83,7 +83,7 @@
         />
       </p>
       <div class="tooltip-artifact"><span>!</span>
-        <p class="tooltip-artifact-content">Source URL 또는 Homepage URL을 입력해주세요</p>
+        <p class="tooltip-artifact-content">버전 정보를 생략한 jar 파일의 이름</p>
       </div>
       <p class="field">
         <label class="label required" for="name">Group Id</label>
@@ -98,7 +98,7 @@
         />
       </p>
       <div class="tooltip-group"><span>!</span>
-        <p class="tooltip-group-content">Source URL 또는 Homepage URL을 입력해주세요</p>
+        <p class="tooltip-group-content">프로젝트를 식별하는 유일한 값</p>
       </div>
       <p class="field required" v-on:keyup.down="selectValue('down')" v-on:keyup.up="selectValue('up')">
         <label class="label required" for="name">License</label>
