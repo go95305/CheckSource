@@ -15,6 +15,15 @@ public interface OpensourceRepository extends JpaRepository<Opensource, Long>{
     public Opensource findByOpensourceId(long opensourceId);
     public Opensource findByGroupIdAndArtifactId(String groupId,String artifactId);
     public Opensource save(Opensource ops);
+//    @Query(
+//    		value = "select o.*, l.* "
+//    				+ "from opensource o "
+//    				+ "left outer join license_opensource lo on o.opensource_id = lo.opensource_id "
+//    				+ "left outer join license l on lo.license_id = l.license_id "
+//    				+ "where o.name like ?1",
+//    		countQuery = "SELECT COUNT(*) FROM opensource",
+//    		nativeQuery = true
+//    		)
 	public Page<Opensource> findByNameLike(String name, Pageable pageable);
 	
 	@Query(
