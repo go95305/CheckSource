@@ -28,7 +28,7 @@
     <div v-else-if="unmappedList.length == 0">
       <NoResult></NoResult>
     </div>
-    <div v-else class="license-pagination">
+    <div class="license-pagination">
 		  <pagination-remote  :lastPage="3"></pagination-remote>
     </div>
 	</div>
