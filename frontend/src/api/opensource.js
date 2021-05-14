@@ -24,7 +24,7 @@ function addOpenSource(opensourceInfo) {
   return http.post(`/opensource/addOpensource`,opensourceInfo);
 }
 
-export default { readOpenSourceList, getLicenseName,addOpenSource };
+
 function getDetailOpensource(opensourceId) {
     return http.get(`/opensource/getDetail/${opensourceId}`, {
         params: {
@@ -32,5 +32,4 @@ function getDetailOpensource(opensourceId) {
         },
     });
 }
-
-export default { readOpenSourceList, getDetailOpensource };
+export default { readOpenSourceList, getLicenseName,addOpenSource,getDetailOpensource,};
