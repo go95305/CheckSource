@@ -6,18 +6,13 @@
             alt="no-result"
         />
         <div class="no-result-div">
-            <span>연결된 계정이 없습니다.</span>
-            <router-link class="no-result-link" :to="link"
-                >계정 연결하러 가기<span class="material-icons">
-                    arrow_forward
-                </span></router-link
-            >
+            <span>결과를 찾을 수 없습니다.</span>
         </div>
     </div>
 </template>
 <script>
 export default {
-    name: "MyProjectEditNoAccount",
+    name: "NoResult",
     props: {
         link: { type: String, default: "/myproject/scm/gitlab" },
     },

@@ -13,7 +13,7 @@
         <td>버전</td>
         <td></td>
       </th>
-      <tr class="opensource-table-tr" v-for="(item, index) in mappedList"
+      <tr class="opensource-table-tr" v-for="(item, index) in unmappedList"
 			:key="`${index}_mapped`" @click="goOpenSource(item.opensourceId)">
         <td>{{ item.artifactId }}</td>
         <td>{{ item.groupId }}</td>
@@ -22,21 +22,30 @@
         <td><span class="material-icons"> add </span></td>
       </tr>
     </table>
-   <div class="opensource-pagination">
-    <pagination-remote :lastPage="3"></pagination-remote>
+    <div v-if="loading">
+      <loading></loading>
+    </div>
+    <div v-else-if="unmappedList.length == 0">
+      <NoResult></NoResult>
+    </div>
+    <div class="license-pagination">
+		  <pagination-remote  :lastPage="3"></pagination-remote>
     </div>
 	</div>
 </template>
 <script>
+import NoResult from "@/components/MyProject/NoResult.vue"
 import verifyApi from "@/api/verify.js";
 import PaginationRemote from '../Pagination/PaginationRemote.vue';
+import Loading from '../Loading/Loading.vue';
 export default {
   name: "MappedOpensourceList",
-  components: { PaginationRemote },
+  components: { PaginationRemote, NoResult, Loading },
   data() {
     return {
       projectId: this.$route.query.projectId,
       unmappedList: [],
+      loading:false,
     }
   },
   created() {
@@ -44,13 +53,15 @@ export default {
   },
   methods: {
     getList: function () {
+      this.loading = true;
 			verifyApi.readVerifiedOpenSourceList(this.projectId).then((response) => {
 				if (response.data) {
-          // this.mappedList = response.data.mappedList;
-					console.log(this.mappedList);
+          this.loading = false;
 					this.unmappedList = response.data.unmappedList;
 				}
-			});
+			}).catch(() => {
+        this.loading = false;
+      });
 		},
 		goOpenSource: function (id) {
 			this.$router.push({
