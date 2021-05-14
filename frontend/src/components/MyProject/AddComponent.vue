@@ -13,19 +13,24 @@
           required
           type="text"
           placeholder="오픈소스 이름"
+          v-model="opensource.name"
         />
       </p>
       <p class="field required">
         <label class="label" for="email">URL</label>
         <input
           class="text-input"
-          id="email"
-          name="email"
+          id="url"
+          name="url"
           required
-          type="email"
+          type="url"
           placeholder="URL"
+          v-model="opensource.url"
         />
       </p>
+      <div class="tooltip-url"><span>!</span>
+        <p class="tooltip-url-content">Source URL 또는 Homepage URL을 입력해주세요</p>
+      </div>
       <p class="field required">
         <label class="label required" for="name">Copyright</label>
         <input
@@ -35,9 +40,13 @@
           required
           type="text"
           placeholder="Copyright"
+          v-model="opensource.copyright"
         />
       </p>
-      <p class="field required">
+      <div class="tooltip-copyright"><span>!</span>
+        <p class="tooltip-copyright-content">Copyright이 확인되지 않을 경우, property of respective owner를 입력해주세요</p>
+      </div>
+      <p class="field">
         <label class="label required" for="name">Version</label>
         <input
           class="text-input"
@@ -46,9 +55,10 @@
           required
           type="text"
           placeholder="Version"
+          v-model="opensource.version"
         />
       </p>
-      <p class="field required">
+      <p class="field">
         <label class="label required" for="name">Package Type</label>
         <input
           class="text-input"
@@ -56,7 +66,8 @@
           name="name"
           required
           type="text"
-          placeholder="package type"
+          placeholder="Package Type"
+          v-model="opensource.packageType"
         />
       </p>
       <p class="field required">
@@ -68,9 +79,13 @@
           required
           type="text"
           placeholder="Artifact Id"
+          v-model="opensource.artifactId"
         />
       </p>
-      <p class="field required">
+      <div class="tooltip-artifact"><span>!</span>
+        <p class="tooltip-artifact-content">버전 정보를 생략한 jar 파일의 이름</p>
+      </div>
+      <p class="field">
         <label class="label required" for="name">Group Id</label>
         <input
           class="text-input"
@@ -79,39 +94,160 @@
           required
           type="text"
           placeholder="Group Id"
+          v-model="opensource.groupId"
         />
       </p>
+      <div class="tooltip-group"><span>!</span>
+        <p class="tooltip-group-content">프로젝트를 식별하는 유일한 값</p>
+      </div>
+      <p class="field required" v-on:keyup.down="selectValue('down')" v-on:keyup.up="selectValue('up')">
+        <label class="label required" for="name">License</label>
+        <input
+          class="text-input-l"
+
+          id="name"
+          name="name"
+          required
+          type="text"
+          placeholder="Enter License"
+          v-model="licenseName"
+        >
+        <ul class="license-watch-ul" :class="{show:searched}" tabindex="0">
+        <li tabindex="-1" 
+          v-for="(licenseInfoName, index) in licenses"
+          :key="index"
+          @click="selectTag(licenseInfoName.name,licenseInfoName.licenseId)"
+          v-on:keyup.enter="selectValue('enter',licenseInfoName.name,licenseInfoName.licenseId)"
+        >
+          <span>{{ licenseInfoName.name }}</span>
+        </li>
+        <li class="add-license" v-show="isEmpty" @click="licenseAddPage">➕add license</li>
+      </ul>
+      </p>
+      
+      <div class="tag-input">
+        <div
+          v-for="(tag, index) in tags"
+          :key="tag"
+          class="tag-input__tag"
+        >
+          <span class="tags" @click="removeTag(index)">x</span>
+          {{ tag }}
+        </div>
+      </div>
     </form>
 
     <div class="box-3">
       <div class="btn btn-three">
-        <span>추가</span>
+        <span class="add" @click="addOpenSource">추가</span>
       </div>
     </div>
   </div>
 </template>
 <script>
+import licenseApi from "@/api/opensource.js";
 export default {
-	name: "AddComponent",
-	data() {
-		return {
-			dependency: {
-				path: "",
-				version: "",
-				complianceUrl: "",
-			},
-			component: {
-				name: "",
-				url: "",
-				license: "",
-			},
-		};
-	},
-	methods: {
-		addComponent() {
-			alert(this.dependency.path);
-		},
-	},
+  name: "AddComponent",
+  data() {
+    return {
+      opensource: {
+        name: "",
+        url: "",
+        copyright: "",
+        version: "",
+        packageType: "",
+        artifactId: "",
+        licenseId:[],
+      },
+      tags: [],
+      licenses: [],
+      licenseName: "",
+      searched: false,
+      isEmpty:false,
+    };
+  },
+  watch: {
+    licenseName: function (newVal) {
+      this.getLicenseName(newVal);
+    },
+  },
+  methods: {
+    licenseAddPage(){
+      this.$router.push({ name: "MyProjectAddLicense" });
+    },
+    getLicenseName(newVal) {
+      licenseApi.getLicenseName(newVal).then((response) => {
+        console.log(response.data);
+        this.licenses = response.data;
+        var str = this.licenseName;
+        if(str!==''){
+          this.searched=true;
+        }else{
+          this.searched=false;
+          this.isEmpty=true;
+        }
+      });
+    },
+    selectTag(name,id) {
+      console.log(name)
+      console.log(id)
+      var val = name.trim();
+      if (val.length > 0) {
+        this.tags.push(val);
+        this.opensource.licenseId.push(id);
+      }
+    },
+    removeTag(index) {
+      this.tags.splice(index, 1);
+    },
+    addOpenSource() {
+      console.log(this.opensource)
+      licenseApi.addOpenSource(this.opensource).then(()=>{
+          alert('Opensource추가 완료');
+          this.$router.go(-1)
+      })
+    },
+    selectValue(keycode,str,id){
+      if(this.searched === true){
+        const hasClass = document.querySelector('.license-watch-ul').classList.contains('key');
+        if(keycode === 'down'){
+          if(!hasClass){
+            const thisEl = document.querySelectorAll('.license-watch-ul li')[0];
+            document.querySelector('.license-watch-ul').classList.add('key');
+            thisEl.classList.add('sel');
+            thisEl.focus();
+          }
+          else {
+            const lastEl = document.querySelector('.license-watch-ul li:last-child');
+            const thisEl = document.querySelector('.license-watch-ul li.sel');
+            const nextEl = thisEl.nextElementSibling;
+            if (!lastEl.classList.contains('sel')) {
+              thisEl.classList.remove('sel');
+              nextEl.classList.add('sel');
+              nextEl.focus();
+            }
+          }
+        }
+        if (keycode === 'up' && hasClass) {
+          const firstEl = document.querySelectorAll('.license-watch-ul li')[0];
+          const thisEl = document.querySelector('.license-watch-ul li.sel');
+          const prevEl = thisEl.previousElementSibling;
+          if (!firstEl.classList.contains('sel')) {
+            thisEl.classList.remove('sel');
+            prevEl.classList.add('sel');
+            prevEl.focus();
+          } else {
+            document.querySelector('.text-input-l').focus();
+          }
+        }
+        if (keycode === 'enter' && hasClass) {
+          this.selectTag(str,id);
+          const thisEl = document.querySelector('.text-input-l');
+          thisEl.focus();
+        }
+      }
+    },
+  },
 };
 </script>
 <style scoped src="../../assets/css/MyProject/AddComponent.css"></style>
