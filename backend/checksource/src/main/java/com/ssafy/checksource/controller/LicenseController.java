@@ -1,5 +1,7 @@
 package com.ssafy.checksource.controller;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,8 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.checksource.model.dto.LicenseDetailDTO;
 import com.ssafy.checksource.model.dto.LicenseListDTO;
+import com.ssafy.checksource.model.dto.LicenseNameDTO;
 import com.ssafy.checksource.model.dto.LicenseSaveDTO;
-import com.ssafy.checksource.model.dto.OpensourcesaveDTO;
+import com.ssafy.checksource.model.dto.LicenseUpdateDTO;
+import com.ssafy.checksource.model.dto.OpensourceUpdateDTO;
 import com.ssafy.checksource.service.LicenseService;
 
 import io.swagger.annotations.ApiImplicitParam;
@@ -37,15 +41,14 @@ public class LicenseController {
 	@GetMapping("/getList")
 	public LicenseListDTO getList(@RequestHeader("TOKEN") String token,@RequestParam String typeFilter, @RequestParam String keyword, @RequestParam int pageSize,
 			@RequestParam int page) {
-		System.out.println(keyword);
+		
 		return licenseService.getLicenseList(typeFilter, keyword, pageSize, page);
 	}
 	
 	@GetMapping("/getNameList")
-	public LicenseListDTO getNameList(@RequestHeader("TOKEN") String token,@RequestParam String typeFilter, @RequestParam String keyword, @RequestParam int pageSize,
-			@RequestParam int page) {
-		System.out.println(keyword);
-		return licenseService.getLicenseList(typeFilter, keyword, pageSize, page);
+	public List<LicenseNameDTO> getNameList(@RequestHeader("TOKEN") String token, @RequestParam String keyword) {
+		
+		return licenseService.getLicenseNameList(keyword);
 	}
 
 	@ApiOperation(value = "라이선스 하나의 상세정보 불러오기")
@@ -55,8 +58,20 @@ public class LicenseController {
 	}
 	
 	@ApiOperation(value = "라이선스 저장하기")
-	@PostMapping("/addlicense")
+	@PostMapping("/addLicense")
 	public void insert(@RequestHeader("TOKEN") String token,@RequestBody LicenseSaveDTO licDto) {
-		licenseService.save(licDto);
+		licenseService.save(token,licDto);
+	}
+	
+	@ApiOperation(value = "오픈소스 업데이트하기")
+	@PostMapping("/updateLicense")
+	public void update(@RequestHeader("TOKEN") String token,@RequestBody LicenseUpdateDTO licDto) {
+		licenseService.update(token,licDto);
+	}
+	
+	@ApiOperation(value = "오픈소스 삭제하기")
+	@PostMapping("/deleteLicense")
+	public void update(@RequestHeader("TOKEN") String token,@RequestBody long licenseId) {
+		licenseService.delete(licenseId);
 	}
 }

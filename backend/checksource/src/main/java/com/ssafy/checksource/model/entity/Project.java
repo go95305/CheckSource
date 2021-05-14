@@ -35,6 +35,11 @@ public class Project {
 	@Column(columnDefinition = "boolean default false")
 	private boolean status;
 	
+	@Column(name = "web_url")
+	private String webUrl;
+	
+	@Column(name =  "git_type")
+	private Long gitType;
 	
 	@CreationTimestamp
 	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm", timezone="Asia/Seoul")
@@ -52,6 +57,9 @@ public class Project {
 	
 	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<OpensourceProject> opensourceProject = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private List<UnmappedOpensource> unmappendOpensource = new ArrayList<>();
 	
 	private String branch;
 }

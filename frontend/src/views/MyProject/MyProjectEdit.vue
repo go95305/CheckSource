@@ -1,7 +1,12 @@
 <template>
+	<!-- project/main/newproject -->
 	<div>
-		<my-project-path :department="'프로젝트'" :project="'New Project'" />
-		<h1 id="myproject-edit-title">New Project</h1>
+		<my-project-path
+			:department="'프로젝트'"
+			:project="'새로 검증하기'"
+			:rootPath="'/project/main/projects'"
+		/>
+		<h1 id="myproject-edit-title">검증할 프로젝트 선택</h1>
 		<div id="myproject-edit-container">
 			<div id="myproject-edit-selected-div">
 				<h3 id="myproject-edit-selected-title">선택된 프로젝트</h3>
@@ -31,22 +36,25 @@
 					id="myproject-edit-routerview"
 					:selectedRepositoryList="selectedRepositoryList"
 					@addRepoClick="AddRepoClick"
-					@clearRepoList="ClearRepoList"
+					@changeAccountValue="ChangeAccountValue"
 				></router-view>
 			</div>
+		</div>
+		<div v-if="fullLoading" class="loading">
+			<Loading></Loading>
 		</div>
 	</div>
 </template>
 <script>
 import "@/assets/css/MyProject/Edit/MyProjectEdit.css";
-import gitLabApi from "@/api/gitlab.js";
-import { mapGetters } from "vuex";
+import Loading from "@/components/Loading/Loading.vue";
+import gitApi from "@/api/git.js";
 import RepositoryCard from "../../components/MyProject/RepositoryCard.vue";
 import MyProjectPath from "../../components/MyProject/MyProjectPath.vue";
 import Tab from "../../components/Tab/Tab.vue";
 export default {
 	name: "MyProjectEdit",
-	components: { MyProjectPath, Tab, RepositoryCard },
+	components: { MyProjectPath, Tab, RepositoryCard, Loading },
 	data() {
 		return {
 			path: this.$route.path,
@@ -61,6 +69,8 @@ export default {
 				},
 			],
 			selectedRepositoryList: [],
+			gitlabId: 1,
+			fullLoading: false,
 		};
 	},
 	created() {
@@ -88,19 +98,29 @@ export default {
 			}
 		},
 		GoVerify: function () {
-			gitLabApi
-				.verifyGitLabProjects(this.getGitLabId, this.selectedRepositoryList)
+			//검증 시작
+			this.fullLoading = true;
+			gitApi
+				.verifyGitLabProjects(this.gitlabId, this.selectedRepositoryList)
 				.then(() => {
-					alert("검증을 시작합니다.");
-					this.$router.push("/project/main/status");
+					alert("검증이 완료되었습니다.");
+					this.fullLoading = false;
+					this.$router.push("/project/main/projects");
+				})
+				.catch(() => {
+					alert("검증에 실패했습니다.");
+					this.fullLoading = false;
 				});
 		},
 		ClearRepoList: function () {
+			//선택된 프로젝트 목록 초기화
+			this.ChangeAccountValue(1);
+		},
+		ChangeAccountValue: function (gitlabId) {
+			//선택된 프로젝트 목록 초기화
+			this.gitlabId = gitlabId;
 			this.selectedRepositoryList = [];
 		},
-	},
-	computed: {
-		...mapGetters(["getGitLabId"]),
 	},
 };
 </script>

@@ -25,3 +25,12 @@ function addOpenSource(opensourceInfo) {
 }
 
 export default { readOpenSourceList, getLicenseName,addOpenSource };
+function getDetailOpensource(opensourceId) {
+    return http.get(`/opensource/getDetail/${opensourceId}`, {
+        params: {
+            opensourceId: opensourceId,
+        },
+    });
+}
+
+export default { readOpenSourceList, getDetailOpensource };

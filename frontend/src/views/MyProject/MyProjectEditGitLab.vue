@@ -1,4 +1,5 @@
 <template>
+	<!-- /project/main/newproject/gitlab -->
 	<div class="myproject-edit">
 		<DropDown
 			class="myproject-dropdown"
@@ -22,28 +23,20 @@
 				@addRepoClick="AddRepoClick"
 			></repository-card>
 		</div>
-		<select-branch
-			v-if="selectBranch"
-			@selectOK="SelectBranch"
-			@selectCancel="CancelBranch"
-		></select-branch>
 	</div>
 </template>
 <script>
 import { mapGetters } from "vuex";
-import gitLabApi from "@/api/gitlab.js";
+import gitApi from "@/api/git.js";
+import swal from "@/api/alert.js";
 import RepositoryCard from "@/components/MyProject/RepositoryCard.vue";
 import Loading from "@/components/Loading/Loading.vue";
-import DropDown from "@/components/DropDown/DropDown.vue";
-import SelectBranch from "@/components/MyProject/SelectBranch.vue";
 import MyProjectEditNoAccount from "@/components/MyProject/MyProjectEditNoAccount.vue";
 export default {
 	name: "MyProjectEditGitLab",
 	components: {
-		DropDown,
 		RepositoryCard,
 		Loading,
-		SelectBranch,
 		MyProjectEditNoAccount,
 	},
 	data() {
@@ -54,7 +47,6 @@ export default {
 			gitlabAccountValue: 0,
 			scmLink: "/mypage/scm/gitlab",
 			branchList: [],
-			selectBranch: false,
 			selectRepo: null,
 		};
 	},
@@ -71,7 +63,10 @@ export default {
 	watch: {
 		gitlabAccountValue: function () {
 			this.GetRepositories();
-			this.$emit("clearRepoList");
+			this.$emit(
+				"changeAccountValue",
+				this.getGitLabList[this.gitlabAccountValue].gitlabId
+			);
 		},
 	},
 	methods: {
@@ -80,7 +75,7 @@ export default {
 				this.gitlabAccountList[i] =
 					this.getGitLabList[i].username +
 					"(" +
-					gitLabApi.getBaseUrl(this.getGitLabList[i].gitlabId - 1) +
+					gitApi.getBaseUrl(this.getGitLabList[i].gitlabId - 1) +
 					")";
 			}
 		},
@@ -91,7 +86,7 @@ export default {
 			//레포지토리 얻어오기
 			this.loading = true;
 			this.repositoryList = [];
-			gitLabApi
+			gitApi
 				.readGitLabProjects(
 					this.getGitLabList[this.gitlabAccountValue].gitlabId
 				)
@@ -118,29 +113,40 @@ export default {
 			return true;
 		},
 		AddRepoClick: function (repo) {
+			//레포지토리 선택
 			this.selectRepo = repo;
-			this.selectBranch = true;
+			this.GetRepoBranch();
 		},
 		GetRepoBranch: function () {
-			gitLabApi
+			//브랜치 목록 가져오기
+			gitApi
 				.readProjectBranches(
 					this.getGitLabList[this.gitlabAccountValue].gitlabId,
 					this.selectRepo.id
 				)
-				.then(() => {})
+				.then((response) => {
+					let branchOption = {};
+					for (let branch of response.data) {
+						branchOption[branch.name] = branch.name;
+					}
+					this.SelectBranch(branchOption);
+				})
 				.catch(() => {
 					alert("프로젝트 브랜치 목록을 불러오지 못했습니다.");
-					this.selectBranch = false;
 				});
 		},
-		SelectBranch: function (branchName) {
-			this.selectRepo.branch = branchName;
-			this.$emit("addRepoClick", this.selectRepo);
-			this.selectBranch = false;
-		},
-		CancelBranch: function () {
-			this.branchList = [];
-			this.selectBranch = false;
+		SelectBranch: function (branchOption) {
+			//브랜치 선택
+			swal
+				.selectBranch("Branch 선택", "Branch를 선택하세요.", branchOption)
+				.then((result) => {
+					console.log(result);
+					if (result.value) {
+						let branchRepo = Object.assign({}, this.selectRepo);
+						branchRepo.branch = result.value;
+						this.$emit("addRepoClick", branchRepo);
+					}
+				});
 		},
 	},
 };

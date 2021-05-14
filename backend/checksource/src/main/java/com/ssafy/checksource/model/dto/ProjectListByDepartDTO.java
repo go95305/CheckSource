@@ -15,11 +15,12 @@ public class ProjectListByDepartDTO {
 
 	private String projectId;
 	private String name;
+	private String branch;
 	private boolean status;
 	private LocalDateTime date;
 	private int opensourceCnt;
 	private int licenseCnt;
-	private String username;
+	private String username; //검증한 유저
 	private String userId;
 	
 }

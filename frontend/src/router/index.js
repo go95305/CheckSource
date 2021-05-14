@@ -22,7 +22,7 @@ const MyProjectEditGitHub = () =>
 const MyProjects = () => import("@/views/MyProject/MyProjects");
 const MyProjectAddLicense = () =>
 	import("@/components/MyProject/MyProjectAddLicense");
-const LicenseList = () => import("@/components/MyProject/LicenseList");
+const LicenseList = () => import("@/views/MyProject/LicenseList");
 const Summary = () => import("@/components/MyProject/Summary");
 
 const OSSMain = () => import("@/views/OSS/OSSMain");
@@ -42,7 +42,7 @@ const MyPageProfile = () => import("@/views/MyPage/MyPageProfile");
 const MyPageSCM = () => import("@/views/MyPage/MyPageSCM");
 const MyPageGitLab = () => import("@/views/MyPage/MyPageGitLab");
 const MyPageGitHub = () => import("@/views/MyPage/MyPageGitHub");
-const OpensourceList = () => import("@/components/MyProject/OpensourceList");
+const OpensourceList = () => import("@/views/MyProject/OpensourceList");
 const AddComponent = () => import("@/components/MyProject/AddComponent");
 const OpensourceMain = () => import("@/views/MyProject/OpensourceMain");
 const LicenseMain = () => import("@/views/MyProject/LicenseMain");
@@ -282,7 +282,7 @@ router.beforeEach((to, from, next) => {
 	//로그인 여부 확인
 	if (to.path != "/") {
 		if (!store.getters.getAccessToken) {
-			// next("/");
+			next("/");
 		}
 	}
 	next();

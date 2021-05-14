@@ -1,27 +1,8 @@
 <template>
 	<div class="container">
-		<div class="mapped-component">
-			<p>Mapped OpenSource</p>
-		</div>
-		<div class="mapped-table-header">
-			<div class="title title-1">Name</div>
-			<div class="title title-2">Url</div>
-			<div class="title title-3">License</div>
-			<div class="title title-3">Copyright</div>
-		</div>
-		<ul
-			class="responsive-table"
-			:key="`${index}_mapped`"
-			v-for="(item, index) in list"
-			:class="{ sideBar: containerWidth }"
-		>
-			<li class="table-row" @click="goOpenSource(item.opensourceId)">
-				<div class="col col-1">{{ item.name }}</div>
-				<div class="col col-2">{{ item.url }}</div>
-				<div class="col col-3">{{ item.obligation }}</div>
-			</li>
-
-			<!-- <div class="component-specific">
+		<mapped-opensource-list></mapped-opensource-list>
+		<un-mapped-opensource-list></un-mapped-opensource-list>
+		<!-- <div class="component-specific">
 				<div class="specific-row">
 					<p class="specific-title">License Version:</p>
 					<p>{{ item.version }}</p>
@@ -39,40 +20,15 @@
 					<p>{{ item.groupId }}</p>
 				</div>
 			</div> -->
-		</ul>
-		<div class="unmapped-component">
-			<p>Unmapped OpenSource</p>
-		</div>
-		<button class="add-component" @click="addComponent">OpenSource 추가</button>
-		<div class="unmapped-table-header" :class="{ sideBar: containerWidth }">
-			<div class="title utitle-1">Dependency</div>
-			<div class="title utitle-2">위치</div>
-		</div>
-		<!-- <ul
-			class="responsive-table"
-			:key="`${idx}_unmapped`"
-			v-for="(item, idx) in unmappedList"
-			:class="{ sideBar: containerWidth }"
-		>
-			<li class="table-row">
-				<div class="col ucol-1">{{ item.name }}</div>
-				<div class="col ucol-2">{{ item.origin }}</div>
-			</li>
-		</ul> -->
-		<div class="component-specific" v-if="sidebarShow">
-			<div>
-				<button class="closebtn" @click="closeSideBar">&times;</button>
-			</div>
-			<div class="component-version">
-				<p>License Version</p>
-				<p class="version">{{ version }}</p>
-			</div>
-		</div>
 	</div>
 </template>
 <script>
+import "@/assets/css/MyProject/OpensourceList.css";
 import verifyApi from "@/api/verify.js";
+import MappedOpensourceList from "../../components/MyProject/MappedOpensourceList.vue";
+import UnMappedOpensourceList from "../../components/MyProject/UnMappedOpensourceList.vue";
 export default {
+	components: { MappedOpensourceList, UnMappedOpensourceList },
 	data() {
 		return {
 			projectId: this.$route.query.projectId,
@@ -82,7 +38,7 @@ export default {
 			packageType: "",
 			artifactId: "",
 			groupId: "",
-			list: [],
+
 			unmappedList: [
 				{
 					name: "Apache License 2.0",
@@ -105,11 +61,18 @@ export default {
 	methods: {
 		getList: function () {
 			verifyApi.readVerifiedOpenSourceList(this.projectId).then((response) => {
-				if (response.data) this.list = response.data;
+				if (response.data) {
+					console.log(response.data);
+					this.mappedList = response.data.mappedList;
+					this.unmappedList = response.data.unmappedList;
+				}
 			});
 		},
 		goOpenSource: function (id) {
-			this.$router.push({ name: "OSSDetailOpenSource", query: { id: id } });
+			this.$router.push({
+				name: "OSSDetailOpenSource",
+				query: { id: id },
+			});
 		},
 		sidebar(event) {
 			let elem = event.target;
@@ -138,4 +101,4 @@ export default {
 	},
 };
 </script>
-<style scoped src="../../assets/css/MyProject/OpensourceList.css"></style>
+<style scoped src=""></style>

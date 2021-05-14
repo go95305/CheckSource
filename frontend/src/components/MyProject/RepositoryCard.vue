@@ -4,8 +4,8 @@
 
         <div class="repository-name">
             <p>{{ repository.name }}</p>
-            <p class="repository-name-branch" v-if="branch.length > 0">
-                브랜치
+            <p class="repository-name-branch" v-if="repository.branch">
+                {{ repository.branch }}
             </p>
         </div>
 
@@ -36,9 +36,6 @@ export default {
         //레포지토리 정보
         repository: Object,
 
-        //브랜치 정보
-        branch: { type: String, default: "" },
-
         //selected칸에 포함된 카드
         selected: Boolean,
 
@@ -47,6 +44,9 @@ export default {
             type: Boolean,
             default: false,
         },
+    },
+    created() {
+        console.log(this.repository);
     },
     methods: {
         CardClick: function () {

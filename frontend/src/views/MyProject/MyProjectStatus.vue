@@ -1,7 +1,8 @@
 <template>
+  <!-- /project/main/result/status -->
   <div>
-    <my-project-path :department="'프로젝트'" />
-    <h1 id="my-project-status-title">Status</h1>
+    <my-project-path :department="'내 부서'" />
+    <h1 id="my-project-status-title">통계</h1>
     <div class="status-header">
       <div class="status-overview">
         <dash-board-overview :status="status"> </dash-board-overview>
@@ -27,11 +28,11 @@
               </caption>
               <thead class="dash-thead-css">
                 <tr>
-                  <th scope="col">Repository</th>
-                  <th scope="col">Department</th>
-                  <th scope="col">Project</th>
-                  <th scope="col">OpenSource</th>
-                  <th scope="col">License</th>
+                  <th scope="col">저장소</th>
+                  <th scope="col">부서</th>
+                  <th scope="col">프로젝트</th>
+                  <th scope="col">오픈소스</th>
+                  <th scope="col">라이선스</th>
                 </tr>
               </thead>
             </table>
@@ -78,7 +79,12 @@ export default {
   data() {
     return {
       projectId: 'projectID입니다.',
-      status: { project: '27', opensource: '17', license: '5', warning: '3' },
+      status: {
+        project: '27',
+        opensource: '17',
+        license: '5',
+        warning: '3',
+      },
       labels: ['Apache-2.0', 'Ruby', 'MIT', 'JSON', 'GLEW'],
       dataList: [6, 5, 11, 13, 3],
     };

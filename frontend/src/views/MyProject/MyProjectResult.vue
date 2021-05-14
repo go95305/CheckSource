@@ -1,7 +1,12 @@
 <template>
+	<!-- /project/result-->
 	<div>
-		<my-project-path :department="'내 프로젝트'" :project="projectId" />
-		<h1 id="my-project-result-title">{{ projectId }}</h1>
+		<my-project-path
+			:department="'프로젝트'"
+			:project="projectName"
+			:rootPath="'/project/main/projects'"
+		/>
+		<h1 id="my-project-result-title">{{ projectName }}</h1>
 		<tab id="my-project-result-tab" :list="tabList" />
 		<router-view />
 	</div>
@@ -9,30 +14,40 @@
 <script>
 import MyProjectPath from "../../components/MyProject/MyProjectPath.vue";
 import Tab from "../../components/Tab/Tab.vue";
+import verifyApi from "@/api/verify.js";
 export default {
 	name: "MyProjectResult",
 	components: { MyProjectPath, Tab },
 	data() {
 		return {
 			projectId: this.$route.query.projectId,
+			projectName: "",
 			tabList: [],
 		};
 	},
 	created() {
 		this.tabList = [
 			{
-				name: "Summary",
+				name: "분석 결과",
 				path: "/project/result/summary",
 			},
 			{
-				name: "OpenSource",
+				name: "오픈소스",
 				path: "/project/result/opensource",
 			},
 			{
-				name: "License",
+				name: "라이선스",
 				path: "/project/result/license",
 			},
 		];
+		this.GetProjectName();
+	},
+	methods: {
+		GetProjectName: function () {
+			verifyApi.readVerifiedProjectName(this.projectId).then((response) => {
+				this.projectName = response.data;
+			});
+		},
 	},
 };
 </script>

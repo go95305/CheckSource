@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <router-view />
-  </div>
+    <!-- /project/result/license -->
+    <div>
+        <router-view />
+    </div>
 </template>
 <script>
 export default {
-  name: 'LicenseMain',
+    name: "LicenseMain",
 };
 </script>
-<style scoped src="@/assets/css/MyProject/MyProject.css"></style>
