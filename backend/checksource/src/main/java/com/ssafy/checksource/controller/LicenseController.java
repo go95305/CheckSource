@@ -15,6 +15,8 @@ import com.ssafy.checksource.model.dto.LicenseDetailDTO;
 import com.ssafy.checksource.model.dto.LicenseListDTO;
 import com.ssafy.checksource.model.dto.LicenseNameDTO;
 import com.ssafy.checksource.model.dto.LicenseSaveDTO;
+import com.ssafy.checksource.model.dto.LicenseUpdateDTO;
+import com.ssafy.checksource.model.dto.OpensourceUpdateDTO;
 import com.ssafy.checksource.service.LicenseService;
 
 import io.swagger.annotations.ApiImplicitParam;
@@ -59,5 +61,17 @@ public class LicenseController {
 	@PostMapping("/addLicense")
 	public void insert(@RequestHeader("TOKEN") String token,@RequestBody LicenseSaveDTO licDto) {
 		licenseService.save(token,licDto);
+	}
+	
+	@ApiOperation(value = "오픈소스 업데이트하기")
+	@PostMapping("/updateLicense")
+	public void update(@RequestHeader("TOKEN") String token,@RequestBody LicenseUpdateDTO licDto) {
+		licenseService.update(token,licDto);
+	}
+	
+	@ApiOperation(value = "오픈소스 삭제하기")
+	@PostMapping("/deleteLicense")
+	public void update(@RequestHeader("TOKEN") String token,@RequestBody long licenseId) {
+		licenseService.delete(licenseId);
 	}
 }
