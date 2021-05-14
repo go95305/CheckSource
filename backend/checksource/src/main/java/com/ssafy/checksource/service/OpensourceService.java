@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.checksource.config.security.JwtTokenProvider;
+import com.ssafy.checksource.model.dto.LicenseDetailDTO;
 import com.ssafy.checksource.model.dto.OpensourceDTO;
 import com.ssafy.checksource.model.dto.OpensourceDetailDTO;
 import com.ssafy.checksource.model.dto.OpensourceListDTO;
@@ -53,6 +54,7 @@ public class OpensourceService {
 		}
 		
 		for (Opensource ops : opensourcePagedata) {
+			
 			OpensourceDTO opsDto = modelMapper.map(ops, OpensourceDTO.class);
 			List<String> licenseNameList = new ArrayList<String>();
 			for (LicenseOpensource licenseopensource : ops.getLicenses()) {
@@ -71,6 +73,12 @@ public class OpensourceService {
 	public OpensourceDetailDTO getDetailOpensource(long id) {
 		Opensource ops = opensourceRepository.findById(id);
 		OpensourceDetailDTO opsDto = modelMapper.map(ops, OpensourceDetailDTO.class);
+		List<LicenseDetailDTO> licenseList = new ArrayList<LicenseDetailDTO>();
+		for (LicenseOpensource licenseopensource : ops.getLicenses()) {
+			License license = licenseopensource.getLicense();
+			licenseList.add(modelMapper.map(license, LicenseDetailDTO.class));
+		}
+		opsDto.setLicenseList(licenseList);
 		return opsDto;
 	}
 
@@ -127,6 +135,10 @@ public class OpensourceService {
 			licops.setOpslic_id(opslickey);
 			licenseopensourceRepository.save(licops);
 		}
+	}
+	
+	public void delete(long opensourceId) {
+		opensourceRepository.deleteById(opensourceId);
 	}
 
 }
