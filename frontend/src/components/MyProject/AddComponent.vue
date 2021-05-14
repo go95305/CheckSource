@@ -28,6 +28,9 @@
           v-model="opensource.url"
         />
       </p>
+      <div class="tooltip-url"><span>!</span>
+        <p class="tooltip-url-content">Source URL 또는 Homepage URL을 입력해주세요</p>
+      </div>
       <p class="field required">
         <label class="label required" for="name">Copyright</label>
         <input
@@ -40,7 +43,10 @@
           v-model="opensource.copyright"
         />
       </p>
-      <p class="field required">
+      <div class="tooltip-copyright"><span>!</span>
+        <p class="tooltip-copyright-content">Copyright이 확인되지 않을 경우, property of respective owner를 입력해주세요</p>
+      </div>
+      <p class="field">
         <label class="label required" for="name">Version</label>
         <input
           class="text-input"
@@ -52,7 +58,7 @@
           v-model="opensource.version"
         />
       </p>
-      <p class="field required">
+      <p class="field">
         <label class="label required" for="name">Package Type</label>
         <input
           class="text-input"
@@ -76,7 +82,10 @@
           v-model="opensource.artifactId"
         />
       </p>
-      <p class="field required">
+      <div class="tooltip-artifact"><span>!</span>
+        <p class="tooltip-artifact-content">Source URL 또는 Homepage URL을 입력해주세요</p>
+      </div>
+      <p class="field">
         <label class="label required" for="name">Group Id</label>
         <input
           class="text-input"
@@ -88,12 +97,14 @@
           v-model="opensource.groupId"
         />
       </p>
-      <p class="field required">
+      <div class="tooltip-group"><span>!</span>
+        <p class="tooltip-group-content">Source URL 또는 Homepage URL을 입력해주세요</p>
+      </div>
+      <p class="field required" v-on:keyup.down="selectValue('down')" v-on:keyup.up="selectValue('up')">
         <label class="label required" for="name">License</label>
         <input
-          class="text-input"
-          @keydown.enter="addTag"
-          @keydown.188="addTag"
+          class="text-input-l"
+
           id="name"
           name="name"
           required
@@ -101,14 +112,14 @@
           placeholder="Enter License"
           v-model="licenseName"
         >
-        <ul class="license-watch-ul" v-bind:class="{show:searched}">
-        <li
-          class="license-watch"
+        <ul class="license-watch-ul" :class="{show:searched}" tabindex="0">
+        <li tabindex="-1" 
           v-for="(licenseInfoName, index) in licenses"
           :key="index"
           @click="selectTag(licenseInfoName.name,licenseInfoName.licenseId)"
+          v-on:keyup.enter="selectValue('enter',licenseInfoName.name,licenseInfoName.licenseId)"
         >
-          {{ licenseInfoName.name }}
+          <span>{{ licenseInfoName.name }}</span>
         </li>
       </ul>
       </p>
@@ -163,34 +174,21 @@ export default {
       licenseApi.getLicenseName(newVal).then((response) => {
         console.log(response.data);
         this.licenses = response.data;
-        if (newVal == "") {
-          this.licenses = [];
-          this.searched = false;
-        } else if (newVal != "") {
-          this.searched = true;
+        var str = this.licenseName;
+        if(str!==''){
+          this.searched=true;
+        }else{
+          this.searched=false;
         }
       });
     },
-    addComponent() {
-      alert(this.dependency.path);
-    },
-    addTag(event) {
-      event.preventDefault();
-      console.log(event.target.value);
-      var val = event.target.value.trim();
-      if (val.length > 0) {
-        this.opensource.tags.push(val);
-        event.target.value = "";
-        this.licenseName = "";
-      }
-    },
     selectTag(name,id) {
+      console.log(name)
+      console.log(id)
       var val = name.trim();
       if (val.length > 0) {
-        this.searched = false;
         this.opensource.tags.push(val);
-        this.opensource.tagId.push(id);
-        this.licenseName = "";
+        this.opensource.licenseId.push(id);
       }
     },
     removeTag(index) {
@@ -200,6 +198,46 @@ export default {
       licenseApi.addComponent(this.opensource).then(()=>{
           alert('Opensource추가 완료')
       })
+    },
+    selectValue(keycode,str,id){
+      if(this.searched === true){
+        const hasClass = document.querySelector('.license-watch-ul').classList.contains('key');
+        if(keycode === 'down'){
+          if(!hasClass){
+            const thisEl = document.querySelectorAll('.license-watch-ul li')[0];
+            document.querySelector('.license-watch-ul').classList.add('key');
+            thisEl.classList.add('sel');
+            thisEl.focus();
+          }
+          else {
+            const lastEl = document.querySelector('.license-watch-ul li:last-child');
+            const thisEl = document.querySelector('.license-watch-ul li.sel');
+            const nextEl = thisEl.nextElementSibling;
+            if (!lastEl.classList.contains('sel')) {
+              thisEl.classList.remove('sel');
+              nextEl.classList.add('sel');
+              nextEl.focus();
+            }
+          }
+        }
+        if (keycode === 'up' && hasClass) {
+          const firstEl = document.querySelectorAll('.license-watch-ul li')[0];
+          const thisEl = document.querySelector('.license-watch-ul li.sel');
+          const prevEl = thisEl.previousElementSibling;
+          if (!firstEl.classList.contains('sel')) {
+            thisEl.classList.remove('sel');
+            prevEl.classList.add('sel');
+            prevEl.focus();
+          } else {
+            document.querySelector('.text-input-l').focus();
+          }
+        }
+        if (keycode === 'enter' && hasClass) {
+          this.selectTag(str,id);
+          const thisEl = document.querySelector('.text-input-l');
+          thisEl.focus();
+        }
+      }
     },
   },
 };
