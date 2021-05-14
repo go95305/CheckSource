@@ -38,6 +38,7 @@ public class LicenseService {
 		License lic = licenseRepository.findByLicenseId(id);
 		
 		LicenseDetailDTO licDto = modelMapper.map(lic, LicenseDetailDTO.class);
+		licDto.setUserName(lic.getUser().getName());
 		return licDto;
 	}
 	public LicenseListDTO getLicenseList(String typeFilter, String keyword, int pageSize, int page) {
