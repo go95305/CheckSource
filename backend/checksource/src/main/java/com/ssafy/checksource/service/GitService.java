@@ -267,6 +267,8 @@ public class GitService {
 			project.setName(gitLabProjectDTO.getName());
 			project.setProjectId(projectId);
 			project.setBranch(gitLabProjectDTO.getBranch());//브랜치 설정
+			project.setGitType(gitlabId);//gitType
+			project.setWebUrl(gitLabProjectDTO.getWeb_url());//webUrl
 			projectRepository.save(project);
 		}
 

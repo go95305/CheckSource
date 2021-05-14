@@ -9,4 +9,5 @@ public class GitLabProjectDTO {
 	private String name;
 	private String branch;
 	private boolean verified;
+	private String web_url;
 }
