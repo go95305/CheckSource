@@ -1,0 +1,40 @@
+.no-result {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    flex-flow: row wrap;
+    align-items: center;
+}
+
+.no-result-image {
+    height: 120px;
+}
+
+.no-result-div {
+    margin-left: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column nowrap;
+}
+
+.no-result-link {
+    text-decoration: none;
+    width: 160px;
+    margin-top: 10px;
+    padding: 10px;
+    cursor: pointer;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    background-color: white;
+    color: black;
+    box-shadow: 0px 4px 5px #ddd;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.no-result-link:hover {
+    box-shadow: 0px 4px 5px #ccc;
+}
