@@ -121,6 +121,7 @@
         >
           <span>{{ licenseInfoName.name }}</span>
         </li>
+        <li class="add-license" v-show="isEmpty" @click="licenseAddPage">➕add license</li>
       </ul>
       </p>
       
@@ -162,6 +163,7 @@ export default {
       licenses: [],
       licenseName: "",
       searched: false,
+      isEmpty:false,
     };
   },
   watch: {
@@ -170,6 +172,9 @@ export default {
     },
   },
   methods: {
+    licenseAddPage(){
+      this.$router.push({ name: "MyProjectAddLicense" });
+    },
     getLicenseName(newVal) {
       licenseApi.getLicenseName(newVal).then((response) => {
         console.log(response.data);
@@ -179,6 +184,7 @@ export default {
           this.searched=true;
         }else{
           this.searched=false;
+          this.isEmpty=true;
         }
       });
     },
