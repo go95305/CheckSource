@@ -60,7 +60,6 @@ export default {
 			projectList: [],
 			keyword: "",
 			page: 1,
-			boolean: false,
 			currentTime: this.getCurrentDate,
 		};
 	},
@@ -89,7 +88,7 @@ export default {
 		ResetList: function () {
 			//리스트 초기화
 			this.page = 1;
-			this.challengeList = [];
+			this.projectList = [];
 			this.currentTime = this.getCurrentDate;
 			console.log(this.currentTime);
 			if (this.$refs.InfiniteLoading) {
@@ -102,13 +101,7 @@ export default {
 				if (response.data) {
 					this.projectList = this.projectList.concat(response.data);
 					++this.page;
-					// $state.complete();
-					if (this.boolean) {
-						$state.complete();
-					} else {
-						$state.loaded();
-					}
-					this.boolean = true;
+					$state.loaded();
 				} else {
 					$state.complete();
 				}
