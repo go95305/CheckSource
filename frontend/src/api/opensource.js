@@ -12,4 +12,12 @@ function readOpenSourceList(keyword, page, pageSize, typeFilter) {
     });
 }
 
-export default { readOpenSourceList };
+function getDetailOpensource(opensourceId) {
+    return http.get(`/opensource/getDetail/${opensourceId}`, {
+        params: {
+            opensourceId: opensourceId,
+        },
+    });
+}
+
+export default { readOpenSourceList, getDetailOpensource };

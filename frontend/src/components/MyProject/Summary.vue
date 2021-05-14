@@ -66,13 +66,13 @@ export default {
   methods: {
     GoOpensource: function () {
       this.$router.push({
-        name: 'ResultOpenSource',
+        name: 'OpenSourceList',
         query: { projectId: this.projectId },
       });
     },
     GoLicense: function () {
       this.$router.push({
-        name: 'ResultLicense',
+        name: 'License',
         query: { projectId: this.projectId },
       });
     },

@@ -9,7 +9,7 @@
             <th scope="col">프로젝트</th>
             <th scope="col">오픈소스</th>
             <th scope="col">라이선스</th>
-            <th scope="col">Warning</th>
+            <th scope="col">주의</th>
           </tr>
         </thead>
       </table>
