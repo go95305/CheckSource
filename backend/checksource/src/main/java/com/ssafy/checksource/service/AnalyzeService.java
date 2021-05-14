@@ -134,32 +134,4 @@ public class AnalyzeService {
 		}
 		return opensourceList;
 	}
-
-	//나중에 상세보기로 쓸거 미완성
-	// groupId, artifactId, version을 가지고 opensource 테이블에서 데이터를 받아옴
-	public List<OpensourceDetailDTO> pomXmlMatchingLicense(List<ParsingDTO> list) {
-		List<OpensourceDetailDTO> opensourceList = new ArrayList<OpensourceDetailDTO>();
-
-		for (ParsingDTO dto : list) {
-			Opensource ops = opensourceRepository.findByGroupIdAndArtifactId(dto.getGroupId(), dto.getArtifactId());
-			OpensourceDetailDTO opsDto;
-			if (ops != null) {
-				opsDto = modelMapper.map(ops, OpensourceDetailDTO.class);
-				List<LicenseDetailDTO> licenseList = new ArrayList<LicenseDetailDTO>();
-				for (LicenseOpensource licenseopensource : ops.getLicenses()) {
-					License license = licenseopensource.getLicense();
-					licenseList.add(modelMapper.map(license, LicenseDetailDTO.class));
-				}
-				opsDto.setLicenseList(licenseList);
-			}else {
-				opsDto = new OpensourceDetailDTO();
-				opsDto.setGroupId(dto.getGroupId());
-				opsDto.setArtifactId(dto.getArtifactId());
-			}
-			opensourceList.add(opsDto);
-		}
-
-		return opensourceList;
-	}
-
 }

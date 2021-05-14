@@ -57,7 +57,6 @@ public class AnalyzeController {
 		try {
 			analyzeService.analyze(projectId, fileName, content, filePath);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
