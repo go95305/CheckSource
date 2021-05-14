@@ -12,6 +12,7 @@ public class LicenseDetailDTO {
 	private String identifier;
 	private String contents;
 	private String url;
+	private String userName;
 	private Boolean is_osi;
 	private Boolean is_modify;
 	private Boolean is_license;
@@ -25,5 +26,6 @@ public class LicenseDetailDTO {
 	private Boolean is_continue;
 	private Boolean is_patent;
 	private Boolean is_private;
+	
 }
 
