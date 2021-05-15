@@ -72,3 +72,6 @@ export default {
   },
 };
 </script>
+<style scoped>
+/* .opensource-table-tr */
+</style>

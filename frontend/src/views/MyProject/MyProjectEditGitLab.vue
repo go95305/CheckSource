@@ -29,6 +29,7 @@
 import { mapGetters } from "vuex";
 import gitApi from "@/api/git.js";
 import swal from "@/api/alert.js";
+import DropDown from "@/components/DropDown/DropDown.vue";
 import RepositoryCard from "@/components/MyProject/RepositoryCard.vue";
 import Loading from "@/components/Loading/Loading.vue";
 import MyProjectEditNoAccount from "@/components/MyProject/MyProjectEditNoAccount.vue";
@@ -38,6 +39,7 @@ export default {
 		RepositoryCard,
 		Loading,
 		MyProjectEditNoAccount,
+		DropDown,
 	},
 	data() {
 		return {
