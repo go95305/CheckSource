@@ -9,9 +9,11 @@ import com.ssafy.checksource.model.entity.Project;
 
 
 
-public interface ProjectRepository extends JpaRepository<Project, String>{
+public interface ProjectRepository extends JpaRepository<Project, Long>{
 	
-	Project findByProjectId (String projectId);
+	Project findByProjectId (Long projectId);
 	
 	List<Project> findByDepart (Depart depart);
+	
+	Project findByGitProjectIdAndGitType (String gitProjectId, Long gitType);
 }

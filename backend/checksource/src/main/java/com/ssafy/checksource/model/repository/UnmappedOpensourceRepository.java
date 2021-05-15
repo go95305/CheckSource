@@ -13,7 +13,7 @@ import com.ssafy.checksource.model.entity.UnmappedOpensource;
 public interface UnmappedOpensourceRepository extends JpaRepository<UnmappedOpensource, Long>{
 
 	List<UnmappedOpensource> findByProject (Project project);
-	@Query( value = "delete from unmapped_opensource where project_id = ?1",nativeQuery = true)
-	void deleteAllByProjectId (String projectId);
+	@Query( value = "delete from unmapped_opensource where git_project_id = ?1 and git_type = ?2",nativeQuery = true)
+	void deleteAllByProjectId (String gitProjectId, Long gitType);
 	
 }
