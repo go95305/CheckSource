@@ -63,17 +63,7 @@
         <span>!</span>
         <p class="tooltip-contents-content">라이선스 전문을 입력해주세요</p>
       </div>
-      <!-- <p class="field required">
-        <label class="label required" for="name">Package Type</label>
-        <input
-          class="text-input"
-          id="name"
-          name="name"
-          required
-          type="text"
-          placeholder="package type"
-        />
-      </p> -->
+
       <p class="field required">
         <label class="label required" for="sourceopen">소스코드 공개여부</label>
         <input
@@ -87,102 +77,96 @@
         />
       </p>
 
-      <label class="label" for="licenseinfo">라이선스 주요내용</label>
+      <!-- <label class="label" for="licenseinfo">라이선스 주요내용</label> -->
+      <label class="label">라이선스 주요내용</label>
       <p class="field">
-        <label class="sublabel" for="licenseinfo">OSI 승인여부</label>
+        <label class="sublabel">OSI 승인여부</label>
         <input
-          name="filter"
-          id="filter1"
+          name="filter_osi"
+          id="filter_osi1"
           type="radio"
           :value="true"
           v-model="license.is_osi"
         />
-        <label class="radiobtn" for="filter1">
-          <!-- <span class="material-icons"> check_circle_outline </span> -->
-          O
-        </label>
+        <label class="radiobtn" for="filter_osi1"> O </label>
         <input
-          name="filter"
-          id="filter2"
+          name="filter_osi"
+          id="filter_osi2"
           type="radio"
           :value="false"
           v-model="license.is_osi"
         />
-        <label class="radiobtn" for="filter2"> X </label>
+        <label class="radiobtn" for="filter_osi2"> X </label>
         <input
-          name="filter"
-          id="filter3"
+          name="filter_osi"
+          id="filter_osi3"
           type="radio"
           :value="null"
           v-model="license.is_osi"
         />
-        <label class="radiobtn" for="filter3"> 내용없음 </label>
+        <label class="radiobtn" for="filter_osi3"> 내용없음 </label>
       </p>
 
       <p class="field">
-        <label class="sublabel" for="licenseinfo"
-          >복제, 배포, 수정의 권한 허용</label
-        >
+        <label class="sublabel">복제, 배포, 수정의 권한 허용</label>
         <input
-          name="filter"
-          id="filter1"
+          name="filter_modify"
+          id="filter_modify1"
           type="radio"
           :value="true"
           v-model="license.is_modify"
         />
-        <label class="radiobtn" for="filter1">
+        <label class="radiobtn" for="filter_modify1">
           <!-- <span class="material-icons"> check_circle_outline </span> -->
           O
         </label>
         <input
-          name="filter"
-          id="filter2"
+          name="filter_modify"
+          id="filter_modify2"
           type="radio"
           :value="false"
           v-model="license.is_modify"
         />
-        <label class="radiobtn" for="filter2"> X </label>
+        <label class="radiobtn" for="filter_modify2"> X </label>
         <input
-          name="filter"
-          id="filter3"
+          name="filter_modify"
+          id="filter_modify3"
           type="radio"
           :value="null"
           v-model="license.is_modify"
         />
-        <label class="radiobtn" for="filter3"> 내용없음 </label>
+        <label class="radiobtn" for="filter_modify3"> 내용없음 </label>
       </p>
 
       <p class="field">
-        <label class="sublabel" for="licenseinfo"
-          >배포시 라이선스 사본 첨부</label
-        >
+        <label class="sublabel">배포시 라이선스 사본 첨부</label>
         <input
-          name="filter"
-          id="filter1"
+          name="filter_license"
+          id="filter_license1"
           type="radio"
           :value="true"
           v-model="license.is_license"
         />
-        <label class="radiobtn" for="filter1">
+        <label class="radiobtn" for="filter_license1">
           <!-- <span class="material-icons"> check_circle_outline </span> -->
           O
         </label>
         <input
-          name="filter"
-          id="filter2"
+          name="filter_license"
+          id="filter_license2"
           type="radio"
           :value="false"
           v-model="license.is_license"
         />
-        <label class="radiobtn" for="filter2"> X </label>
+        <label class="radiobtn" for="filter_license2"> X </label>
         <input
-          name="filter"
-          id="filter3"
+          name="filter_license"
+          id="filter_license3"
           type="radio"
           :value="null"
           v-model="license.is_license"
         />
-        <label class="radiobtn" for="filter3"> 내용없음 </label>
+        <label class="radiobtn" for="filter_license3"> 내용없음 </label>
       </p>
 
       <p class="field">
@@ -190,32 +174,32 @@
           >저작권 고지사항 또는 Attribution 고지사항 유지</label
         >
         <input
-          name="filter"
-          id="filter1"
+          name="filter_copyright"
+          id="filter_copyright1"
           type="radio"
           :value="true"
           v-model="license.is_copyright"
         />
-        <label class="radiobtn" for="filter1">
+        <label class="radiobtn" for="filter_copyright1">
           <!-- <span class="material-icons"> check_circle_outline </span> -->
           O
         </label>
         <input
-          name="filter"
-          id="filter2"
+          name="filter_copyright"
+          id="filter_copyright2"
           type="radio"
           :value="false"
           v-model="license.is_copyright"
         />
-        <label class="radiobtn" for="filter2"> X </label>
+        <label class="radiobtn" for="filter_copyright2"> X </label>
         <input
-          name="filter"
-          id="filter3"
+          name="filter_copyright"
+          id="filter_copyright3"
           type="radio"
           :value="null"
           v-model="license.is_copyright"
         />
-        <label class="radiobtn" for="filter3"> 내용없음 </label>
+        <label class="radiobtn" for="filter_copyright3"> 내용없음 </label>
       </p>
 
       <p class="field">
@@ -223,249 +207,249 @@
           >조합저작물 작성 및 타 라이선스 배포 허용</label
         >
         <input
-          name="filter"
-          id="filter1"
+          name="filter_anotherli"
+          id="filter_anotherli1"
           type="radio"
           :value="true"
           v-model="license.is_anotherlicense"
         />
-        <label class="radiobtn" for="filter1">
+        <label class="radiobtn" for="filter_anotherli1">
           <!-- <span class="material-icons"> check_circle_outline </span> -->
           O
         </label>
         <input
-          name="filter"
-          id="filter2"
+          name="filter_anotherli"
+          id="filter_anotherli2"
           type="radio"
           :value="false"
           v-model="license.is_anotherlicense"
         />
-        <label class="radiobtn" for="filter2"> X </label>
+        <label class="radiobtn" for="filter_anotherli2"> X </label>
         <input
-          name="filter"
-          id="filter3"
+          name="filter_anotherli"
+          id="filter_anotherli3"
           type="radio"
           :value="null"
           v-model="license.is_anotherlicense"
         />
-        <label class="radiobtn" for="filter3"> 내용없음 </label>
+        <label class="radiobtn" for="filter_anotherli3"> 내용없음 </label>
       </p>
 
       <p class="field">
-        <label class="sublabel" for="licenseinfo">수정 시 수정내용 고지</label>
+        <label class="sublabel">수정 시 수정내용 고지</label>
         <input
-          name="filter"
-          id="filter1"
+          name="filter_modify_notice"
+          id="filter_modify_notice1"
           type="radio"
           :value="true"
           v-model="license.is_modify_notice"
         />
-        <label class="radiobtn" for="filter1">
+        <label class="radiobtn" for="filter_modify_notice1">
           <!-- <span class="material-icons"> check_circle_outline </span> -->
           O
         </label>
         <input
-          name="filter"
-          id="filter2"
+          name="filter_modify_notice"
+          id="filter_modify_notice2"
           type="radio"
           :value="false"
           v-model="license.is_modify_notice"
         />
-        <label class="radiobtn" for="filter2"> X </label>
+        <label class="radiobtn" for="filter_modify_notice2"> X </label>
         <input
-          name="filter"
-          id="filter3"
+          name="filter_modify_notice"
+          id="filter_modify_notice3"
           type="radio"
           :value="null"
           v-model="license.is_modify_notice"
         />
-        <label class="radiobtn" for="filter3"> 내용없음 </label>
+        <label class="radiobtn" for="filter_modify_notice3"> 내용없음 </label>
       </p>
 
       <p class="field">
-        <label class="sublabel" for="licenseinfo">보증의 부인</label>
+        <label class="sublabel">보증의 부인</label>
         <input
-          name="filter"
-          id="filter1"
+          name="filter_warranty"
+          id="filter_warranty1"
           type="radio"
           :value="true"
           v-model="license.is_warranty"
         />
-        <label class="radiobtn" for="filter1">
+        <label class="radiobtn" for="filter_warranty1">
           <!-- <span class="material-icons"> check_circle_outline </span> -->
           O
         </label>
         <input
-          name="filter"
-          id="filter2"
+          name="filter_warranty"
+          id="filter_warranty2"
           type="radio"
           :value="false"
           v-model="license.is_warranty"
         />
-        <label class="radiobtn" for="filter2"> X </label>
+        <label class="radiobtn" for="filter_warranty2"> X </label>
         <input
-          name="filter"
-          id="filter3"
+          name="filter_warranty"
+          id="filter_warranty3"
           type="radio"
           :value="null"
           v-model="license.is_warranty"
         />
-        <label class="radiobtn" for="filter3"> 내용없음 </label>
+        <label class="radiobtn" for="filter_warranty3"> 내용없음 </label>
       </p>
 
       <p class="field">
-        <label class="sublabel" for="licenseinfo">책임의 제한</label>
+        <label class="sublabel">책임의 제한</label>
         <input
-          name="filter"
-          id="filter1"
+          name="filter_respon"
+          id="filter_respon1"
           type="radio"
           :value="true"
           v-model="license.is_respon"
         />
-        <label class="radiobtn" for="filter1">
+        <label class="radiobtn" for="filter_respon1">
           <!-- <span class="material-icons"> check_circle_outline </span> -->
           O
         </label>
         <input
-          name="filter"
-          id="filter2"
+          name="filter_respon"
+          id="filter_respon2"
           type="radio"
           :value="false"
           v-model="license.is_respon"
         />
-        <label class="radiobtn" for="filter2"> X </label>
+        <label class="radiobtn" for="filter_respon2"> X </label>
         <input
-          name="filter"
-          id="filter3"
+          name="filter_respon"
+          id="filter_respon3"
           type="radio"
           :value="null"
           v-model="license.is_respon"
         />
-        <label class="radiobtn" for="filter3"> 내용없음 </label>
+        <label class="radiobtn" for="filter_respon3"> 내용없음 </label>
       </p>
 
       <p class="field">
-        <label class="sublabel" for="licenseinfo">상업적 사용 가능</label>
+        <label class="sublabel">상업적 사용 가능</label>
         <input
-          name="filter"
-          id="filter1"
+          name="filter_commercial"
+          id="filter_commercial1"
           type="radio"
           :value="true"
           v-model="license.is_commercial"
         />
-        <label class="radiobtn" for="filter1">
+        <label class="radiobtn" for="filter_commercial1">
           <!-- <span class="material-icons"> check_circle_outline </span> -->
           O
         </label>
         <input
-          name="filter"
-          id="filter2"
+          name="filter_commercial"
+          id="filter_commercial2"
           type="radio"
           :value="false"
           v-model="license.is_commercial"
         />
-        <label class="radiobtn" for="filter2"> X </label>
+        <label class="radiobtn" for="filter_commercial2"> X </label>
         <input
-          name="filter"
-          id="filter3"
+          name="filter_commercial"
+          id="filter_commercial3"
           type="radio"
           :value="null"
           v-model="license.is_commercial"
         />
-        <label class="radiobtn" for="filter3"> 내용없음 </label>
+        <label class="radiobtn" for="filter_commercial3"> 내용없음 </label>
       </p>
 
       <p class="field">
-        <label class="sublabel" for="licenseinfo">동일한 라이선스 유지</label>
+        <label class="sublabel">동일한 라이선스 유지</label>
         <input
-          name="filter"
-          id="filter1"
+          name="filter_continue"
+          id="filter_continue1"
           type="radio"
           :value="true"
           v-model="license.is_continue"
         />
-        <label class="radiobtn" for="filter1">
+        <label class="radiobtn" for="filter_continue1">
           <!-- <span class="material-icons"> check_circle_outline </span> -->
           O
         </label>
         <input
-          name="filter"
-          id="filter2"
+          name="filter_continue"
+          id="filter_continue2"
           type="radio"
           :value="false"
           v-model="license.is_continue"
         />
-        <label class="radiobtn" for="filter2"> X </label>
+        <label class="radiobtn" for="filter_continue2"> X </label>
         <input
-          name="filter"
-          id="filter3"
+          name="filter_continue"
+          id="filter_continue3"
           type="radio"
           :value="null"
           v-model="license.is_continue"
         />
-        <label class="radiobtn" for="filter3"> 내용없음 </label>
+        <label class="radiobtn" for="filter_continue3"> 내용없음 </label>
       </p>
 
       <p class="field">
-        <label class="sublabel" for="licenseinfo">특허권 사용 여부</label>
+        <label class="sublabel">특허권 사용 여부</label>
         <input
-          name="filter"
-          id="filter1"
+          name="filter_patent"
+          id="filter_patent1"
           type="radio"
           :value="true"
           v-model="license.is_patent"
         />
-        <label class="radiobtn" for="filter1">
+        <label class="radiobtn" for="filter_patent1">
           <!-- <span class="material-icons"> check_circle_outline </span> -->
           O
         </label>
         <input
-          name="filter"
-          id="filter2"
+          name="filter_patent"
+          id="filter_patent2"
           type="radio"
           :value="false"
           v-model="license.is_patent"
         />
-        <label class="radiobtn" for="filter2"> X </label>
+        <label class="radiobtn" for="filter_patent2"> X </label>
         <input
-          name="filter"
-          id="filter3"
+          name="filter_patent"
+          id="filter_patent3"
           type="radio"
           :value="null"
           v-model="license.is_patent"
         />
-        <label class="radiobtn" for="filter3"> 내용없음 </label>
+        <label class="radiobtn" for="filter_patent3"> 내용없음 </label>
       </p>
 
       <p class="field">
-        <label class="sublabel" for="licenseinfo">비공개 사용 여부</label>
+        <label class="sublabel">비공개 사용 여부</label>
         <input
-          name="filter"
-          id="filter1"
+          name="filter_private"
+          id="filter_private1"
           type="radio"
           :value="true"
           v-model="license.is_private"
         />
-        <label class="radiobtn" for="filter1">
+        <label class="radiobtn" for="filter_private1">
           <!-- <span class="material-icons"> check_circle_outline </span> -->
           O
         </label>
         <input
-          name="filter"
-          id="filter2"
+          name="filter_private"
+          id="filter_private2"
           type="radio"
           :value="false"
           v-model="license.is_private"
         />
-        <label class="radiobtn" for="filter2"> X </label>
+        <label class="radiobtn" for="filter_private2"> X </label>
         <input
-          name="filter"
-          id="filter3"
+          name="filter_private"
+          id="filter_private3"
           type="radio"
           :value="null"
           v-model="license.is_private"
         />
-        <label class="radiobtn" for="filter3"> 내용없음 </label>
+        <label class="radiobtn" for="filter_private3"> 내용없음 </label>
       </p>
 
       <!-- <p class="field required">
@@ -495,7 +479,7 @@
 
     <div class="box-3">
       <div class="btn btn-three">
-        <span>추가</span>
+        <span @click="addLicense">추가</span>
       </div>
     </div>
   </div>
@@ -503,6 +487,7 @@
 
 <script>
 // import '@/assets/css/MyProject/MyProjectAddLicense.scss';
+import licenseApi from '@/api/license.js';
 
 export default {
   name: 'MyProjectAddLicense',
@@ -527,6 +512,7 @@ export default {
         is_patent: '',
         is_private: '',
       },
+      licenseinfo: '',
     };
   },
   watch: {
@@ -534,7 +520,14 @@ export default {
     //   console.log(this.licenseinfo);
     // },
   },
-  methods: {},
+  methods: {
+    addLicense() {
+      licenseApi.addLicense(this.license).then(() => {
+        console.log('추가성공');
+        this.$router.go(-1);
+      });
+    },
+  },
 };
 </script>
 <style
