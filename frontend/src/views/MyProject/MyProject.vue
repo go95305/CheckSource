@@ -1,4 +1,5 @@
 <template>
+    <!-- /project -->
     <div>
         <router-view id="my-project" />
     </div>

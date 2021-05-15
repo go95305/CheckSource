@@ -81,7 +81,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import gitLabApi from "@/api/gitlab.js";
+import gitLabApi from "@/api/git.js";
 import SCMCard from "@/components/MyPage/SCMCard.vue";
 export default {
     name: "MyPageGitLab",
@@ -115,11 +115,10 @@ export default {
     },
     created() {
         this.baseUrlList = gitLabApi.getBaseUrlList();
+        this.gitlab = this.getGitLabList;
         if (this.gitlab.length == 0) {
             this.openInputArea = true;
         }
-
-        this.gitlab = this.getGitLabList;
     },
     methods: {
         OpenAndCloseInputArea: function () {

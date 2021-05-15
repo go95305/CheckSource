@@ -18,6 +18,7 @@ import com.ssafy.checksource.model.dto.LicenseDetailDTO;
 import com.ssafy.checksource.model.dto.LicenseListDTO;
 import com.ssafy.checksource.model.dto.LicenseNameDTO;
 import com.ssafy.checksource.model.dto.LicenseSaveDTO;
+import com.ssafy.checksource.model.dto.LicenseUpdateDTO;
 import com.ssafy.checksource.model.entity.License;
 import com.ssafy.checksource.model.entity.User;
 import com.ssafy.checksource.model.repository.LicenseRepository;
@@ -37,6 +38,7 @@ public class LicenseService {
 		License lic = licenseRepository.findByLicenseId(id);
 		
 		LicenseDetailDTO licDto = modelMapper.map(lic, LicenseDetailDTO.class);
+		licDto.setUserName(lic.getUser().getName());
 		return licDto;
 	}
 	public LicenseListDTO getLicenseList(String typeFilter, String keyword, int pageSize, int page) {
@@ -75,5 +77,17 @@ public class LicenseService {
 		saveuser.setUserId(userId);
 		saveEntity.setUser(saveuser);
 		licenseRepository.save(saveEntity);
+	}
+	
+	public void update(String token,LicenseUpdateDTO licUpdate) {
+		License updateEntity = modelMapper.map(licUpdate, License.class);
+		String userId = jwtTokenProvider.getUserId(token);
+		User saveuser = new User();
+		saveuser.setUserId(userId);
+		updateEntity.setUser(saveuser);
+		licenseRepository.save(updateEntity);
+	}
+	public void delete(long licenseId) {
+		licenseRepository.deleteById(licenseId);
 	}
 }

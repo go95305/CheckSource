@@ -32,7 +32,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/git")
 @RequiredArgsConstructor
-public class GitController {
+public class GitLabController {
 	
 	private final GitService gitService;
 	
@@ -71,9 +71,9 @@ public class GitController {
 	
 	@ApiOperation(value = "프로젝트 추가하기-검증 ")
 	@PostMapping("/projects")
-	public boolean addProjects(@RequestHeader("TOKEN") String token, @RequestBody List<GitLabProjectDTO> projectList, @RequestParam Long gitlabId, @RequestParam String branch) throws URISyntaxException, UnsupportedEncodingException {
+	public boolean addProjects(@RequestHeader("TOKEN") String token, @RequestBody List<GitLabProjectDTO> projectList, @RequestParam Long gitlabId) throws URISyntaxException, UnsupportedEncodingException {
 		try {
-			return gitService.addProject(token, projectList, gitlabId, branch);
+			return gitService.addProject(token, projectList, gitlabId);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
@@ -82,8 +82,8 @@ public class GitController {
 	
 	@ApiOperation(value = "프로젝트 삭제하기")
 	@DeleteMapping("/projects")
-	public boolean deleteProject(@RequestHeader("TOKEN") String token, @RequestParam String projectId) {
-		return gitService.deleteProject(token, projectId);
+	public boolean deleteProject(@RequestHeader("TOKEN") String token, @RequestParam String projectId, @RequestParam Long gitlabId) {
+		return gitService.deleteProject(token, projectId, gitlabId);
 	}
 	
 

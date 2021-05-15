@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "license_opensource")
+@Table(name = "LICENSE_OPENSOURCE")
 public class LicenseOpensource {
 
     @EmbeddedId

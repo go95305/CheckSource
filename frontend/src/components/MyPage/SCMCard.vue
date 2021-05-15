@@ -20,7 +20,7 @@
     </div>
 </template>
 <script>
-import gitLabApi from "@/api/gitlab.js";
+import gitLabApi from "@/api/git.js";
 import "@/assets/css/MyPage/SCMCard.css";
 export default {
     name: "SCMCard",
