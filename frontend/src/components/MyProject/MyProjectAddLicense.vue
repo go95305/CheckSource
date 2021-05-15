@@ -66,6 +66,18 @@
           placeholder="package type"
         />
       </p> -->
+      <p class="field required">
+        <label class="label required" for="sourceopen">소스코드 공개여부</label>
+        <input
+          class="text-input"
+          id="sourceopen"
+          name="sourceopen"
+          required
+          type="text"
+          placeholder="소스코드 공개여부"
+        />
+      </p>
+
 
       <p class="field required">
         <label class="label required">소스코드 공개여부</label>
