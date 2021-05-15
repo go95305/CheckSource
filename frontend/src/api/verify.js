@@ -20,18 +20,20 @@ function readVerifiedProjectInfo(gitType, projectId) {
 }
 
 //분석된 프로젝트 오픈소스 목록 불러오기
-function readVerifiedOpenSourceList(projectId) {
+function readVerifiedOpenSourceList(gitType, projectId) {
 	return http.get(`/analyze/opensourceList`, {
 		params: {
+			gitType: gitType,
 			projectId: projectId,
 		},
 	});
 }
 
 //분석된 프로젝트 라이선스 목록 불러오기
-function readVerifiedLicenseList(projectId) {
+function readVerifiedLicenseList(gitType, projectId) {
 	return http.get(`/analyze/licenseList`, {
 		params: {
+			gitType: gitType,
 			projectId: projectId,
 		},
 	});
