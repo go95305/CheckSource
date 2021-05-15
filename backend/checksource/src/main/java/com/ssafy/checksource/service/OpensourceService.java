@@ -62,7 +62,7 @@ public class OpensourceService {
 				licenseNameList.add(license.getName());
 			}
 			opsDto.setLicenseNameList(licenseNameList);
-
+			opsDto.setUserId((ops.getUser().getUserId()));
 			opensourceList.add(opsDto);
 		}
 		opsListDto.setTotalPage(opensourcePagedata.getTotalPages());
@@ -73,6 +73,7 @@ public class OpensourceService {
 	public OpensourceDetailDTO getDetailOpensource(long id) {
 		Opensource ops = opensourceRepository.findById(id);
 		OpensourceDetailDTO opsDto = modelMapper.map(ops, OpensourceDetailDTO.class);
+		opsDto.setUserName(ops.getUser().getName());
 		List<LicenseDetailDTO> licenseList = new ArrayList<LicenseDetailDTO>();
 		for (LicenseOpensource licenseopensource : ops.getLicenses()) {
 			License license = licenseopensource.getLicense();
