@@ -8,6 +8,7 @@
 				:key="`${index}_accountList`"
 				:index="index"
 				:account="account"
+				:gitType="1"
 				@deleteSCM="DeleteAccount"
 			></SCMCard>
 		</div>
