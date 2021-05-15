@@ -66,7 +66,17 @@ export default {
   props: {
     project: Object,
   },
+  created() {
+    this.changeStatus();
+  },
   methods: {
+    changeStatus: function () {
+      if (this.project.status == true) {
+        this.project.status = '검증완료';
+      } else {
+        this.project.status = '검증대기중';
+      }
+    },
     GoReport: function () {
       this.$emit('goReport', this.project.gitType, this.project.projectId);
     },
