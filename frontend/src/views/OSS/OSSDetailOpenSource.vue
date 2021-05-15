@@ -9,6 +9,7 @@
 
 		<div class="oss-detail-table">
 			<router-link
+				v-if="opensource.userName != '관리자'"
 				class="oss-detail-edit-routerlink"
 				:to="{ name: 'EditOpenSource', params: { editOpensource: opensource } }"
 				><span class="material-icons">edit</span>수정하기</router-link
