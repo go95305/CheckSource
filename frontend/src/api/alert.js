@@ -10,6 +10,16 @@ function success(text) {
 	});
 }
 
+function confirm(text) {
+	return Swal.fire({
+		icon: "warning",
+		text: text,
+		showDenyButton: true,
+		confirmButtonText: `확인`,
+		denyButtonText: `취소`,
+	});
+}
+
 function inputtext(title, inputLabel) {
 	return Swal.fire({
 		title: title,
@@ -29,4 +39,4 @@ function selectBranch(title, inputPlaceHolder, options) {
 	});
 }
 
-export default { success, inputtext, selectBranch };
+export default { success, confirm, inputtext, selectBranch };

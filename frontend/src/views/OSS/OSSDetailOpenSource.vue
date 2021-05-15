@@ -10,7 +10,7 @@
 		<div class="oss-detail-table">
 			<router-link
 				class="oss-detail-edit-routerlink"
-				:to="{ name: 'EditOpenSource', props: { editOpensource: opensource } }"
+				:to="{ name: 'EditOpenSource', params: { editOpensource: opensource } }"
 				><span class="material-icons">edit</span>수정하기</router-link
 			>
 			<OSSDetailOpenSourceTable

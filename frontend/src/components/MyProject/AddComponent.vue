@@ -1,13 +1,12 @@
 <template>
   <div class="form-section">
     <div v-if="isEditMode">
-	<my-project-path
+	    <my-project-path
 			department="전체목록"
 			project="오픈소스 수정하기"
 			rootPath="/list/opensource"
-		/>
-		<h1 class="oss-detail-title">{{ opensource.name }}</h1>
-
+		  />
+		  <h1 class="oss-detail-title">{{ opensource.name }}</h1>
     </div>
     <div v-else class="title">
       <h2>새로운 OpenSource 추가</h2>
@@ -146,17 +145,28 @@
       </div>
     </form>
 
-    <div class="box-3">
-      <div class="btn btn-three">
-        <span class="add" @click="addOpenSource">추가</span>
+    
+    <div class="add-component-button-div">
+      <div v-if="isEditMode">
+        <span class="btn edit-btn" :class="{CantDo:!CanDo}" @click="editOpenSource">수정</span>
+        <span class="btn delete-btn" @click="deleteOpenSource">삭제</span>
+      </div>
+      <div v-else >
+        <span class="btn" :class="{CantDo:!CanDo}" @click="addOpenSource">추가</span>
       </div>
     </div>
+    
   </div>
 </template>
 <script>
-import licenseApi from "@/api/opensource.js";
+import MyProjectPath from "@/components/MyProject/MyProjectPath.vue";
+import opensourceApi from "@/api/opensource.js";
+import swal from "@/api/alert.js";
 export default {
   name: "AddComponent",
+  components:{
+    MyProjectPath,
+  },
   data() {
     return {
       opensource: {
@@ -182,9 +192,20 @@ export default {
   created() {
     if(window.location.pathname == '/list/detail/edit-opensource'){
       //수정하기 모드
-      this.isEditMode = true;
-      console.log(this.editOpensource);
-      this.opensource = this.editOpensource;
+      if(this.editOpensource){
+        this.isEditMode = true;
+        this.opensource = this.editOpensource;
+        this.opensource.licenseId = [];
+        for(let license of this.editOpensource.licenseList){
+          this.opensource.licenseId.push(license.licenseId);
+          this.tags.push(license.contents);
+        }
+        delete this.opensource.licenseList;
+        // console.log(this.opensource);
+      }
+      else{
+        this.$router.go(-1);
+      }
     }
   },
  
@@ -193,12 +214,23 @@ export default {
       this.getLicenseName(newVal);
     },
   },
+  computed:{
+    CanDo:function(){
+      //전부 입력되었는지 확인
+      for(let attr in this.opensource){
+        if(attr.length == 0){
+          return false;
+        }
+      }
+      return true;
+    },
+  },
   methods: {
     licenseAddPage(){
       this.$router.push({ name: "MyProjectAddLicense" });
     },
     getLicenseName(newVal) {
-      licenseApi.getLicenseName(newVal).then((response) => {
+      opensourceApi.getLicenseName(newVal).then((response) => {
         console.log(response.data);
         this.licenses = response.data;
         var str = this.licenseName;
@@ -222,10 +254,35 @@ export default {
       this.tags.splice(index, 1);
     },
     addOpenSource() {
-      licenseApi.addOpenSource(this.opensource).then(()=>{
-          alert('Opensource추가 완료');
-          this.$router.go(-1)
-      })
+      //오픈소스 추가
+      if(this.CanDo){
+          opensourceApi.addOpenSource(this.opensource).then(()=>{
+            swal.success('오픈소스 정보가 추가되었습니다.');
+            this.$router.go(-1);
+          });
+      }
+    },
+    editOpenSource(){
+      //오픈소스 수정
+      if(this.CanDo){
+        opensourceApi.updateOpenSource(this.opensource).then(()=>{
+          swal.success('오픈소스 정보가 수정되었습니다.');
+          this.$router.go(-1);
+        });
+      }
+    },
+    deleteOpenSource(){
+      //오픈소스 삭제
+      if(this.CanDo){
+        swal.confirm('정말로 삭제하시겠습니까?').then((response) => {
+          if(response.value){
+             opensourceApi.deleteOpenSource(this.opensource).then(()=>{
+              swal.success('오픈소스 정보가 삭제되었습니다.');
+              this.$router.go(-1);
+            });
+          }
+        })
+      }
     },
     selectValue(keycode,str,id){
       if(this.searched === true){
