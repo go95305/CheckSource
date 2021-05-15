@@ -73,11 +73,11 @@ export default {
 		this.departmentName = Info.GetDepartmentName(this.getDepartment - 1);
 	},
 	methods: {
-		GoReport: function (projectId) {
+		GoReport: function (gitType, projectId) {
 			//레포트 페이지로 가기
 			this.$router.push({
 				name: "Summary",
-				query: { projectId: projectId },
+				query: { gitType: gitType, projectId: projectId },
 			});
 		},
 		DoSearch: function (keyword) {

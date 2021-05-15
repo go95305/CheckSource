@@ -1,8 +1,7 @@
 <template>
 
 	<div class="container">
-
-	<table class="license-table">
+	  <table class="license-table">
       <th class="license-table-th">
         <td>이름</td>
         <td>식별자</td>
@@ -10,7 +9,7 @@
         <td>코드 공개</td>
       </th>
       <tr class="license-table-tr" v-for="(item, index) in list"
-			:key="`${index}_mapped`" @click="goLicense(item.licenseId)" :class="{ illegal: item.sourceopen.length > 0 }">
+			:key="`${index}_mapped`" @click="GoLicense(item.licenseId)" :class="{ illegal: item.sourceopen.length > 0 }">
         <td>{{ item.name }}</td>
         <td>{{ item.identifier }}</td>
         <td>{{ item.path }}</td>
@@ -29,7 +28,10 @@
 		<NoResult></NoResult>
 	</div>
     <div class="license-pagination">
-		<pagination-remote  :lastPage="3"></pagination-remote>
+		<pagination-remote :currentPage="page"
+				:lastPage="totalPage"
+				@changePage="ChangePage"
+        ></pagination-remote>
     </div>
 	</div>
 </template>
@@ -45,14 +47,33 @@ export default {
     return {
       projectId: this.$route.query.projectId,
       list: [],
+      page:1,
+      size: 10,
+      totalPage:3,
       loading: false,
+      routeQuery:this.$route.query,
     };
   },
   created() {
-    this.getList();
+    console.log(this.routeQuery);
+    this.GetQuery();    
+    this.GetList();
+  },
+  watch:{
+    routeQuery:function(){
+      this.GetQuery();
+    }
   },
   methods: {
-    getList: function () {
+    GetQuery:function(){
+      if (this.$route.query.page) {
+			this.page = Number(this.$route.query.page);
+		}
+		if (this.$route.query.size) {
+			this.size = Number(this.$route.query.size);
+		}
+    },
+    GetList: function () {
       this.loading = true;
       verifyApi
         .readVerifiedLicenseList(this.projectId)
@@ -64,12 +85,19 @@ export default {
           this.loading = false;
         });
     },
-    goLicense: function (id) {
+    GoLicense: function (id) {
       this.$router.push({
         name: "OSSDetailLicense",
         query: { id: id },
       });
     },
+    ChangePage: function (page) {
+			this.page = page;
+			this.$router.push({ 
+				query: { projectId:this.projectId, page: page, size: this.size },
+			});
+			this.GetList();
+		},
   },
 };
 </script>

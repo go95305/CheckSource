@@ -3,10 +3,16 @@
 	<div>
 		<my-project-path
 			:department="'프로젝트'"
-			:project="projectName"
+			:project="projectInfo.name"
 			:rootPath="'/project/main/projects'"
 		/>
-		<h1 id="my-project-result-title">{{ projectName }}</h1>
+		<div class="my-project-result-head">
+			<h1>{{ projectInfo.name }}</h1>
+			<div class="my-project-info">
+				<span class="my-project-info-weburl">{{ projectInfo.webUrl }}</span>
+				<span class="my-project-info-branch">{{ projectInfo.branch }}</span>
+			</div>
+		</div>
 		<tab id="my-project-result-tab" :list="tabList" />
 		<router-view />
 	</div>
@@ -21,7 +27,8 @@ export default {
 	data() {
 		return {
 			projectId: this.$route.query.projectId,
-			projectName: "",
+			gitType: this.$route.query.gitType,
+			projectInfo: "",
 			tabList: [],
 		};
 	},
@@ -44,9 +51,13 @@ export default {
 	},
 	methods: {
 		GetProjectName: function () {
-			verifyApi.readVerifiedProjectName(this.projectId).then((response) => {
-				this.projectName = response.data;
-			});
+			verifyApi
+				.readVerifiedProjectInfo(this.gitType, this.projectId)
+				.then((response) => {
+					if (response.data) {
+						this.projectInfo = response.data;
+					}
+				});
 		},
 	},
 };
