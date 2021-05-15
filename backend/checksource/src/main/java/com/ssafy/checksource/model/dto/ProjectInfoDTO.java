@@ -3,10 +3,8 @@ package com.ssafy.checksource.model.dto;
 import lombok.Data;
 
 @Data
-public class GitLabProjectDTO {
-	private String id;
+public class ProjectInfoDTO {
 	private String name;
+	private String webUrl;
 	private String branch;
-	private boolean verified;
-	private String web_url;
 }

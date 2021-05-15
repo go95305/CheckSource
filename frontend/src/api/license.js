@@ -12,4 +12,12 @@ function readLicenseList(keyword, page, pageSize, typeFilter) {
 	});
 }
 
-export default { readLicenseList };
+function getDetailLicense(licenseId) {
+	return http.get(`/license/getDetail/${licenseId}`, {
+		params: {
+			licenseId: licenseId,
+		},
+	});
+}
+
+export default { readLicenseList, getDetailLicense };

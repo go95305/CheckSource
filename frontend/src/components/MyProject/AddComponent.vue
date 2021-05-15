@@ -121,7 +121,7 @@
         >
           <span>{{ licenseInfoName.name }}</span>
         </li>
-        <li class="add-license" v-show="isEmpty" @click="licenseAddPage">➕add license</li>
+        <li class="add-license" @click="licenseAddPage">➕add license</li>
       </ul>
       </p>
       
@@ -184,24 +184,22 @@ export default {
           this.searched=true;
         }else{
           this.searched=false;
-          this.isEmpty=true;
         }
       });
     },
     selectTag(name,id) {
-      console.log(name)
-      console.log(id)
       var val = name.trim();
       if (val.length > 0) {
-        this.tags.push(val);
+        if(!this.tags.includes(val)){
+          this.tags.push(val);
         this.opensource.licenseId.push(id);
+        }
       }
     },
     removeTag(index) {
       this.tags.splice(index, 1);
     },
     addOpenSource() {
-      console.log(this.opensource)
       licenseApi.addOpenSource(this.opensource).then(()=>{
           alert('Opensource추가 완료');
           this.$router.go(-1)
