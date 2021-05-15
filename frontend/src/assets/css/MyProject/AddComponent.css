@@ -79,6 +79,11 @@ input {
 	background-color: rgb(189, 3, 3);
 }
 
+.CantDo {
+	cursor: default;
+	background: #3b729e;
+}
+
 form .button,
 .form .text-input,
 .form .label,

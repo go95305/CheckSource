@@ -218,7 +218,7 @@ export default {
     CanDo:function(){
       //전부 입력되었는지 확인
       for(let attr in this.opensource){
-        if(attr.length == 0){
+        if(this.opensource[attr].length == 0){
           return false;
         }
       }
@@ -278,7 +278,7 @@ export default {
           if(response.value){
              opensourceApi.deleteOpenSource(this.opensource).then(()=>{
               swal.success('오픈소스 정보가 삭제되었습니다.');
-              this.$router.go(-1);
+              this.$router.go(-2);
             });
           }
         })
