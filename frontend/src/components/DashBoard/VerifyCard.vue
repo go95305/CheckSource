@@ -60,14 +60,17 @@
 <script>
 import '@/assets/css/DashBoard/VerifyCard.scss';
 import swal from '@/api/alert.js';
+import dayjs from 'dayjs';
 
 export default {
   name: 'VerifyCard',
   props: {
     project: Object,
   },
+  component: { dayjs },
   created() {
     this.changeStatus();
+    this.changeTime();
   },
   methods: {
     changeStatus: function () {
@@ -76,6 +79,9 @@ export default {
       } else {
         this.project.status = '검증대기중';
       }
+    },
+    changeTime: function () {
+      this.project.date = dayjs().format('YYYY-MM-DD HH:mm:ss');
     },
     GoReport: function () {
       this.$emit('goReport', this.project.gitType, this.project.projectId);
