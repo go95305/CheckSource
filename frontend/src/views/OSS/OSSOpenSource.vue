@@ -8,13 +8,13 @@
 			></search-bar>
 		</div>
 		<div>
-			<span class="added added-absolute"> : Added by user</span>
+			<span class="added added-absolute"> : 사용자가 생성한 오픈소스</span>
 			<table class="oss-table">
 				<thead class="oss-table-thead">
-					<th>NAME</th>
-					<th>URL</th>
-					<th>LICENSE</th>
-					<th>COPYRIGHT</th>
+					<th>오픈소스명</th>
+					<th>주소</th>
+					<th>라이선스</th>
+					<th>저작권</th>
 				</thead>
 				<tbody class="oss-table-tbody">
 					<tr
@@ -58,7 +58,8 @@ export default {
 	components: { SearchBar, PaginationRemote },
 	data() {
 		return {
-			filterList: ["Name", "License"],
+			filterList: ["오픈소스명", "라이선스"],
+			filterEnglistList: ["Name", "License"],
 			openSourceList: [],
 			page: 1,
 			size: 10,
@@ -85,7 +86,7 @@ export default {
 					this.keyword,
 					this.page,
 					this.size,
-					this.filterList[this.typeFilter - 1]
+					this.filterEnglistList[this.typeFilter - 1]
 				)
 				.then((response) => {
 					this.openSourceList = response.data.list;

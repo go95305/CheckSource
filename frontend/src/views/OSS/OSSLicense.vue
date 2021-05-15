@@ -10,10 +10,10 @@
 		<div>
 			<table class="oss-table">
 				<thead class="oss-table-thead">
-					<th>FULL NAME</th>
-					<th>IDENTIFIER</th>
-					<th>URL</th>
-					<th>CODE OPEN</th>
+					<th>라이선스명</th>
+					<th>식별자</th>
+					<th>주소</th>
+					<th>코드 공개여부</th>
 				</thead>
 				<tbody class="oss-table-tbody">
 					<tr
@@ -52,7 +52,8 @@ export default {
 	components: { SearchBar, PaginationRemote },
 	data() {
 		return {
-			filterList: ["Name", "Identifier"],
+			filterList: ["라이선스명", "식별자"],
+			filterEnglistList: ["Name", "Identifier"],
 			licenseList: [],
 			page: 1,
 			size: 20,
@@ -78,7 +79,7 @@ export default {
 					this.keyword,
 					this.page,
 					this.size,
-					this.filterList[this.typeFilter - 1]
+					this.filterEnglistList[this.typeFilter - 1]
 				)
 				.then((response) => {
 					this.licenseList = response.data.licenseList;
