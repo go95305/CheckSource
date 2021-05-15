@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.checksource.model.dto.AnalyOpensourceListDTO;
+import com.ssafy.checksource.model.dto.ProjectInfoDTO;
 import com.ssafy.checksource.model.dto.ProjectLiceseListDTO;
 import com.ssafy.checksource.model.dto.ProjectListByDepartDTO;
 import com.ssafy.checksource.service.AnalyzeService;
@@ -27,9 +28,9 @@ public class AnalyzeController {
 	private final AnalyzeService analyzeService;
 	private final ProjectService projectService;
 	
-	@ApiOperation(value = "프로젝트 이름 가져오기")
-	@GetMapping("/projectName")
-	public String getProjectName (@RequestHeader("TOKEN") String token, @RequestParam String projectId, @RequestParam Long gitType) {
+	@ApiOperation(value = "프로젝트 정보 가져오기")
+	@GetMapping("/projectInfo")
+	public ProjectInfoDTO getProjectName (@RequestHeader("TOKEN") String token, @RequestParam String projectId, @RequestParam Long gitType) {
 		return projectService.getProjectName(projectId, gitType);
 	}
 	
