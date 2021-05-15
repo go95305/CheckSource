@@ -3,8 +3,10 @@ package com.ssafy.checksource.controller;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,13 +66,13 @@ public class LicenseController {
 	}
 	
 	@ApiOperation(value = "오픈소스 업데이트하기")
-	@PostMapping("/updateLicense")
+	@PutMapping("/updateLicense")
 	public void update(@RequestHeader("TOKEN") String token,@RequestBody LicenseUpdateDTO licDto) {
 		licenseService.update(token,licDto);
 	}
 	
 	@ApiOperation(value = "오픈소스 삭제하기")
-	@PostMapping("/deleteLicense")
+	@DeleteMapping("/deleteLicense")
 	public void update(@RequestHeader("TOKEN") String token,@RequestBody long licenseId) {
 		licenseService.delete(licenseId);
 	}
