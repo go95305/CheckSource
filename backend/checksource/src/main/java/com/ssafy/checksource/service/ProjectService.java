@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ssafy.checksource.config.security.JwtTokenProvider;
 import com.ssafy.checksource.model.dto.AnalyOpensourceListDTO;
 import com.ssafy.checksource.model.dto.OpensourceDTO;
+import com.ssafy.checksource.model.dto.ProjectInfoDTO;
 import com.ssafy.checksource.model.dto.ProjectLiceseListDTO;
 import com.ssafy.checksource.model.dto.ProjectListByDepartDTO;
 import com.ssafy.checksource.model.dto.UnmappendOpensourceDTO;
@@ -46,9 +47,14 @@ public class ProjectService {
 	
 	//summary
 	
+	
+	
 	//프로젝트 이름
-	public String getProjectName(String projectId) {
-		return projectRepository.findByProjectId(projectId).getName();
+	public ProjectInfoDTO getProjectName(String gitProjectId, Long gitType) {
+		ProjectInfoDTO projectInfoDto = new ProjectInfoDTO();
+		Project project = projectRepository.findByGitProjectIdAndGitType(gitProjectId, gitType);
+		projectInfoDto = modelMapper.map(project, ProjectInfoDTO.class);
+		return projectInfoDto;
 	}
 	
 	// 부서별 분석된 프로젝트 목록
@@ -79,10 +85,10 @@ public class ProjectService {
 	}
 
 	// 분석된 프로젝트의 오픈소스 목록
-	public AnalyOpensourceListDTO getOpensourceListByProject(String projectId) {
-		Project project = projectRepository.findByProjectId(projectId);
+	public AnalyOpensourceListDTO getOpensourceListByProject(String gitProjectId, Long gitType) {
+		Project project = projectRepository.findByGitProjectIdAndGitType(gitProjectId, gitType);
 		AnalyOpensourceListDTO analyOpensourceListDto = new AnalyOpensourceListDTO();	
-		
+		Long projectId = project.getProjectId();
 		//매핑
 		List<OpensourceProject> opensourceList = new ArrayList<OpensourceProject>();
 		opensourceList = opensourceProjectRepository.findByProject(project);
@@ -110,7 +116,9 @@ public class ProjectService {
 	}
 
 	// 분석된 프로젝트의 라이선스 목록 -> 페이징 필요
-	public List<ProjectLiceseListDTO> getLicenseListByProject(String projectId) {
+	public List<ProjectLiceseListDTO> getLicenseListByProject(String gitProjectId, Long gitType) {
+		Project project = projectRepository.findByGitProjectIdAndGitType(gitProjectId, gitType);
+		Long projectId = project.getProjectId();
 		List<LicenseOpensource> licenseOpensourceList = new ArrayList<LicenseOpensource>();
 		licenseOpensourceList = licenseOpensourceRepository.findAllByProjectId(projectId);		
 		List<ProjectLiceseListDTO> licenseList = licenseOpensourceList.stream().map(ProjectLiceseListDTO::new).distinct().collect(Collectors.toList());

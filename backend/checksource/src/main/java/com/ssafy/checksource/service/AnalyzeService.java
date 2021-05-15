@@ -50,24 +50,22 @@ public class AnalyzeService {
 
 	// packageManager = "pom.xml"
 	// content = base64 encoding data
-	public void analyze(String projectId,String fileName, String content,String filePath) throws Exception {
+	public void analyze(Long projectId, String fileName, String content,String filePath) throws Exception {
 		//기존 데이터 삭제
 		
 		List<Long> list = null;
 		byte[] decoded = Base64.getDecoder().decode(content);
 		content = new String(decoded, StandardCharsets.UTF_8);
 		if (fileName.equals("pom.xml")) {
-			list = getOpensourceId(filePath,projectId,pomxmlParsing(content));
+			list = getOpensourceId(filePath, projectId ,pomxmlParsing(content));
 		} else if(fileName.equals("build.gradle")) {
 			
 		} else if(fileName.equals("package.json")) {
-			list = getOpensourceId(filePath,projectId,packageJsonParsing(content));
+			list = getOpensourceId(filePath, projectId, packageJsonParsing(content));
 		}
-		//list에 opensourceid list있으니 가지고 insert 치세오
-		//System.out.println(list.toString());
-		
+
+		//opensourceProject insert
 		for (Long opensourceId : list) {
-			//기존꺼 지움
 			OpensourceProject opensourceProject = new OpensourceProject();
 			Opensource opensource = new Opensource();
 			opensource.setOpensourceId(opensourceId);
@@ -114,7 +112,7 @@ public class AnalyzeService {
 	
 	
 	//groupId와 artifactId로 opensourceId 찾아오기
-	public List<Long> getOpensourceId(String filePath,String projectId,List<ParsingDTO> list){
+	public List<Long> getOpensourceId(String filePath, Long projectId, List<ParsingDTO> list){
 		List<Long> opensourceList = new ArrayList<Long>();
 		for (ParsingDTO dto : list) {
 			Opensource ops = opensourceRepository.findByGroupIdAndArtifactId(dto.getGroupId(), dto.getArtifactId());
