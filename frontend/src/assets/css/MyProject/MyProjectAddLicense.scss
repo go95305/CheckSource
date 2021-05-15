@@ -74,7 +74,7 @@ input {
   cursor: pointer;
   color: white;
   width: 80px;
-  margin: 0px auto;
+  margin: 30px auto;
   font-weight: bold;
   padding-left: 2em;
   padding-right: 2em;
@@ -98,6 +98,32 @@ form .button,
   background: none;
   display: block;
 }
+
+.form .sublabel {
+  padding: 0.75em 1em;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+  line-height: normal;
+  border-radius: 0;
+  border: none;
+  background: none;
+  display: block;
+}
+
+.form .sublabel {
+  // font-weight: bold;
+  color: #717171;
+  padding-top: 0;
+  padding-left: 0;
+  letter-spacing: 0.025em;
+  font-size: 17px;
+  line-height: 1.25;
+  position: relative;
+  z-index: 100;
+}
+
 .form .label {
   font-weight: bold;
   color: rgb(0, 0, 0);
@@ -179,6 +205,96 @@ form .button,
   margin: 0 0 1.5em 0;
 }
 
+// 툴팁
+.tooltip-url {
+  position: absolute;
+  display: block;
+  top: 221px;
+  left: 10%;
+  /* background-color: #bcdbea; */
+  border-radius: 50%;
+  border: 1px solid;
+  line-height: 26px;
+  width: 10px;
+  height: 10px;
+  cursor: default;
+  z-index: 500;
+  opacity: 0.5;
+  font-size: small;
+}
+
+.tooltip-url:hover .tooltip-url-content {
+  display: block;
+  transform-origin: 100% 0%;
+  -webkit-animation: fadeIn 0.3s ease-in-out;
+  animation: fadeIn 0.3s ease-in-out;
+}
+.tooltip-url .tooltip-url-content {
+  display: none;
+  text-align: left;
+  background-color: #1e2021;
+  padding: 10px;
+  width: 200px;
+  position: absolute;
+  border-radius: 3px;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+  color: #fff;
+  font-size: 13px;
+  line-height: 1.4;
+  left: 12px;
+  bottom: 0;
+}
+.tooltip-url span {
+  position: absolute;
+  left: 3px;
+  bottom: -8px;
+  font-size: 3px;
+}
+.tooltip-contents {
+  position: absolute;
+  display: block;
+  top: 329px;
+  left: 24%;
+  /* background-color: #bcdbea; */
+  border-radius: 50%;
+  border: 1px solid;
+  line-height: 26px;
+  width: 10px;
+  height: 10px;
+  cursor: default;
+  z-index: 500;
+  opacity: 0.5;
+  font-size: small;
+}
+
+.tooltip-contents:hover .tooltip-contents-content {
+  display: block;
+  transform-origin: 100% 0%;
+  -webkit-animation: fadeIn 0.3s ease-in-out;
+  animation: fadeIn 0.3s ease-in-out;
+}
+.tooltip-contents .tooltip-contents-content {
+  display: none;
+  text-align: left;
+  background-color: #1e2021;
+  padding: 10px;
+  width: 250px;
+  position: absolute;
+  border-radius: 3px;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+  color: #fff;
+  font-size: 13px;
+  line-height: 1.4;
+  left: 12px;
+  bottom: 0;
+}
+.tooltip-contents span {
+  position: absolute;
+  left: 3px;
+  bottom: -8px;
+  font-size: 3px;
+}
+
 // 체크박스
 .styled-checkbox {
   position: absolute; // take it out of document flow
@@ -252,4 +368,51 @@ form .button,
 
 .add-l-check {
   margin: 20px 0;
+}
+
+// radio!
+$white: #fff;
+$kinetek-green: #bed745;
+$light-grey: #eeeeee;
+$border: 0px;
+
+input[type='radio'] {
+  opacity: 0;
+  position: absolute;
+  // top: 50%;
+  // left: 50%;
+  // z-index: -1;
+  &:checked + label.radiobtn {
+    background-color: $white;
+    box-shadow: 0 0 0 5px rgba(#00a3e2, 1) inset;
+  }
+}
+> .radiobtn:first-of-type:not(:last-of-type) {
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 0px;
+}
+> .radiobtn:last-of-type:not(:first-of-type) {
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0px;
+}
+> .radiobtn:not(:first-of-type):not(:last-of-type) {
+  border-radius: 0px;
+  border-left: 1px solid #c0c0c0;
+  border-right: 1px solid #c0c0c0;
+}
+.radiobtn {
+  -moz-user-select: none;
+  background-color: $light-grey;
+  background-image: none;
+  // border-radius: 14px;
+  border: $border solid transparent;
+  cursor: pointer;
+  float: left;
+  font-size: 17px;
+  line-height: 1;
+  padding: 16px 30px;
+  position: relative;
+  text-align: center;
+  text-transform: uppercase;
+  width: 21.6%;
 }

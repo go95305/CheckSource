@@ -20,4 +20,8 @@ function getDetailLicense(licenseId) {
 	});
 }
 
-export default { readLicenseList, getDetailLicense };
+function addLicense(licenseInfo) {
+	return http.post(`/license/addLicense`,licenseInfo);
+  }
+
+export default { readLicenseList, getDetailLicense, addLicense };
