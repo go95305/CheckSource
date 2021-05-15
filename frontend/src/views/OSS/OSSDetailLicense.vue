@@ -7,6 +7,12 @@
 		/>
 		<h1 class="oss-detail-title">{{ license.name }}</h1>
 		<div class="oss-detail-table">
+			<router-link
+				v-if="license.userName != '관리자'"
+				class="oss-detail-edit-routerlink"
+				:to="{ name: 'EditLicense', params: { editLicense: license } }"
+				><span class="material-icons">edit</span>수정하기</router-link
+			>
 			<OSSDetailLicenceTable :license="license"></OSSDetailLicenceTable>
 		</div>
 
@@ -39,11 +45,11 @@ export default {
 			},
 			tabList: [
 				{
-					name: "Information",
+					name: "라이선스 정보",
 					path: "/list/detail/license/information",
 				},
 				{
-					name: "Content",
+					name: "라이선스 전문",
 					path: "/list/detail/license/content",
 				},
 			],
@@ -58,7 +64,6 @@ export default {
 				.getDetailLicense(this.licenseId)
 				.then((response) => {
 					this.license = response.data;
-					console.log(this.license.sourceopen);
 				})
 				.catch();
 		},

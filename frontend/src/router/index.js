@@ -238,9 +238,15 @@ const routes = [
 								],
 							},
 							{
-								path: "edit-opensource",
+								path: "editOpensource",
 								name: "EditOpenSource",
 								component: AddComponent,
+								props: true,
+							},
+							{
+								path: "editLicense",
+								name: "EditLicense",
+								component: MyProjectAddLicense,
 								props: true,
 							},
 						],
