@@ -44,6 +44,7 @@ export default {
   data() {
     return {
       projectId: this.$route.query.projectId,
+      gitType: this.$route.query.gitType,
       unmappedList: [],
       loading:false,
     }
@@ -54,7 +55,7 @@ export default {
   methods: {
     getList: function () {
       this.loading = true;
-			verifyApi.readVerifiedOpenSourceList(this.projectId).then((response) => {
+			verifyApi.readVerifiedOpenSourceList(this.gitType,this.projectId).then((response) => {
 				if (response.data) {
           this.loading = false;
 					this.unmappedList = response.data.unmappedList;

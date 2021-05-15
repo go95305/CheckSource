@@ -1,10 +1,10 @@
 <template>
     <table class="info-table">
         <th class="info-table-th">
-            <td class="info-table-td">VERSION</td>
-            <td class="info-table-td">GROUP ID</td>
-            <td class="info-table-td">ARTIFACT ID</td>
-            <td class="info-table-td">PACKAGE MANAGER TYPE</td>
+            <td class="info-table-td">버전</td>
+            <td class="info-table-td">그룹ID</td>
+            <td class="info-table-td">아티팩트ID</td>
+            <td class="info-table-td">패키지 매니저 타입</td>
         </th>
         <tr class="info-table-tr">
         <!-- <tr class="info-table-tr" v-for="(value, index) in opensourceList" :key="`${index}_opensourceList`"> -->

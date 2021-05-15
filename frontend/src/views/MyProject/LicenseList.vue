@@ -9,7 +9,7 @@
         <td>코드 공개</td>
       </th>
       <tr class="license-table-tr" v-for="(item, index) in list"
-			:key="`${index}_mapped`" @click="GoLicense(item.licenseId)" :class="{ illegal: item.sourceopen.length > 0 }">
+			:key="`${index}_mapped`" :class="{illegal: item.sourceopen.length > 0, noComment: item.sourceopen == '명시X'}" @click="GoLicense(item.licenseId)">
         <td>{{ item.name }}</td>
         <td>{{ item.identifier }}</td>
         <td>{{ item.path }}</td>
@@ -46,6 +46,7 @@ export default {
   data() {
     return {
       projectId: this.$route.query.projectId,
+      gitType: this.$route.query.gitType,
       list: [],
       page:1,
       size: 10,
@@ -60,8 +61,12 @@ export default {
     this.GetList();
   },
   watch:{
-    routeQuery:function(){
-      this.GetQuery();
+    routeQuery:{
+      deep:true,
+      handler(){
+        console.log(this.routeQuery);
+        this.GetQuery();
+      }
     }
   },
   methods: {
@@ -76,7 +81,7 @@ export default {
     GetList: function () {
       this.loading = true;
       verifyApi
-        .readVerifiedLicenseList(this.projectId)
+        .readVerifiedLicenseList(this.gitType,this.projectId)
         .then((response) => {
           if (response.data) this.list = response.data;
           this.loading = false;

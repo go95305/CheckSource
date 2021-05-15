@@ -200,6 +200,11 @@ li.illegal::before {
 	box-shadow: 0 0 5px red;
 }
 
+li.illegal.noComment {
+	background: orange;
+	box-shadow: 0 0 5px orange;
+}
+
 .mapped-component {
 	border-bottom: 1px solid;
 	width: 10%;

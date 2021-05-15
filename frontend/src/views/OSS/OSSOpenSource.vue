@@ -23,7 +23,7 @@
 						:key="`${index}_openSourceList`"
 						@click="GoDetail(opensource)"
 					>
-						<td :class="{ added: added }">
+						<td :class="{ added: opensource.userId != '0' }">
 							{{ opensource.name }}
 						</td>
 						<td>{{ opensource.url }}</td>
@@ -59,38 +59,46 @@ export default {
 	data() {
 		return {
 			filterList: ["오픈소스명", "라이선스"],
-			filterEnglistList: ["Name", "License"],
+			filterEnglishList: ["Name", "License"],
 			openSourceList: [],
 			page: 1,
 			size: 10,
 			totalPage: 10,
 			typeFilter: 1,
 			keyword: "",
-			added: true,
+			routerQueryPage: this.$router.query,
 		};
 	},
 	created() {
-		if (this.$route.query.page) {
-			this.page = Number(this.$route.query.page);
-		}
-		if (this.$route.query.size) {
-			this.size = Number(this.$route.query.size);
-		}
-
+		this.GetQuery();
 		this.GetList();
 	},
+	watch: {
+		routerQueryPage: function () {
+			this.GetQuery();
+		},
+	},
 	methods: {
+		GetQuery: function () {
+			if (this.$route.query.page) {
+				this.page = Number(this.$route.query.page);
+			}
+			if (this.$route.query.size) {
+				this.size = Number(this.$route.query.size);
+			}
+		},
 		GetList: function () {
+			console.log(this.filterEnglishList[this.typeFilter - 1]);
 			opensourceApi
 				.readOpenSourceList(
 					this.keyword,
 					this.page,
 					this.size,
-					this.filterEnglistList[this.typeFilter - 1]
+					this.filterEnglishList[this.typeFilter - 1]
 				)
 				.then((response) => {
+					console.log(response.data);
 					this.openSourceList = response.data.list;
-					console.log(this.openSourceList);
 					this.totalPage = response.data.totalPage;
 				})
 				.catch();

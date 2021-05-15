@@ -8,6 +8,7 @@
 			></search-bar>
 		</div>
 		<div>
+			<span class="added added-absolute"> : 사용자가 생성한 라이선스</span>
 			<table class="oss-table">
 				<thead class="oss-table-thead">
 					<th>라이선스명</th>
@@ -22,7 +23,9 @@
 						:key="`${index}_openSourceList`"
 						@click="GoDetail(license)"
 					>
-						<td>{{ license.name }}</td>
+						<td :class="{ added: license.userId != '0' }">
+							{{ license.name }}
+						</td>
 						<td>{{ license.identifier }}</td>
 						<td>{{ license.url }}</td>
 						<td v-if="license.sourceopen.length != 0">
@@ -63,16 +66,23 @@ export default {
 		};
 	},
 	created() {
-		if (this.$route.query.page) {
-			this.page = Number(this.$route.query.page);
-		}
-		if (this.$route.query.size) {
-			this.size = Number(this.$route.query.size);
-		}
-
+		this.GetQuery();
 		this.GetList();
 	},
+	watch: {
+		routerQueryPage: function () {
+			this.GetQuery();
+		},
+	},
 	methods: {
+		GetQuery: function () {
+			if (this.$route.query.page) {
+				this.page = Number(this.$route.query.page);
+			}
+			if (this.$route.query.size) {
+				this.size = Number(this.$route.query.size);
+			}
+		},
 		GetList: function () {
 			licenseApi
 				.readLicenseList(
