@@ -26,6 +26,7 @@
 	flex: 1 0 0;
 	padding: 15px;
 	display: flex;
+
 	justify-content: center;
 	align-items: center;
 	word-break: break-word;

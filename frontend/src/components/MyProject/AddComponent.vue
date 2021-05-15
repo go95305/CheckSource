@@ -190,7 +190,7 @@ export default {
     editOpensource:Object
   },
   created() {
-    if(window.location.pathname == '/list/detail/edit-opensource'){
+    if(window.location.pathname == '/list/detail/editOpensource'){
       //수정하기 모드
       if(this.editOpensource){
         this.isEditMode = true;
@@ -201,7 +201,7 @@ export default {
           this.tags.push(license.contents);
         }
         delete this.opensource.licenseList;
-        // console.log(this.opensource);
+        console.log(this.opensource);
       }
       else{
         this.$router.go(-1);
@@ -275,8 +275,9 @@ export default {
       //오픈소스 삭제
       if(this.CanDo){
         swal.confirm('정말로 삭제하시겠습니까?').then((response) => {
+          console.log(this.opensource.opensourceId);
           if(response.value){
-             opensourceApi.deleteOpenSource(this.opensource).then(()=>{
+             opensourceApi.deleteOpenSource(this.opensource.opensourceId).then(()=>{
               swal.success('오픈소스 정보가 삭제되었습니다.');
               this.$router.go(-2);
             });

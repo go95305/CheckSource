@@ -66,6 +66,8 @@
 	padding: 10px;
 	word-break: break-all;
 	display: flex;
-	align-items: center;
+	flex-flow: column wrap;
+	justify-content: center;
+	align-items: flex-start;
 	box-sizing: border-box;
 }
