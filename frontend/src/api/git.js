@@ -58,6 +58,17 @@ function verifyGitLabProjects(gitlabId, projectList) {
 	return http.post(`/git/projects?gitlabId=${gitlabId}`, projectList);
 }
 
+
+// 프로젝트 삭제
+function deleteProject(projectId, gitlabId) {
+	return http.delete(`/git/projects`, {
+		params: {
+			projectId: projectId,
+			gitlabId: gitlabId,
+		},
+	});
+}
+
 export default {
 	getBaseUrlList,
 	getBaseUrl,
@@ -66,4 +77,5 @@ export default {
 	readGitLabProjects,
 	readProjectBranches,
 	verifyGitLabProjects,
+	deleteProject,
 };

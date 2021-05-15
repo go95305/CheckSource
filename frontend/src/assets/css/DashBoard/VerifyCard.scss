@@ -1,5 +1,5 @@
 .verifycard {
-  box-shadow: 0 6px 15px 0 rgba(36, 37, 38, 0.08);
+  box-shadow: 8px 8px 15px 1px rgba(36, 37, 38, 0.08);
   width: 600px;
   height: 350px;
   display: flex;
@@ -25,6 +25,7 @@
   justify-content: space-evenly;
   text-align: center;
   color: white;
+  width: 100px;
 }
 
 .verifycard-aside-detail {
@@ -124,8 +125,9 @@
 }
 
 .vc-btn-detail {
-  padding: 10px 6px;
+  padding: 10px 10px;
   vertical-align: top;
+  font-size: 15px;
 }
 
 /* 삭제 */
