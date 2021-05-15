@@ -77,7 +77,6 @@
         />
       </p>
 
-      <!-- <label class="label" for="licenseinfo">라이선스 주요내용</label> -->
       <label class="label">라이선스 주요내용</label>
       <p class="field">
         <label class="sublabel">OSI 승인여부</label>
@@ -116,10 +115,7 @@
           :value="true"
           v-model="license.is_modify"
         />
-        <label class="radiobtn" for="filter_modify1">
-          <!-- <span class="material-icons"> check_circle_outline </span> -->
-          O
-        </label>
+        <label class="radiobtn" for="filter_modify1"> O </label>
         <input
           name="filter_modify"
           id="filter_modify2"
@@ -147,10 +143,7 @@
           :value="true"
           v-model="license.is_license"
         />
-        <label class="radiobtn" for="filter_license1">
-          <!-- <span class="material-icons"> check_circle_outline </span> -->
-          O
-        </label>
+        <label class="radiobtn" for="filter_license1"> O </label>
         <input
           name="filter_license"
           id="filter_license2"
@@ -180,10 +173,7 @@
           :value="true"
           v-model="license.is_copyright"
         />
-        <label class="radiobtn" for="filter_copyright1">
-          <!-- <span class="material-icons"> check_circle_outline </span> -->
-          O
-        </label>
+        <label class="radiobtn" for="filter_copyright1"> O </label>
         <input
           name="filter_copyright"
           id="filter_copyright2"
@@ -213,10 +203,7 @@
           :value="true"
           v-model="license.is_anotherlicense"
         />
-        <label class="radiobtn" for="filter_anotherli1">
-          <!-- <span class="material-icons"> check_circle_outline </span> -->
-          O
-        </label>
+        <label class="radiobtn" for="filter_anotherli1"> O </label>
         <input
           name="filter_anotherli"
           id="filter_anotherli2"
@@ -244,10 +231,7 @@
           :value="true"
           v-model="license.is_modify_notice"
         />
-        <label class="radiobtn" for="filter_modify_notice1">
-          <!-- <span class="material-icons"> check_circle_outline </span> -->
-          O
-        </label>
+        <label class="radiobtn" for="filter_modify_notice1"> O </label>
         <input
           name="filter_modify_notice"
           id="filter_modify_notice2"
@@ -275,10 +259,7 @@
           :value="true"
           v-model="license.is_warranty"
         />
-        <label class="radiobtn" for="filter_warranty1">
-          <!-- <span class="material-icons"> check_circle_outline </span> -->
-          O
-        </label>
+        <label class="radiobtn" for="filter_warranty1"> O </label>
         <input
           name="filter_warranty"
           id="filter_warranty2"
@@ -306,10 +287,7 @@
           :value="true"
           v-model="license.is_respon"
         />
-        <label class="radiobtn" for="filter_respon1">
-          <!-- <span class="material-icons"> check_circle_outline </span> -->
-          O
-        </label>
+        <label class="radiobtn" for="filter_respon1"> O </label>
         <input
           name="filter_respon"
           id="filter_respon2"
@@ -337,10 +315,7 @@
           :value="true"
           v-model="license.is_commercial"
         />
-        <label class="radiobtn" for="filter_commercial1">
-          <!-- <span class="material-icons"> check_circle_outline </span> -->
-          O
-        </label>
+        <label class="radiobtn" for="filter_commercial1"> O </label>
         <input
           name="filter_commercial"
           id="filter_commercial2"
@@ -368,10 +343,7 @@
           :value="true"
           v-model="license.is_continue"
         />
-        <label class="radiobtn" for="filter_continue1">
-          <!-- <span class="material-icons"> check_circle_outline </span> -->
-          O
-        </label>
+        <label class="radiobtn" for="filter_continue1"> O </label>
         <input
           name="filter_continue"
           id="filter_continue2"
@@ -399,10 +371,7 @@
           :value="true"
           v-model="license.is_patent"
         />
-        <label class="radiobtn" for="filter_patent1">
-          <!-- <span class="material-icons"> check_circle_outline </span> -->
-          O
-        </label>
+        <label class="radiobtn" for="filter_patent1"> O </label>
         <input
           name="filter_patent"
           id="filter_patent2"
@@ -430,10 +399,7 @@
           :value="true"
           v-model="license.is_private"
         />
-        <label class="radiobtn" for="filter_private1">
-          <!-- <span class="material-icons"> check_circle_outline </span> -->
-          O
-        </label>
+        <label class="radiobtn" for="filter_private1"> O </label>
         <input
           name="filter_private"
           id="filter_private2"
