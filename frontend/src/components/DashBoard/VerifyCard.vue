@@ -35,8 +35,10 @@
 
       <div class="verifycard-main-third">
         <div class="verifycard-excerpt">Last Scanned</div>
-        <div class="verifycard-excerpt-s">{{ project.username }}</div>
-        <div class="verifycard-excerpt-s">{{ project.date }}</div>
+        <div class="verifycard-excerpt-s">
+          {{ project.username }} / {{ project.date }}
+        </div>
+        <!-- <div class="verifycard-excerpt-s">{{ project.date }}</div> -->
       </div>
 
       <!-- down -->
