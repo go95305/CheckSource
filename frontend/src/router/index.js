@@ -227,11 +227,13 @@ const routes = [
 										path: "information",
 										name: "OSSDetailLicenseInformation",
 										component: OSSDetailLicenseInformation,
+										props: true,
 									},
 									{
 										path: "content",
 										name: "OSSDetailLicenseContent",
 										component: OSSDetailLicenseContent,
+										props: true,
 									},
 								],
 							},
