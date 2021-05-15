@@ -66,8 +66,7 @@ public class GitService {
 	private final AnalyzeService analyzeService;
 	private final UnmappedOpensourceRepository unmappedOpensourceRepository;
 	private final OpensourceProjectRepository opensourceProjectRepository;
-	
-	
+
 	// gitlab 계정 연동 체크
 	public GitLabConnectDTO gitConnect(String username, String token, Long gitlabId) {
 		GitLab gitlab = gitLabRepository.findById(gitlabId)
@@ -189,9 +188,8 @@ public class GitService {
 
 			// 검증, 비검증으로 나누기
 			for (GitLabProjectDTO gitLabProject : gitLabProjectlist) {
-				String projectId = gitLabProject.getId();
-				Project project = projectRepository.findByProjectId(projectId);
-
+				String gitlabProjectId = gitLabProject.getId();
+				Project project = projectRepository.findByGitProjectIdAndGitType(gitlabProjectId, gitlabId);
 				if (project == null) {// 비검증
 					gitLabProjectList.add(gitLabProject);
 				} else {// 검증
@@ -211,10 +209,10 @@ public class GitService {
 	}
 
 	// 프로젝트 삭제하기
-	public boolean deleteProject(String token, String projectId) {
+	public boolean deleteProject(String token, String gitlabProjectId, Long gitlabId) {
 		String userId = jwtTokenProvider.getUserId(token);
 		User user = userRepository.findByUserId(userId);
-		Project project = projectRepository.findByProjectId(projectId);
+		Project project = projectRepository.findByGitProjectIdAndGitType(gitlabProjectId, gitlabId);
 		if (user.getDepart().getDepartId() == project.getDepart().getDepartId()) {
 			projectRepository.delete(project);
 			return true;
@@ -223,12 +221,12 @@ public class GitService {
 	}
 
 	// 프로젝트 브런치 가져오기
-	public List<ProjectBranchesDTO> getBranches(String token, String projectId, Long gitlabId) {
+	public List<ProjectBranchesDTO> getBranches(String token, String gitlabProjectId, Long gitlabId) {
 		GitLab gitlab = gitLabRepository.findById(gitlabId)
 				.orElseThrow(() -> new IllegalArgumentException("no gitLab data"));
 		String baseUrl = gitlab.getBaseUrl();
 		String accessToken = gitlab.getRootAccessToken(); // 루트토큰
-		String url = baseUrl + "/projects/" + projectId + "/repository/branches";
+		String url = baseUrl + "/projects/" + gitlabProjectId + "/repository/branches";
 		List<ProjectBranchesDTO> projectBranchesList = new ArrayList<ProjectBranchesDTO>();
 		// 헤더 담음
 		HttpHeaders headers = new HttpHeaders();
@@ -242,7 +240,7 @@ public class GitService {
 			Gson gson = new Gson();
 			ProjectBranchesDTO[] branchList = gson.fromJson(responseEntity.getBody(), ProjectBranchesDTO[].class);
 			projectBranchesList = Arrays.asList(branchList);
-			
+
 		} catch (HttpClientErrorException e) {
 			// accessToken이 유효하지 않을 경우 -> root계정 토큰 만료기간 제한 없으면 상관없음
 			// 잘못된 프로젝트 id 적을 경우
@@ -258,64 +256,68 @@ public class GitService {
 		User user = userRepository.findByUserId(userId);
 		Depart depart = user.getDepart();
 
-		// 검증전 프로젝트 추가 - status 검증전 세팅 flase
-		for (GitLabProjectDTO gitLabProjectDTO : projectList) {
-			String projectId = gitLabProjectDTO.getId();
-			Project project = new Project();
-			project.setUser(user);
-			project.setDepart(depart);
-			project.setName(gitLabProjectDTO.getName());
-			project.setProjectId(projectId);
-			project.setBranch(gitLabProjectDTO.getBranch());//브랜치 설정
-			project.setGitType(gitlabId);//gitType
-			project.setWebUrl(gitLabProjectDTO.getWeb_url());//webUrl
-			projectRepository.save(project);
-		}
-
-		//검증할 프로젝트 리스트
+		// 검증할 프로젝트 리스트
 		List<AnalyProjectListDTO> analyProjectList = new ArrayList<AnalyProjectListDTO>();
-		GitLab gitLab = gitLabRepository.findById(gitlabId).orElseThrow(() -> new IllegalArgumentException("no gitlab Id in database"));
-		String accessToken = gitLab.getRootAccessToken(); //루트토큰
+		GitLab gitLab = gitLabRepository.findById(gitlabId)
+				.orElseThrow(() -> new IllegalArgumentException("no gitlab Id in database"));
+		String accessToken = gitLab.getRootAccessToken(); // 루트토큰
 		String baseUrl = gitLab.getBaseUrl();
-		// 프로젝트별 검증 
+
+		// 프로젝트별 검증
 		for (GitLabProjectDTO gitLabProjectDTO : projectList) {
 			AnalyProjectListDTO analyProjectListDto = new AnalyProjectListDTO();
-			String projectId = gitLabProjectDTO.getId();
+			String gitlabProjectId = gitLabProjectDTO.getId();
 			String projectName = gitLabProjectDTO.getName();
 			String branch = gitLabProjectDTO.getBranch();
-			
-			//1. repositoryTree 전체 리스트로 가져오기
-			String url = baseUrl + "projects/" + projectId + "/repository/tree?ref="+ branch +"&recursive=true&per_page=50000";
+			String webUrl = gitLabProjectDTO.getWeb_url();
+
+			// 1. repositoryTree 전체 리스트로 가져오기
+			String url = baseUrl + "projects/" + gitlabProjectId + "/repository/tree?ref=" + branch
+					+ "&recursive=true&per_page=50000";
 			List<RepositoryTreeDTO> repositoryTreeList = new ArrayList<RepositoryTreeDTO>();
 			RepositoryTreeDTO returnRepositoryDto = new RepositoryTreeDTO();
-			
+
 			// 헤더 담음
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_XML);
 			headers.set("private-token", accessToken);
-			HttpEntity entity = new HttpEntity(headers);		
-			try {//api - RepositoryTree 리스트 받아옴
-				ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+			HttpEntity entity = new HttpEntity(headers);
+			try {// api - RepositoryTree 리스트 받아옴
+				ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity,
+						String.class);
 				Gson gson = new Gson();
-				RepositoryTreeDTO[] repositoryTreeDto = gson.fromJson(responseEntity.getBody(), RepositoryTreeDTO[].class);
+				RepositoryTreeDTO[] repositoryTreeDto = gson.fromJson(responseEntity.getBody(),
+						RepositoryTreeDTO[].class);
 				repositoryTreeList = Arrays.asList(repositoryTreeDto);
-			}catch (HttpClientErrorException e) {
-				//토큰이 유효하지 않을 경우 401
-				if(e.getStatusCode() == HttpStatus.UNAUTHORIZED) {
+			} catch (HttpClientErrorException e) {
+				// 토큰이 유효하지 않을 경우 401
+				if (e.getStatusCode() == HttpStatus.UNAUTHORIZED) {
 					return false;
 				}
-				//repository tree가 없을 경우 404
-				if(e.getStatusCode() == HttpStatus.NOT_FOUND) {
-					//검증할 필요가 없으므로 검증상태 처리 true
-					Project project = projectRepository.findByProjectId(projectId);
+				// repository tree가 없을 경우 404 - nocontents
+				if (e.getStatusCode() == HttpStatus.NOT_FOUND) {
+					// 검증할 필요가 없으므로 검증완료 후 저장
+					// 기존꺼 있는지 체크
+					Project existProject = projectRepository.findByGitProjectIdAndGitType(gitlabProjectId, gitlabId);
+					if (existProject != null) { // 기존에 검증한 프로젝트가 있다면 지우기
+						projectRepository.delete(existProject);
+					}
+					Project project = new Project();
+					project.setUser(user);
+					project.setDepart(depart);
+					project.setName(gitLabProjectDTO.getName());
+					project.setGitProjectId(gitlabProjectId); // gitlabProjectId
+					project.setBranch(gitLabProjectDTO.getBranch());// 브랜치 설정
+					project.setGitType(gitlabId);// gitType
+					project.setWebUrl(gitLabProjectDTO.getWeb_url());// webUrl
 					project.setStatus(true);
 					projectRepository.save(project);
 					continue;
 				}
-					
+
 			}
-			
-			//2. repositoryTreeList에서 패키지 매니저 파일 리스트 뽑음
+
+			// 2. repositoryTreeList에서 패키지 매니저 파일 리스트 뽑음
 			List<RepositoryTreeDTO> packageManageFileList = new ArrayList<RepositoryTreeDTO>();
 			for (RepositoryTreeDTO repositoryTree : repositoryTreeList) {
 				String name = repositoryTree.getName();
@@ -324,59 +326,74 @@ public class GitService {
 					packageManageFileList.add(returnRepositoryDto);
 				}
 			}
-			
-			//set
-			analyProjectListDto.setProjectId(projectId);
+
+			// set
+			analyProjectListDto.setGitProjectId(gitlabProjectId);
 			analyProjectListDto.setProjectName(projectName);
-			analyProjectListDto.setPackageManageFileList(packageManageFileList); //패키지매니저파일 리스트
+			analyProjectListDto.setBranch(branch);
+			analyProjectListDto.setWebUrl(webUrl);
+			analyProjectListDto.setPackageManageFileList(packageManageFileList); // 패키지매니저파일 리스트
 			analyProjectList.add(analyProjectListDto);
-		}//end project for문
+		} // end project for문
 
 		//System.out.println(analyProjectList);
-		
-		//3. 프로젝트별 패키지매니저 파일 리스트에서 패키지 매니터 파일의 contents 뽑기
+
+		// 3. 검증할 프로젝트별 패키지매니저 파일 리스트에서 패키지 매니터 파일의 contents 뽑기
 		for (AnalyProjectListDTO analyProjectListDto : analyProjectList) {
 			List<RepositoryTreeDTO> packageManageFileList = analyProjectListDto.getPackageManageFileList();
-			String projectId = analyProjectListDto.getProjectId();
-			unmappedOpensourceRepository.deleteAllByProjectId(projectId);
-			opensourceProjectRepository.deleteAllByProjectId(projectId);
-			//프로젝트별 패키지파일 리스트
+			String gitlabProjectId = analyProjectListDto.getGitProjectId();
+
+			// 기존꺼 지움
+			Project existProject = projectRepository.findByGitProjectIdAndGitType(gitlabProjectId, gitlabId);
+			if (existProject != null) { // 기존에 검증한 프로젝트가 있다면
+				projectRepository.delete(existProject);
+			}
+
+			Project project = new Project();
+			project.setUser(user);
+			project.setDepart(depart);
+			project.setName(analyProjectListDto.getProjectName());
+			project.setGitProjectId(gitlabProjectId); // gitlabProjectId
+			project.setBranch(analyProjectListDto.getBranch());// 브랜치 설정
+			project.setGitType(gitlabId);// gitType
+			project.setWebUrl(analyProjectListDto.getWebUrl());// webUrl
+			project.setStatus(true);
+			Project newProject = projectRepository.save(project);
+			Long projectId = newProject.getProjectId();
+
+			// 프로젝트별 패키지파일 리스트
 			for (RepositoryTreeDTO packageManageFile : packageManageFileList) {
 				String path = packageManageFile.getPath();
-				
-				//path 경로 url encoding해서 api 요청
+
+				// path 경로 url encoding해서 api 요청
 				URI uri = UriComponentsBuilder
-				        .fromUriString(baseUrl+"projects/{projectid}/repository/files/{urlEncoding}?ref=master")
-				        .encode()
-				        .buildAndExpand(projectId, path).toUri();
-				//헤더
+						.fromUriString(baseUrl + "projects/{projectid}/repository/files/{urlEncoding}?ref=master")
+						.encode().buildAndExpand(gitlabProjectId, path).toUri();
+				// 헤더
 				HttpHeaders headers = new HttpHeaders();
 				headers.setContentType(MediaType.APPLICATION_XML);
 				headers.set("private-token", accessToken);
-				HttpEntity entity = new HttpEntity(headers);	
+				HttpEntity entity = new HttpEntity(headers);
 				try {
-					ResponseEntity<String> responseEntity = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
+					ResponseEntity<String> responseEntity = restTemplate.exchange(uri, HttpMethod.GET, entity,
+							String.class);
 					Gson gson = new Gson();
-					PackageManageFileDTO packageManageFileDto =  gson.fromJson(responseEntity.getBody(), PackageManageFileDTO.class);
-					//contents 뽑음
+					PackageManageFileDTO packageManageFileDto = gson.fromJson(responseEntity.getBody(),
+							PackageManageFileDTO.class);
+					// contents 뽑음
 					String contents = packageManageFileDto.getContent();
 					String filePath = packageManageFileDto.getFile_path();
 					String fileName = packageManageFileDto.getFile_name();
 					// 4. base64 - decoding 등 승환 코드
-					analyzeService.analyze(projectId, fileName, contents, filePath);
-							
+					analyzeService.analyze(projectId, fileName, contents, filePath); // 변경
+
 				} catch (HttpClientErrorException e) {
-					//토큰이 유효하지 않을 경우 401
-					if(e.getStatusCode() == HttpStatus.UNAUTHORIZED) {
+					// 토큰이 유효하지 않을 경우 401
+					if (e.getStatusCode() == HttpStatus.UNAUTHORIZED) {
 						return false;
 					}
 				}
 			}
-			
-			//5. 검증 완료한 프로젝트 status 업데이트
-			Project project = projectRepository.findByProjectId(projectId);
-			project.setStatus(true);
-			projectRepository.save(project);
 		}
 
 		return true;

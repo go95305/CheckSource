@@ -47,8 +47,8 @@ public class ProjectService {
 	//summary
 	
 	//프로젝트 이름
-	public String getProjectName(String projectId) {
-		return projectRepository.findByProjectId(projectId).getName();
+	public String getProjectName(String gitProjectId, Long gitType) {
+		return projectRepository.findByGitProjectIdAndGitType(gitProjectId, gitType).getName();
 	}
 	
 	// 부서별 분석된 프로젝트 목록
@@ -79,10 +79,10 @@ public class ProjectService {
 	}
 
 	// 분석된 프로젝트의 오픈소스 목록
-	public AnalyOpensourceListDTO getOpensourceListByProject(String projectId) {
-		Project project = projectRepository.findByProjectId(projectId);
+	public AnalyOpensourceListDTO getOpensourceListByProject(String gitProjectId, Long gitType) {
+		Project project = projectRepository.findByGitProjectIdAndGitType(gitProjectId, gitType);
 		AnalyOpensourceListDTO analyOpensourceListDto = new AnalyOpensourceListDTO();	
-		
+		Long projectId = project.getProjectId();
 		//매핑
 		List<OpensourceProject> opensourceList = new ArrayList<OpensourceProject>();
 		opensourceList = opensourceProjectRepository.findByProject(project);
@@ -110,7 +110,9 @@ public class ProjectService {
 	}
 
 	// 분석된 프로젝트의 라이선스 목록 -> 페이징 필요
-	public List<ProjectLiceseListDTO> getLicenseListByProject(String projectId) {
+	public List<ProjectLiceseListDTO> getLicenseListByProject(String gitProjectId, Long gitType) {
+		Project project = projectRepository.findByGitProjectIdAndGitType(gitProjectId, gitType);
+		Long projectId = project.getProjectId();
 		List<LicenseOpensource> licenseOpensourceList = new ArrayList<LicenseOpensource>();
 		licenseOpensourceList = licenseOpensourceRepository.findAllByProjectId(projectId);		
 		List<ProjectLiceseListDTO> licenseList = licenseOpensourceList.stream().map(ProjectLiceseListDTO::new).distinct().collect(Collectors.toList());
