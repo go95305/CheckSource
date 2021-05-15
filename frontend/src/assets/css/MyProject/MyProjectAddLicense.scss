@@ -179,6 +179,96 @@ form .button,
   margin: 0 0 1.5em 0;
 }
 
+// 툴팁
+.tooltip-url {
+  position: absolute;
+  display: block;
+  top: 221px;
+  left: 10%;
+  /* background-color: #bcdbea; */
+  border-radius: 50%;
+  border: 1px solid;
+  line-height: 26px;
+  width: 10px;
+  height: 10px;
+  cursor: default;
+  z-index: 500;
+  opacity: 0.5;
+  font-size: small;
+}
+
+.tooltip-url:hover .tooltip-url-content {
+  display: block;
+  transform-origin: 100% 0%;
+  -webkit-animation: fadeIn 0.3s ease-in-out;
+  animation: fadeIn 0.3s ease-in-out;
+}
+.tooltip-url .tooltip-url-content {
+  display: none;
+  text-align: left;
+  background-color: #1e2021;
+  padding: 10px;
+  width: 200px;
+  position: absolute;
+  border-radius: 3px;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+  color: #fff;
+  font-size: 13px;
+  line-height: 1.4;
+  left: 12px;
+  bottom: 0;
+}
+.tooltip-url span {
+  position: absolute;
+  left: 3px;
+  bottom: -8px;
+  font-size: 3px;
+}
+.tooltip-contents {
+  position: absolute;
+  display: block;
+  top: 329px;
+  left: 24%;
+  /* background-color: #bcdbea; */
+  border-radius: 50%;
+  border: 1px solid;
+  line-height: 26px;
+  width: 10px;
+  height: 10px;
+  cursor: default;
+  z-index: 500;
+  opacity: 0.5;
+  font-size: small;
+}
+
+.tooltip-contents:hover .tooltip-contents-content {
+  display: block;
+  transform-origin: 100% 0%;
+  -webkit-animation: fadeIn 0.3s ease-in-out;
+  animation: fadeIn 0.3s ease-in-out;
+}
+.tooltip-contents .tooltip-contents-content {
+  display: none;
+  text-align: left;
+  background-color: #1e2021;
+  padding: 10px;
+  width: 250px;
+  position: absolute;
+  border-radius: 3px;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+  color: #fff;
+  font-size: 13px;
+  line-height: 1.4;
+  left: 12px;
+  bottom: 0;
+}
+.tooltip-contents span {
+  position: absolute;
+  left: 3px;
+  bottom: -8px;
+  font-size: 3px;
+}
+
 // 체크박스
 .styled-checkbox {
   position: absolute; // take it out of document flow

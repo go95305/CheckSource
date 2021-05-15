@@ -37,6 +37,9 @@
           placeholder="URL"
         />
       </p>
+      <div class="tooltip-url"><span>!</span>
+        <p class="tooltip-url-content">Source URL 또는 Homepage URL을 입력해주세요</p>
+      </div>
       <p class="field required">
         <label class="label required" for="contents">라이선스 전문</label>
         <textarea
@@ -49,6 +52,9 @@
           placeholder="라이선스 전문"
         />
       </p>
+      <div class="tooltip-contents"><span>!</span>
+        <p class="tooltip-contents-content">라이선스 전문을 입력해주세요</p>
+      </div>
       <!-- <p class="field required">
         <label class="label required" for="name">Package Type</label>
         <input
