@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ssafy.checksource.config.security.JwtTokenProvider;
 import com.ssafy.checksource.model.dto.AnalyOpensourceListDTO;
 import com.ssafy.checksource.model.dto.OpensourceDTO;
+import com.ssafy.checksource.model.dto.ProjectInfoDTO;
 import com.ssafy.checksource.model.dto.ProjectLiceseListDTO;
 import com.ssafy.checksource.model.dto.ProjectListByDepartDTO;
 import com.ssafy.checksource.model.dto.UnmappendOpensourceDTO;
@@ -46,9 +47,14 @@ public class ProjectService {
 	
 	//summary
 	
+	
+	
 	//프로젝트 이름
-	public String getProjectName(String gitProjectId, Long gitType) {
-		return projectRepository.findByGitProjectIdAndGitType(gitProjectId, gitType).getName();
+	public ProjectInfoDTO getProjectName(String gitProjectId, Long gitType) {
+		ProjectInfoDTO projectInfoDto = new ProjectInfoDTO();
+		Project project = projectRepository.findByGitProjectIdAndGitType(gitProjectId, gitType);
+		projectInfoDto = modelMapper.map(project, ProjectInfoDTO.class);
+		return projectInfoDto;
 	}
 	
 	// 부서별 분석된 프로젝트 목록
