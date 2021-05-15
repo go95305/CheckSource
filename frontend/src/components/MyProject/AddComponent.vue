@@ -1,6 +1,15 @@
 <template>
   <div class="form-section">
-    <div class="title">
+    <div v-if="isEditMode">
+	<my-project-path
+			department="전체목록"
+			project="오픈소스 수정하기"
+			rootPath="/list/opensource"
+		/>
+		<h1 class="oss-detail-title">{{ opensource.name }}</h1>
+
+    </div>
+    <div v-else class="title">
       <h2>새로운 OpenSource 추가</h2>
     </div>
     <form action="" class="form">
@@ -164,8 +173,21 @@ export default {
       licenseName: "",
       searched: false,
       isEmpty:false,
+      isEditMode:false,
     };
   },
+   props:{
+    editOpensource:Object
+  },
+  created() {
+    if(window.location.pathname == '/list/detail/edit-opensource'){
+      //수정하기 모드
+      this.isEditMode = true;
+      console.log(this.editOpensource);
+      this.opensource = this.editOpensource;
+    }
+  },
+ 
   watch: {
     licenseName: function (newVal) {
       this.getLicenseName(newVal);

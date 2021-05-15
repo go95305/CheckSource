@@ -237,6 +237,12 @@ const routes = [
 									},
 								],
 							},
+							{
+								path: "edit-opensource",
+								name: "EditOpenSource",
+								component: AddComponent,
+								props: true,
+							},
 						],
 					},
 				],
