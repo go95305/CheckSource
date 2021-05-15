@@ -15,5 +15,5 @@ public interface LicenseOpensourceRepository extends JpaRepository<LicenseOpenso
 	
 	@Query(value = "select * from license_opensource where opensource_id " + 
 			"in (select opensource_id from opensource_project where project_id = ?1) order by opensource_id ", nativeQuery = true)
-	public List<LicenseOpensource> findAllByProjectId (String projectId);
+	public List<LicenseOpensource> findAllByProjectId (Long projectId);
 }

@@ -14,7 +14,7 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "gitlab_user")
+@Table(name = "GITLAB_USER")
 public class GitLabUser {
 
 	@EmbeddedId

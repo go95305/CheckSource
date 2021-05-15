@@ -29,8 +29,8 @@ public class AnalyzeController {
 	
 	@ApiOperation(value = "프로젝트 이름 가져오기")
 	@GetMapping("/projectName")
-	public String getProjectName (@RequestHeader("TOKEN") String token, @RequestParam String projectId) {
-		return projectService.getProjectName(projectId);
+	public String getProjectName (@RequestHeader("TOKEN") String token, @RequestParam String projectId, @RequestParam Long gitType) {
+		return projectService.getProjectName(projectId, gitType);
 	}
 	
 	@ApiOperation(value = "부서별 분석된 프로젝트 목록")
@@ -41,24 +41,24 @@ public class AnalyzeController {
 	
 	@ApiOperation(value = "분석된 프로젝트의 오픈소스 목록")
 	@GetMapping("/opensourceList")
-	public AnalyOpensourceListDTO getOpensourceListByProject(@RequestHeader("TOKEN") String token, @RequestParam String projectId) {
-		return projectService.getOpensourceListByProject(projectId);
+	public AnalyOpensourceListDTO getOpensourceListByProject(@RequestHeader("TOKEN") @RequestParam String projectId, @RequestParam Long gitType) {
+		return projectService.getOpensourceListByProject(projectId, gitType);
 	}
 	
 	@ApiOperation(value = "분석된 프로젝트의 라이선스 목록")
 	@GetMapping("/licenseList")
-	public List<ProjectLiceseListDTO> getLicenseListByProject(@RequestHeader("TOKEN") String token, @RequestParam String projectId) {
-		return projectService.getLicenseListByProject(projectId);
+	public List<ProjectLiceseListDTO> getLicenseListByProject(@RequestHeader("TOKEN") String token, @RequestParam String projectId, @RequestParam Long gitType) {
+		return projectService.getLicenseListByProject(projectId, gitType);
 	}
 	
-	@ApiOperation(value = "test")
-	@GetMapping("/test")
-	public void test(@RequestParam String projectId,@RequestParam String fileName,@RequestParam String content,@RequestParam String filePath) {
-		try {
-			analyzeService.analyze(projectId, fileName, content, filePath);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+//	@ApiOperation(value = "test")
+//	@GetMapping("/test")
+//	public void test(@RequestParam String projectId,@RequestParam String fileName,@RequestParam String content,@RequestParam String filePath) {
+//		try {
+//			analyzeService.analyze(projectId, fileName, content, filePath);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 }

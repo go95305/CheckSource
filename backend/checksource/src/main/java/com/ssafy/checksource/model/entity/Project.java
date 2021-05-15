@@ -27,12 +27,16 @@ import lombok.Data;
 public class Project {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "project_id")
-	private String projectId;
+	private Long projectId;
+	
+	@Column(name = "git_project_id")
+	private String gitProjectId;
 	
 	private String name;
 	
-	@Column(columnDefinition = "boolean default false")
+	@Column(columnDefinition = "bit default 0")
 	private boolean status;
 	
 	@Column(name = "web_url")

@@ -32,7 +32,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/git")
 @RequiredArgsConstructor
-public class GitController {
+public class GitLabController {
 	
 	private final GitService gitService;
 	
@@ -82,8 +82,8 @@ public class GitController {
 	
 	@ApiOperation(value = "프로젝트 삭제하기")
 	@DeleteMapping("/projects")
-	public boolean deleteProject(@RequestHeader("TOKEN") String token, @RequestParam String projectId) {
-		return gitService.deleteProject(token, projectId);
+	public boolean deleteProject(@RequestHeader("TOKEN") String token, @RequestParam String projectId, @RequestParam Long gitlabId) {
+		return gitService.deleteProject(token, projectId, gitlabId);
 	}
 	
 
