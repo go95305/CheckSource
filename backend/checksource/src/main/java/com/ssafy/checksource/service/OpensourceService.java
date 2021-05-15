@@ -16,6 +16,7 @@ import com.ssafy.checksource.config.security.JwtTokenProvider;
 import com.ssafy.checksource.model.dto.LicenseDetailDTO;
 import com.ssafy.checksource.model.dto.OpensourceDTO;
 import com.ssafy.checksource.model.dto.OpensourceDetailDTO;
+import com.ssafy.checksource.model.dto.OpensourceIdDTO;
 import com.ssafy.checksource.model.dto.OpensourceListDTO;
 import com.ssafy.checksource.model.dto.OpensourceSaveDTO;
 import com.ssafy.checksource.model.dto.OpensourceUpdateDTO;
@@ -138,8 +139,8 @@ public class OpensourceService {
 		}
 	}
 	
-	public void delete(long opensourceId) {
-		opensourceRepository.deleteById(opensourceId);
+	public void delete(OpensourceIdDTO opensourceId) {
+		opensourceRepository.deleteById(opensourceId.getOpensourceId());
 	}
 
 }
