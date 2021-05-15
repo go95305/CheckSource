@@ -11,5 +11,9 @@
 }
 
 .detail-table-tr:nth-child(4) {
-	grid-column: span 3;
+	grid-column: span 2;
+}
+
+.detail-table-tr:nth-child(5) {
+	grid-column: span 1;
 }
