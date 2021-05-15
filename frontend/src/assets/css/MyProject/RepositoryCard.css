@@ -1,3 +1,7 @@
+.repository-card-background {
+	position: relative;
+}
+
 .repository-card {
 	position: relative;
 	overflow: hidden;
@@ -26,11 +30,16 @@
 .repository-card-info {
 	display: none;
 	position: absolute;
-	width: 180px;
-	padding: 10px;
+	width: 170px;
+	height: 1em + 10px;
+	padding: 5px;
 	border-radius: 5px;
-	background-color: rgba(136, 136, 136, 0.5);
+	background-color: rgba(158, 158, 158, 0.5);
 	color: white;
+	font-size: small;
+	text-align: center;
+	top: -10px;
+	left: 20px;
 	z-index: 100;
 }
 

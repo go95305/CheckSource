@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="repository-card-background">
 		<div class="repository-card">
 			<div v-if="repository.verified" class="fade-out"></div>
 			<div class="repository-name">
@@ -13,6 +13,7 @@
 			<div v-if="repository.verified" class="button-area verified">
 				<span class="icon material-icons"> done </span>
 			</div>
+			<!-- 선택된 프로젝트 -->
 			<div
 				v-else-if="selected"
 				class="button-area selected"
@@ -22,6 +23,7 @@
 					arrow_back_ios
 				</span>
 			</div>
+			<!-- 리스트에서 고른 프로젝트 -->
 			<div v-else-if="checked" class="button-area checked">
 				<span class="icon material-icons"> add_task </span>
 			</div>
@@ -50,7 +52,8 @@
 				alt="gitlab-icon"
 			/>
 		</div>
-		<div class="repository-card-info">
+		<!-- 이미 검증된 프로젝트 설명 -->
+		<div v-if="repository.verified" class="repository-card-info">
 			{{ infoText }}
 		</div>
 	</div>
