@@ -20,6 +20,7 @@ public class OpensourceDTO {
 	private String copyright;
 	private List<String> licenseNameList;
 	private String path;
+	private String userId;
 
 	
 	public OpensourceDTO (OpensourceProject opensourceProject) {

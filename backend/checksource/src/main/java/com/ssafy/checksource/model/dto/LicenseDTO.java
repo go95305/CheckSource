@@ -10,6 +10,6 @@ public class LicenseDTO {
 	private String identifier;
 	private String sourceopen;
 	private String url;
-	
+	private String userId;
 }
 
