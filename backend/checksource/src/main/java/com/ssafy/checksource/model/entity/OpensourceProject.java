@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 
 
 @Entity
-@Table(name = "opensource_project")
+@Table(name = "OPENSOURCE_PROJECT")
 @NoArgsConstructor
 @Data
 public class OpensourceProject {

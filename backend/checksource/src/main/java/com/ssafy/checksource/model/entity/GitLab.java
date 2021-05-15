@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@Table(name = "gitlab")
+@Table(name = "GITLAB")
 public class GitLab {
 	
 	@Id
