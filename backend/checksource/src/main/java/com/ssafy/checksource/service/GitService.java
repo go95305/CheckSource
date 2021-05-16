@@ -1,6 +1,6 @@
 package com.ssafy.checksource.service;
 
-import java.net.*;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
