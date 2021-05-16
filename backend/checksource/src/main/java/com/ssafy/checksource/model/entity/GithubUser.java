@@ -19,4 +19,6 @@ public class GithubUser {
     private User user;
 
     private String username;
+    @Column(name = "personal_access_token")
+    private String personalAccessToken;
 }

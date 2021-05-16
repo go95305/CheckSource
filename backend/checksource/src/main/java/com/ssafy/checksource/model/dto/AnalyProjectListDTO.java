@@ -13,4 +13,5 @@ public class AnalyProjectListDTO {
 	private String branch;
 	private String webUrl;
 	private List<RepositoryTreeDTO> packageManageFileList;
+	private List<GithubRepoPathDTO> githubpackageManageFileList;
 }

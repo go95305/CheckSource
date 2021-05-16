@@ -32,8 +32,7 @@ import lombok.RequiredArgsConstructor;
 public class GitLabController {
 	
 	private final GitService gitService;
-	private final GithubService githubService;
-	
+
 	@ApiOperation(value = "테스트다")
 	@GetMapping("/test/{id}")
 	public void test(@PathVariable Long id) {
@@ -83,14 +82,4 @@ public class GitLabController {
 		return gitService.deleteProject(token, projectId, gitlabId);
 	}
 
-	@ApiOperation(value = "github 계정 연동 ")
-	@GetMapping("/githubConnect")
-	public GitHubConnectDTO githubConnect(@RequestParam String username, @RequestHeader("TOKEN") String token, @RequestParam String personalAccessToken) {
-		return githubService.githubConnect(username, token,personalAccessToken);
-	}
-	@ApiOperation(value = "github 계정 연동 삭제" )
-	@DeleteMapping("/githubConnect")
-	public void deleteGitHubConnect(@RequestParam Long githubId, @RequestHeader("TOKEN") String token) {
-		githubService.deleteGitConnect(githubId, token);
-	}
 }
