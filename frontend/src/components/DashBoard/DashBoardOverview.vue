@@ -9,7 +9,7 @@
         <h3 class="overviewCard-title text-light">
           <strong>{{ status.project }}</strong>
         </h3>
-        <p class="overviewCard-subtitle">Projects</p>
+        <p class="overviewCard-subtitle">프로젝트</p>
       </div>
     </div>
 
@@ -23,7 +23,7 @@
         <h3 class="overviewCard-title text-light">
           <strong>{{ status.opensource }}</strong>
         </h3>
-        <p class="overviewCard-subtitle">OpenSource</p>
+        <p class="overviewCard-subtitle">오픈소스</p>
       </div>
     </div>
 
@@ -36,7 +36,7 @@
         <h3 class="overviewCard-title text-light">
           <strong>{{ status.license }}</strong>
         </h3>
-        <p class="overviewCard-subtitle">License</p>
+        <p class="overviewCard-subtitle">라이선스</p>
       </div>
     </div>
 
@@ -49,7 +49,7 @@
         <h3 class="overviewCard-title text-light">
           <strong>{{ status.warning }}</strong>
         </h3>
-        <p class="overviewCard-subtitle">Warning</p>
+        <p class="overviewCard-subtitle">주의</p>
       </div>
     </div>
   </div>
