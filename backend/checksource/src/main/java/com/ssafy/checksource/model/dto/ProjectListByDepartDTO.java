@@ -22,5 +22,7 @@ public class ProjectListByDepartDTO {
 	private int licenseCnt;
 	private String username; //검증한 유저
 	private String userId;
+	private String webUrl;
+	private Long gitType;
 	
 }

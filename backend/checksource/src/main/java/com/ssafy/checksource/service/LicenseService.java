@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ssafy.checksource.config.security.JwtTokenProvider;
 import com.ssafy.checksource.model.dto.LicenseDTO;
 import com.ssafy.checksource.model.dto.LicenseDetailDTO;
+import com.ssafy.checksource.model.dto.LicenseIdDTO;
 import com.ssafy.checksource.model.dto.LicenseListDTO;
 import com.ssafy.checksource.model.dto.LicenseNameDTO;
 import com.ssafy.checksource.model.dto.LicenseSaveDTO;
@@ -57,6 +58,7 @@ public class LicenseService {
 		
 		for (License lic : licensePagedata) {
 			LicenseDTO licDto = modelMapper.map(lic, LicenseDTO.class);
+			licDto.setUserId(lic.getUser().getUserId());
 			licenseList.add(licDto);
 		}
 		licenseListDTO.setTotalPage(licensePagedata.getTotalPages());
@@ -87,7 +89,7 @@ public class LicenseService {
 		updateEntity.setUser(saveuser);
 		licenseRepository.save(updateEntity);
 	}
-	public void delete(long licenseId) {
-		licenseRepository.deleteById(licenseId);
+	public void delete(LicenseIdDTO licenseId) {
+		licenseRepository.deleteById(licenseId.getLicenseId());
 	}
 }
