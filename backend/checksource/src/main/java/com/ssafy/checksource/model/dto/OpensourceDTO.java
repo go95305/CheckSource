@@ -3,6 +3,7 @@ package com.ssafy.checksource.model.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ssafy.checksource.model.entity.License;
 import com.ssafy.checksource.model.entity.LicenseOpensource;
 import com.ssafy.checksource.model.entity.Opensource;
 import com.ssafy.checksource.model.entity.OpensourceProject;
@@ -20,6 +21,7 @@ public class OpensourceDTO {
 	private String copyright;
 	private List<String> licenseNameList;
 	private String path;
+	private String userId;
 
 	
 	public OpensourceDTO (OpensourceProject opensourceProject) {
@@ -29,7 +31,12 @@ public class OpensourceDTO {
 		this.url = opensource.getUrl();
 		this.copyright = opensource.getCopyright();
 		this.path = opensourceProject.getPath();
-		this.licenseNameList = new ArrayList<String>();
+		licenseNameList = new ArrayList<String>();
+		List<LicenseOpensource> licenseList = opensource.getLicenses();
+		for (LicenseOpensource licenseOpensource : licenseList) {
+			String name = licenseOpensource.getLicense().getName();
+			licenseNameList.add(name);
+		}
 	}
 	
 	public OpensourceDTO (LicenseOpensource licenseOpensource) {
