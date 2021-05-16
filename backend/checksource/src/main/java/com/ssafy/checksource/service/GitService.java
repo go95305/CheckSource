@@ -5,14 +5,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.configurationprocessor.json.JSONArray;
-//import org.springframework.boot.configurationprocessor.json.JSONException;
-//import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -370,7 +367,7 @@ public class GitService {
 
 				// path 경로 url encoding해서 api 요청
 				URI uri = UriComponentsBuilder
-						.fromUriString(baseUrl + "projects/{projectid}/repository/files/{urlEncoding}?ref=master")
+					.fromUriString(baseUrl + "projects/{projectid}/repository/files/{urlEncoding}?ref=master")
 						.encode().buildAndExpand(gitlabProjectId, path).toUri();
 				// 헤더
 				HttpHeaders headers = new HttpHeaders();
@@ -383,7 +380,7 @@ public class GitService {
 					Gson gson = new Gson();
 					PackageManageFileDTO packageManageFileDto = gson.fromJson(responseEntity.getBody(),
 							PackageManageFileDTO.class);
-					 //contents 뽑음
+					// contents 뽑음
 					String contents = packageManageFileDto.getContent();
 					String filePath = packageManageFileDto.getFile_path();
 					String fileName = packageManageFileDto.getFile_name();
