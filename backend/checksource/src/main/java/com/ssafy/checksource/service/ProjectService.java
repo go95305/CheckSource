@@ -5,10 +5,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.checksource.config.security.JwtTokenProvider;
+import com.ssafy.checksource.model.dto.AnalyLicenseListDTO;
 import com.ssafy.checksource.model.dto.AnalyOpensourceListDTO;
 import com.ssafy.checksource.model.dto.OpensourceDTO;
 import com.ssafy.checksource.model.dto.ProjectInfoDTO;
@@ -24,6 +27,7 @@ import com.ssafy.checksource.model.entity.Project;
 import com.ssafy.checksource.model.entity.UnmappedOpensource;
 import com.ssafy.checksource.model.repository.DepartRepository;
 import com.ssafy.checksource.model.repository.LicenseOpensourceRepository;
+import com.ssafy.checksource.model.repository.LicenseRepository;
 import com.ssafy.checksource.model.repository.OpensourceProjectRepository;
 import com.ssafy.checksource.model.repository.ProjectRepository;
 import com.ssafy.checksource.model.repository.UnmappedOpensourceRepository;
@@ -42,6 +46,7 @@ public class ProjectService {
 	private final ProjectRepository projectRepository;
 	private final DepartRepository departRepository;
 	private final LicenseOpensourceRepository licenseOpensourceRepository;
+	private final LicenseRepository licenseRepository;
 	private final OpensourceProjectRepository opensourceProjectRepository;
 	private final UnmappedOpensourceRepository unmappedOpensourceRepository;
 	
@@ -84,7 +89,7 @@ public class ProjectService {
 		return projectListDto;
 	}
 
-	// 분석된 프로젝트의 오픈소스 목록
+	// 분석된 프로젝트의 매핑된 오픈소스 목록
 	public AnalyOpensourceListDTO getOpensourceListByProject(String gitProjectId, Long gitType) {
 		Project project = projectRepository.findByGitProjectIdAndGitType(gitProjectId, gitType);
 		AnalyOpensourceListDTO analyOpensourceListDto = new AnalyOpensourceListDTO();	
@@ -114,14 +119,24 @@ public class ProjectService {
 		analyOpensourceListDto.setUnmappedList(unmappedListDto);
 		return analyOpensourceListDto;
 	}
+	
+	
+	// 분석된 프로젝트의 언매핑된 오픈소스 목록
+	
+	
 
-	// 분석된 프로젝트의 라이선스 목록 -> 페이징 필요
-	public List<ProjectLiceseListDTO> getLicenseListByProject(String gitProjectId, Long gitType) {
+	
+	// 분석된 프로젝트의 라이선스 목록
+	public AnalyLicenseListDTO getLicenseListByProject(String gitProjectId, Long gitType, int size, int currentPage) {
 		Project project = projectRepository.findByGitProjectIdAndGitType(gitProjectId, gitType);
-		Long projectId = project.getProjectId();
-		List<LicenseOpensource> licenseOpensourceList = new ArrayList<LicenseOpensource>();
-		licenseOpensourceList = licenseOpensourceRepository.findAllByProjectId(projectId);		
-		List<ProjectLiceseListDTO> licenseList = licenseOpensourceList.stream().map(ProjectLiceseListDTO::new).distinct().collect(Collectors.toList());
-		return licenseList;
+		Long projectId = project.getProjectId(); 
+		PageRequest pageRequest = PageRequest.of(currentPage - 1, size);
+		Page<License> projectLicense = licenseRepository.findAllByProjectId(projectId, pageRequest);
+		List<ProjectLiceseListDTO> licenseList = new ArrayList<ProjectLiceseListDTO>();
+		licenseList = projectLicense.getContent().stream().map(ProjectLiceseListDTO::new).collect(Collectors.toList());
+		AnalyLicenseListDTO analyLicenseList = new AnalyLicenseListDTO();
+		analyLicenseList.setTotalPages(projectLicense.getTotalPages());
+		analyLicenseList.setLicenseList(licenseList);
+		return analyLicenseList;
 	}
 }
