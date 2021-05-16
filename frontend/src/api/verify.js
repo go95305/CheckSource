@@ -69,10 +69,21 @@ function readVerifiedLicenseList(gitType, currentPage, size, projectId) {
 	});
 }
 
+// 분석된 프로젝트 요약정보
+function readVerifiedSummary(gitType, projectId) {
+	return http.get(`/analyze/summary`, {
+		params: {
+			gitType: gitType,
+			projectId: projectId,
+		},
+	});
+}
+
 export default {
 	readVerifiedProjectList,
 	readVerifiedProjectInfo,
 	readVerifiedMappedOpenSourceList,
 	readVerifiedUnmappedOpenSourceList,
 	readVerifiedLicenseList,
+	readVerifiedSummary,
 };

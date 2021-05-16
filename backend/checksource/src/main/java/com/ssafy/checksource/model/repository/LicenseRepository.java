@@ -18,6 +18,7 @@ public interface LicenseRepository extends JpaRepository<License, Long>{
     public License findByLicenseId(long licenseId);
 	public List<License> findByNameLike(String lincenseName);
     
+	//페이징 포함된
 	@Query(value = "select * from license where license_id in " + 
 			"(select distinct license_id from license_opensource where opensource_id " + 
 			"in (select opensource_id from opensource_project where project_id = ?1)) " + 
@@ -27,9 +28,12 @@ public interface LicenseRepository extends JpaRepository<License, Long>{
 			nativeQuery = true)
 	public Page<License> findAllByProjectId (Long projectId, Pageable page);
 	
-//	@Query(value = "select distinct license_id from license_opensource where opensource_id " + 
-//			"in (select opensource_id from opensource_project where project_id = ?1) " + 
-//			"order by contents asc",
-//			nativeQuery = true)
-//	public List<License> findCountByProjectId (Long projectId);
+	//페이징 없는
+	@Query(value = "select * from license where license_id in " + 
+			"(select distinct license_id from license_opensource where opensource_id " + 
+			"in (select opensource_id from opensource_project where project_id = ?1)) " + 
+			"order by contents asc",
+			nativeQuery = true)
+	public List<License> findCountByProjectId (Long projectId);
+	
 }

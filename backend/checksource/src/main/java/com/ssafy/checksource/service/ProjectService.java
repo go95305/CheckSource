@@ -14,13 +14,13 @@ import com.ssafy.checksource.config.security.JwtTokenProvider;
 import com.ssafy.checksource.model.dto.AnalyLicenseListDTO;
 import com.ssafy.checksource.model.dto.AnalyMappedOpensouceListDTO;
 import com.ssafy.checksource.model.dto.AnalyProjectListByDepartDTO;
+import com.ssafy.checksource.model.dto.AnalyProjectSummaryDTO;
 import com.ssafy.checksource.model.dto.AnalyUnmappedOpensouceListDTO;
 import com.ssafy.checksource.model.dto.OpensourceDTO;
 import com.ssafy.checksource.model.dto.ProjectInfoDTO;
 import com.ssafy.checksource.model.dto.ProjectLiceseListDTO;
 import com.ssafy.checksource.model.dto.ProjectListByDepartDTO;
 import com.ssafy.checksource.model.dto.UnmappendOpensourceDTO;
-import com.ssafy.checksource.model.entity.Depart;
 import com.ssafy.checksource.model.entity.License;
 import com.ssafy.checksource.model.entity.LicenseOpensource;
 import com.ssafy.checksource.model.entity.OpensourceProject;
@@ -52,6 +52,27 @@ public class ProjectService {
 	private final UnmappedOpensourceRepository unmappedOpensourceRepository;
 	
 	//summary
+	public AnalyProjectSummaryDTO getSummaryByProject(String gitProjectId, Long gitType) {
+		Project project = projectRepository.findByGitProjectIdAndGitType(gitProjectId, gitType);
+		Long projectId = project.getProjectId();
+		AnalyProjectSummaryDTO analySummaryDto = new AnalyProjectSummaryDTO();
+		int unmappingOpensourceCnt = unmappedOpensourceRepository.findAllByProject(project).size();
+		int mappingOpensourceCnt = opensourceProjectRepository.findAllByProject(project).size();
+		int analyOpensourceCnt = unmappingOpensourceCnt + mappingOpensourceCnt;
+		List<License> licenseList = licenseRepository.findCountByProjectId(projectId);
+		int analyLicenseCnt = licenseList.size();
+		int requireCheckingLicenseCnt = 0;
+		for (License license : licenseList) {
+			if(license.getSourceopen().length() > 0) //소스코드 공개여부 값이 null이 아니라면, 확인이 필요한 라이선스
+				requireCheckingLicenseCnt++;
+		}
+		analySummaryDto.setUnmappingOpensourceCnt(unmappingOpensourceCnt); //언매핑 오픈소스 수
+		analySummaryDto.setAnalyOpensourceCnt(analyOpensourceCnt); //검증한 오픈소스 수 (매핑+언매핑)
+		analySummaryDto.setAnalyLicenseCnt(analyLicenseCnt); //검증한 라이선스 수
+		analySummaryDto.setRequireCheckingLicenseCnt(requireCheckingLicenseCnt); //확인이 필요한 라이선스
+		
+		return analySummaryDto;
+	}
 	
 	
 	
