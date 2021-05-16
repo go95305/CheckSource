@@ -136,9 +136,10 @@ export default {
 								id: this.project.projectId,
 								name: this.project.name,
 								verified: this.project.status,
-								weburl: this.project.webUrl,
+								web_url: this.project.webUrl,
 							},
 						];
+						console.log(repoList[0].web_url);
 						this.ReverifyGitLab(repoList);
 					}
 				});
