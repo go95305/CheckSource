@@ -1,104 +1,173 @@
 <template>
-  <div class="verifycard">
-    <!-- left -->
-    <div class="verifycard-aside">
-      <div class="verifycard-aside-detail">
-        <span class="verifycard-difficulty">{{ project.opensourceCnt }}</span
-        ><br />
-        <span class="verifycard-skill">오픈소스</span>
-      </div>
+	<div class="verifycard">
+		<div v-if="loading" class="verifycard-loading">
+			<Loading></Loading>
+		</div>
+		<!-- left -->
+		<div class="verifycard-aside">
+			<div class="verifycard-aside-detail">
+				<span class="verifycard-difficulty">{{ project.opensourceCnt }}</span
+				><br />
+				<span class="verifycard-skill">오픈소스</span>
+			</div>
 
-      <div class="verifycard-detail">
-        <span class="verifycard-difficulty">{{ project.licenseCnt }}</span
-        ><br />
-        <span class="verifycard-skill">라이선스</span>
-      </div>
-    </div>
-    <!-- end of left -->
+			<div class="verifycard-detail">
+				<span class="verifycard-difficulty">{{ project.licenseCnt }}</span
+				><br />
+				<span class="verifycard-skill">라이선스</span>
+			</div>
+		</div>
+		<!-- end of left -->
 
-    <!-- right -->
-    <div class="verifycard-main">
-      <div class="block" @click="deleteproject">
-        <i class="hovicon effect-1 sub-a"
-          ><span class="material-icons red500"> delete </span>
-        </i>
-      </div>
-      <div class="verifycard-main-first">
-        <p class="verifycard-excerpt">git</p>
-        <h3 class="verifycard-title">{{ project.name }}</h3>
-        <p>{{ project.branch }}</p>
-      </div>
+		<!-- right -->
+		<div class="verifycard-main">
+			<div class="block" @click="deleteproject">
+				<i class="hovicon effect-1 sub-a"
+					><span class="material-icons red500"> delete </span>
+				</i>
+			</div>
+			<div class="verifycard-main-first">
+				<p class="verifycard-excerpt">{{ getGitType }}</p>
+				<h3 class="verifycard-title">{{ project.name }}</h3>
+				<p>{{ project.branch }}</p>
+			</div>
 
-      <div class="verifycard-main-second">
-        <div class="verifycard-skill-s">{{ project.status }}</div>
-      </div>
+			<div class="verifycard-main-second">
+				<div class="verifycard-skill-s">{{ getStatus }}</div>
+			</div>
 
-      <div class="verifycard-main-third">
-        <div class="verifycard-excerpt">Last Scanned</div>
-        <div class="verifycard-excerpt-s">
-          {{ project.username }} / {{ project.date }}
-        </div>
-        <!-- <div class="verifycard-excerpt-s">{{ project.date }}</div> -->
-      </div>
+			<div class="verifycard-main-third">
+				<div class="verifycard-excerpt">Last Scanned</div>
+				<div class="verifycard-excerpt-s">
+					{{ project.username }} / {{ project.date }}
+				</div>
+				<!-- <div class="verifycard-excerpt-s">{{ project.date }}</div> -->
+			</div>
 
-      <!-- down -->
-      <div class="verifycard-meta">
-        <div class="verifycard-btn">
-          <span class="material-icons"> replay </span>
-          <span class="vc-btn-detail">재검증</span>
-        </div>
+			<!-- down -->
+			<div class="verifycard-meta">
+				<div class="verifycard-btn" @click="Reverify">
+					<span class="material-icons"> replay </span>
+					<span class="vc-btn-detail">재검증</span>
+				</div>
 
-        <div class="verifycard-btn" @click="GoReport">
-          <span class="material-icons"> text_snippet </span>
-          <span class="vc-btn-detail">보고서</span>
-        </div>
-      </div>
-      <!-- end of down -->
-    </div>
-    <!-- end of right -->
-  </div>
+				<div class="verifycard-btn" @click="GoReport">
+					<span class="material-icons"> text_snippet </span>
+					<span class="vc-btn-detail">보고서</span>
+				</div>
+			</div>
+			<!-- end of down -->
+		</div>
+		<!-- end of right -->
+	</div>
 </template>
 
 <script>
-import '@/assets/css/DashBoard/VerifyCard.scss';
-import swal from '@/api/alert.js';
-import dayjs from 'dayjs';
+import "@/assets/css/DashBoard/VerifyCard.scss";
+import gitLabApi from "@/api/git.js";
+import swal from "@/api/alert.js";
+import dayjs from "dayjs";
+import Loading from "../Loading/Loading";
 
 export default {
-  name: 'VerifyCard',
-  props: {
-    project: Object,
-  },
-  component: { dayjs },
-  created() {
-    this.changeStatus();
-    this.changeTime();
-  },
-  methods: {
-    changeStatus: function () {
-      if (this.project.status == true) {
-        this.project.status = '검증완료';
-      } else {
-        this.project.status = '검증대기중';
-      }
-    },
-    changeTime: function () {
-      this.project.date = dayjs().format('YYYY-MM-DD HH:mm:ss');
-    },
-    GoReport: function () {
-      this.$emit('goReport', this.project.gitType, this.project.projectId);
-    },
-    deleteproject: function () {
-      //   swal.success('성공!');
-      swal
-        .inputtext(
-          '프로젝트 삭제',
-          '프로젝트 삭제를 위해 프로젝트명을 기입해주세요.'
-        )
-        .then((result) => {
-          console.log(result);
-        });
-    },
-  },
+	name: "VerifyCard",
+	components: { Loading },
+	data() {
+		return {
+			loading: false,
+		};
+	},
+	props: {
+		project: Object,
+	},
+	created() {
+		this.changeTime();
+	},
+	computed: {
+		getGitType: function () {
+			if (this.project.gitType <= 2) {
+				return "GitLab";
+			}
+			return "GitHub";
+		},
+		getStatus: function () {
+			if (this.project.status == true) {
+				return "검증완료";
+			} else {
+				return "검증대기중";
+			}
+		},
+	},
+	methods: {
+		changeTime: function () {
+			this.project.date = dayjs().format("YYYY-MM-DD HH:mm:ss");
+		},
+		GoReport: function () {
+			this.$emit("goReport", this.project.gitType, this.project.projectId);
+		},
+		Reverify: function () {
+			this.GetRepoBranch();
+		},
+		GetRepoBranch: function () {
+			//브랜치 목록 가져오기
+			gitLabApi
+				.readProjectBranches(this.project.gitType, this.project.projectId)
+				.then((response) => {
+					let branchOption = {};
+					for (let branch of response.data) {
+						branchOption[branch.name] = branch.name;
+					}
+					this.SelectBranch(branchOption);
+				})
+				.catch(() => {
+					alert("프로젝트 브랜치 목록을 불러오지 못했습니다.");
+				});
+		},
+		SelectBranch: function (branchOption) {
+			//브랜치 선택
+			swal
+				.selectBranch("Branch 선택", "Branch를 선택하세요.", branchOption)
+				.then((result) => {
+					if (result.value) {
+						console.log(result.value);
+						let repoList = [
+							{
+								branch: result.value,
+								id: this.project.projectId,
+								name: this.project.name,
+								verified: this.project.status,
+								weburl: this.project.webUrl,
+							},
+						];
+						this.ReverifyGitLab(repoList);
+					}
+				});
+		},
+		ReverifyGitLab: function (repoList) {
+			//재검증 시작
+			this.loading = true;
+			gitLabApi
+				.verifyGitLabProjects(this.project.gitType, repoList)
+				.then(() => {
+					alert("검증이 완료되었습니다.");
+					this.loading = false;
+					window.location.reload();
+				})
+				.catch(() => {
+					alert("검증에 실패했습니다.");
+					this.loading = false;
+				});
+		},
+		deleteproject: function () {
+			swal
+				.inputtext(
+					"프로젝트 삭제",
+					"프로젝트 삭제를 위해 프로젝트명을 기입해주세요."
+				)
+				.then((result) => {
+					console.log(result);
+				});
+		},
+	},
 };
 </script>

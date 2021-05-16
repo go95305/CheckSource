@@ -119,6 +119,7 @@ export default {
 					}
 				});
 		},
+
 		scrollUp: function () {
 			window.scrollTo({
 				top: 0,
