@@ -86,7 +86,7 @@
 }
 
 .license-pagination {
-	margin-top: 20px;
+	margin: 30px;
 }
 
 .license-table-tr.illegal::before {

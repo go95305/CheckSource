@@ -25,14 +25,14 @@
         />
       </p>
       <p class="field required">
-        <label class="label" for="url">URL</label>
+        <label class="label" for="url">주소</label>
         <input
           class="text-input"
           id="url"
           name="url"
           required
           type="url"
-          placeholder="URL"
+          placeholder="주소"
           v-model="opensource.url"
         />
       </p>
@@ -40,14 +40,14 @@
         <p class="tooltip-url-content">Source URL 또는 Homepage URL을 입력해주세요</p>
       </div>
       <p class="field required">
-        <label class="label required" for="copyright">Copyright</label>
+        <label class="label required" for="copyright">저작권</label>
         <input
           class="text-input"
           id="copyright"
           name="copyright"
           required
           type="text"
-          placeholder="Copyright"
+          placeholder="저작권"
           v-model="opensource.copyright"
         />
       </p>
@@ -55,38 +55,38 @@
         <p class="tooltip-copyright-content">Copyright이 확인되지 않을 경우, property of respective owner를 입력해주세요</p>
       </div>
       <p class="field">
-        <label class="label required" for="version">Version</label>
+        <label class="label required" for="version">버전</label>
         <input
           class="text-input"
           id="version"
           name="version"
           required
           type="text"
-          placeholder="Version"
+          placeholder="버전"
           v-model="opensource.version"
         />
       </p>
       <p class="field">
-        <label class="label required" for="package_type">Package Type</label>
+        <label class="label required" for="package_type">패키지 타입</label>
         <input
           class="text-input"
           id="package_type"
           name="package_type"
           required
           type="text"
-          placeholder="Package Type"
+          placeholder="패키지 타입"
           v-model="opensource.packageType"
         />
       </p>
       <p class="field required">
-        <label class="label required" for="artifact_id">Artifact Id</label>
+        <label class="label required" for="artifact_id">아티팩트ID</label>
         <input
           class="text-input"
           id="artifact_id"
           name="artifact_id"
           required
           type="text"
-          placeholder="Artifact Id"
+          placeholder="아티팩트ID"
           v-model="opensource.artifactId"
         />
       </p>
@@ -94,14 +94,14 @@
         <p class="tooltip-artifact-content">버전 정보를 생략한 jar 파일의 이름</p>
       </div>
       <p class="field">
-        <label class="label required" for="group_id">Group Id</label>
+        <label class="label required" for="group_id">그룹ID</label>
         <input
           class="text-input"
           id="group_id"
           name="group_id"
           required
           type="text"
-          placeholder="Group Id"
+          placeholder="그룹ID"
           v-model="opensource.groupId"
         />
       </p>
@@ -109,7 +109,7 @@
         <p class="tooltip-group-content">프로젝트를 식별하는 유일한 값</p>
       </div>
       <p class="field required" v-on:keyup.down="selectValue('down')" v-on:keyup.up="selectValue('up')">
-        <label class="label required" for="enter_license">License</label>
+        <label class="label required" for="enter_license">라이선스</label>
         <input
           class="text-input-l"
 
@@ -117,7 +117,7 @@
           name="enter_license"
           required
           type="text"
-          placeholder="Enter License"
+          placeholder="라이선스"
           v-model="licenseName"
         >
         <ul class="license-watch-ul" :class="{show:searched}" tabindex="0">

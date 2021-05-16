@@ -11,7 +11,7 @@
         <td>그룹ID</td>
         <td>위치</td>
         <td>버전</td>
-        <td></td>
+        <td class="opensource-table-unmapped-add"></td>
       </th>
       <tr class="opensource-table-tr" v-for="(item, index) in unmappedList"
 			:key="`${index}_mapped`" @click="goOpenSource(item.opensourceId)">
@@ -19,17 +19,17 @@
         <td>{{ item.groupId }}</td>
         <td>{{ item.path }}</td>
         <td>{{ item.version }}</td>
-        <td><span class="material-icons"> add </span></td>
+        <td class="opensource-table-unmapped-add"><span class="material-icons"> add </span></td>
       </tr>
     </table>
-    <div v-if="loading">
+    <div v-if="unMappedLoading">
       <loading></loading>
     </div>
     <div v-else-if="unmappedList.length == 0">
       <NoResult></NoResult>
     </div>
-    <div class="license-pagination">
-		  <pagination-remote  :lastPage="3"></pagination-remote>
+    <div class="opensource-pagination">
+		  <pagination-remote name="unmapped" :currentPage="page" :lastPage="totalPage" @changePage="ChangePage"></pagination-remote>
     </div>
 	</div>
 </template>
@@ -45,34 +45,57 @@ export default {
     return {
       projectId: this.$route.query.projectId,
       gitType: this.$route.query.gitType,
+      page:1,
+      size:5,
+      totalPage:3,
       unmappedList: [],
-      loading:false,
+      unMappedLoading:false,
     }
   },
   created() {
+     if(this.$route.query.unmappedPage){
+          this.page = Number(this.$route.query.unmappedPage);
+     };
     this.getList();
+  },
+  watch:{
+    $route:{
+      deep:true,
+      handler(){
+        if(this.page != this.$route.query.unmappedPage){
+          this.page = Number(this.$route.query.unmappedPage);
+          this.getList();
+        }
+      }
+    },
   },
   methods: {
     getList: function () {
-      this.loading = true;
-			verifyApi.readVerifiedOpenSourceList(this.gitType,this.projectId).then((response) => {
+      this.unMappedLoading = true;
+      this.unmappedList = [];
+			verifyApi.readVerifiedUnmappedOpenSourceList(this.page,this.gitType,this.projectId,this.size).then((response) => {
 				if (response.data) {
-          this.loading = false;
+          this.unMappedLoading = false;
 					this.unmappedList = response.data.unmappedList;
+          this.totalPage = response.data.totalPages;
 				}
 			}).catch(() => {
-        this.loading = false;
+        this.unMappedLoading = false;
       });
 		},
 		goOpenSource: function (id) {
 			this.$router.push({
-				name: "OSSDetailOpenSource",
+				name: "AddOpenSource",
 				query: { id: id },
 			});
 		},
+    ChangePage:function(page){
+      let newQuery = Object.assign({}, this.$route.query);
+      newQuery.unmappedPage = page;
+      this.$router.push({ 
+				query: newQuery,
+			})
+    },
   },
 };
 </script>
-<style scoped>
-/* .opensource-table-tr */
-</style>

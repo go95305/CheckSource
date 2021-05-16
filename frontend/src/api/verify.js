@@ -13,7 +13,7 @@ function readVerifiedProjectList(currentPage, departId, keyword, size, time) {
 	});
 }
 
-//분석된 프로젝트 오픈소스 목록 불러오기
+//분석된 프로젝트 오픈소스 정보 불러오기
 function readVerifiedProjectInfo(gitType, projectId) {
 	return http.get(`/analyze/projectInfo`, {
 		params: {
@@ -24,11 +24,35 @@ function readVerifiedProjectInfo(gitType, projectId) {
 }
 
 //분석된 프로젝트 오픈소스 목록 불러오기
-function readVerifiedOpenSourceList(gitType, projectId) {
-	return http.get(`/analyze/opensourceList`, {
+function readVerifiedMappedOpenSourceList(
+	currentPage,
+	gitType,
+	projectId,
+	size
+) {
+	return http.get(`/analyze/mappedOpensourceList`, {
 		params: {
+			currentPage: currentPage,
 			gitType: gitType,
 			projectId: projectId,
+			size: size,
+		},
+	});
+}
+
+//분석된 프로젝트 오픈소스 목록 불러오기
+function readVerifiedUnmappedOpenSourceList(
+	currentPage,
+	gitType,
+	projectId,
+	size
+) {
+	return http.get(`/analyze/unMappedOpensourceList`, {
+		params: {
+			currentPage: currentPage,
+			gitType: gitType,
+			projectId: projectId,
+			size: size,
 		},
 	});
 }
@@ -48,6 +72,7 @@ function readVerifiedLicenseList(gitType, currentPage, size, projectId) {
 export default {
 	readVerifiedProjectList,
 	readVerifiedProjectInfo,
-	readVerifiedOpenSourceList,
+	readVerifiedMappedOpenSourceList,
+	readVerifiedUnmappedOpenSourceList,
 	readVerifiedLicenseList,
 };

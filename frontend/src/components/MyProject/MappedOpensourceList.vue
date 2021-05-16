@@ -17,8 +17,8 @@
         <td>{{ item.name }}</td>
         <td>{{ item.url }}</td>
         <td>{{ item.path }}</td>
-        <td v-for="(licenseName, index) in item.licenseNameList"
-					:key="`${index}_licenseNameList`">	{{ licenseName }}</td>
+        <td  class="opensource-table-td-license"><span v-for="(licenseName, index) in item.licenseNameList"
+					:key="`${index}_licenseNameList`">	{{ licenseName }}</span></td>
         <td>{{ item.copyright }}</td>
       </tr>
     </table>
@@ -28,8 +28,8 @@
     <div v-else-if="mappedList.length == 0">
       <NoResult></NoResult>
     </div>
-    <div class="license-pagination">
-		  <pagination-remote  :lastPage="3"></pagination-remote>
+    <div class="opensource-pagination">
+		  <pagination-remote  name="mapped" :currentPage="page" :lastPage="totalPage" @changePage="ChangePage"></pagination-remote>
     </div>
 	</div>
 </template>
@@ -45,21 +45,40 @@ export default {
     return {
       projectId: this.$route.query.projectId,
       gitType: this.$route.query.gitType,
+      page:1,
+      size:5,
+      totalPage:3,
       mappedList: [],
       loading:false,
     }
   },
   created() {
+     if(this.$route.query.mappedPage){
+          this.page = Number(this.$route.query.mappedPage);
+     };
     this.getList();
   },
-  methods: {
+  watch:{
+    $route:{
+      deep:true,
+      handler(){
+        if(this.page != this.$route.query.mappedPage){
+          this.page = Number(this.$route.query.mappedPage);
+          this.getList();
+        }
+      }
+    },
+  },
+  methods: { 
     getList: function () {
       this.loading = true;
-			verifyApi.readVerifiedOpenSourceList(this.gitType,this.projectId).then((response) => {
+      this.mappedList = [];
+			verifyApi.readVerifiedMappedOpenSourceList(this.page, this.gitType,this.projectId, this.size)
+      .then((response) => {
 				if (response.data) {
           this.loading = false;
           this.mappedList = response.data.mappedList;
-					console.log(this.mappedList);
+          this.totalPage = response.data.totalPages;
 				}
 			}).catch(() => {this.loading = false;});
 		},
@@ -69,6 +88,13 @@ export default {
 				query: { id: id },
 			});
 		},
+    ChangePage:function(page){
+      let newQuery = Object.assign({}, this.$route.query);
+      newQuery.mappedPage = page;
+      this.$router.push({ 
+				query: newQuery,
+			});
+    },
   },
 };
 </script>

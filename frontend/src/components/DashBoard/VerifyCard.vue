@@ -139,7 +139,6 @@ export default {
 								web_url: this.project.webUrl,
 							},
 						];
-						console.log(repoList[0].web_url);
 						this.ReverifyGitLab(repoList);
 					}
 				});
