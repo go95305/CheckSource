@@ -1,5 +1,6 @@
 package com.ssafy.checksource.model.dto;
 
+import com.ssafy.checksource.model.entity.License;
 import com.ssafy.checksource.model.entity.LicenseOpensource;
 
 import lombok.AccessLevel;
@@ -16,6 +17,15 @@ public class ProjectLiceseListDTO {
 	private String url;
 	private String sourceopen;
 
+	
+	public ProjectLiceseListDTO (License license) {
+		this.licenseId = license.getLicenseId();
+		this.identifier = license.getIdentifier();
+		this.name = license.getName();
+		this.url = license.getUrl();
+		this.sourceopen = license.getSourceopen();
+	}
+	
 	public ProjectLiceseListDTO (LicenseOpensource licenseOpensource) {
 		this.licenseId = licenseOpensource.getLicense().getLicenseId();
 		this.identifier = licenseOpensource.getLicense().getIdentifier();
