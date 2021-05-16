@@ -7,5 +7,6 @@ public class GitHubProjectDTO {
     private String id;
     private String name;
     private String branch;
+    private String html_url;
     private boolean verified;
 }

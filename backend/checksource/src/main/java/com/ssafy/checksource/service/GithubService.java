@@ -189,6 +189,9 @@ public class GithubService {
             String githubProjectId = gitHubProjectDTO.getId();
             String projectName = gitHubProjectDTO.getName();
             String branch = gitHubProjectDTO.getBranch();
+            String htmlUrl = gitHubProjectDTO.getHtml_url();
+
+
             // 1. repositoryTree 전체 리스트로 가져오기
             String url = baseURL + "repos/" + gitHub.getUsername() + "/" + projectName + "/git/trees/" + sha + "?recursive=true";
             List<GithubRepoTreeDTO> githubRepoTreeDTOList = new ArrayList<GithubRepoTreeDTO>();
@@ -214,7 +217,7 @@ public class GithubService {
                 if (e.getStatusCode() == HttpStatus.NOT_FOUND) {
                     // 검증할 필요가 없으므로 검증완료 후 저장
                     // 기존꺼 있는지 체크
-                    Project existProject = projectRepository.findByGitProjectIdAndGitType(githubProjectId, githubId);
+                    Project existProject = projectRepository.findByGitProjectIdAndGitType(githubProjectId, (long)3);
                     if (existProject != null) { // 기존에 검증한 프로젝트가 있다면 지우기
                         projectRepository.delete(existProject);
                     }
@@ -226,6 +229,7 @@ public class GithubService {
                     project.setBranch(gitHubProjectDTO.getBranch());// 브랜치 설정
                     project.setGitType((long)3);// gitType
                     project.setStatus(true);
+                    project.setWebUrl(gitHubProjectDTO.getHtml_url());
                     projectRepository.save(project);
                     continue;
                 }
@@ -234,7 +238,6 @@ public class GithubService {
 
             // 2. repositoryTreeList에서 패키지 매니저 파일 리스트 뽑음
             List<GithubRepoPathDTO> packageManageFileList = new ArrayList<GithubRepoPathDTO>();
-            int index = 0;
             for (int i = 0; i < githubRepoTreeDTOList.get(0).getTree().length; i++) {
                 String name = githubRepoTreeDTOList.get(0).getTree()[i].getPath();
                 if (name.contains("pom.xml") || name.contains("package.json")) {
@@ -250,6 +253,7 @@ public class GithubService {
             analyProjectListDto.setGitProjectId(githubProjectId);
             analyProjectListDto.setProjectName(projectName);
             analyProjectListDto.setBranch(branch);
+            analyProjectListDto.setWebUrl(htmlUrl);
             analyProjectListDto.setGithubpackageManageFileList(packageManageFileList); // 패키지매니저파일 리스트
             analyProjectList.add(analyProjectListDto);
         } // end project for문
@@ -262,7 +266,7 @@ public class GithubService {
             String githubProjectId = analyProjectListDto.getGitProjectId();
 
 //            // 기존꺼 지움
-            Project existProject = projectRepository.findByGitProjectIdAndGitType(githubProjectId, githubId);
+            Project existProject = projectRepository.findByGitProjectIdAndGitType(githubProjectId, (long)3);
             if (existProject != null) { // 기존에 검증한 프로젝트가 있다면
                 projectRepository.delete(existProject);
             }
@@ -273,8 +277,9 @@ public class GithubService {
             project.setName(analyProjectListDto.getProjectName());
             project.setGitProjectId(githubProjectId); // gitlabProjectId
             project.setBranch(analyProjectListDto.getBranch());// 브랜치 설정
-            project.setGitType(githubId);// gitType
+            project.setGitType((long)3);// gitType
             project.setStatus(true);
+            project.setWebUrl(analyProjectListDto.getWebUrl());
             Project newProject = projectRepository.save(project);
             Long projectId = newProject.getProjectId();
 
