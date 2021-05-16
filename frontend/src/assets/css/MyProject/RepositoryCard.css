@@ -83,6 +83,10 @@
 	left: 70%;
 }
 .repository-name {
+	display: flex;
+	justify-content: center;
+	flex-flow: column wrap;
+	align-items: center;
 	position: absolute;
 	z-index: 2;
 	font-weight: 300;
