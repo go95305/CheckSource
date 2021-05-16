@@ -18,6 +18,7 @@ public interface OpensourceProjectRepository extends JpaRepository<OpensourcePro
 	
 	
 	Page<OpensourceProject> findByProject (Project project, Pageable pageable);
+	List<OpensourceProject> findAllByProject (Project project);
 	
 	@Query( value = "delete from opensource_project where git_project_id = ?1 and git_type = ?2",nativeQuery = true)
 	void deleteAllByProjectId (String gitProjectId, Long gitType);

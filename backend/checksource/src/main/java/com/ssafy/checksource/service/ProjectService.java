@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ssafy.checksource.config.security.JwtTokenProvider;
 import com.ssafy.checksource.model.dto.AnalyLicenseListDTO;
 import com.ssafy.checksource.model.dto.AnalyMappedOpensouceListDTO;
+import com.ssafy.checksource.model.dto.AnalyProjectListByDepartDTO;
 import com.ssafy.checksource.model.dto.AnalyUnmappedOpensouceListDTO;
 import com.ssafy.checksource.model.dto.OpensourceDTO;
 import com.ssafy.checksource.model.dto.ProjectInfoDTO;
@@ -63,30 +64,36 @@ public class ProjectService {
 	}
 	
 	// 부서별 분석된 프로젝트 목록
-	public List<ProjectListByDepartDTO> getProjectListByDepart(Long departId, int currentPage, int size) {
+	public AnalyProjectListByDepartDTO  getProjectListByDepart(Long departId, int currentPage, int size, String time) {
+		AnalyProjectListByDepartDTO analyProjectByDepartDto = new AnalyProjectListByDepartDTO();
+		
 		List<ProjectListByDepartDTO> projectListDto = new ArrayList<ProjectListByDepartDTO>();
-//		Depart dapart = departRepository.findById(departId).orElseThrow(() -> new IllegalArgumentException("no depart data"));
-//		List<Project> projectList = projectRepository.findByDepart(dapart);
-//		
-//		for (Project project : projectList) {
-//			ProjectListByDepartDTO projectDto = new ProjectListByDepartDTO();
-//			projectDto = modelMapper.map(project, ProjectListByDepartDTO.class);
-//			//프로젝트 id별 매핑된 오픈소스 갯수 
-//			List<OpensourceProject> opensourceList = new ArrayList<OpensourceProject>();
-//			opensourceList = opensourceProjectRepository.findByProject(project);
-//			projectDto.setOpensourceCnt(opensourceList.size());
-//			//프로젝트 id별 매핑된 라이선스 갯수
-//			List<LicenseOpensource> licenseOpensourceList = new ArrayList<LicenseOpensource>();
-//			licenseOpensourceList = licenseOpensourceRepository.findAllByProjectId(project.getProjectId());
-//			List<ProjectLiceseListDTO> licenseList = licenseOpensourceList.stream().map(ProjectLiceseListDTO::new).distinct().collect(Collectors.toList());
-//			projectDto.setLicenseCnt(licenseList.size());
-//			//유저
-//			projectDto.setUserId(project.getUser().getUserId());
-//			projectDto.setUsername(project.getUser().getName());
-//			projectListDto.add(projectDto);
-//			//깃 정보도 같이 줘야함
-//		}
-		return projectListDto;
+		PageRequest pageRequest = PageRequest.of(currentPage - 1, size);
+		Page<Project> projectList = projectRepository.findByDepart(departId, pageRequest, time);
+		
+		for (Project project : projectList.getContent()) {
+			ProjectListByDepartDTO projectDto = new ProjectListByDepartDTO();
+			projectDto = modelMapper.map(project, ProjectListByDepartDTO.class);
+			//프로젝트 id별 매핑된 오픈소스 갯수 
+			List<OpensourceProject> opensourceList = new ArrayList<OpensourceProject>();
+			opensourceList = opensourceProjectRepository.findAllByProject(project);
+			projectDto.setOpensourceCnt(opensourceList.size());
+			//프로젝트 id별 매핑된 라이선스 갯수
+			List<LicenseOpensource> licenseOpensourceList = new ArrayList<LicenseOpensource>();
+			licenseOpensourceList = licenseOpensourceRepository.findAllByProjectId(project.getProjectId());
+			List<ProjectLiceseListDTO> licenseList = licenseOpensourceList.stream().map(ProjectLiceseListDTO::new).distinct().collect(Collectors.toList());
+			projectDto.setLicenseCnt(licenseList.size());
+			//유저
+			projectDto.setUserId(project.getUser().getUserId());
+			projectDto.setUsername(project.getUser().getName());
+			projectListDto.add(projectDto);
+		
+		}
+		
+		analyProjectByDepartDto.setProjectList(projectListDto);
+		analyProjectByDepartDto.setTotalPages(projectList.getTotalPages());
+		
+		return analyProjectByDepartDto;
 	}
 	
 	// 분석된 프로젝트의 매핑된 오픈소스 목록
