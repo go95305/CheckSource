@@ -64,13 +64,20 @@ public class ProjectService {
 	}
 	
 	// 부서별 분석된 프로젝트 목록
-	public AnalyProjectListByDepartDTO  getProjectListByDepart(Long departId, int currentPage, int size, String time) {
+	public AnalyProjectListByDepartDTO  getProjectListByDepart(Long departId, int currentPage, int size, String time, String keyword) {
 		AnalyProjectListByDepartDTO analyProjectByDepartDto = new AnalyProjectListByDepartDTO();
 		
 		List<ProjectListByDepartDTO> projectListDto = new ArrayList<ProjectListByDepartDTO>();
 		PageRequest pageRequest = PageRequest.of(currentPage - 1, size);
-		Page<Project> projectList = projectRepository.findByDepart(departId, pageRequest, time);
+		Page<Project> projectList = null;
 		
+		//검색 키워드 없을때 
+		if(keyword.equals(".") || keyword.equals("")) {
+			projectList = projectRepository.findByDepart(departId, pageRequest, time);
+		}else {//키워드 있을 경우
+			projectList = projectRepository.findByDepartAndKeyword(departId, pageRequest, time, "%"+keyword+"%");
+		}
+						
 		for (Project project : projectList.getContent()) {
 			ProjectListByDepartDTO projectDto = new ProjectListByDepartDTO();
 			projectDto = modelMapper.map(project, ProjectListByDepartDTO.class);
