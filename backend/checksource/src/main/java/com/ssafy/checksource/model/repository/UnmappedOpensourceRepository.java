@@ -16,6 +16,7 @@ public interface UnmappedOpensourceRepository extends JpaRepository<UnmappedOpen
 
 	Page<UnmappedOpensource> findByProject (Project project, Pageable pageable);
 	
+	List<UnmappedOpensource> findAllByProject (Project project);
 	
 	@Query( value = "delete from unmapped_opensource where git_project_id = ?1 and git_type = ?2",nativeQuery = true)
 	void deleteAllByProjectId (String gitProjectId, Long gitType);
