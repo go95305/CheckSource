@@ -68,8 +68,8 @@ public class OpenSourceController {
 	}
 	
 	@ApiOperation(value = "오픈소스 삭제하기")
-	@DeleteMapping("/deleteOpensource")
-	public void update(@RequestHeader("TOKEN") String token,@RequestBody OpensourceIdDTO opensourceId) {
+	@PutMapping("/deleteOpensource")
+	public void delete(@RequestHeader("TOKEN") String token,@RequestBody OpensourceIdDTO opensourceId) {
 		opensourceService.delete(opensourceId);
 	}
 
