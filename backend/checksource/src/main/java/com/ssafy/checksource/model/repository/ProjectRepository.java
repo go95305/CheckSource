@@ -19,5 +19,8 @@ public interface ProjectRepository extends JpaRepository<Project, Long>{
 	@Query(value = "select * from project where depart_id = ?1 and date <= ?2 order by date desc", nativeQuery = true)
 	Page<Project> findByDepart (Long departId, Pageable pageable, String time);
 	
+	@Query(value = "select * from project where depart_id = ?1 and date <= ?2 and name like ?3 order by date desc", nativeQuery = true)
+	Page<Project> findByDepartAndKeyword (Long departId, Pageable pageable, String time, String name);
+	
 	Project findByGitProjectIdAndGitType (String gitProjectId, Long gitType);
 }
