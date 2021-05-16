@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.checksource.model.dto.LicenseDetailDTO;
+import com.ssafy.checksource.model.dto.LicenseIdDTO;
 import com.ssafy.checksource.model.dto.LicenseListDTO;
 import com.ssafy.checksource.model.dto.LicenseNameDTO;
 import com.ssafy.checksource.model.dto.LicenseSaveDTO;
 import com.ssafy.checksource.model.dto.LicenseUpdateDTO;
-import com.ssafy.checksource.model.dto.OpensourceUpdateDTO;
 import com.ssafy.checksource.service.LicenseService;
 
 import io.swagger.annotations.ApiImplicitParam;
@@ -65,15 +65,15 @@ public class LicenseController {
 		licenseService.save(token,licDto);
 	}
 	
-	@ApiOperation(value = "오픈소스 업데이트하기")
+	@ApiOperation(value = "라이선스 업데이트하기")
 	@PutMapping("/updateLicense")
 	public void update(@RequestHeader("TOKEN") String token,@RequestBody LicenseUpdateDTO licDto) {
 		licenseService.update(token,licDto);
 	}
 	
-	@ApiOperation(value = "오픈소스 삭제하기")
+	@ApiOperation(value = "라이선스 삭제하기")
 	@DeleteMapping("/deleteLicense")
-	public void update(@RequestHeader("TOKEN") String token,@RequestBody long licenseId) {
+	public void update(@RequestHeader("TOKEN") String token,@RequestBody LicenseIdDTO licenseId) {
 		licenseService.delete(licenseId);
 	}
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.checksource.model.dto.OpensourceDetailDTO;
+import com.ssafy.checksource.model.dto.OpensourceIdDTO;
 import com.ssafy.checksource.model.dto.OpensourceListDTO;
 import com.ssafy.checksource.model.dto.OpensourceSaveDTO;
 import com.ssafy.checksource.model.dto.OpensourceUpdateDTO;
@@ -68,7 +69,7 @@ public class OpenSourceController {
 	
 	@ApiOperation(value = "오픈소스 삭제하기")
 	@DeleteMapping("/deleteOpensource")
-	public void update(@RequestHeader("TOKEN") String token,@RequestBody long opensourceId) {
+	public void update(@RequestHeader("TOKEN") String token,@RequestBody OpensourceIdDTO opensourceId) {
 		opensourceService.delete(opensourceId);
 	}
 
