@@ -1,6 +1,6 @@
 package com.ssafy.checksource.service;
 
-//import java.net.URI;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -366,26 +366,26 @@ public class GitService {
 				String path = packageManageFile.getPath();
 
 				// path 경로 url encoding해서 api 요청
-//				URI uri = UriComponentsBuilder
-//						.fromUriString(baseUrl + "projects/{projectid}/repository/files/{urlEncoding}?ref=master")
-//						.encode().buildAndExpand(gitlabProjectId, path).toUri();
+				URI uri = UriComponentsBuilder
+						.fromUriString(baseUrl + "projects/{projectid}/repository/files/{urlEncoding}?ref=master")
+						.encode().buildAndExpand(gitlabProjectId, path).toUri();
 				// 헤더
 				HttpHeaders headers = new HttpHeaders();
 				headers.setContentType(MediaType.APPLICATION_XML);
 				headers.set("private-token", accessToken);
 				HttpEntity entity = new HttpEntity(headers);
 				try {
-					//ResponseEntity<String> responseEntity = restTemplate.exchange(uri, HttpMethod.GET, entity,
-						//	String.class);
-					//Gson gson = new Gson();
-					//PackageManageFileDTO packageManageFileDto = gson.fromJson(responseEntity.getBody(),
-							//PackageManageFileDTO.class);
-					// contents 뽑음
-					//String contents = packageManageFileDto.getContent();
-					//String filePath = packageManageFileDto.getFile_path();
-					//String fileName = packageManageFileDto.getFile_name();
+					ResponseEntity<String> responseEntity = restTemplate.exchange(uri, HttpMethod.GET, entity,
+							String.class);
+					Gson gson = new Gson();
+					PackageManageFileDTO packageManageFileDto = gson.fromJson(responseEntity.getBody(),
+							PackageManageFileDTO.class);
+					 //contents 뽑음
+					String contents = packageManageFileDto.getContent();
+					String filePath = packageManageFileDto.getFile_path();
+					String fileName = packageManageFileDto.getFile_name();
 					// 4. base64 - decoding 등 승환 코드
-					//analyzeService.analyze(projectId, fileName, contents, filePath); // 변경
+					analyzeService.analyze(projectId, fileName, contents, filePath); // 변경
 
 				} catch (HttpClientErrorException e) {
 					// 토큰이 유효하지 않을 경우 401
