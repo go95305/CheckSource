@@ -16,8 +16,7 @@
             연결되지 않은 오픈소스가 있습니다. '확인하기'를 눌러 mapping을
             진행해 주세요.
           </p>
-          <p class="sum-btn" @click="GoOpensource()">확인하기</p>
-          <!-- <button class="sum-btn">확인하기</button> -->
+          <button class="sum-btn" @click="GoOpensource()">확인하기</button>
         </div>
       </div>
     </div>
@@ -39,8 +38,7 @@
             공개해야하는 라이선스가 있습니다. License 의무사항을 확인하고,
             오픈소스 사용방법을 선택해 주세요.
           </p>
-          <p class="sum-btn" @click="GoLicense()">확인하기</p>
-          <!-- <button class="sum-btn">확인하기</button> -->
+          <button class="sum-btn" @click="GoLicense()">확인하기</button>
         </div>
       </div>
     </div>
