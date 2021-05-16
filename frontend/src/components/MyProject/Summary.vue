@@ -9,9 +9,6 @@
         </div>
         <div class="card-content">
           <h2 class="hh2">OPENSOURCE</h2>
-          <!-- <span class="font_black"
-            >연결된 오픈소스 : {{ mapped_component }}개</span
-          ><br /> -->
           <span class="font_red"
             >연결이 필요한 오픈소스 : {{ unmappingOpensourceCnt }}개</span
           >
@@ -57,12 +54,6 @@ import verifyApi from '@/api/verify.js';
 export default {
   data() {
     return {
-      // project: {
-      //   analyLicenseCnt: '',
-      //   analyOpensourceCnt: '',
-      //   requireCheckingLicenseCnt: '',
-      //   unmappingOpensourceCnt: '',
-      // },
       analyLicenseCnt: '',
       analyOpensourceCnt: '',
       requireCheckingLicenseCnt: '',
