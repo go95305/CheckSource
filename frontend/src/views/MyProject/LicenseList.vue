@@ -12,7 +12,7 @@
 			:key="`${index}_mapped`" :class="{illegal: item.sourceopen.length > 0, noComment: item.sourceopen == '명시X'}" @click="GoLicense(item.licenseId)">
         <td>{{ item.name }}</td>
         <td>{{ item.identifier }}</td>
-        <td>{{ item.path }}</td>
+        <td>{{ item.url }}</td>
         <td v-if="item.sourceopen.length > 0">
 					{{ item.sourceopen }}
 				</td>
@@ -56,7 +56,6 @@ export default {
     };
   },
   created() {
-    console.log(this.routeQuery);
     this.GetQuery();    
     this.GetList();
   },
@@ -64,7 +63,6 @@ export default {
     routeQuery:{
       deep:true,
       handler(){
-        console.log(this.routeQuery);
         this.GetQuery();
       }
     }
@@ -81,9 +79,13 @@ export default {
     GetList: function () {
       this.loading = true;
       verifyApi
-        .readVerifiedLicenseList(this.gitType,this.projectId)
+        .readVerifiedLicenseList(this.gitType,this.page, this.size,this.projectId)
         .then((response) => {
-          if (response.data) this.list = response.data;
+          if (response.data) {
+            this.list = response.data.licenseList; 
+            console.log(this.list);
+            this.totalPage =response.data.totalPages; 
+          }
           this.loading = false;
         })
         .catch(() => {
@@ -92,7 +94,7 @@ export default {
     },
     GoLicense: function (id) {
       this.$router.push({
-        name: "OSSDetailLicense",
+        name: "OSSDetailLicenseInformation",
         query: { id: id },
       });
     },

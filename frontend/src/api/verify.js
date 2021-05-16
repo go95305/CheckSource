@@ -1,10 +1,14 @@
 import http from "./http";
 
 //분석된 프로젝트 목록 불러오기
-function readVerifiedProjectList(departId) {
+function readVerifiedProjectList(currentPage, departId, keyword, size, time) {
 	return http.get(`/analyze/projectList`, {
 		params: {
+			currentPage: currentPage,
 			departId: departId,
+			keyword: keyword,
+			size: size,
+			time: time,
 		},
 	});
 }
@@ -30,10 +34,12 @@ function readVerifiedOpenSourceList(gitType, projectId) {
 }
 
 //분석된 프로젝트 라이선스 목록 불러오기
-function readVerifiedLicenseList(gitType, projectId) {
+function readVerifiedLicenseList(gitType, currentPage, size, projectId) {
 	return http.get(`/analyze/licenseList`, {
 		params: {
 			gitType: gitType,
+			currentPage: currentPage,
+			size: size,
 			projectId: projectId,
 		},
 	});

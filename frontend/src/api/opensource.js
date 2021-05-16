@@ -33,10 +33,8 @@ function updateOpenSource(opensourceInfo) {
 
 //오픈소스 삭제하기
 function deleteOpenSource(opensourceId) {
-	return http.delete(`/opensource/deleteOpensource`, {
-		params: {
-			opensourceId: opensourceId,
-		},
+	return http.put(`/opensource/deleteOpensource`, {
+		opensourceId: opensourceId,
 	});
 }
 
