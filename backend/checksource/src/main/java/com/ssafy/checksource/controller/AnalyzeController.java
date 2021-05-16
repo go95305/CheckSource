@@ -38,8 +38,8 @@ public class AnalyzeController {
 	
 	@ApiOperation(value = "부서별 분석된 프로젝트 목록")
 	@GetMapping("/projectList")
-	public AnalyProjectListByDepartDTO getProjectListByDepart(@RequestHeader("TOKEN") String token, @RequestParam Long departId, @RequestParam int currentPage, @RequestParam int size, @RequestParam String time ) {
-		return projectService.getProjectListByDepart(departId, currentPage, size, time);
+	public AnalyProjectListByDepartDTO getProjectListByDepart(@RequestHeader("TOKEN") String token, @RequestParam Long departId, @RequestParam int currentPage, @RequestParam int size, @RequestParam String time, @RequestParam String keyword ) {
+		return projectService.getProjectListByDepart(departId, currentPage, size, time, keyword);
 	}
 	
 	@ApiOperation(value = "분석된 프로젝트의 매핑된 오픈소스 목록")
