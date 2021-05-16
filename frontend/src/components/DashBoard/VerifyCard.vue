@@ -21,7 +21,7 @@
 
 		<!-- right -->
 		<div class="verifycard-main">
-			<div class="block" @click="deleteproject">
+			<div class="block" @click="DeleteProjectCheck">
 				<i class="hovicon effect-1 sub-a"
 					><span class="material-icons red500"> delete </span>
 				</i>
@@ -158,14 +158,31 @@ export default {
 					this.loading = false;
 				});
 		},
-		deleteproject: function () {
+		DeleteProjectCheck: function () {
 			swal
 				.inputtext(
 					"프로젝트 삭제",
 					"프로젝트 삭제를 위해 프로젝트명을 기입해주세요."
 				)
 				.then((result) => {
-					console.log(result);
+					if (result.value == this.project.name) {
+						this.DeleteProject();
+					}
+				});
+		},
+		DeleteProject: function () {
+			//프로젝트 삭제
+			this.loading = true;
+			gitLabApi
+				.deleteProject(this.project.projectId, this.project.gitType)
+				.then(() => {
+					alert("프로젝트가 삭제되었습니다.");
+					this.loading = false;
+					window.location.reload();
+				})
+				.catch(() => {
+					alert("삭제에 실패했습니다.");
+					this.loading = false;
 				});
 		},
 	},
