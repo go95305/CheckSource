@@ -15,7 +15,6 @@ export default {
   methods: {
     createChart() {
       var ctx = document.getElementById('myChart');
-
       new Chart(ctx, {
         type: 'doughnut',
         data: {
@@ -43,11 +42,15 @@ export default {
           ],
         },
         options: {
-          legend: {
-            align: 'middle',
-            labels: {
-              font: {
-                size: 16,
+          // maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              align: 'middle',
+              labels: {
+                font: {
+                  size: 17.5,
+                },
               },
             },
           },
