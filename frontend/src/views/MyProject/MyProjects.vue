@@ -51,6 +51,7 @@ import VerifyCard from "@/components/DashBoard/VerifyCard.vue";
 import SearchBar from "@/components/SearchBar/SearchBar.vue";
 import verifyApi from "@/api/verify.js";
 import Info from "@/api/info.js";
+import dayjs from "dayjs";
 export default {
 	name: "MyProjectSummary",
 	components: { InfiniteLoading, MyProjectPath, VerifyCard, SearchBar },
@@ -58,16 +59,15 @@ export default {
 		return {
 			departmentName: "",
 			projectList: [],
+			filter: "",
 			keyword: "",
 			page: 1,
-			currentTime: this.getCurrentDate,
+			size: 10,
+			currentTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
 		};
 	},
 	computed: {
 		...mapGetters(["getDepartment"]),
-		getCurrentDate: function () {
-			return Date.now();
-		},
 	},
 	created() {
 		this.departmentName = Info.GetDepartmentName(this.getDepartment - 1);
@@ -80,8 +80,9 @@ export default {
 				query: { gitType: gitType, projectId: projectId },
 			});
 		},
-		DoSearch: function (keyword) {
+		DoSearch: function (filter, keyword) {
 			//검색 키워드 저장
+			this.filter = filter;
 			this.keyword = keyword;
 			this.ResetList();
 		},
@@ -89,23 +90,34 @@ export default {
 			//리스트 초기화
 			this.page = 1;
 			this.projectList = [];
-			this.currentTime = this.getCurrentDate;
-			console.log(this.currentTime);
+			this.currentTime = dayjs().format("YYYY-MM-DD HH:mm:ss");
 			if (this.$refs.InfiniteLoading) {
 				this.$refs.InfiniteLoading.stateChanger.reset();
 			}
 		},
 		GetProjectList: function ($state) {
 			//검증된 프로젝트 리스트 조회
-			verifyApi.readVerifiedProjectList(this.getDepartment).then((response) => {
-				if (response.data) {
-					this.projectList = this.projectList.concat(response.data);
-					++this.page;
-					$state.loaded();
-				} else {
-					$state.complete();
-				}
-			});
+			console.log("키워드:" + this.keyword);
+			verifyApi
+				.readVerifiedProjectList(
+					this.page,
+					this.getDepartment,
+					this.keyword,
+					this.size,
+					this.currentTime
+				)
+				.then((response) => {
+					if (response.data.projectList.length > 0) {
+						this.projectList = this.projectList.concat(
+							response.data.projectList
+						);
+						++this.page;
+						console.log(this.projectList);
+						$state.loaded();
+					} else {
+						$state.complete();
+					}
+				});
 		},
 		scrollUp: function () {
 			window.scrollTo({
