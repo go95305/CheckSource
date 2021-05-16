@@ -12,7 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.checksource.config.security.JwtTokenProvider;
 import com.ssafy.checksource.model.dto.AnalyLicenseListDTO;
-import com.ssafy.checksource.model.dto.AnalyOpensourceListDTO;
+import com.ssafy.checksource.model.dto.AnalyMappedOpensouceListDTO;
+import com.ssafy.checksource.model.dto.AnalyUnmappedOpensouceListDTO;
 import com.ssafy.checksource.model.dto.OpensourceDTO;
 import com.ssafy.checksource.model.dto.ProjectInfoDTO;
 import com.ssafy.checksource.model.dto.ProjectLiceseListDTO;
@@ -21,7 +22,6 @@ import com.ssafy.checksource.model.dto.UnmappendOpensourceDTO;
 import com.ssafy.checksource.model.entity.Depart;
 import com.ssafy.checksource.model.entity.License;
 import com.ssafy.checksource.model.entity.LicenseOpensource;
-import com.ssafy.checksource.model.entity.Opensource;
 import com.ssafy.checksource.model.entity.OpensourceProject;
 import com.ssafy.checksource.model.entity.Project;
 import com.ssafy.checksource.model.entity.UnmappedOpensource;
@@ -63,69 +63,61 @@ public class ProjectService {
 	}
 	
 	// 부서별 분석된 프로젝트 목록
-	public List<ProjectListByDepartDTO> getProjectListByDepart(Long departId) {
+	public List<ProjectListByDepartDTO> getProjectListByDepart(Long departId, int currentPage, int size) {
 		List<ProjectListByDepartDTO> projectListDto = new ArrayList<ProjectListByDepartDTO>();
-		Depart dapart = departRepository.findById(departId).orElseThrow(() -> new IllegalArgumentException("no depart data"));
-		List<Project> projectList = projectRepository.findByDepart(dapart);
-		
-		for (Project project : projectList) {
-			ProjectListByDepartDTO projectDto = new ProjectListByDepartDTO();
-			projectDto = modelMapper.map(project, ProjectListByDepartDTO.class);
-			//프로젝트 id별 매핑된 오픈소스 갯수 
-			List<OpensourceProject> opensourceList = new ArrayList<OpensourceProject>();
-			opensourceList = opensourceProjectRepository.findByProject(project);
-			projectDto.setOpensourceCnt(opensourceList.size());
-			//프로젝트 id별 매핑된 라이선스 갯수
-			List<LicenseOpensource> licenseOpensourceList = new ArrayList<LicenseOpensource>();
-			licenseOpensourceList = licenseOpensourceRepository.findAllByProjectId(project.getProjectId());
-			List<ProjectLiceseListDTO> licenseList = licenseOpensourceList.stream().map(ProjectLiceseListDTO::new).distinct().collect(Collectors.toList());
-			projectDto.setLicenseCnt(licenseList.size());
-			//유저
-			projectDto.setUserId(project.getUser().getUserId());
-			projectDto.setUsername(project.getUser().getName());
-			projectListDto.add(projectDto);
-			//깃 정보도 같이 줘야함
-		}
+//		Depart dapart = departRepository.findById(departId).orElseThrow(() -> new IllegalArgumentException("no depart data"));
+//		List<Project> projectList = projectRepository.findByDepart(dapart);
+//		
+//		for (Project project : projectList) {
+//			ProjectListByDepartDTO projectDto = new ProjectListByDepartDTO();
+//			projectDto = modelMapper.map(project, ProjectListByDepartDTO.class);
+//			//프로젝트 id별 매핑된 오픈소스 갯수 
+//			List<OpensourceProject> opensourceList = new ArrayList<OpensourceProject>();
+//			opensourceList = opensourceProjectRepository.findByProject(project);
+//			projectDto.setOpensourceCnt(opensourceList.size());
+//			//프로젝트 id별 매핑된 라이선스 갯수
+//			List<LicenseOpensource> licenseOpensourceList = new ArrayList<LicenseOpensource>();
+//			licenseOpensourceList = licenseOpensourceRepository.findAllByProjectId(project.getProjectId());
+//			List<ProjectLiceseListDTO> licenseList = licenseOpensourceList.stream().map(ProjectLiceseListDTO::new).distinct().collect(Collectors.toList());
+//			projectDto.setLicenseCnt(licenseList.size());
+//			//유저
+//			projectDto.setUserId(project.getUser().getUserId());
+//			projectDto.setUsername(project.getUser().getName());
+//			projectListDto.add(projectDto);
+//			//깃 정보도 같이 줘야함
+//		}
 		return projectListDto;
 	}
-
-	// 분석된 프로젝트의 매핑된 오픈소스 목록
-	public AnalyOpensourceListDTO getOpensourceListByProject(String gitProjectId, Long gitType) {
-		Project project = projectRepository.findByGitProjectIdAndGitType(gitProjectId, gitType);
-		AnalyOpensourceListDTO analyOpensourceListDto = new AnalyOpensourceListDTO();	
-		Long projectId = project.getProjectId();
-		//매핑
-		List<OpensourceProject> opensourceList = new ArrayList<OpensourceProject>();
-		opensourceList = opensourceProjectRepository.findByProject(project);
-		List<OpensourceDTO> mappedopensourceList = new ArrayList<OpensourceDTO>();
-		mappedopensourceList = opensourceList.stream().map(OpensourceDTO::new).collect(Collectors.toList());
 	
-		List<LicenseOpensource> licenseOpensourceList = new ArrayList<LicenseOpensource>();
-		licenseOpensourceList = licenseOpensourceRepository.findAllByProjectId(projectId);
-		for (int i = 0; i < mappedopensourceList.size(); i++) {
-			for (LicenseOpensource licenseOpensource : licenseOpensourceList) {
-				OpensourceDTO opensourceDto = mappedopensourceList.get(i);
-				if(opensourceDto.getOpensourceId() == licenseOpensource.getOpslic_id().getOpensourceId()) {
-					opensourceDto.getLicenseNameList().add(licenseOpensource.getLicense().getName());
-					mappedopensourceList.set(i, opensourceDto);
-				}
-			}
-		}
-		analyOpensourceListDto.setMappedList(mappedopensourceList);
-		
-		//언매핑
-		List <UnmappendOpensourceDTO> unmappedListDto = new ArrayList<UnmappendOpensourceDTO>();
-		unmappedListDto = unmappedOpensourceRepository.findByProject(project).stream().map(UnmappendOpensourceDTO::new).collect(Collectors.toList());
-		analyOpensourceListDto.setUnmappedList(unmappedListDto);
-		return analyOpensourceListDto;
+	// 분석된 프로젝트의 매핑된 오픈소스 목록
+	public AnalyMappedOpensouceListDTO getMappedOpensourceListByProject (String gitProjectId, Long gitType, int size, int currentPage) {
+		Project project = projectRepository.findByGitProjectIdAndGitType(gitProjectId, gitType);
+		Long projectId = project.getProjectId();
+		PageRequest pageRequest = PageRequest.of(currentPage - 1, size);
+		Page<OpensourceProject> opensourceList = opensourceProjectRepository.findByProject(project, pageRequest);
+		List<OpensourceDTO> mappedopensourceListDto = new ArrayList<OpensourceDTO>();
+		mappedopensourceListDto = opensourceList.getContent().stream().map(OpensourceDTO::new).collect(Collectors.toList());	
+		AnalyMappedOpensouceListDTO mappedList = new AnalyMappedOpensouceListDTO();
+		mappedList.setTotalPages(opensourceList.getTotalPages());
+		mappedList.setMappedList(mappedopensourceListDto);
+		return mappedList;
 	}
 	
-	
 	// 분석된 프로젝트의 언매핑된 오픈소스 목록
-	
+	public AnalyUnmappedOpensouceListDTO getUnmappedOpensourceListByProject(String gitProjectId, Long gitType, int size, int currentPage) {
+		Project project = projectRepository.findByGitProjectIdAndGitType(gitProjectId, gitType);
+		Long projectId = project.getProjectId();
+		PageRequest pageRequest = PageRequest.of(currentPage - 1, size);
+		Page<UnmappedOpensource> unMappedOpensouce = unmappedOpensourceRepository.findByProject(project, pageRequest);
+		List <UnmappendOpensourceDTO> unmappedListDto = new ArrayList<UnmappendOpensourceDTO>();
+		unmappedListDto = unMappedOpensouce.getContent().stream().map(UnmappendOpensourceDTO::new).collect(Collectors.toList());
+		AnalyUnmappedOpensouceListDTO analyUnmappedList = new AnalyUnmappedOpensouceListDTO();
+		analyUnmappedList.setTotalPages(unMappedOpensouce.getTotalPages());
+		analyUnmappedList.setUnmappedList(unmappedListDto);
+		return analyUnmappedList;
+	}
 	
 
-	
 	// 분석된 프로젝트의 라이선스 목록
 	public AnalyLicenseListDTO getLicenseListByProject(String gitProjectId, Long gitType, int size, int currentPage) {
 		Project project = projectRepository.findByGitProjectIdAndGitType(gitProjectId, gitType);

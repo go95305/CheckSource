@@ -5,8 +5,8 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class AnalyOpensourceListDTO {
-	
-	private List<UnmappendOpensourceDTO> unmappedList;
+public class AnalyMappedOpensouceListDTO {
+
 	private List<OpensourceDTO> mappedList;
+	private int totalPages;
 }

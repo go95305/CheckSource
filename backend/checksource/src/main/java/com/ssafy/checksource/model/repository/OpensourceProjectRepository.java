@@ -2,6 +2,8 @@ package com.ssafy.checksource.model.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -13,7 +15,9 @@ public interface OpensourceProjectRepository extends JpaRepository<OpensourcePro
 
 //	@Query( value = "delete from opensource_project where opensource_id = ?1 and project_id = ?2",nativeQuery = true)
 //	void deleteByOpensourceIdAndProjectId (Long opensourceId, String projectId);
-	List<OpensourceProject> findByProject (Project project);
+	
+	
+	Page<OpensourceProject> findByProject (Project project, Pageable pageable);
 	
 	@Query( value = "delete from opensource_project where git_project_id = ?1 and git_type = ?2",nativeQuery = true)
 	void deleteAllByProjectId (String gitProjectId, Long gitType);
