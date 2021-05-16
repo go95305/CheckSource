@@ -72,8 +72,8 @@ public class LicenseController {
 	}
 	
 	@ApiOperation(value = "라이선스 삭제하기")
-	@DeleteMapping("/deleteLicense")
-	public void update(@RequestHeader("TOKEN") String token,@RequestBody LicenseIdDTO licenseId) {
+	@PutMapping("/deleteLicense")
+	public void delete(@RequestHeader("TOKEN") String token,@RequestBody LicenseIdDTO licenseId) {
 		licenseService.delete(licenseId);
 	}
 }

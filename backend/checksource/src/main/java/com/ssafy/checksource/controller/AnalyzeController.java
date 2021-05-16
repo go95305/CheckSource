@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.checksource.model.dto.AnalyLicenseListDTO;
 import com.ssafy.checksource.model.dto.AnalyMappedOpensouceListDTO;
 import com.ssafy.checksource.model.dto.AnalyProjectListByDepartDTO;
+import com.ssafy.checksource.model.dto.AnalyProjectSummaryDTO;
 import com.ssafy.checksource.model.dto.AnalyUnmappedOpensouceListDTO;
 import com.ssafy.checksource.model.dto.ProjectInfoDTO;
 import com.ssafy.checksource.model.dto.ProjectListByDepartDTO;
@@ -38,8 +39,8 @@ public class AnalyzeController {
 	
 	@ApiOperation(value = "부서별 분석된 프로젝트 목록")
 	@GetMapping("/projectList")
-	public AnalyProjectListByDepartDTO getProjectListByDepart(@RequestHeader("TOKEN") String token, @RequestParam Long departId, @RequestParam int currentPage, @RequestParam int size, @RequestParam String time ) {
-		return projectService.getProjectListByDepart(departId, currentPage, size, time);
+	public AnalyProjectListByDepartDTO getProjectListByDepart(@RequestHeader("TOKEN") String token, @RequestParam Long departId, @RequestParam int currentPage, @RequestParam int size, @RequestParam String time, @RequestParam String keyword ) {
+		return projectService.getProjectListByDepart(departId, currentPage, size, time, keyword);
 	}
 	
 	@ApiOperation(value = "분석된 프로젝트의 매핑된 오픈소스 목록")
@@ -59,6 +60,12 @@ public class AnalyzeController {
 	@GetMapping("/licenseList")
 	public AnalyLicenseListDTO getLicenseListByProject(@RequestHeader("TOKEN") String token, @RequestParam String projectId, @RequestParam Long gitType, @RequestParam int size, @RequestParam int currentPage) {
 		return projectService.getLicenseListByProject(projectId, gitType, size, currentPage);
+	}
+	
+	@ApiOperation(value = "분석된 프로젝트의 summary")
+	@GetMapping("/summary")
+	public AnalyProjectSummaryDTO getSummaryByProject(@RequestHeader("TOKEN") String token, @RequestParam String projectId, @RequestParam Long gitType) {
+		return projectService.getSummaryByProject(projectId, gitType);
 	}
 
 }
