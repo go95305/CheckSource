@@ -1,180 +1,177 @@
 .title,
 .dependency-title {
-  margin-top: 16px;
+	margin-top: 16px;
 }
 .dependency-title {
-  width: 9%;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
-  opacity: 0.7;
-  margin-left: 35%;
+	width: 9%;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+	opacity: 0.7;
+	margin-left: 35%;
 }
 .dependency {
-  margin-top: 1%;
-  margin-left: 30%;
+	margin-top: 1%;
+	margin-left: 30%;
 }
 
 input {
-  box-sizing: border-box;
-  display: inline-block;
-  margin: 0;
-  min-width: 0;
-  padding: 4px 11px;
-  transition: all 0.3s;
-  width: 362px;
+	box-sizing: border-box;
+	display: inline-block;
+	margin: 0;
+	min-width: 0;
+	padding: 4px 11px;
+	transition: all 0.3s;
+	width: 362px;
 }
 .dependency-label {
-  max-width: 16.7%;
-  display: inline-block;
-  width: 10%;
-  text-align: right;
-  margin-bottom: 1%;
-  margin-right: 1%;
+	max-width: 16.7%;
+	display: inline-block;
+	width: 10%;
+	text-align: right;
+	margin-bottom: 1%;
+	margin-right: 1%;
 }
 .component-label {
-  max-width: 16.7%;
-  display: inline-block;
-  width: 10%;
-  text-align: right;
-  margin-bottom: 1%;
-  margin-right: 1%;
+	max-width: 16.7%;
+	display: inline-block;
+	width: 10%;
+	text-align: right;
+	margin-bottom: 1%;
+	margin-right: 1%;
 }
 .component {
-  margin-top: 1%;
-  margin-left: 30%;
+	margin-top: 1%;
+	margin-left: 30%;
 }
 .component-title {
-  margin-top: 3%;
-  width: 9%;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
-  opacity: 0.7;
-  margin-left: 35%;
+	margin-top: 3%;
+	width: 9%;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+	opacity: 0.7;
+	margin-left: 35%;
 }
 
 /* .box-3 { background-color: #898a8b; } */
 
+.add-component-button-div {
+	display: flex;
+	justify-content: center;
+	margin: 30px 0;
+}
+
+.add-component-button-div div {
+	flex: 1 0 0;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+}
+
 .btn {
-  line-height: 50px;
-  height: 50px;
-  text-align: center;
-  width: 187px;
-  cursor: pointer;
-  border: 1px solid;
+	cursor: pointer;
+	color: white;
+	width: 160px;
+	height: 50px;
+	font-weight: bold;
+	background: #58adf3;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
-/* 
-========================
-      BUTTON THREE
-========================
-*/
-.btn-three {
-  transition: all 0.5s;
-  /* position: absolute; */
-  font: inherit;
-  line-height: 3.2;
-  cursor: pointer;
-  color: white;
-  width: 80px;
-  margin: 30px auto;
-  font-weight: bold;
-  padding-left: 2em;
-  padding-right: 2em;
-  background: #58adf3;
+.delete-btn {
+	background-color: rgb(189, 3, 3);
 }
 
-span {
-  margin-right: 5%;
-}
 form .button,
 .form .text-input,
 .form .label {
-  padding: 0.75em 1em;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  outline: none;
-  line-height: normal;
-  border-radius: 0;
-  border: none;
-  background: none;
-  display: block;
+	padding: 0.75em 1em;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	outline: none;
+	line-height: normal;
+	border-radius: 0;
+	border: none;
+	background: none;
+	display: block;
 }
 
 .form .sublabel {
-  padding: 0.75em 1em;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  outline: none;
-  line-height: normal;
-  border-radius: 0;
-  border: none;
-  background: none;
-  display: block;
+	padding: 0.75em 1em;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	outline: none;
+	line-height: normal;
+	border-radius: 0;
+	border: none;
+	background: none;
+	display: block;
 }
 
 .form .sublabel {
-  // font-weight: bold;
-  color: #717171;
-  padding-top: 0;
-  padding-left: 0;
-  letter-spacing: 0.025em;
-  font-size: 17px;
-  line-height: 1.25;
-  position: relative;
-  z-index: 100;
+	// font-weight: bold;
+	color: #717171;
+	padding-top: 0;
+	padding-left: 0;
+	letter-spacing: 0.025em;
+	font-size: 17px;
+	line-height: 1.25;
+	position: relative;
+	z-index: 100;
 }
 
 .form .label {
-  font-weight: bold;
-  color: rgb(0, 0, 0);
-  padding-top: 0;
-  padding-left: 0;
-  letter-spacing: 0.025em;
-  font-size: 1.125em;
-  line-height: 1.25;
-  position: relative;
-  z-index: 100;
+	font-weight: bold;
+	color: rgb(0, 0, 0);
+	padding-top: 0;
+	padding-left: 0;
+	letter-spacing: 0.025em;
+	font-size: 1.125em;
+	line-height: 1.25;
+	position: relative;
+	z-index: 100;
 }
 .required .form .label:after,
 .form .required .label:after {
-  content: ' *';
-  color: #e8474c;
-  font-weight: normal;
-  font-size: 0.75em;
-  vertical-align: top;
+	content: " *";
+	color: #e8474c;
+	font-weight: normal;
+	font-size: 0.75em;
+	vertical-align: top;
 }
 .form .text-input {
-  font: inherit;
-  line-height: normal;
-  width: 100%;
-  box-sizing: border-box;
-  background: #eeeeee;
-  color: rgb(37, 37, 37);
+	font: inherit;
+	line-height: normal;
+	width: 100%;
+	box-sizing: border-box;
+	background: #eeeeee;
+	color: rgb(37, 37, 37);
 }
 .form .text-input:placeholder {
-  color: white;
+	color: white;
 }
 .form .text-input:-webkit-autofill {
-  box-shadow: 0 0 0px 1000px #111111 inset;
-  -webkit-text-fill-color: white;
-  border-top-color: #111111;
-  border-left-color: #111111;
-  border-right-color: #111111;
+	box-shadow: 0 0 0px 1000px #111111 inset;
+	-webkit-text-fill-color: white;
+	border-top-color: #111111;
+	border-left-color: #111111;
+	border-right-color: #111111;
 }
 .form .text-input:not(:focus):not(:active).error {
-  background-size: 8px 8px;
-  background-image: linear-gradient(
-    135deg,
-    rgba(232, 71, 76, 0.5),
-    rgba(232, 71, 76, 0.5) 25%,
-    transparent 25%,
-    transparent 50%,
-    rgba(232, 71, 76, 0.5) 50%,
-    rgba(232, 71, 76, 0.5) 75%,
-    transparent 75%,
-    transparent
-  );
-  background-repeat: repeat;
+	background-size: 8px 8px;
+	background-image: linear-gradient(
+		135deg,
+		rgba(232, 71, 76, 0.5),
+		rgba(232, 71, 76, 0.5) 25%,
+		transparent 25%,
+		transparent 50%,
+		rgba(232, 71, 76, 0.5) 50%,
+		rgba(232, 71, 76, 0.5) 75%,
+		transparent 75%,
+		transparent
+	);
+	background-repeat: repeat;
 }
 .form:not(.has-magic-focus) .customSelect.customSelectFocus,
 .form:not(.has-magic-focus) .customSelect:active,
@@ -189,185 +186,185 @@ form .button,
 .form:not(.has-magic-focus) .text-input:focus,
 .form:not(.has-magic-focus) .option-input + label:focus,
 .form:not(.has-magic-focus) .checkbox-input + label:focus {
-  background: #b8b8b8;
+	background: #b8b8b8;
 }
 
 .form {
-  max-width: 32em;
-  margin: 0 auto;
-  position: relative;
-  display: flex;
-  flex-flow: column wrap;
-  margin-top: 26px;
+	max-width: 32em;
+	margin: 0 auto;
+	position: relative;
+	display: flex;
+	flex-flow: column wrap;
+	margin-top: 26px;
 }
 .form .field {
-  width: 100%;
-  margin: 0 0 1.5em 0;
+	width: 100%;
+	margin: 0 0 1.5em 0;
 }
 
 // 툴팁
 .tooltip-url {
-  position: absolute;
-  display: block;
-  top: 221px;
-  left: 10%;
-  /* background-color: #bcdbea; */
-  border-radius: 50%;
-  border: 1px solid;
-  line-height: 26px;
-  width: 10px;
-  height: 10px;
-  cursor: default;
-  z-index: 500;
-  opacity: 0.5;
-  font-size: small;
+	position: absolute;
+	display: block;
+	top: 221px;
+	left: 10%;
+	/* background-color: #bcdbea; */
+	border-radius: 50%;
+	border: 1px solid;
+	line-height: 26px;
+	width: 10px;
+	height: 10px;
+	cursor: default;
+	z-index: 500;
+	opacity: 0.5;
+	font-size: small;
 }
 
 .tooltip-url:hover .tooltip-url-content {
-  display: block;
-  transform-origin: 100% 0%;
-  -webkit-animation: fadeIn 0.3s ease-in-out;
-  animation: fadeIn 0.3s ease-in-out;
+	display: block;
+	transform-origin: 100% 0%;
+	-webkit-animation: fadeIn 0.3s ease-in-out;
+	animation: fadeIn 0.3s ease-in-out;
 }
 .tooltip-url .tooltip-url-content {
-  display: none;
-  text-align: left;
-  background-color: #1e2021;
-  padding: 10px;
-  width: 200px;
-  position: absolute;
-  border-radius: 3px;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
-  color: #fff;
-  font-size: 13px;
-  line-height: 1.4;
-  left: 12px;
-  bottom: 0;
+	display: none;
+	text-align: left;
+	background-color: #1e2021;
+	padding: 10px;
+	width: 200px;
+	position: absolute;
+	border-radius: 3px;
+	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+	color: #fff;
+	font-size: 13px;
+	line-height: 1.4;
+	left: 12px;
+	bottom: 0;
 }
 .tooltip-url span {
-  position: absolute;
-  left: 3px;
-  bottom: -8px;
-  font-size: 3px;
+	position: absolute;
+	left: 3px;
+	bottom: -8px;
+	font-size: 3px;
 }
 .tooltip-contents {
-  position: absolute;
-  display: block;
-  top: 329px;
-  left: 24%;
-  /* background-color: #bcdbea; */
-  border-radius: 50%;
-  border: 1px solid;
-  line-height: 26px;
-  width: 10px;
-  height: 10px;
-  cursor: default;
-  z-index: 500;
-  opacity: 0.5;
-  font-size: small;
+	position: absolute;
+	display: block;
+	top: 329px;
+	left: 24%;
+	/* background-color: #bcdbea; */
+	border-radius: 50%;
+	border: 1px solid;
+	line-height: 26px;
+	width: 10px;
+	height: 10px;
+	cursor: default;
+	z-index: 500;
+	opacity: 0.5;
+	font-size: small;
 }
 
 .tooltip-contents:hover .tooltip-contents-content {
-  display: block;
-  transform-origin: 100% 0%;
-  -webkit-animation: fadeIn 0.3s ease-in-out;
-  animation: fadeIn 0.3s ease-in-out;
+	display: block;
+	transform-origin: 100% 0%;
+	-webkit-animation: fadeIn 0.3s ease-in-out;
+	animation: fadeIn 0.3s ease-in-out;
 }
 .tooltip-contents .tooltip-contents-content {
-  display: none;
-  text-align: left;
-  background-color: #1e2021;
-  padding: 10px;
-  width: 250px;
-  position: absolute;
-  border-radius: 3px;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
-  color: #fff;
-  font-size: 13px;
-  line-height: 1.4;
-  left: 12px;
-  bottom: 0;
+	display: none;
+	text-align: left;
+	background-color: #1e2021;
+	padding: 10px;
+	width: 250px;
+	position: absolute;
+	border-radius: 3px;
+	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+	color: #fff;
+	font-size: 13px;
+	line-height: 1.4;
+	left: 12px;
+	bottom: 0;
 }
 .tooltip-contents span {
-  position: absolute;
-  left: 3px;
-  bottom: -8px;
-  font-size: 3px;
+	position: absolute;
+	left: 3px;
+	bottom: -8px;
+	font-size: 3px;
 }
 
 // 체크박스
 .styled-checkbox {
-  position: absolute; // take it out of document flow
-  opacity: 0; // hide it
+	position: absolute; // take it out of document flow
+	opacity: 0; // hide it
 
-  & + label {
-    position: relative;
-    cursor: pointer;
-    padding: 0;
-  }
+	& + label {
+		position: relative;
+		cursor: pointer;
+		padding: 0;
+	}
 
-  // Box.
-  & + label:before {
-    content: '';
-    margin-right: 10px;
-    display: inline-block;
-    vertical-align: text-top;
-    width: 20px;
-    height: 20px;
-    background: white;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12);
-  }
+	// Box.
+	& + label:before {
+		content: "";
+		margin-right: 10px;
+		display: inline-block;
+		vertical-align: text-top;
+		width: 20px;
+		height: 20px;
+		background: white;
+		box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12);
+	}
 
-  // Box hover
-  &:hover + label:before {
-    background: #00a3e2;
-  }
+	// Box hover
+	&:hover + label:before {
+		background: #00a3e2;
+	}
 
-  // Box focus
-  &:focus + label:before {
-    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
-  }
+	// Box focus
+	&:focus + label:before {
+		box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
+	}
 
-  // Box checked
-  &:checked + label:before {
-    background: #00a3e2;
-  }
+	// Box checked
+	&:checked + label:before {
+		background: #00a3e2;
+	}
 
-  // Disabled state label.
-  &:disabled + label {
-    color: #b8b8b8;
-    cursor: auto;
-  }
+	// Disabled state label.
+	&:disabled + label {
+		color: #b8b8b8;
+		cursor: auto;
+	}
 
-  // Disabled box.
-  &:disabled + label:before {
-    box-shadow: none;
-    background: #ddd;
-  }
+	// Disabled box.
+	&:disabled + label:before {
+		box-shadow: none;
+		background: #ddd;
+	}
 
-  // Checkmark.
-  &:checked + label:after {
-    content: '';
-    position: absolute;
-    left: 5px;
-    top: 9px;
-    background: white;
-    width: 2px;
-    height: 2px;
-    box-shadow: 2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white,
-      4px -6px 0 white, 4px -8px 0 white;
-    transform: rotate(45deg);
-  }
+	// Checkmark.
+	&:checked + label:after {
+		content: "";
+		position: absolute;
+		left: 5px;
+		top: 9px;
+		background: white;
+		width: 2px;
+		height: 2px;
+		box-shadow: 2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white,
+			4px -6px 0 white, 4px -8px 0 white;
+		transform: rotate(45deg);
+	}
 }
 
 .unstyled {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
 }
 
 .add-l-check {
-  margin: 20px 0;
+	margin: 20px 0;
 }
 
 // radio!
@@ -376,43 +373,43 @@ $kinetek-green: #bed745;
 $light-grey: #eeeeee;
 $border: 0px;
 
-input[type='radio'] {
-  opacity: 0;
-  position: absolute;
-  // top: 50%;
-  // left: 50%;
-  // z-index: -1;
-  &:checked + label.radiobtn {
-    background-color: $white;
-    box-shadow: 0 0 0 5px rgba(#00a3e2, 1) inset;
-  }
+input[type="radio"] {
+	opacity: 0;
+	position: absolute;
+	// top: 50%;
+	// left: 50%;
+	// z-index: -1;
+	&:checked + label.radiobtn {
+		background-color: $white;
+		box-shadow: 0 0 0 5px rgba(#00a3e2, 1) inset;
+	}
 }
 > .radiobtn:first-of-type:not(:last-of-type) {
-  border-bottom-right-radius: 0px;
-  border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+	border-top-right-radius: 0px;
 }
 > .radiobtn:last-of-type:not(:first-of-type) {
-  border-bottom-left-radius: 0px;
-  border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px;
+	border-top-left-radius: 0px;
 }
 > .radiobtn:not(:first-of-type):not(:last-of-type) {
-  border-radius: 0px;
-  border-left: 1px solid #c0c0c0;
-  border-right: 1px solid #c0c0c0;
+	border-radius: 0px;
+	border-left: 1px solid #c0c0c0;
+	border-right: 1px solid #c0c0c0;
 }
 .radiobtn {
-  -moz-user-select: none;
-  background-color: $light-grey;
-  background-image: none;
-  // border-radius: 14px;
-  border: $border solid transparent;
-  cursor: pointer;
-  float: left;
-  font-size: 17px;
-  line-height: 1;
-  padding: 16px 30px;
-  position: relative;
-  text-align: center;
-  text-transform: uppercase;
-  width: 21.6%;
+	-moz-user-select: none;
+	background-color: $light-grey;
+	background-image: none;
+	// border-radius: 14px;
+	border: $border solid transparent;
+	cursor: pointer;
+	float: left;
+	font-size: 17px;
+	line-height: 1;
+	padding: 16px 30px;
+	position: relative;
+	text-align: center;
+	text-transform: uppercase;
+	width: 21.6%;
 }

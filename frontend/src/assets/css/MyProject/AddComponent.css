@@ -282,7 +282,7 @@ li.sel {
 	position: absolute;
 	display: block;
 	top: 224px;
-	left: 20%;
+	left: 65px;
 	/* background-color: #bcdbea; */
 	border-radius: 50%;
 	border: 1px solid;
@@ -326,7 +326,7 @@ li.sel {
 	position: absolute;
 	display: block;
 	top: 545px;
-	left: 21%;
+	left: 100px;
 	/* background-color: #bcdbea; */
 	border-radius: 50%;
 	border: 1px solid;
@@ -370,7 +370,7 @@ li.sel {
 	position: absolute;
 	display: block;
 	top: 654px;
-	left: 17%;
+	left: 60px;
 	/* background-color: #bcdbea; */
 	border-radius: 50%;
 	border: 1px solid;

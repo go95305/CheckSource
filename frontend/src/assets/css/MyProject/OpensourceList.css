@@ -52,7 +52,7 @@
 	border-radius: 9px;
 	color: white;
 	font-weight: 500;
-	padding: 8px 0px;
+	padding: 8px 13px;
 	letter-spacing: 0.03em;
 	word-break: break-all;
 }
@@ -84,6 +84,18 @@
 	word-break: break-word;
 }
 
+.opensource-table-td-license {
+	display: flex;
+	flex-flow: column nowrap;
+}
+
 .opensource-pagination {
-	margin-top: 20px;
+	margin: 20px;
+}
+
+.opensource-table-unmapped-add {
+	flex: 0 0 50px !important;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }

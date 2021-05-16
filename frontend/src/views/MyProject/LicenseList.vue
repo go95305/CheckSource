@@ -52,30 +52,26 @@ export default {
       size: 10,
       totalPage:3,
       loading: false,
-      routeQuery:this.$route.query,
     };
   },
-  created() {
-    this.GetQuery();    
+   created() {
+     if(this.$route.query.mappedPage){
+          this.page = Number(this.$route.query.mappedPage);
+     };
     this.GetList();
   },
   watch:{
-    routeQuery:{
+    $route:{
       deep:true,
       handler(){
-        this.GetQuery();
+        if(this.page != this.$route.query.mappedPage){
+          this.page = Number(this.$route.query.mappedPage);
+          this.GetList();
+        }
       }
-    }
+    },
   },
   methods: {
-    GetQuery:function(){
-      if (this.$route.query.page) {
-			this.page = Number(this.$route.query.page);
-		}
-		if (this.$route.query.size) {
-			this.size = Number(this.$route.query.size);
-		}
-    },
     GetList: function () {
       this.loading = true;
       verifyApi
@@ -100,10 +96,11 @@ export default {
     },
     ChangePage: function (page) {
 			this.page = page;
-			this.$router.push({ 
-				query: { projectId:this.projectId, page: page, size: this.size },
-			});
-			this.GetList();
+      let newQuery = Object.assign({}, this.$route.query);
+      newQuery.page = page;
+      this.$router.push({ 
+				query: newQuery,
+			})
 		},
   },
 };
