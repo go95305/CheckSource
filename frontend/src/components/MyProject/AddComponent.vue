@@ -25,7 +25,7 @@
         />
       </p>
       <p class="field required">
-        <label class="label" for="email">URL</label>
+        <label class="label" for="url">URL</label>
         <input
           class="text-input"
           id="url"
@@ -40,11 +40,11 @@
         <p class="tooltip-url-content">Source URL 또는 Homepage URL을 입력해주세요</p>
       </div>
       <p class="field required">
-        <label class="label required" for="name">Copyright</label>
+        <label class="label required" for="copyright">Copyright</label>
         <input
           class="text-input"
-          id="name"
-          name="name"
+          id="copyright"
+          name="copyright"
           required
           type="text"
           placeholder="Copyright"
@@ -55,11 +55,11 @@
         <p class="tooltip-copyright-content">Copyright이 확인되지 않을 경우, property of respective owner를 입력해주세요</p>
       </div>
       <p class="field">
-        <label class="label required" for="name">Version</label>
+        <label class="label required" for="version">Version</label>
         <input
           class="text-input"
-          id="name"
-          name="name"
+          id="version"
+          name="version"
           required
           type="text"
           placeholder="Version"
@@ -67,11 +67,11 @@
         />
       </p>
       <p class="field">
-        <label class="label required" for="name">Package Type</label>
+        <label class="label required" for="package_type">Package Type</label>
         <input
           class="text-input"
-          id="name"
-          name="name"
+          id="package_type"
+          name="package_type"
           required
           type="text"
           placeholder="Package Type"
@@ -79,11 +79,11 @@
         />
       </p>
       <p class="field required">
-        <label class="label required" for="name">Artifact Id</label>
+        <label class="label required" for="artifact_id">Artifact Id</label>
         <input
           class="text-input"
-          id="name"
-          name="name"
+          id="artifact_id"
+          name="artifact_id"
           required
           type="text"
           placeholder="Artifact Id"
@@ -94,11 +94,11 @@
         <p class="tooltip-artifact-content">버전 정보를 생략한 jar 파일의 이름</p>
       </div>
       <p class="field">
-        <label class="label required" for="name">Group Id</label>
+        <label class="label required" for="group_id">Group Id</label>
         <input
           class="text-input"
-          id="name"
-          name="name"
+          id="group_id"
+          name="group_id"
           required
           type="text"
           placeholder="Group Id"
@@ -109,12 +109,12 @@
         <p class="tooltip-group-content">프로젝트를 식별하는 유일한 값</p>
       </div>
       <p class="field required" v-on:keyup.down="selectValue('down')" v-on:keyup.up="selectValue('up')">
-        <label class="label required" for="name">License</label>
+        <label class="label required" for="enter_license">License</label>
         <input
           class="text-input-l"
 
-          id="name"
-          name="name"
+          id="enter_license"
+          name="enter_license"
           required
           type="text"
           placeholder="Enter License"
@@ -217,12 +217,14 @@ export default {
   computed:{
     CanDo:function(){
       //전부 입력되었는지 확인
-      for(let attr in this.opensource){
-        if(this.opensource[attr].length == 0){
-          return false;
-        }
+      if(this.opensource.name.length > 0 &&
+      this.opensource.url.length > 0 &&
+      this.opensource.copyright.length > 0 &&
+      this.opensource.artifactId.length > 0 &&
+      this.opensource.licenseId.length > 0){
+          return true;
       }
-      return true;
+      return false;
     },
   },
   methods: {
@@ -252,6 +254,7 @@ export default {
     },
     removeTag(index) {
       this.tags.splice(index, 1);
+      this.opensource.licenseId.splice(index,1);
     },
     addOpenSource() {
       //오픈소스 추가

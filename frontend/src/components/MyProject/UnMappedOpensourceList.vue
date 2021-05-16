@@ -3,7 +3,7 @@
 	<div>
     <div class="opensource-title-div">
       <p class="opensource-title">연동되지 않은 오픈소스</p>
-      <router-link :to="{name:'AddOpenSource'}" class="opensource-add-button"><span class="material-icons"> add </span> 오픈소스 추가 </router-link> 
+      <router-link :to="{name:'AddOpenSource', query:this.$route.query}" class="opensource-add-button"><span class="material-icons"> add </span> 오픈소스 추가 </router-link> 
     </div>
     <table class="opensource-table">
       <th class="opensource-table-th">
