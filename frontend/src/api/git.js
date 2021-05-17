@@ -91,6 +91,10 @@ function verifyGitLabProjects(gitlabId, projectList) {
   return http.post(`/git/projects?gitlabId=${gitlabId}`, projectList);
 }
 
+function verifyGitHubProjects(githubId, projectList,sha) {
+  return http.post(`/git/github/projects?githubId=${githubId}`, projectList,sha);
+}
+
 // 프로젝트 삭제
 function deleteProject(projectId, gitlabId) {
   return http.delete(`/git/projects`, {
@@ -114,4 +118,5 @@ export default {
   deleteGitHubConnect,
   readGitHubProjects,
   readHubProjectBranches,
+  verifyGitHubProjects,
 };
