@@ -32,13 +32,5 @@ public class LicenseUpdateDTO {
 	private boolean is_warranty;
 	//책임의 제한
 	private boolean is_respon;
-	//상업적 사용 가능
-	private boolean is_commercial;
-	//동일한 라이선스 유지
-	private boolean is_continue;
-	//특허권 사용 여부
-	private boolean is_patent;
-	//비공개 사용 여부
-	private boolean is_private;
 
 }
