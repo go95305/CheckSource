@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.websocket.server.PathParam;
 
+import com.ssafy.checksource.model.dto.*;
+import com.ssafy.checksource.service.GithubService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.checksource.model.dto.GitLabConnectDTO;
-import com.ssafy.checksource.model.dto.GitLabProjectDTO;
-import com.ssafy.checksource.model.dto.GitLabProjectListDTO;
-import com.ssafy.checksource.model.dto.ProjectBranchesDTO;
-import com.ssafy.checksource.model.dto.RepositoryTreeDTO;
 import com.ssafy.checksource.service.GitService;
 
 import io.swagger.annotations.ApiOperation;
@@ -35,7 +32,7 @@ import lombok.RequiredArgsConstructor;
 public class GitLabController {
 	
 	private final GitService gitService;
-	
+
 	@ApiOperation(value = "테스트다")
 	@GetMapping("/test/{id}")
 	public void test(@PathVariable Long id) {
@@ -84,9 +81,5 @@ public class GitLabController {
 	public boolean deleteProject(@RequestHeader("TOKEN") String token, @RequestParam String projectId, @RequestParam Long gitlabId) {
 		return gitService.deleteProject(token, projectId, gitlabId);
 	}
-	
 
-	
-	
-	
 }

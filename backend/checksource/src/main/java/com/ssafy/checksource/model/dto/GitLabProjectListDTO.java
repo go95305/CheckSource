@@ -6,7 +6,6 @@ import lombok.Data;
 
 @Data
 public class GitLabProjectListDTO {
-
 	private boolean accessflag;
 	private List<GitLabProjectDTO> projectList;
 }
