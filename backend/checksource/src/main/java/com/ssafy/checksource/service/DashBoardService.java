@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.json.JSONObject;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.gson.Gson;
 import com.ssafy.checksource.config.security.JwtTokenProvider;
 import com.ssafy.checksource.model.dto.StatisticsByDepartDTO;
 import com.ssafy.checksource.model.dto.StatisticsTotalDTO;
@@ -50,8 +52,12 @@ public class DashBoardService {
 	public List<Top5OpensourceDTO> getTop5OpensourceByDepart(Long departId) {
 		List <Top5OpensourceDTO> top5ListDto = new ArrayList<Top5OpensourceDTO>();
 		//쿼리
-		List<Optional> todp5List = opensourceRepository.findByTop5(departId);
-		Top5OpensourceDTO top5OpensourceDto = new Top5OpensourceDTO();
+		List<Object> top5List = opensourceRepository.findByTop5(departId);
+		for (Object object : top5List) {
+			Gson gson = new Gson();
+			
+		}
+		
 		//set
 		return top5ListDto;
 	}

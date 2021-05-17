@@ -1,5 +1,7 @@
 package com.ssafy.checksource.controller;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,5 +36,10 @@ public class DashBoardController {
 		return dashBoardService.getStatisticsByDepart(departId);
 	}
 	
+	@ApiOperation(value = "부서별 top5")
+	@GetMapping("/top5/{departId}")
+	public List<Top5OpensourceDTO> getTop5OpensourceByDepart(@RequestHeader("TOKEN") String token, @PathVariable Long departId) {
+		return dashBoardService.getTop5OpensourceByDepart(departId);
+	}
 	
 }

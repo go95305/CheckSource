@@ -4,6 +4,7 @@ package com.ssafy.checksource.model.repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.json.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -52,5 +53,5 @@ public interface OpensourceRepository extends JpaRepository<Opensource, Long>{
 			"(select project_id from project where depart_id = ?1) " + 
 			"group by opensource_id " + 
 			"order by count desc", nativeQuery = true)
-	List<Optional> findByTop5 (Long departId);
+	List<Object> findByTop5 (Long departId);
 }
