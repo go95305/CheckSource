@@ -43,6 +43,7 @@ export default {
 	},
 	data() {
 		return {
+			gitType:1,
 			repositoryList: [],
 			loading: false,
 			gitlabAccountList: [],
