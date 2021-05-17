@@ -7,18 +7,21 @@ import java.util.Optional;
 
 import org.json.JSONObject;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.gson.Gson;
 import com.ssafy.checksource.config.security.JwtTokenProvider;
+import com.ssafy.checksource.model.dto.LicenseWarningDTO;
 import com.ssafy.checksource.model.dto.StatisticsByDepartDTO;
 import com.ssafy.checksource.model.dto.StatisticsTotalDTO;
 import com.ssafy.checksource.model.dto.Top5OpensourceDTO;
 import com.ssafy.checksource.model.entity.Depart;
 import com.ssafy.checksource.model.entity.License;
 import com.ssafy.checksource.model.entity.Opensource;
+import com.ssafy.checksource.model.entity.Project;
 import com.ssafy.checksource.model.repository.DepartRepository;
 import com.ssafy.checksource.model.repository.LicenseRepository;
 import com.ssafy.checksource.model.repository.OpensourceProjectRepository;
@@ -84,17 +87,48 @@ public class DashBoardService {
 	}
 	
 	//전제 라이선스 의무 warning
-	public void getTotalLicenseWarning() {
-		
+	public List<LicenseWarningDTO> getTotalLicenseWarning(int currentPage, int size, String time) {
+		List<LicenseWarningDTO> licenseWarningList = new ArrayList<LicenseWarningDTO>();
+		PageRequest pageRequest = PageRequest.of(currentPage - 1, size);
+		List<Object[]> warningList = projectRepository.findByLicenseWarningTotalProjects(time, pageRequest);
+		for (Object[] objects : warningList) {
+			Long departId = Long.parseLong(objects[0].toString()); //departId
+			Long projectId = Long.parseLong(objects[1].toString()); //projectId
+			int cnt = Integer.parseInt(objects[2].toString());//cnt
+			Project project = projectRepository.findById(projectId).orElseThrow(() -> new IllegalArgumentException("no project data"));
+			LicenseWarningDTO licenseWarningDto = new LicenseWarningDTO();
+			//set
+			licenseWarningDto.setGitProjectId(project.getGitProjectId());
+			licenseWarningDto.setName(project.getName());
+			licenseWarningDto.setGitType(project.getGitType());
+			licenseWarningDto.setCnt(cnt);
+			licenseWarningDto.setDepartId(departId);
+			licenseWarningList.add(licenseWarningDto);
+		}
+		return licenseWarningList;
 	}
 	
 	
 	// 부서별 라이선스 의무 warning
-	public void getlicenseWarningByDepart (Long dapartId, int currentPage, int size) {
-		//페이징 필요, 각각의 프로젝트마다 의무 워닝수 필요
+	public List<LicenseWarningDTO> getlicenseWarningByDepart (Long departId, int currentPage, int size, String time) {
+		//페이징, 각각의 프로젝트마다 의무 워닝수 필요, 의무 워닝이 있는 프로젝트만 세야함
+		List<LicenseWarningDTO> licenseWarningList = new ArrayList<LicenseWarningDTO>();
 		PageRequest pageRequest = PageRequest.of(currentPage - 1, size);
-		//프로젝트 당 라이선스 의무워닝이 있는 것만 세야해.
-	
+		List<Object[]> warningList = projectRepository.findByLicenseWarningProjectByDepart(departId, time, pageRequest);
+		for (Object[] objects : warningList) {
+			Long projectId = Long.parseLong(objects[0].toString()); //projectId
+			int cnt = Integer.parseInt(objects[1].toString());//cnt
+			Project project = projectRepository.findById(projectId).orElseThrow(() -> new IllegalArgumentException("no project data"));
+			LicenseWarningDTO licenseWarningDto = new LicenseWarningDTO();
+			//set
+			licenseWarningDto.setGitProjectId(project.getGitProjectId());
+			licenseWarningDto.setName(project.getName());
+			licenseWarningDto.setGitType(project.getGitType());
+			licenseWarningDto.setCnt(cnt);
+			licenseWarningDto.setDepartId(departId);
+			licenseWarningList.add(licenseWarningDto);
+		}
+		return licenseWarningList;
 	}
 	
 	// 전체 통계 수치
