@@ -1,13 +1,19 @@
 <template>
 	<div class="top-five-chart">
-		<canvas id="myChart"></canvas>
+		<no-result v-if="data.length == 0"></no-result>
+		<canvas v-show="data.length > 0" id="myChart"></canvas>
 	</div>
 </template>
 
 <script>
 import Chart from "chart.js/auto";
+import NoResult from "../MyProject/NoResult.vue";
 
 export default {
+	name: "TopFiveGraph",
+	components: {
+		NoResult,
+	},
 	data() {
 		return {
 			label: [],
@@ -25,6 +31,7 @@ export default {
 			handler() {
 				this.label = this.labels;
 				this.chart.destroy();
+				console.log(this.chart);
 				this.createChart();
 			},
 		},
@@ -95,5 +102,9 @@ export default {
 	width: 60%;
 	height: 60%;
 	padding: 15px;
+}
+
+.no-result {
+	margin: 30px 0px;
 }
 </style>
