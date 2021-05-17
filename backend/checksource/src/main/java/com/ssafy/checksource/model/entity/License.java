@@ -56,14 +56,6 @@ public class License {
 	private Boolean is_warranty;
 	// 책임의 제한
 	private Boolean is_respon;
-	// 상업적 사용 가능
-	private Boolean is_commercial;
-	// 동일한 라이선스 유지
-	private Boolean is_continue;
-	// 특허권 사용 여부
-	private Boolean is_patent;
-	// 비공개 사용 여부
-	private Boolean is_private;
 
 	@OneToMany(mappedBy = "license", cascade = CascadeType.ALL)
 	private List<LicenseOpensource> opensources = new ArrayList<>();
