@@ -152,6 +152,7 @@ $width-sidenav: 240px;
 }
 
 .card {
+	overflow: hidden;
 	display: flex;
 	flex-direction: column;
 	width: 100%;
@@ -565,22 +566,31 @@ table caption {
 /* SLIDER STYLES */
 
 #slider {
-	width: 100%;
-	height: 400px;
+	// height: 400px;
 	position: relative;
 	color: #ccc;
 	margin: auto;
-	padding-bottom: 40px;
+	padding: 30px 0px;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.slides-group {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .slide {
 	margin: auto;
-	width: 100%;
-	height: 400px;
-	position: absolute;
-	top: 0;
-	left: 0;
+	// width: 100%;
+	// height: 400px;
+	// top: 0;
+	// left: 0;
 	display: flex;
+	flex-flow: row nowrap;
 	align-items: center;
 	justify-content: center;
 }
@@ -595,7 +605,6 @@ table caption {
 	align-items: center;
 	width: 40px;
 	height: 40px;
-	position: absolute;
 	top: calc(50% - 35px);
 	left: 1%;
 	transition: transform 0.3s ease-in-out;
@@ -609,4 +618,8 @@ table caption {
 
 .dash-c-btn:hover {
 	transform: scale(1.1);
+}
+
+.dashboard-verifycard {
+	margin: 0;
 }
