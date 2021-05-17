@@ -77,14 +77,6 @@ function readProjectBranches(gitlabId, projectId) {
     },
   });
 }
-function readGitHubProjectBranches(githubId, project) {
-  return http.get("/git/github/branches", {
-    params: {
-      githubId: githubId,
-      projectId: projectId,
-    },
-  });
-}
 function readHubProjectBranches(githubId, name, username) {
   return http.get("/git/github/branches", {
     params: {
@@ -98,10 +90,13 @@ function readHubProjectBranches(githubId, name, username) {
 function verifyGitLabProjects(gitlabId, projectList) {
   return http.post(`/git/projects?gitlabId=${gitlabId}`, projectList);
 }
-
 function verifyGitHubProjects(githubId, projectList) {
+  console.log(githubId)
+  console.log(projectList)
   return http.post(`/git/github/projects?githubId=${githubId}`, projectList);
 }
+
+
 
 // 프로젝트 삭제
 function deleteProject(projectId, gitlabId) {
@@ -125,7 +120,6 @@ export default {
   createGitHubConnect,
   deleteGitHubConnect,
   readGitHubProjects,
-  readHubProjectBranches,
   verifyGitHubProjects,
-  readGitHubProjectBranches
+  readHubProjectBranches,
 };

@@ -100,6 +100,7 @@ export default {
     },
     AddRepoClick: function (repo) {
       //레포지토리 클릭 => selectedList에 추가
+	  console.log(repo)
       if (this.selectedRepositoryList.length < 3) {
         this.selectedRepositoryList.push(repo);
       }
@@ -120,7 +121,7 @@ export default {
             this.fullLoading = false;
           });
       } else {
-        console.log(this.getGitHubList);
+		
         gitApi
           .verifyGitHubProjects(
             this.getGitHubList[0].githubId,
@@ -129,6 +130,7 @@ export default {
           .then(() => {
             alert("검증이 완료되었습니다.");
             this.fullLoading = false;
+			console.log(this.selectedRepositoryList)
             this.$router.push("/project/main/projects");
           })
           .catch(() => {
