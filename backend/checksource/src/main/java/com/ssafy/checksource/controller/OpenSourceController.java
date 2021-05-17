@@ -1,8 +1,10 @@
 package com.ssafy.checksource.controller;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.checksource.model.dto.OpensourceDetailDTO;
+import com.ssafy.checksource.model.dto.OpensourceIdDTO;
 import com.ssafy.checksource.model.dto.OpensourceListDTO;
 import com.ssafy.checksource.model.dto.OpensourceSaveDTO;
 import com.ssafy.checksource.model.dto.OpensourceUpdateDTO;
@@ -59,14 +62,14 @@ public class OpenSourceController {
 	}
 	
 	@ApiOperation(value = "오픈소스 업데이트하기")
-	@PostMapping("/updateOpensource")
+	@PutMapping("/updateOpensource")
 	public void update(@RequestHeader("TOKEN") String token,@RequestBody OpensourceUpdateDTO opsDto) {
 		opensourceService.update(token,opsDto);
 	}
 	
 	@ApiOperation(value = "오픈소스 삭제하기")
-	@PostMapping("/deleteOpensource")
-	public void update(@RequestHeader("TOKEN") String token,@RequestBody long opensourceId) {
+	@PutMapping("/deleteOpensource")
+	public void delete(@RequestHeader("TOKEN") String token,@RequestBody OpensourceIdDTO opensourceId) {
 		opensourceService.delete(opensourceId);
 	}
 
