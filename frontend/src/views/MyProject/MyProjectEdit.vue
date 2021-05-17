@@ -35,6 +35,7 @@
 				<router-view
 					id="myproject-edit-routerview"
 					:selectedRepositoryList="selectedRepositoryList"
+					:gitType="gitType"
 					@addRepoClick="AddRepoClick"
 					@changeAccountValue="ChangeAccountValue"
 				></router-view>
@@ -69,12 +70,13 @@ export default {
 				},
 			],
 			selectedRepositoryList: [],
-			gitlabId: 1,
+			gitId: 1,
+			gitType: 1,
 			fullLoading: false,
 		};
 	},
 	created() {
-		this.GetSelectedRepositories();
+		this.ClearRepoList();
 	},
 	watch: {
 		$route: function () {
@@ -101,7 +103,7 @@ export default {
 			//검증 시작
 			this.fullLoading = true;
 			gitApi
-				.verifyGitLabProjects(this.gitlabId, this.selectedRepositoryList)
+				.verifyGitLabProjects(this.gitId, this.selectedRepositoryList)
 				.then(() => {
 					alert("검증이 완료되었습니다.");
 					this.fullLoading = false;
@@ -114,11 +116,18 @@ export default {
 		},
 		ClearRepoList: function () {
 			//선택된 프로젝트 목록 초기화
+			if (this.$route.name == "MyProjectEditGitLab") {
+				this.gitType = 1;
+				this.gitId = 1;
+			} else {
+				this.gitType = 2;
+				this.gitId = 3;
+			}
 			this.ChangeAccountValue(1);
 		},
-		ChangeAccountValue: function (gitlabId) {
+		ChangeAccountValue: function (gitId) {
 			//선택된 프로젝트 목록 초기화
-			this.gitlabId = gitlabId;
+			this.gitId = gitId;
 			this.selectedRepositoryList = [];
 		},
 	},

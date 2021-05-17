@@ -47,8 +47,15 @@
 			<span v-else class="icon material-icons"> add </span>
 		</div> -->
 			<img
+				v-if="gitType == 1"
 				id="scm-icon"
 				src="@/assets/images/gitlab-icon.png"
+				alt="gitlab-icon"
+			/>
+			<img
+				v-else
+				id="scm-icon"
+				src="@/assets/images/github-icon.png"
 				alt="gitlab-icon"
 			/>
 		</div>
@@ -78,9 +85,10 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		gitType: Number,
 	},
 	created() {
-		console.log(this.repository);
+		console.log(this.gitType);
 	},
 	methods: {
 		SelectCard: function () {

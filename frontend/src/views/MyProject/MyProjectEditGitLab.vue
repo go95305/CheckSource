@@ -20,6 +20,7 @@
 				:repository="repository"
 				:selected="false"
 				:checked="IsSelected(repository.id)"
+				:gitType="gitType"
 				@addRepoClick="AddRepoClick"
 			></repository-card>
 		</div>
@@ -54,6 +55,7 @@ export default {
 	},
 	props: {
 		selectedRepositoryList: Array,
+		gitType: Number,
 	},
 	created() {
 		this.GetGitLabAccountList();
