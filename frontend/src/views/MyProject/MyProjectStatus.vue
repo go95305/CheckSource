@@ -72,6 +72,8 @@ import MyProjectPath from '../../components/MyProject/MyProjectPath.vue';
 import DashBoardOverview from '@/components/DashBoard/DashBoardOverview.vue';
 import TopFiveGraph from '@/components/DashBoard/TopFiveGraph.vue';
 import '@/assets/css/MyProject/MyProjectStatus.scss';
+import { mapGetters } from 'vuex';
+import dashboardApi from '@/api/dashboard.js';
 
 export default {
   name: 'MyProjectSummary',
@@ -80,16 +82,58 @@ export default {
     return {
       projectId: 'projectID입니다.',
       status: {
-        project: '27',
-        opensource: '17',
-        license: '5',
-        warning: '3',
+        project: '',
+        opensource: '',
+        license: '',
+        warning: '',
       },
-      labels: ['Apache-2.0', 'Ruby', 'MIT', 'JSON', 'GLEW'],
-      dataList: [6, 5, 11, 13, 3],
+      // labels: ['Apache-2.0', 'Ruby', 'MIT', 'JSON', 'GLEW'],
+      // dataList: [6, 5, 11, 13, 3],
+      labels: [],
+      dataList: [],
+      departId: '',
     };
   },
+  computed: {
+    ...mapGetters(['getDepartment']),
+  },
+  created() {
+    this.getDepartmentStatus();
+    this.getDepartmentGraph();
+  },
   methods: {
+    getDepartmentGraph: function () {
+      this.departId = this.getDepartment;
+      dashboardApi
+        .readTopFiveDepart(this.departId)
+        .then((response) => {
+          this.SetTopFive(response.data);
+        })
+        .catch();
+    },
+    SetTopFive(list) {
+      let labels = [];
+      let values = [];
+      console.log(list);
+      for (let item of list) {
+        labels.push(item.name);
+        values.push(item.cnt);
+      }
+      this.labels = labels;
+      this.dataList = values;
+    },
+    getDepartmentStatus: function () {
+      this.departId = this.getDepartment;
+      dashboardApi
+        .readDepartmentStatus(this.departId)
+        .then((response) => {
+          this.status.project = response.data.projectCnt;
+          this.status.opensource = response.data.opensourceCnt;
+          this.status.license = response.data.licenseCnt;
+          this.status.warning = response.data.warningCnt;
+        })
+        .catch();
+    },
     GoProjectResult: function () {
       this.$router.push({
         path: '/project/result/summary',
