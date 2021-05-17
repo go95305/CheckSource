@@ -10,13 +10,15 @@
 			<input
 				class="pagination-input"
 				type="radio"
-				name="pageList"
-				:id="`pagination-first`"
+				:name="`pageList_` + name"
+				:id="`pagination-first` + name"
 				:value="1"
 				v-model="page"
 				@click="AlertPageChange(1)"
 			/>
-			<label :for="`pagination-first`" class="pagination-label"> 1 </label>
+			<label :for="`pagination-first` + name" class="pagination-label">
+				1
+			</label>
 		</span>
 		<span class="pagination-list" v-if="displayFirstNum">...</span>
 
@@ -29,13 +31,13 @@
 			<input
 				class="pagination-input"
 				type="radio"
-				name="pageList"
-				:id="`pagination-${value}`"
+				:name="`pageList_` + name"
+				:id="`pagination-${value}` + name"
 				:value="value"
 				v-model="page"
 				@click="AlertPageChange(value)"
 			/>
-			<label :for="`pagination-${value}`" class="pagination-label">{{
+			<label :for="`pagination-${value}` + name" class="pagination-label">{{
 				value
 			}}</label>
 		</span>
@@ -46,13 +48,13 @@
 			<input
 				class="pagination-input"
 				type="radio"
-				name="pageList"
-				:id="`pagination-last`"
+				:name="`pageList_` + name"
+				:id="`pagination-last` + name"
 				:value="lastPage"
 				v-model="page"
 				@click="AlertPageChange(lastPage)"
 			/>
-			<label :for="`pagination-last`" class="pagination-label"
+			<label :for="`pagination-last` + name" class="pagination-label"
 				>{{ lastPage }}
 			</label>
 		</span>
@@ -68,6 +70,7 @@ export default {
 	props: {
 		currentPage: Number,
 		lastPage: Number,
+		name: String,
 	},
 	data() {
 		return {

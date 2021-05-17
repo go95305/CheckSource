@@ -367,7 +367,7 @@ public class GitService {
 
 				// path 경로 url encoding해서 api 요청
 				URI uri = UriComponentsBuilder
-					.fromUriString(baseUrl + "projects/{projectid}/repository/files/{urlEncoding}?ref=master")
+						.fromUriString(baseUrl + "projects/{projectid}/repository/files/{urlEncoding}?ref="+analyProjectListDto.getBranch())
 						.encode().buildAndExpand(gitlabProjectId, path).toUri();
 				// 헤더
 				HttpHeaders headers = new HttpHeaders();
@@ -388,6 +388,7 @@ public class GitService {
 					analyzeService.analyze(projectId, fileName, contents, filePath); // 변경
 
 				} catch (HttpClientErrorException e) {
+					System.out.println(e.getStatusCode());
 					// 토큰이 유효하지 않을 경우 401
 					if (e.getStatusCode() == HttpStatus.UNAUTHORIZED) {
 						return false;

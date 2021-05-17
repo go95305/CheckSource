@@ -5,25 +5,19 @@
 			<div class="card">
 				<div class="card__header">
 					<div class="card__header-title">
-						<strong>저장소(부서) 별 정보</strong>
+						<strong>부서별 정보</strong>
 					</div>
 				</div>
 				<!-- 총 갯수 -->
 				<div class="card__main">
 					<!-- <DashBoardOverview /> -->
 					<dash-board-overview :status="status"> </dash-board-overview>
-					<DashBoardTable />
+					<DashBoardTable
+						:list="statisticsList"
+						@getDepartProjects="GetDepartProjects"
+					/>
 
 					<div id="slider">
-						<transition-group
-							tag="div"
-							:name="transitionName"
-							class="slides-group"
-						>
-							<div v-if="show" :key="current" class="slide">
-								<VerifyCard />
-							</div>
-						</transition-group>
 						<div
 							class="dash-c-btn dash-c-btn-prev"
 							aria-label="Previous slide"
@@ -31,6 +25,19 @@
 						>
 							&#10094;
 						</div>
+						<transition-group
+							tag="div"
+							:name="transitionName"
+							class="slides-group"
+						>
+							<div v-if="projectList.length > 0" :key="current" class="slide">
+								<VerifyCard
+									class="dashboard-verifycard"
+									:project="projectList[current]"
+								/>
+							</div>
+						</transition-group>
+
 						<div
 							class="dash-c-btn dash-c-btn-next"
 							aria-label="Next slide"
@@ -82,11 +89,11 @@
 								</caption>
 								<thead class="dash-thead-css">
 									<tr>
-										<th scope="col">Repository</th>
-										<th scope="col">Department</th>
-										<th scope="col">Project</th>
-										<th scope="col">OpenSource</th>
-										<th scope="col">License</th>
+										<th scope="col">저장소</th>
+										<th scope="col">부서</th>
+										<th scope="col">프로젝트</th>
+										<th scope="col">오픈소스</th>
+										<th scope="col">라이선스</th>
 									</tr>
 								</thead>
 							</table>
@@ -124,14 +131,17 @@
 </template>
 
 <script>
-import "@/assets/css/DashBoard/DashBoard.scss";
+import dayjs from "dayjs";
 import Info from "@/api/info.js";
+import verifyApi from "@/api/verify.js";
+import dashboardApi from "@/api/dashboard.js";
 import TopFiveGraph from "@/components/DashBoard/TopFiveGraph.vue";
 import VerifyCard from "@/components/DashBoard/VerifyCard.vue";
 import DropDown from "@/components/DropDown/DropDown.vue";
 import DashBoardTable from "@/components/DashBoard/DashBoardTable.vue";
 import DashBoardOverview from "@/components/DashBoard/DashBoardOverview.vue";
 import "vueperslides/dist/vueperslides.css";
+import "@/assets/css/DashBoard/DashBoard.scss";
 
 export default {
 	name: "DashBoard",
@@ -144,6 +154,10 @@ export default {
 	},
 	data() {
 		return {
+			statisticsList: [],
+			choicedDepartId: -1,
+			currentTime: 0,
+			projectList: [],
 			current: 0,
 			direction: 1,
 			transitionName: "fade",
@@ -156,14 +170,36 @@ export default {
 	},
 	created() {
 		this.departList = Info.GetDepartmentList();
+		this.GetStatistics();
 	},
 	methods: {
+		GetStatistics() {
+			dashboardApi.readStatistics().then((response) => {
+				if (response.data) {
+					this.statisticsList = response.data.statisticsList;
+					this.status.project = response.data.totalProjectCnt;
+					this.status.opensource = response.data.totalOpensourceCnt;
+					this.status.license = response.data.totalLicenseCnt;
+					this.status.warning = response.data.totalWarningCnt;
+				}
+			});
+		},
+		GetDepartProjects(departId) {
+			this.choicedDepartId = departId;
+			this.currentTime = dayjs().format("YYYY-MM-DD HH:mm:ss");
+			verifyApi
+				.readVerifiedProjectList(1, departId, "", 100, this.currentTime)
+				.then((response) => {
+					this.projectList = response.data.projectList;
+				});
+		},
 		slide(dir) {
+			console.log(this.current);
 			this.direction = dir;
 			dir === 1
 				? (this.transitionName = "slide-next")
 				: (this.transitionName = "slide-prev");
-			var len = this.slides.length;
+			var len = this.projectList.length;
 			this.current = (this.current + (dir % len) + len) % len;
 		},
 	},

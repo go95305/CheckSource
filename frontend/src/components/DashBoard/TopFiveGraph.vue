@@ -1,6 +1,20 @@
 <template>
   <div class="top-five-chart">
     <canvas id="myChart"></canvas>
+    <!-- 
+                    'rgba(48, 138, 197, 0.4)',
+                'rgba(35, 154, 110, 0.4)',
+                'rgba(223, 107, 25, 0.4)',
+                'rgba(206, 69, 99, 0.4)',
+                'rgba(113, 116, 122, 0.4)',
+
+
+                'rgba(255, 99, 132, 0.4)',
+                'rgba(54, 162, 235, 0.4)',
+                'rgba(255, 206, 86, 0.4)',
+                'rgba(75, 192, 192, 0.4)',
+                'rgba(153, 102, 255, 0.4)', 
+                -->
   </div>
 </template>
 
@@ -15,7 +29,6 @@ export default {
   methods: {
     createChart() {
       var ctx = document.getElementById('myChart');
-
       new Chart(ctx, {
         type: 'doughnut',
         data: {
@@ -25,28 +38,37 @@ export default {
               label: '# of Votes',
               data: this.dataList,
               backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
+                'rgba(48, 138, 197, 0.6)',
+                'rgba(35, 154, 110, 0.6)',
+                'rgba(223, 107, 25, 0.6)',
+                'rgba(206, 69, 99, 0.6)',
+                'rgba(113, 116, 122, 0.6)',
               ],
               borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
+                'rgba(48, 138, 197, 0.7)',
+                'rgba(35, 154, 110, 0.7)',
+                'rgba(223, 107, 25, 0.7)',
+                'rgba(206, 69, 99, 0.7)',
+                'rgba(113, 116, 122, 0.7)',
               ],
               borderWidth: 1,
             },
           ],
         },
-        // options: {
-        //   legend: {
-        //     align: 'middle',
-        //   },
-        // },
+        options: {
+          // maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              align: 'middle',
+              labels: {
+                font: {
+                  size: 17.5,
+                },
+              },
+            },
+          },
+        },
       });
     },
   },

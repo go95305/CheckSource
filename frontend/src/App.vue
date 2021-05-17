@@ -13,7 +13,7 @@ export default {
 			const userToken = JSON.parse(localStorageVuex).accessToken;
 			if (userToken != null) {
 				//현재 페이지가 로그인 페이지라면 대시보드로 이동.
-				if (this.$route.name == "BeforeLogin") this.$router.push("/dashboard");
+				if (window.location.pathname == "/") this.$router.push("/dashboard");
 			}
 		}
 	},
@@ -26,6 +26,22 @@ export default {
 * {
 	margin: 0;
 }
+
+/* *::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+	background-color: #eac03a30;
+	border-radius: 10px;
+	background-clip: padding-box;
+	border: 1px solid transparent;
+}
+*::-webkit-scrollbar-track {
+	background-color: rgba(255, 255, 255);
+	border-radius: 10px;
+	box-shadow: inset 0px 0px 5px white;
+} */
 
 #app {
 	font-family: "Noto Sans KR";
