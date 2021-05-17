@@ -14,11 +14,11 @@
         <top-five-graph :labels="labels" :dataList="dataList"> </top-five-graph>
       </div>
 
-      <div class="status-table">
+      <div class="status-table-layout">
         <div class="dashboard-table-warning">
           <div class="d-tbl-header">
             <table
-              class="dash-table"
+              class="status-table"
               cellpadding="0"
               cellspacing="0"
               border="0"
@@ -26,7 +26,7 @@
               <caption>
                 [코드공개(All) / 고지의무]
               </caption>
-              <thead class="dash-thead-css">
+              <thead class="status-thead-css">
                 <tr>
                   <th scope="col">저장소</th>
                   <th scope="col">부서</th>
@@ -37,9 +37,9 @@
               </thead>
             </table>
           </div>
-          <div class="d-tbl-content">
+          <div class="s-tbl-content">
             <table
-              class="dash-table"
+              class="status-table"
               cellpadding="0"
               cellspacing="0"
               border="0"
