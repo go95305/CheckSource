@@ -42,22 +42,22 @@ export default {
           name: '라이선스 고지 여부',
           value: 'this.informationData.is_license',
         },
-        {
-          name: '상업적 사용 가능 여부',
-          value: 'this.informationData.is_commercial',
-        },
+        // {
+        //   name: '상업적 사용 가능 여부',
+        //   value: 'this.informationData.is_commercial',
+        // },
         {
           name: '수정 가능 여부',
           value: 'this.informationData.is_modify',
         },
-        {
-          name: '비공개 사용 가능 여부',
-          value: 'this.informationData.is_private',
-        },
-        {
-          name: '특허권 사용 여부',
-          value: 'this.informationData.is_patent',
-        },
+        // {
+        //   name: '비공개 사용 가능 여부',
+        //   value: 'this.informationData.is_private',
+        // },
+        // {
+        //   name: '특허권 사용 여부',
+        //   value: 'this.informationData.is_patent',
+        // },
         {
           name: '책임 여부',
           value: 'this.informationData.is_respon',
@@ -66,10 +66,10 @@ export default {
           name: '보증 여부',
           value: 'this.informationData.is_warranty',
         },
-        {
-          name: '동일한 라이선스 유지 여부',
-          value: 'this.informationData.is_continue',
-        },
+        // {
+        //   name: '동일한 라이선스 유지 여부',
+        //   value: 'this.informationData.is_continue',
+        // },
         {
           name: '배포 가능 여부',
           value: 'this.informationData.is_distribute',
