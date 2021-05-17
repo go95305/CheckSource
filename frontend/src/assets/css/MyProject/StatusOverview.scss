@@ -4,7 +4,7 @@
   justify-content: space-around;
   align-items: center;
   align-content: center;
-  margin: 20px;
+  margin: 20px 0;
 }
 
 .panel {
@@ -49,8 +49,6 @@
       color: darken(#af64cc, 4%);
       top: 45px;
       right: 60px;
-      -webkit-transform: rotate(45deg);
-      transform: rotate(45deg);
     }
     &:hover:after {
       top: 8px;
