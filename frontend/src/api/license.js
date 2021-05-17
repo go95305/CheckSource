@@ -12,6 +12,7 @@ function readLicenseList(keyword, page, pageSize, typeFilter) {
 	});
 }
 
+//라이선스 상세 정보 불러오기
 function getDetailLicense(licenseId) {
 	return http.get(`/license/getDetail/${licenseId}`, {
 		params: {
@@ -20,8 +21,27 @@ function getDetailLicense(licenseId) {
 	});
 }
 
+//라이선스 추가
 function addLicense(licenseInfo) {
-	return http.post(`/license/addLicense`,licenseInfo);
-  }
+	return http.post(`/license/addLicense`, licenseInfo);
+}
 
-export default { readLicenseList, getDetailLicense, addLicense };
+//오픈소스 업데이트
+function updateLicense(licenseInfo) {
+	return http.put(`/license/updateLicense`, licenseInfo);
+}
+
+//오픈소스 삭제하기
+function deleteLicense(licenseId) {
+	return http.put(`/license/deleteLicense`, {
+		licenseId: licenseId,
+	});
+}
+
+export default {
+	readLicenseList,
+	getDetailLicense,
+	addLicense,
+	updateLicense,
+	deleteLicense,
+};

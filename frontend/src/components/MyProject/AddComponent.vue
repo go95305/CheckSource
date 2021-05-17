@@ -148,7 +148,7 @@
     
     <div class="add-component-button-div">
       <div v-if="isEditMode">
-        <span class="btn edit-btn" :class="{CantDo:!CanDo}" @click="editOpenSource">수정</span>
+        <span class="btn edit-btn" :class="{CantDo:!CanDo}" @click="updateOpenSource">수정</span>
         <span class="btn delete-btn" @click="deleteOpenSource">삭제</span>
       </div>
       <div v-else >
@@ -176,6 +176,7 @@ export default {
         version: "",
         packageType: "",
         artifactId: "",
+        groupId:"",
         licenseId:[],
       },
       tags: [],
@@ -186,25 +187,33 @@ export default {
       isEditMode:false,
     };
   },
-   props:{
-    editOpensource:Object
-  },
   created() {
     if(window.location.pathname == '/list/detail/editOpensource'){
       //수정하기 모드
-      if(this.editOpensource){
+      let editOpensource = this.$route.params.editOpensource;
+      // let licenseList= this.$route.params.licenseList;
+      console.log(editOpensource);
+      if(editOpensource){
         this.isEditMode = true;
-        this.opensource = this.editOpensource;
+        this.opensource = editOpensource;
         this.opensource.licenseId = [];
-        for(let license of this.editOpensource.licenseList){
+        for(let license of editOpensource.licenseList){
           this.opensource.licenseId.push(license.licenseId);
-          this.tags.push(license.contents);
+          this.tags.push(license.name);
         }
         delete this.opensource.licenseList;
         console.log(this.opensource);
       }
       else{
         this.$router.go(-1);
+      }
+    }
+    else{
+      let unmapped = this.$route.params.unmappedOpensource;
+      if(unmapped){
+        this.opensource.artifactId = unmapped.artifactId;
+        this.opensource.groupId = unmapped.groupId;
+        this.opensource.version = unmapped.version;
       }
     }
   },
@@ -265,7 +274,7 @@ export default {
           });
       }
     },
-    editOpenSource(){
+    updateOpenSource(){
       //오픈소스 수정
       if(this.CanDo){
         opensourceApi.updateOpenSource(this.opensource).then(()=>{

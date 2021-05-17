@@ -4,6 +4,8 @@
 			<search-bar
 				:placeHolderText="'검색할 오픈소스를 입력하세요.'"
 				:filterList="filterList"
+				:filter="typeFilter"
+				:keyword="keyword"
 				@doSearch="DoSearch"
 			></search-bar>
 		</div>
@@ -66,16 +68,41 @@ export default {
 			totalPage: 10,
 			typeFilter: 1,
 			keyword: "",
-			routerQueryPage: this.$router.query,
 		};
 	},
 	created() {
-		this.GetQuery();
+		if (this.$route.query.page) {
+			this.page = Number(this.$route.query.page);
+		}
+		if (this.$route.query.keyword || this.$route.query.filter) {
+			this.keyword = this.$route.query.keyword;
+			this.typeFilter = Number(this.$route.query.filter);
+		}
+		console.log("들" + this.keyword);
 		this.GetList();
 	},
 	watch: {
-		routerQueryPage: function () {
-			this.GetQuery();
+		$route: {
+			deep: true,
+			handler() {
+				if (this.$route.query.page && this.page != this.$route.query.page) {
+					this.page = Number(this.$route.query.page);
+				} else if (!this.$route.query.page) {
+					this.page = 1;
+				}
+				if (
+					(this.$route.query.keyword &&
+						this.keyword != this.$route.query.keyword) ||
+					(this.$route.query.filter && this.keyword != this.$route.query.filter)
+				) {
+					this.keyword = this.$route.query.keyword;
+					this.typeFilter = Number(this.$route.query.filter);
+				} else if (!this.$route.query.keyword || !this.$route.query.filter) {
+					this.keyword = "";
+					this.typeFilter = 1;
+				}
+				this.GetList();
+			},
 		},
 	},
 	methods: {
@@ -104,16 +131,20 @@ export default {
 				.catch();
 		},
 		DoSearch: function (filter, keyword) {
-			this.typeFilter = filter;
-			this.keyword = keyword;
-			this.GetList();
+			let newQuery = Object.assign({}, this.$route.query);
+			newQuery.filter = filter;
+			newQuery.keyword = keyword;
+			newQuery.page = 1;
+			this.$router.push({
+				query: newQuery,
+			});
 		},
 		ChangePage: function (page) {
-			this.page = page;
+			let newQuery = Object.assign({}, this.$route.query);
+			newQuery.page = page;
 			this.$router.push({
-				query: { page: page, size: this.size },
+				query: newQuery,
 			});
-			this.GetList();
 		},
 		GoDetail: function (opensource) {
 			this.$router.push({

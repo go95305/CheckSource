@@ -14,7 +14,7 @@
         <td class="opensource-table-unmapped-add"></td>
       </th>
       <tr class="opensource-table-tr" v-for="(item, index) in unmappedList"
-			:key="`${index}_mapped`" @click="goOpenSource(item.opensourceId)">
+			:key="`${index}_mapped`" @click="GoAddOpensource(item)">
         <td>{{ item.artifactId }}</td>
         <td>{{ item.groupId }}</td>
         <td>{{ item.path }}</td>
@@ -56,37 +56,43 @@ export default {
      if(this.$route.query.unmappedPage){
           this.page = Number(this.$route.query.unmappedPage);
      };
-    this.getList();
+    this.GetList();
   },
   watch:{
     $route:{
       deep:true,
       handler(){
-        if(this.page != this.$route.query.unmappedPage){
+        if(this.$route.query.unmappedPage && this.page != this.$route.query.unmappedPage){
           this.page = Number(this.$route.query.unmappedPage);
-          this.getList();
+          this.GetList();
+        }else if(!this.$route.query.unmappedPage){
+          this.page = 1;
+           this.GetList();
         }
       }
     },
   },
   methods: {
-    getList: function () {
+    GetList: function () {
       this.unMappedLoading = true;
       this.unmappedList = [];
 			verifyApi.readVerifiedUnmappedOpenSourceList(this.page,this.gitType,this.projectId,this.size).then((response) => {
 				if (response.data) {
           this.unMappedLoading = false;
 					this.unmappedList = response.data.unmappedList;
+          console.log(this.unmappedList);
           this.totalPage = response.data.totalPages;
 				}
 			}).catch(() => {
         this.unMappedLoading = false;
       });
 		},
-		goOpenSource: function (id) {
+		GoAddOpensource:function(opensource) {
+      console.log(opensource.artifactId);
+      let unmappedOpensource = {artifactId:opensource.artifactId, groupId:opensource.groupId, version:opensource.version};
 			this.$router.push({
 				name: "AddOpenSource",
-				query: { id: id },
+        params: {unmappedOpensource:unmappedOpensource},
 			});
 		},
     ChangePage:function(page){
