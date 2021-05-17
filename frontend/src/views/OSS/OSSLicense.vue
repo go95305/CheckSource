@@ -4,6 +4,7 @@
 			<search-bar
 				:placeHolderText="'검색할 라이선스를 입력하세요.'"
 				:filterList="filterList"
+				:filter="typeFilter"
 				:keyword="keyword"
 				@doSearch="DoSearch"
 			></search-bar>
@@ -72,7 +73,7 @@ export default {
 		}
 		if (this.$route.query.keyword) {
 			this.keyword = this.$route.query.keyword;
-			this.typeFilter = this.$route.query.filter;
+			this.typeFilter = Number(this.$route.query.filter);
 		}
 		this.GetList();
 	},
@@ -85,14 +86,14 @@ export default {
 				} else if (!this.$route.query.page) {
 					this.page = 1;
 				}
-
 				if (
-					this.$route.query.keyword &&
-					this.keyword != this.$route.query.keyword
+					(this.$route.query.keyword &&
+						this.keyword != this.$route.query.keyword) ||
+					(this.$route.query.filter && this.keyword != this.$route.query.filter)
 				) {
 					this.keyword = this.$route.query.keyword;
-					this.typeFilter = this.$route.query.filter;
-				} else if (!this.$route.query.keyword) {
+					this.typeFilter = Number(this.$route.query.filter);
+				} else if (!this.$route.query.keyword || !this.$route.query.filter) {
 					this.keyword = "";
 					this.typeFilter = 1;
 				}

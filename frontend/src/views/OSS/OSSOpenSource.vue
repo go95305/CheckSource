@@ -89,12 +89,13 @@ export default {
 					this.page = 1;
 				}
 				if (
-					this.$route.query.keyword &&
-					this.keyword != this.$route.query.keyword
+					(this.$route.query.keyword &&
+						this.keyword != this.$route.query.keyword) ||
+					(this.$route.query.filter && this.keyword != this.$route.query.filter)
 				) {
 					this.keyword = this.$route.query.keyword;
 					this.typeFilter = this.$route.query.filter;
-				} else if (!this.$route.query.keyword) {
+				} else if (!this.$route.query.keyword || !this.$route.query.filter) {
 					this.keyword = "";
 					this.typeFilter = 1;
 				}
@@ -137,8 +138,10 @@ export default {
 			});
 		},
 		ChangePage: function (page) {
+			let newQuery = Object.assign({}, this.$route.query);
+			newQuery.page = page;
 			this.$router.push({
-				query: { page: page },
+				query: newQuery,
 			});
 		},
 		GoDetail: function (opensource) {

@@ -30,6 +30,7 @@ export default {
 		placeHolderText: String,
 		filterList: Array,
 		keyword: String,
+		filter: Number,
 	},
 	watch: {
 		keyword: function () {
