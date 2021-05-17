@@ -46,15 +46,15 @@ public class GitHubController {
 
     @ApiOperation(value = "프로젝트 삭제하기")
     @DeleteMapping("/github/projects")
-    public boolean deleteProject(@RequestHeader("TOKEN") String token, @RequestParam String projectId, @RequestParam Long githubId) {
-        return githubService.deleteProject(token, projectId, githubId);
+    public boolean deleteProject(@RequestHeader("TOKEN") String token, @RequestParam String projectId, @RequestParam Long gitType) {
+        return githubService.deleteProject(token, projectId, gitType);
     }
 
     @ApiOperation(value = "프로젝트 추가하기-검증 ")
     @PostMapping("/github/projects")
-    public boolean addProjects(@RequestHeader("TOKEN") String token, @RequestBody List<GitHubProjectDTO> projectList, @RequestParam Long githubId, @RequestParam String sha){
+    public boolean addProjects(@RequestHeader("TOKEN") String token, @RequestBody List<GitHubProjectDTO> projectList, @RequestParam Long githubId){
         try {
-            return githubService.addProject(token, projectList, githubId, sha);
+            return githubService.addProject(token, projectList, githubId);
         } catch (Exception e) {
             e.printStackTrace();
             return false;

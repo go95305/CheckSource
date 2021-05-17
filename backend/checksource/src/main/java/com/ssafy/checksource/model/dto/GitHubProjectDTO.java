@@ -8,5 +8,6 @@ public class GitHubProjectDTO {
     private String name;
     private String branch;
     private String html_url;
+    private String sha;
     private boolean verified;
 }
