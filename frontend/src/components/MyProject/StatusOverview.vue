@@ -5,6 +5,9 @@
         <span>{{ status.project }}</span
         >프로젝트
       </div>
+      <div class="tooltip-content">
+        <p>하잉 오늘은 화요일이예요</p>
+      </div>
     </div>
     <div class="panel opensource">
       <div class="status-title">
