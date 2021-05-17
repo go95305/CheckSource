@@ -2,7 +2,8 @@
 	<div>
 		<div class="mypage-scm-card-background">
 			<div class="mypage-scm-card-div">
-				<span>{{ getBaseUrl(account.gitlabId) }}</span>
+				<span v-if="gitType<2">{{ getBaseUrl(account.gitlabId) }}</span>
+				<span v-else>{{ getBaseUrl(account.githubId) }}</span>
 				<span>{{ account.username }}</span>
 				<img
 					v-if="gitType < 2"
@@ -17,9 +18,15 @@
 					alt="gitlab-icon"
 				/>
 			</div>
-			<span
+			<span v-if="gitType<2"
 				class="mypage-scm-card-close-button material-icons"
 				@click="deleteSCMCard"
+			>
+				close
+			</span>
+			<span v-else
+				class="mypage-scm-card-close-button material-icons"
+				@click="deleteHubSCMCard"
 			>
 				close
 			</span>
@@ -42,6 +49,9 @@ export default {
 		},
 		deleteSCMCard: function () {
 			this.$emit("deleteSCM", this.index, this.account.gitlabId);
+		},
+		deleteHubSCMCard: function () {
+			this.$emit("deleteSCM", this.index, this.account.githubId);
 		},
 	},
 };
