@@ -14,7 +14,7 @@
   width: 22%;
   height: 140px;
   margin: 10px;
-  font-size: 29px;
+  font-size: 27px;
   font-weight: 600;
   color: #fff;
   overflow: hidden;
@@ -22,15 +22,15 @@
   .status-title {
     position: relative;
     display: block;
-    padding: 0 25px;
+    padding: 2px 25px;
     color: #fff;
     text-decoration: none;
     z-index: 2;
     span {
       display: block;
-      font-size: 96px;
+      font-size: 91px;
       font-weight: 700;
-      line-height: 96px;
+      line-height: 90px;
     }
   }
   &:after {
