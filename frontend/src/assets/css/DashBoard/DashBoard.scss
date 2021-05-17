@@ -80,6 +80,7 @@ $width-sidenav: 240px;
     // grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     // grid-auto-rows: 74px;
     // grid-gap: 7px;
+    align-self: stretch;
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
@@ -163,6 +164,7 @@ $width-sidenav: 240px;
     border-radius: 15px 15px 0 0;
 
     &__header {
+        flex: 0 0 50px;
         display: flex;
         border-radius: 15px 15px 0 0;
         align-items: center;
@@ -305,6 +307,108 @@ $width-sidenav: 240px;
     }
 }
 
+// Mobile screen breakpoints (750px)
+@media only screen and (min-width: 46.875em) {
+    // Break out to sidenav grid layout on medium + screens
+    .grid {
+        display: grid;
+        grid-template-columns: $width-sidenav calc(100% - 240px); // Charts responsiveness won't work with fr units
+        grid-template-rows: $height-header 1fr $height-footer;
+        grid-template-areas:
+            "sidenav header"
+            "sidenav main"
+            "sidenav footer";
+        height: 100vh;
+    }
+    .main {
+        &__cards {
+            display: grid;
+            row-gap: 20px;
+        }
+    }
+
+    .sidenav {
+        position: relative;
+        transform: translateX(0);
+
+        &__brand-close {
+            visibility: hidden;
+        }
+    }
+
+    .main-header {
+        &__intro-wrapper {
+            padding: 0 30px;
+        }
+    }
+
+    .header {
+        &__menu {
+            display: none;
+        }
+
+        &__search {
+            margin-left: 20px; // No menu icon; move 'er back over
+        }
+
+        &__avatar {
+            width: 40px;
+            height: 40px;
+        }
+    }
+}
+
+// Medium screens breakpoint (1050px)
+@media only screen and (min-width: 65.625em) {
+    html,
+    body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+    .main {
+        &__cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 48vh 48vh;
+            column-count: 2;
+        }
+    }
+
+    .main-header {
+        &__intro-wrapper {
+            flex-direction: row;
+        }
+
+        &__welcome {
+            align-items: flex-start;
+        }
+    }
+
+    .depart-card {
+        grid-column: 1;
+        grid-row: 1 / span 2;
+    }
+
+    .depart-card .card__main {
+        flex: 1 0 0;
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+    }
+
+    .topfive-card {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    .warning-card {
+        grid-column: 2;
+        grid-row: 2;
+    }
+}
+
 // Card header settings icons
 .settings {
     display: flex;
@@ -392,103 +496,6 @@ $width-sidenav: 240px;
     min-width: 0;
 }
 
-// Mobile screen breakpoints (750px)
-@media only screen and (min-width: 46.875em) {
-    // Break out to sidenav grid layout on medium + screens
-    .grid {
-        display: grid;
-        grid-template-columns: $width-sidenav calc(100% - 240px); // Charts responsiveness won't work with fr units
-        grid-template-rows: $height-header 1fr $height-footer;
-        grid-template-areas:
-            "sidenav header"
-            "sidenav main"
-            "sidenav footer";
-        height: 100vh;
-    }
-    .main {
-        &__cards {
-            display: grid;
-            row-gap: 20px;
-        }
-    }
-
-    .sidenav {
-        position: relative;
-        transform: translateX(0);
-
-        &__brand-close {
-            visibility: hidden;
-        }
-    }
-
-    .main-header {
-        &__intro-wrapper {
-            padding: 0 30px;
-        }
-    }
-
-    .header {
-        &__menu {
-            display: none;
-        }
-
-        &__search {
-            margin-left: 20px; // No menu icon; move 'er back over
-        }
-
-        &__avatar {
-            width: 40px;
-            height: 40px;
-        }
-    }
-}
-
-// Medium screens breakpoint (1050px)
-@media only screen and (min-width: 65.625em) {
-    html,
-    body {
-        margin: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-    }
-    .main {
-        &__cards {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 48vh 48vh;
-            column-count: 2;
-        }
-    }
-
-    .main-header {
-        &__intro-wrapper {
-            flex-direction: row;
-        }
-
-        &__welcome {
-            align-items: flex-start;
-        }
-    }
-
-    .depart-card {
-        grid-column: 1;
-        grid-row: 1 / span 2;
-    }
-
-    .topfive-card {
-        grid-column: 2;
-        grid-row: 1;
-    }
-
-    .warning-card {
-        grid-column: 2;
-        grid-row: 2;
-    }
-}
-
-// table
-
 // vueper slides
 .vueperslides__progress {
     background: rgba(0, 0, 0, 0.25);
@@ -543,11 +550,10 @@ $width-sidenav: 240px;
 /* SLIDER STYLES */
 
 #slider {
-    // height: 400px;
+    align-self: stretch;
+    flex: 1 0 0;
     position: relative;
     color: #ccc;
-    margin: auto;
-    padding: 30px 0px;
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
