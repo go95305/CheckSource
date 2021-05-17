@@ -55,4 +55,10 @@ public class DashBoardController {
 		return dashBoardService.getlicenseWarningByDepart(departId, currentPage, size, time);
 	}
 	
+	@ApiOperation(value = "전체 프로젝트 warning")
+	@GetMapping("/warning")
+	public List<LicenseWarningDTO> getTotalLicenseWarning(@RequestHeader("TOKEN") String token, @RequestParam int currentPage,  @RequestParam int size,  @RequestParam String time) {
+		return dashBoardService.getTotalLicenseWarning(currentPage, size, time);
+	}
+	
 }

@@ -87,8 +87,25 @@ public class DashBoardService {
 	}
 	
 	//전제 라이선스 의무 warning
-	public void getTotalLicenseWarning() {
-		
+	public List<LicenseWarningDTO> getTotalLicenseWarning(int currentPage, int size, String time) {
+		List<LicenseWarningDTO> licenseWarningList = new ArrayList<LicenseWarningDTO>();
+		PageRequest pageRequest = PageRequest.of(currentPage - 1, size);
+		List<Object[]> warningList = projectRepository.findByLicenseWarningTotalProjects(time, pageRequest);
+		for (Object[] objects : warningList) {
+			Long departId = Long.parseLong(objects[0].toString()); //departId
+			Long projectId = Long.parseLong(objects[1].toString()); //projectId
+			int cnt = Integer.parseInt(objects[2].toString());//cnt
+			Project project = projectRepository.findById(projectId).orElseThrow(() -> new IllegalArgumentException("no project data"));
+			LicenseWarningDTO licenseWarningDto = new LicenseWarningDTO();
+			//set
+			licenseWarningDto.setGitProjectId(project.getGitProjectId());
+			licenseWarningDto.setName(project.getName());
+			licenseWarningDto.setGitType(project.getGitType());
+			licenseWarningDto.setCnt(cnt);
+			licenseWarningDto.setDepartId(departId);
+			licenseWarningList.add(licenseWarningDto);
+		}
+		return licenseWarningList;
 	}
 	
 	
@@ -103,8 +120,12 @@ public class DashBoardService {
 			int cnt = Integer.parseInt(objects[1].toString());//cnt
 			Project project = projectRepository.findById(projectId).orElseThrow(() -> new IllegalArgumentException("no project data"));
 			LicenseWarningDTO licenseWarningDto = new LicenseWarningDTO();
-			licenseWarningDto = modelMapper.map(project, LicenseWarningDTO.class);
+			//set
+			licenseWarningDto.setGitProjectId(project.getGitProjectId());
+			licenseWarningDto.setName(project.getName());
+			licenseWarningDto.setGitType(project.getGitType());
 			licenseWarningDto.setCnt(cnt);
+			licenseWarningDto.setDepartId(departId);
 			licenseWarningList.add(licenseWarningDto);
 		}
 		return licenseWarningList;
