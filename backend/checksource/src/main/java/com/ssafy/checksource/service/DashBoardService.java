@@ -2,6 +2,7 @@ package com.ssafy.checksource.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.json.JSONObject;
@@ -44,21 +45,41 @@ public class DashBoardService {
 	
 	
 	//전체 top 오픈소스 5
-	public void getTotalTop5Opensource() {
-		
+	public List<Top5OpensourceDTO> getTotalTop5Opensource() {
+		List <Top5OpensourceDTO> top5ListDto = new ArrayList<Top5OpensourceDTO>();
+		List<Object[]> top5List = opensourceRepository.findTop5();
+		for (Object[] objects : top5List) {
+			Long opensourceId = Long.parseLong(objects[0].toString()); //opensourceId
+			int cnt = Integer.parseInt(objects[1].toString());//cnt
+			Opensource opensource = opensourceRepository.findById(opensourceId).orElseThrow(() -> new IllegalArgumentException("no opensource data"));
+			String name = opensource.getName();
+			Top5OpensourceDTO topOpensouce = new Top5OpensourceDTO();
+			//set
+			topOpensouce.setOpensourceId(opensourceId);
+			topOpensouce.setName(name);
+			topOpensouce.setCnt(cnt);
+			top5ListDto.add(topOpensouce);
+		}
+		return top5ListDto;
 	}
+	
 	
 	// 부서벌 top 오픈소스 5
 	public List<Top5OpensourceDTO> getTop5OpensourceByDepart(Long departId) {
 		List <Top5OpensourceDTO> top5ListDto = new ArrayList<Top5OpensourceDTO>();
-		//쿼리
-		List<Object> top5List = opensourceRepository.findByTop5(departId);
-		for (Object object : top5List) {
-			Gson gson = new Gson();
-			
+		List<Object[]> top5List = opensourceRepository.findTop5ByDepart(departId);
+		for (Object[] objects : top5List) {
+			Long opensourceId = Long.parseLong(objects[0].toString()); //opensourceId
+			int cnt = Integer.parseInt(objects[1].toString());//cnt
+			Opensource opensource = opensourceRepository.findById(opensourceId).orElseThrow(() -> new IllegalArgumentException("no opensource data"));
+			String name = opensource.getName();
+			Top5OpensourceDTO topOpensouce = new Top5OpensourceDTO();
+			//set
+			topOpensouce.setOpensourceId(opensourceId);
+			topOpensouce.setName(name);
+			topOpensouce.setCnt(cnt);
+			top5ListDto.add(topOpensouce);
 		}
-		
-		//set
 		return top5ListDto;
 	}
 	

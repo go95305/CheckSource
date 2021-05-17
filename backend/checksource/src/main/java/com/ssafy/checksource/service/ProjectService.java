@@ -102,10 +102,11 @@ public class ProjectService {
 		for (Project project : projectList.getContent()) {
 			ProjectListByDepartDTO projectDto = new ProjectListByDepartDTO();
 			projectDto = modelMapper.map(project, ProjectListByDepartDTO.class);
-			//프로젝트 id별 매핑된 오픈소스 갯수 
-			List<OpensourceProject> opensourceList = new ArrayList<OpensourceProject>();
-			opensourceList = opensourceProjectRepository.findAllByProject(project);
-			projectDto.setOpensourceCnt(opensourceList.size());
+			//프로젝트 id별 검증한 총 오픈소스 갯수 
+			int unmappingOpensourceCnt = unmappedOpensourceRepository.findAllByProject(project).size();
+			int mappingOpensourceCnt = opensourceProjectRepository.findAllByProject(project).size();
+			int analyOpensourceCnt = unmappingOpensourceCnt + mappingOpensourceCnt;
+			projectDto.setOpensourceCnt(analyOpensourceCnt);
 			//프로젝트 id별 매핑된 라이선스 갯수
 			List<LicenseOpensource> licenseOpensourceList = new ArrayList<LicenseOpensource>();
 			licenseOpensourceList = licenseOpensourceRepository.findAllByProjectId(project.getProjectId());
