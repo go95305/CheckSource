@@ -70,6 +70,7 @@ export default {
 				},
 			],
 			selectedRepositoryList: [],
+			gitId: 1,
 			gitType: 1,
 			fullLoading: false,
 		};
@@ -102,7 +103,7 @@ export default {
 			//검증 시작
 			this.fullLoading = true;
 			gitApi
-				.verifyGitLabProjects(this.gitlabId, this.selectedRepositoryList)
+				.verifyGitLabProjects(this.gitId, this.selectedRepositoryList)
 				.then(() => {
 					alert("검증이 완료되었습니다.");
 					this.fullLoading = false;
@@ -117,14 +118,16 @@ export default {
 			//선택된 프로젝트 목록 초기화
 			if (this.$route.name == "MyProjectEditGitLab") {
 				this.gitType = 1;
+				this.gitId = 1;
 			} else {
 				this.gitType = 2;
+				this.gitId = 3;
 			}
 			this.ChangeAccountValue(1);
 		},
-		ChangeAccountValue: function (gitlabId) {
+		ChangeAccountValue: function (gitId) {
 			//선택된 프로젝트 목록 초기화
-			this.gitlabId = gitlabId;
+			this.gitId = gitId;
 			this.selectedRepositoryList = [];
 		},
 	},
