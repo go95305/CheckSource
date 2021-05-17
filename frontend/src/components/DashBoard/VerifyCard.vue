@@ -25,7 +25,7 @@
 
     <!-- right -->
     <div class="verifycard-main">
-      <div class="button-holder" @click="DeleteProjectCheck">
+      <div v-if="isMyproject" class="button-holder" @click="DeleteProjectCheck">
         <button class="delete-btn">
           <span class="material-icons"> delete </span>
         </button>
@@ -88,6 +88,7 @@ export default {
   },
   props: {
     project: Object,
+    isMyproject: Boolean,
   },
   created() {
     console.log(this.project);
