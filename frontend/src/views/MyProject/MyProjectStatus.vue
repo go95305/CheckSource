@@ -4,9 +4,8 @@
     <my-project-path :department="'내 부서'" />
     <h1 id="my-project-status-title">통계</h1>
     <div class="status-header">
-      <StatusOverview />
       <div class="status-overview">
-        <dash-board-overview :status="status"> </dash-board-overview>
+        <status-overview :status="status"></status-overview>
       </div>
     </div>
 
@@ -70,7 +69,6 @@
 </template>
 <script>
 import MyProjectPath from '../../components/MyProject/MyProjectPath.vue';
-import DashBoardOverview from '@/components/DashBoard/DashBoardOverview.vue';
 import TopFiveGraph from '@/components/DashBoard/TopFiveGraph.vue';
 import StatusOverview from '@/components/MyProject/StatusOverview.vue';
 import '@/assets/css/MyProject/MyProjectStatus.scss';
@@ -81,7 +79,6 @@ export default {
   name: 'MyProjectSummary',
   components: {
     MyProjectPath,
-    DashBoardOverview,
     TopFiveGraph,
     StatusOverview,
   },

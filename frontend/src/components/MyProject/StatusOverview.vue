@@ -1,16 +1,28 @@
 <template>
   <div class="depart-status-container">
-    <div class="panel post">
-      <div class="status-title"><span>8 </span>프로젝트</div>
+    <div class="panel project">
+      <div class="status-title">
+        <span>{{ status.project }}</span
+        >프로젝트
+      </div>
     </div>
-    <div class="panel comment">
-      <div class="status-title"><span>8 </span>프로젝트</div>
+    <div class="panel opensource">
+      <div class="status-title">
+        <span>{{ status.opensource }}</span
+        >오픈소스
+      </div>
     </div>
-    <div class="panel page">
-      <div class="status-title"><span>8 </span>프로젝트</div>
+    <div class="panel license">
+      <div class="status-title">
+        <span>{{ status.license }}</span
+        >라이선스
+      </div>
     </div>
-    <div class="panel user">
-      <div class="status-title"><span>8 </span>프로젝트</div>
+    <div class="panel warning">
+      <div class="status-title">
+        <span>{{ status.warning }}</span
+        >주의
+      </div>
     </div>
   </div>
 </template>
@@ -22,9 +34,8 @@ export default {
     return {};
   },
   props: {
-    editLicense: Object,
+    status: Object,
   },
-  methods: {},
 };
 </script>
 <style

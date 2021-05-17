@@ -41,7 +41,7 @@
     transition: all 0.5s;
     line-height: normal;
   }
-  &.post {
+  &.project {
     background-color: #af64cc;
     &:after {
       content: '\e873';
@@ -56,7 +56,7 @@
       top: 8px;
     }
   }
-  &.comment {
+  &.opensource {
     background-color: #27ae60;
     &:after {
       content: '\e8ef';
@@ -69,7 +69,7 @@
       top: -5px;
     }
   }
-  &.page {
+  &.license {
     background-color: #e67e22;
     &:after {
       content: '\ef76';
@@ -82,7 +82,7 @@
       top: 24px;
     }
   }
-  &.user {
+  &.warning {
     background-color: #e74c3c;
     &:after {
       content: '\e8b2';
