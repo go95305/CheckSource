@@ -77,6 +77,14 @@ function readProjectBranches(gitlabId, projectId) {
     },
   });
 }
+function readGitHubProjectBranches(githubId, project) {
+  return http.get("/git/github/branches", {
+    params: {
+      githubId: githubId,
+      projectId: projectId,
+    },
+  });
+}
 function readHubProjectBranches(githubId, name, username) {
   return http.get("/git/github/branches", {
     params: {
@@ -91,8 +99,8 @@ function verifyGitLabProjects(gitlabId, projectList) {
   return http.post(`/git/projects?gitlabId=${gitlabId}`, projectList);
 }
 
-function verifyGitHubProjects(githubId, projectList,sha) {
-  return http.post(`/git/github/projects?githubId=${githubId}`, projectList,sha);
+function verifyGitHubProjects(githubId, projectList) {
+  return http.post(`/git/github/projects?githubId=${githubId}`, projectList);
 }
 
 // 프로젝트 삭제
@@ -119,4 +127,5 @@ export default {
   readGitHubProjects,
   readHubProjectBranches,
   verifyGitHubProjects,
+  readGitHubProjectBranches
 };
