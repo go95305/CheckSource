@@ -457,7 +457,7 @@
 				<span class="btn delete-btn">삭제</span>
 			</div>
 			<div v-else>
-				<span @click="addLicense">추가</span>
+				<span class="btn" @click="addLicense">추가</span>
 			</div>
 		</div>
 		<!-- <div class="box-3">

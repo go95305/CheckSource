@@ -49,14 +49,14 @@ export default {
       gitType: this.$route.query.gitType,
       list: [],
       page:1,
-      size: 10,
+      size: 5,
       totalPage:3,
       loading: false,
     };
   },
    created() {
-     if(this.$route.query.mappedPage){
-          this.page = Number(this.$route.query.mappedPage);
+     if(this.$route.query.page){
+          this.page = Number(this.$route.query.page);
      };
     this.GetList();
   },
@@ -64,8 +64,14 @@ export default {
     $route:{
       deep:true,
       handler(){
-        if(this.page != this.$route.query.mappedPage){
-          this.page = Number(this.$route.query.mappedPage);
+        console.log(this.$route.query.page);
+        if(this.$route.query.page && this.page != this.$route.query.page){
+          
+          this.page = Number(this.$route.query.page);
+          this.GetList();
+        }
+        else if(!this.$route.query.page){
+          this.page = 1;
           this.GetList();
         }
       }
@@ -95,7 +101,6 @@ export default {
       });
     },
     ChangePage: function (page) {
-			this.page = page;
       let newQuery = Object.assign({}, this.$route.query);
       newQuery.page = page;
       this.$router.push({ 

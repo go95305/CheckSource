@@ -56,21 +56,24 @@ export default {
      if(this.$route.query.unmappedPage){
           this.page = Number(this.$route.query.unmappedPage);
      };
-    this.getList();
+    this.GetList();
   },
   watch:{
     $route:{
       deep:true,
       handler(){
-        if(this.page != this.$route.query.unmappedPage){
+        if(this.$route.query.unmappedPage && this.page != this.$route.query.unmappedPage){
           this.page = Number(this.$route.query.unmappedPage);
-          this.getList();
+          this.GetList();
+        }else if(!this.$route.query.unmappedPage){
+          this.page = 1;
+           this.GetList();
         }
       }
     },
   },
   methods: {
-    getList: function () {
+    GetList: function () {
       this.unMappedLoading = true;
       this.unmappedList = [];
 			verifyApi.readVerifiedUnmappedOpenSourceList(this.page,this.gitType,this.projectId,this.size).then((response) => {

@@ -56,21 +56,25 @@ export default {
      if(this.$route.query.mappedPage){
           this.page = Number(this.$route.query.mappedPage);
      };
-    this.getList();
+    this.GetList();
   },
   watch:{
     $route:{
       deep:true,
       handler(){
-        if(this.page != this.$route.query.mappedPage){
+        if(this.$route.query.mappedPage && this.page != this.$route.query.mappedPage){
           this.page = Number(this.$route.query.mappedPage);
-          this.getList();
+          this.GetList();
+        }
+        else if(!this.$route.query.mappedPage){
+          this.page = 1;
+           this.GetList();
         }
       }
     },
   },
   methods: { 
-    getList: function () {
+    GetList: function () {
       this.loading = true;
       this.mappedList = [];
 			verifyApi.readVerifiedMappedOpenSourceList(this.page, this.gitType,this.projectId, this.size)
