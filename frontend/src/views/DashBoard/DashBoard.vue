@@ -2,7 +2,7 @@
 	<div>
 		<div class="main__cards">
 			<!-- 저장소(부서) 별 정보 -->
-			<div class="card">
+			<div class="depart-card card">
 				<div class="card__header">
 					<div class="card__header-title">
 						<strong>부서별 정보</strong>
@@ -17,7 +17,7 @@
 						@getDepartProjects="GetDepartProjects"
 					/>
 
-					<div id="slider">
+					<div id="slider" v-if="projectList.length > 0">
 						<div
 							class="dash-c-btn dash-c-btn-prev"
 							aria-label="Previous slide"
@@ -30,7 +30,7 @@
 							:name="transitionName"
 							class="slides-group"
 						>
-							<div v-if="projectList.length > 0" :key="current" class="slide">
+							<div :key="current" class="slide">
 								<VerifyCard
 									class="dashboard-verifycard"
 									:project="projectList[current]"
@@ -50,23 +50,21 @@
 			</div>
 
 			<!-- top5 -->
-			<div class="card">
+			<div class="topfive-card card">
 				<div class="card__header">
 					<div class="card__header-title text-light">
 						오픈소스 <strong>TOP5</strong>
 					</div>
 				</div>
-				<div>
-					<div class="dash-dropdown">
-						<DropDown :orderList="departList" @orderItemChange="GetTopFive" />
-					</div>
+				<div class="dash-dropdown">
+					<DropDown :orderList="departList" @orderItemChange="GetTopFive" />
 				</div>
 				<top-five-graph :labels="topFiveLabels" :dataList="topFiveValues">
 				</top-five-graph>
 			</div>
 
 			<!-- warning -->
-			<div class="card">
+			<div class="warning-card card">
 				<div class="card__header">
 					<div class="card__header-title text-light">
 						<strong>라이선스 의무 warning</strong>
@@ -142,7 +140,6 @@ import DropDown from "@/components/DropDown/DropDown.vue";
 import DashBoardTable from "@/components/DashBoard/DashBoardTable.vue";
 import DashBoardOverview from "@/components/DashBoard/DashBoardOverview.vue";
 import "vueperslides/dist/vueperslides.css";
-import "@/assets/css/DashBoard/DashBoard.scss";
 
 export default {
 	name: "DashBoard",
@@ -238,3 +235,4 @@ export default {
 	},
 };
 </script>
+<style lang="scss" scoped src="@/assets/css/DashBoard/DashBoard.scss"></style>
