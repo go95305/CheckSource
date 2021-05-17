@@ -176,6 +176,7 @@ export default {
         version: "",
         packageType: "",
         artifactId: "",
+        groupId:"",
         licenseId:[],
       },
       tags: [],
@@ -187,7 +188,7 @@ export default {
     };
   },
    props:{
-    editOpensource:Object
+    editOpensource:Object,
   },
   created() {
     if(window.location.pathname == '/list/detail/editOpensource'){
@@ -205,6 +206,14 @@ export default {
       }
       else{
         this.$router.go(-1);
+      }
+    }
+    else{
+      let unmapped = this.$route.params.unmappedOpensource;
+      if(unmapped){
+        this.opensource.artifactId = unmapped.artifactId;
+        this.opensource.groupId = unmapped.groupId;
+        this.opensource.version = unmapped.version;
       }
     }
   },

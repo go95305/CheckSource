@@ -14,7 +14,7 @@
         <td class="opensource-table-unmapped-add"></td>
       </th>
       <tr class="opensource-table-tr" v-for="(item, index) in unmappedList"
-			:key="`${index}_mapped`" @click="goOpenSource(item.opensourceId)">
+			:key="`${index}_mapped`" @click="GoAddOpensource(item)">
         <td>{{ item.artifactId }}</td>
         <td>{{ item.groupId }}</td>
         <td>{{ item.path }}</td>
@@ -80,16 +80,19 @@ export default {
 				if (response.data) {
           this.unMappedLoading = false;
 					this.unmappedList = response.data.unmappedList;
+          console.log(this.unmappedList);
           this.totalPage = response.data.totalPages;
 				}
 			}).catch(() => {
         this.unMappedLoading = false;
       });
 		},
-		goOpenSource: function (id) {
+		GoAddOpensource:function(opensource) {
+      console.log(opensource.artifactId);
+      let unmappedOpensource = {artifactId:opensource.artifactId, groupId:opensource.groupId, version:opensource.version};
 			this.$router.push({
 				name: "AddOpenSource",
-				query: { id: id },
+        params: {unmappedOpensource:unmappedOpensource},
 			});
 		},
     ChangePage:function(page){

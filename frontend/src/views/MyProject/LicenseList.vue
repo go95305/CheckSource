@@ -54,7 +54,7 @@ export default {
       loading: false,
     };
   },
-   created() {
+  created() {
      if(this.$route.query.page){
           this.page = Number(this.$route.query.page);
      };

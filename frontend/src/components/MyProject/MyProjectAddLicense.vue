@@ -453,8 +453,8 @@
 
 		<div class="add-component-button-div">
 			<div v-if="isEditMode">
-				<span class="btn edit-btn">수정</span>
-				<span class="btn delete-btn">삭제</span>
+				<span class="btn edit-btn" @click="updateLicense">수정</span>
+				<span class="btn delete-btn" @click="deleteLicense">삭제</span>
 			</div>
 			<div v-else>
 				<span class="btn" @click="addLicense">추가</span>
@@ -472,7 +472,7 @@
 // import '@/assets/css/MyProject/MyProjectAddLicense.scss';
 import licenseApi from "@/api/license.js";
 import MyProjectPath from "@/components/MyProject/MyProjectPath.vue";
-
+import swal from "@/api/alert.js";
 export default {
 	name: "MyProjectAddLicense",
 	components: {
@@ -518,16 +518,27 @@ export default {
 			}
 		}
 	},
-	watch: {
-		// licenseinfo: function () {
-		//   console.log(this.licenseinfo);
-		// },
-	},
 	methods: {
 		addLicense() {
 			licenseApi.addLicense(this.license).then(() => {
 				console.log("추가성공");
 				this.$router.go(-1);
+			});
+		},
+		updateLicense() {
+			licenseApi.updateLicense(this.license).then(() => {
+				console.log("수정성공");
+				this.$router.go(-1);
+			});
+		},
+		deleteLicense() {
+			swal.confirm("정말로 삭제하시겠습니까?").then((response) => {
+				if (response.value) {
+					licenseApi.deleteLicense(this.license.licenseId).then(() => {
+						console.log("삭제성공");
+						this.$router.go(-2);
+					});
+				}
 			});
 		},
 	},

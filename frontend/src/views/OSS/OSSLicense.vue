@@ -4,6 +4,7 @@
 			<search-bar
 				:placeHolderText="'검색할 라이선스를 입력하세요.'"
 				:filterList="filterList"
+				:keyword="keyword"
 				@doSearch="DoSearch"
 			></search-bar>
 		</div>
@@ -59,30 +60,47 @@ export default {
 			filterEnglistList: ["Name", "Identifier"],
 			licenseList: [],
 			page: 1,
-			size: 20,
+			size: 10,
 			totalPage: 10,
 			typeFilter: 1,
 			keyword: "",
 		};
 	},
 	created() {
-		this.GetQuery();
+		if (this.$route.query.page) {
+			this.page = Number(this.$route.query.page);
+		}
+		if (this.$route.query.keyword) {
+			this.keyword = this.$route.query.keyword;
+			this.typeFilter = this.$route.query.filter;
+		}
 		this.GetList();
 	},
 	watch: {
-		routerQueryPage: function () {
-			this.GetQuery();
+		$route: {
+			deep: true,
+			handler() {
+				if (this.$route.query.page && this.page != this.$route.query.page) {
+					this.page = Number(this.$route.query.page);
+				} else if (!this.$route.query.page) {
+					this.page = 1;
+				}
+
+				if (
+					this.$route.query.keyword &&
+					this.keyword != this.$route.query.keyword
+				) {
+					this.keyword = this.$route.query.keyword;
+					this.typeFilter = this.$route.query.filter;
+				} else if (!this.$route.query.keyword) {
+					this.keyword = "";
+					this.typeFilter = 1;
+				}
+				this.GetList();
+			},
 		},
 	},
 	methods: {
-		GetQuery: function () {
-			if (this.$route.query.page) {
-				this.page = Number(this.$route.query.page);
-			}
-			if (this.$route.query.size) {
-				this.size = Number(this.$route.query.size);
-			}
-		},
 		GetList: function () {
 			licenseApi
 				.readLicenseList(
@@ -98,16 +116,20 @@ export default {
 				.catch();
 		},
 		DoSearch: function (filter, keyword) {
-			this.typeFilter = filter;
-			this.keyword = keyword;
-			this.GetList();
+			let newQuery = Object.assign({}, this.$route.query);
+			newQuery.filter = filter;
+			newQuery.keyword = keyword;
+			newQuery.page = 1;
+			this.$router.push({
+				query: newQuery,
+			});
 		},
 		ChangePage: function (page) {
-			this.page = page;
+			let newQuery = Object.assign({}, this.$route.query);
+			newQuery.page = page;
 			this.$router.push({
-				query: { page: page, size: this.size },
+				query: newQuery,
 			});
-			this.GetList();
 		},
 		GoDetail: function (license) {
 			this.$router.push({
