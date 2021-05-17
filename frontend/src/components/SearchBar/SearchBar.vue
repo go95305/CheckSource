@@ -32,10 +32,9 @@ export default {
 		keyword: String,
 		filter: Number,
 	},
-	watch: {
-		keyword: function () {
-			this.inputValue = this.keyword;
-		},
+	created() {
+		this.inputValue = this.keyword;
+		this.filter = this.filterValue;
 	},
 	data() {
 		return {

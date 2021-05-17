@@ -4,6 +4,7 @@
 			<search-bar
 				:placeHolderText="'검색할 오픈소스를 입력하세요.'"
 				:filterList="filterList"
+				:filter="typeFilter"
 				:keyword="keyword"
 				@doSearch="DoSearch"
 			></search-bar>
@@ -73,10 +74,11 @@ export default {
 		if (this.$route.query.page) {
 			this.page = Number(this.$route.query.page);
 		}
-		if (this.$route.query.keyword) {
+		if (this.$route.query.keyword || this.$route.query.filter) {
 			this.keyword = this.$route.query.keyword;
-			this.typeFilter = this.$route.query.filter;
+			this.typeFilter = Number(this.$route.query.filter);
 		}
+		console.log("들" + this.keyword);
 		this.GetList();
 	},
 	watch: {
@@ -94,7 +96,7 @@ export default {
 					(this.$route.query.filter && this.keyword != this.$route.query.filter)
 				) {
 					this.keyword = this.$route.query.keyword;
-					this.typeFilter = this.$route.query.filter;
+					this.typeFilter = Number(this.$route.query.filter);
 				} else if (!this.$route.query.keyword || !this.$route.query.filter) {
 					this.keyword = "";
 					this.typeFilter = 1;
