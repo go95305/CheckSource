@@ -120,7 +120,7 @@ export default new Vuex.Store({
       //사용자 정보 유무 확인
       loginApi.checkUser(userId).then((response) => {
         context.commit("SAVEUSERID", userId);
-        console.log(response.data);
+        // console.log(response.data);
         if (response.data.flag) {
           //사용자 정보가 있으면
           context.commit("LOGIN", response.data);

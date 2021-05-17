@@ -99,7 +99,7 @@ export default {
     },
     GetProjectList: function ($state) {
       //검증된 프로젝트 리스트 조회
-      console.log('키워드:' + this.keyword);
+      // console.log('키워드:' + this.keyword);
       verifyApi
         .readVerifiedProjectList(
           this.page,
@@ -114,7 +114,7 @@ export default {
               response.data.projectList
             );
             ++this.page;
-            console.log(this.projectList);
+            // console.log(this.projectList);
             $state.loaded();
           } else {
             $state.complete();
