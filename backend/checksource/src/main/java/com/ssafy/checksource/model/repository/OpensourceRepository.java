@@ -52,6 +52,14 @@ public interface OpensourceRepository extends JpaRepository<Opensource, Long>{
 	@Query(value = "select opensource_id, count(opensource_id) as count from opensource_project where project_id in " + 
 			"(select project_id from project where depart_id = ?1) " + 
 			"group by opensource_id " + 
-			"order by count desc", nativeQuery = true)
-	List<Object> findByTop5 (Long departId);
+			"order by count desc " +
+			"limit 5", nativeQuery = true)
+	List<Object[]> findTop5ByDepart (Long departId);
+	
+	
+	@Query(value = "select opensource_id, count(opensource_id) as count from opensource_project " + 
+			"group by opensource_id " + 
+			"order by count desc " + 
+			"limit 5" , nativeQuery = true)
+	List<Object[]> findTop5 ();
 }
