@@ -87,8 +87,10 @@ export default {
         license: '',
         warning: '',
       },
-      labels: ['Apache-2.0', 'Ruby', 'MIT', 'JSON', 'GLEW'],
-      dataList: [6, 5, 11, 13, 3],
+      // labels: ['Apache-2.0', 'Ruby', 'MIT', 'JSON', 'GLEW'],
+      // dataList: [6, 5, 11, 13, 3],
+      labels: [],
+      dataList: [],
       departId: '',
     };
   },
@@ -97,12 +99,31 @@ export default {
   },
   created() {
     this.getDepartmentStatus();
+    this.getDepartmentGraph();
   },
   methods: {
-    getDepartmentStatus: function () {
-      console.log(this.getDepartment);
+    getDepartmentGraph: function () {
       this.departId = this.getDepartment;
-      console.log(this.departId);
+      dashboardApi
+        .readTopFiveDepart(this.departId)
+        .then((response) => {
+          this.SetTopFive(response.data);
+        })
+        .catch();
+    },
+    SetTopFive(list) {
+      let labels = [];
+      let values = [];
+      console.log(list);
+      for (let item of list) {
+        labels.push(item.name);
+        values.push(item.cnt);
+      }
+      this.labels = labels;
+      this.dataList = values;
+    },
+    getDepartmentStatus: function () {
+      this.departId = this.getDepartment;
       dashboardApi
         .readDepartmentStatus(this.departId)
         .then((response) => {
