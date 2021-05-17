@@ -69,7 +69,8 @@ $width-sidenav: 240px;
 		display: block;
 		column-count: 1;
 		column-gap: 20px;
-		margin: 20px;
+		row-gap: 20px;
+		padding: 1vh 1vw;
 	}
 }
 
@@ -84,11 +85,11 @@ $width-sidenav: 240px;
 	justify-content: space-around;
 	align-items: center;
 	align-content: center;
-	margin: 20px;
+	margin: 10px;
 }
 
 .overviewCard {
-	flex: 0 0 130px;
+	flex: 0 1 130px;
 	display: flex;
 	align-items: center;
 	justify-content: space-evenly;
@@ -152,12 +153,11 @@ $width-sidenav: 240px;
 }
 
 .card {
+	position: relative;
 	overflow: hidden;
 	display: flex;
 	flex-direction: column;
-	width: 100%;
 	background-color: #fff;
-	margin-bottom: 20px;
 	-webkit-column-break-inside: avoid;
 	border: solid 1px rgba(0, 0, 0, 0.1);
 	border-radius: 15px 15px 0 0;
@@ -293,9 +293,6 @@ $width-sidenav: 240px;
 	&__source {
 		line-height: 1.8;
 		color: $color-java;
-	}
-
-	&__description {
 	}
 
 	&__note {
@@ -442,8 +439,18 @@ $width-sidenav: 240px;
 
 // Medium screens breakpoint (1050px)
 @media only screen and (min-width: 65.625em) {
+	html,
+	body {
+		margin: 0;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+	}
 	.main {
 		&__cards {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			grid-template-rows: 48vh 48vh;
 			column-count: 2;
 		}
 	}
@@ -457,20 +464,30 @@ $width-sidenav: 240px;
 			align-items: flex-start;
 		}
 	}
+
+	.depart-card {
+		grid-column: 1;
+		grid-row: 1 / span 2;
+	}
+
+	.topfive-card {
+		grid-column: 2;
+		grid-row: 1;
+	}
+
+	.warning-card {
+		grid-column: 2;
+		grid-row: 2;
+	}
 }
 
 // table
-
-.dashboard-table {
-	padding: 0px 30px;
-}
 .dash-table {
 	width: 100%;
 	table-layout: fixed;
 	border: 1px solid #ccc;
 	border-collapse: collapse;
 	margin: 0;
-	padding: 0px 10px;
 
 	th {
 		padding: 15px;
@@ -491,10 +508,6 @@ $width-sidenav: 240px;
 	}
 }
 
-.d-tbl-header {
-	// background-color: #f8f8f8;
-}
-
 .dash-thead-css {
 	background-color: #f8f8f8;
 }
@@ -511,10 +524,6 @@ table caption {
 	// background-color: #fff !important;
 }
 
-.dashboard-table-warning {
-	padding: 15px 30px;
-}
-
 // vueper slides
 .vueperslides__progress {
 	background: rgba(0, 0, 0, 0.25);
@@ -523,6 +532,9 @@ table caption {
 
 // 드롭다운
 .dash-dropdown {
+	position: absolute;
+	right: 0;
+	top: 50px;
 	display: flex;
 	padding-right: 10px;
 	padding-top: 10px;
