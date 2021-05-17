@@ -30,11 +30,6 @@
           <span class="material-icons"> delete </span>
         </button>
       </div>
-      <!-- <div class="block" @click="DeleteProjectCheck">
-				<i class="hovicon effect-1 sub-a"
-					><span class="material-icons red500"> delete </span>
-				</i>
-			</div> -->
       <div class="verifycard-main-first">
         <p class="verifycard-excerpt">{{ getGitType }}</p>
         <h3 class="verifycard-title">{{ project.name }}</h3>
@@ -50,7 +45,6 @@
         <div class="verifycard-excerpt-s">
           {{ project.username }} / {{ project.date }}
         </div>
-        <!-- <div class="verifycard-excerpt-s">{{ project.date }}</div> -->
       </div>
 
       <!-- down -->
@@ -72,7 +66,6 @@
 </template>
 
 <script>
-// import '@/assets/css/DashBoard/VerifyCard.scss';
 import gitLabApi from '@/api/git.js';
 import swal from '@/api/alert.js';
 import dayjs from 'dayjs';
