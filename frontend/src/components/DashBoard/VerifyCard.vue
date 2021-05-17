@@ -6,13 +6,17 @@
     <!-- left -->
     <div class="verifycard-aside">
       <div class="verifycard-aside-detail">
-        <span class="verifycard-difficulty">{{ project.opensourceCnt }}</span
+        <span class="verifycard-difficulty">{{
+          project.opensourceCnt ? project.opensourceCnt : 0
+        }}</span
         ><br />
         <span class="verifycard-skill">오픈소스</span>
       </div>
 
       <div class="verifycard-detail">
-        <span class="verifycard-difficulty">{{ project.licenseCnt }}</span
+        <span class="verifycard-difficulty">{{
+          project.licenseCnt ? project.licenseCnt : 0
+        }}</span
         ><br />
         <span class="verifycard-skill">라이선스</span>
       </div>
@@ -21,10 +25,10 @@
 
     <!-- right -->
     <div class="verifycard-main">
-      <div class="block" @click="DeleteProjectCheck">
-        <i class="hovicon effect-1 sub-a"
-          ><span class="material-icons red500"> delete </span>
-        </i>
+      <div v-if="isMyproject" class="button-holder" @click="DeleteProjectCheck">
+        <button class="delete-btn">
+          <span class="material-icons"> delete </span>
+        </button>
       </div>
       <div class="verifycard-main-first">
         <p class="verifycard-excerpt">{{ getGitType }}</p>
@@ -41,7 +45,6 @@
         <div class="verifycard-excerpt-s">
           {{ project.username }} / {{ project.date }}
         </div>
-        <!-- <div class="verifycard-excerpt-s">{{ project.date }}</div> -->
       </div>
 
       <!-- down -->
@@ -63,7 +66,6 @@
 </template>
 
 <script>
-import '@/assets/css/DashBoard/VerifyCard.scss';
 import gitLabApi from '@/api/git.js';
 import swal from '@/api/alert.js';
 import dayjs from 'dayjs';
@@ -79,8 +81,10 @@ export default {
   },
   props: {
     project: Object,
+    isMyproject: Boolean,
   },
   created() {
+    console.log(this.project);
     this.changeTime();
   },
   computed: {
@@ -190,3 +194,5 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped src="@/assets/css/DashBoard/VerifyCard.scss"></style>

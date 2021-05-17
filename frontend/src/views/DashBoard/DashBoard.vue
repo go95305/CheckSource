@@ -18,15 +18,6 @@
 					/>
 
 					<div id="slider">
-						<transition-group
-							tag="div"
-							:name="transitionName"
-							class="slides-group"
-						>
-							<div v-if="choicedDepartId > 0" :key="current" class="slide">
-								<VerifyCard />
-							</div>
-						</transition-group>
 						<div
 							class="dash-c-btn dash-c-btn-prev"
 							aria-label="Previous slide"
@@ -34,6 +25,19 @@
 						>
 							&#10094;
 						</div>
+						<transition-group
+							tag="div"
+							:name="transitionName"
+							class="slides-group"
+						>
+							<div v-if="projectList.length > 0" :key="current" class="slide">
+								<VerifyCard
+									class="dashboard-verifycard"
+									:project="projectList[current]"
+								/>
+							</div>
+						</transition-group>
+
 						<div
 							class="dash-c-btn dash-c-btn-next"
 							aria-label="Next slide"
@@ -54,10 +58,11 @@
 				</div>
 				<div>
 					<div class="dash-dropdown">
-						<DropDown :orderList="departList" />
+						<DropDown :orderList="departList" @orderItemChange="GetTopFive" />
 					</div>
 				</div>
-				<top-five-graph :labels="labels" :dataList="dataList"> </top-five-graph>
+				<top-five-graph :labels="topFiveLabels" :dataList="topFiveValues">
+				</top-five-graph>
 			</div>
 
 			<!-- warning -->
@@ -153,22 +158,26 @@ export default {
 			statisticsList: [],
 			choicedDepartId: -1,
 			currentTime: 0,
+			projectList: [],
+			topFiveLabels: [],
+			topFiveValues: [],
 			current: 0,
 			direction: 1,
 			transitionName: "fade",
 			show: false,
 			status: { project: "31", opensource: "29", license: "7", warning: "15" },
-			labels: ["Apache-2.0", "Ruby", "MIT", "JSON", "JSON"],
-			dataList: [12, 19, 15, 21, 2],
 			departList: [],
 		};
 	},
 	created() {
-		this.departList = Info.GetDepartmentList();
+		this.departList = Info.GetDepartmentList().slice();
+		this.departList.unshift("전체");
 		this.GetStatistics();
+		this.GetTopFive(0);
 	},
 	methods: {
 		GetStatistics() {
+			//부서별 통계정보 조회
 			dashboardApi.readStatistics().then((response) => {
 				if (response.data) {
 					this.statisticsList = response.data.statisticsList;
@@ -180,16 +189,47 @@ export default {
 			});
 		},
 		GetDepartProjects(departId) {
+			//클릭한 부서의 프로젝트 리스트 조회
 			this.choicedDepartId = departId;
 			this.currentTime = dayjs().format("YYYY-MM-DD HH:mm:ss");
-			verifyApi.readVerifiedProjectList(1, departId, "", 100);
+			verifyApi
+				.readVerifiedProjectList(1, departId, "", 100, this.currentTime)
+				.then((response) => {
+					this.projectList = response.data.projectList;
+				});
+		},
+		GetTopFive(index) {
+			//top5 정보 조회
+			console.log(index);
+			if (index == 0) {
+				dashboardApi.readTopFive().then((response) => {
+					this.SetTopFive(response.data);
+				});
+			} else {
+				dashboardApi.readTopFiveDepart(index).then((response) => {
+					this.SetTopFive(response.data);
+					// console.log(this.topFiveList);
+				});
+			}
+		},
+		SetTopFive(list) {
+			let labels = [];
+			let values = [];
+			console.log(list);
+			for (let item of list) {
+				labels.push(item.name);
+				values.push(item.cnt);
+			}
+			this.topFiveLabels = labels;
+			this.topFiveValues = values;
 		},
 		slide(dir) {
+			console.log(this.current);
 			this.direction = dir;
 			dir === 1
 				? (this.transitionName = "slide-next")
 				: (this.transitionName = "slide-prev");
-			var len = this.slides.length;
+			var len = this.projectList.length;
 			this.current = (this.current + (dir % len) + len) % len;
 		},
 	},

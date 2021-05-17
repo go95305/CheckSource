@@ -33,8 +33,8 @@ export default {
 		filter: Number,
 	},
 	created() {
-		this.inputValue = this.keyword;
-		this.filter = this.filterValue;
+		this.inputValue = this.keyword ? this.keyword : "";
+		this.filterValue = this.filter ? this.filter : 1;
 	},
 	data() {
 		return {

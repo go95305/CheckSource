@@ -36,10 +36,16 @@ public class DashBoardController {
 		return dashBoardService.getStatisticsByDepart(departId);
 	}
 	
-	@ApiOperation(value = "부서별 top5")
+	@ApiOperation(value = "부서별 오픈소스 top5")
 	@GetMapping("/top5/{departId}")
 	public List<Top5OpensourceDTO> getTop5OpensourceByDepart(@RequestHeader("TOKEN") String token, @PathVariable Long departId) {
 		return dashBoardService.getTop5OpensourceByDepart(departId);
+	}
+	
+	@ApiOperation(value = "전체  오픈소스 top5")
+	@GetMapping("/top5")
+	public List<Top5OpensourceDTO> getTotalTop5Opensource(@RequestHeader("TOKEN") String token) {
+		return dashBoardService.getTotalTop5Opensource();
 	}
 	
 }
