@@ -2,6 +2,7 @@ package com.ssafy.checksource.model.repository;
 
 import java.util.List;
 
+import org.hibernate.type.TrueFalseType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -36,4 +37,11 @@ public interface LicenseRepository extends JpaRepository<License, Long>{
 			nativeQuery = true)
 	public List<License> findCountByProjectId (Long projectId);
 	
+	
+	//부서별 라이선스 종류의 수
+	@Query(value = "select * from license where license_id in "+
+			"(select distinct license_id from license_opensource where opensource_id in " + 
+			"(select distinct opensource_id from opensource_project where project_id in " + 
+			"(select project_id from project where depart_id = ?1))) ", nativeQuery = true)
+	public List<License> findByDepart (Long departId);
 }
