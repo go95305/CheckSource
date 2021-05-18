@@ -16,7 +16,7 @@
   font-size: 27px;
   font-weight: 600;
   color: #fff;
-  overflow: hidden;
+  //   overflow: hidden;
   border-radius: 8px;
 
   .tooltip-content {
@@ -56,52 +56,53 @@
     background-color: #af64cc;
     &:after {
       content: '\e873';
-      font-size: 200px;
+      font-size: 130px;
       color: darken(#af64cc, 4%);
-      top: 45px;
-      right: 60px;
+      top: 5px;
+      right: -6px;
     }
     &:hover:after {
-      top: 8px;
+      //   top: 8px;
+      right: 10px;
     }
   }
   &.opensource {
     background-color: #27ae60;
     &:after {
       content: '\e8ef';
-      font-size: 180px;
+      font-size: 135px;
       color: darken(#27ae60, 4%);
-      top: 30px;
-      right: 35px;
+      top: 5px;
+      right: -6px;
     }
     &:hover:after {
-      top: -5px;
+      right: 16px;
     }
   }
   &.license {
     background-color: #e67e22;
     &:after {
       content: '\ef76';
-      font-size: 160px;
+      font-size: 130px;
       color: darken(#e67e22, 4%);
-      top: 62px;
-      right: 39px;
+      top: 5px;
+      right: 0px;
     }
     &:hover:after {
-      top: 24px;
+      right: 19px;
     }
   }
   &.warning {
     background-color: #e74c3c;
     &:after {
       content: '\e8b2';
-      font-size: 200px;
+      font-size: 130px;
       color: darken(#e74c3c, 8%);
-      top: 45px;
-      right: 35px;
+      top: 5px;
+      right: 3px;
     }
     &:hover:after {
-      top: 7px;
+      right: 19px;
     }
   }
   &:hover:after {
