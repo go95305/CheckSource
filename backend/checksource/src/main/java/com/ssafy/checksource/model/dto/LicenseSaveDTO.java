@@ -14,22 +14,22 @@ public class LicenseSaveDTO {
 	//url
 	private String url;
 	//osi승인여부
-	private boolean is_osi;
+	private Boolean is_osi;
 	//복제, 배포, 수정의 권한 허용
-	private boolean is_modify;
+	private Boolean is_modify;
 	//배포시 라이선스 사본 첨부
-	private boolean is_license;
+	private Boolean is_license;
 	//저작권 고지사항 또는 Attribution 고지사항 유지
-	private boolean is_copyright;
+	private Boolean is_copyright;
 	//배포시 소스코드 제공의무(Reciprocity)와 범위
 	private String sourceopen;
 	//조합저작물(Lager Work) 작성 및 타 라이선스 배포 허용
-	private boolean is_anotherlicense;
+	private Boolean is_anotherlicense;
 	//수정 시 수정내용 고지
-	private boolean is_modify_notice;
+	private Boolean is_modify_notice;
 	//보증의 부인
-	private boolean is_warranty;
+	private Boolean is_warranty;
 	//책임의 제한
-	private boolean is_respon;
+	private Boolean is_respon;
 
 }
