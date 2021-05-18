@@ -83,7 +83,7 @@ export default new Vuex.Store({
       }
 
       temp.push(account);
-      //gitlabid 순서대로 정렬
+      //githubid 순서대로 정렬
       temp.sort(function (a, b) {
         return a.githubId - b.githubId;
       });
@@ -102,6 +102,7 @@ export default new Vuex.Store({
       state.job = payload["job"];
       state.userImg = payload["userImg"];
       state.gitlabList = payload["gitlabList"];
+      state.githubList=payload["githubList"];
       state.name = payload["name"];
       state.department = payload["depart"];
     },
@@ -111,6 +112,7 @@ export default new Vuex.Store({
       state.job = "";
       state.userImg = "";
       state.gitlabList = [];
+      state.githubList=[];
       state.name = "";
       state.department = "";
     },
@@ -120,7 +122,7 @@ export default new Vuex.Store({
       //사용자 정보 유무 확인
       loginApi.checkUser(userId).then((response) => {
         context.commit("SAVEUSERID", userId);
-        // console.log(response.data);
+        console.log(response.data);
         if (response.data.flag) {
           //사용자 정보가 있으면
           context.commit("LOGIN", response.data);
