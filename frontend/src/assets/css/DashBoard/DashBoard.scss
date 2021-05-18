@@ -452,7 +452,7 @@ $width-sidenav: 240px;
 		margin: 0;
 		width: 100%;
 		height: 100%;
-		overflow: hidden;
+		// overflow: hidden;
 	}
 	.main {
 		&__cards {
@@ -621,7 +621,7 @@ $width-sidenav: 240px;
 	transition: transform 0.5s ease-in-out;
 }
 .slide-next-enter {
-	transform: translate(100%);
+	transform: translate(0);
 }
 .slide-next-leave-to {
 	transform: translate(-100%);
@@ -636,7 +636,7 @@ $width-sidenav: 240px;
 	transform: translate(-100%);
 }
 .slide-prev-leave-to {
-	transform: translate(100%);
+	transform: translate(0);
 }
 
 /* SLIDER STYLES */
@@ -660,10 +660,6 @@ $width-sidenav: 240px;
 
 .slide {
 	margin: auto;
-	// width: 100%;
-	// height: 400px;
-	// top: 0;
-	// left: 0;
 	display: flex;
 	flex-flow: row nowrap;
 	align-items: center;
