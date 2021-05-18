@@ -45,10 +45,10 @@ export default {
   data() {
     return {
       msg: {
-        project: '총 프로젝트 개수',
-        opensource: '사용된 오픈소스 종류의 개수',
-        license: '사용된 라이선스 종류의 개수',
-        warning: '사용 시 주의해야하는 라이선스 개수',
+        project: '검증된 프로젝트 수 입니다.',
+        opensource: '검증된 프로젝트의 오픈소스 종류입니다.',
+        license: '검증된 프로젝트의 라이선스의 종류입니다.',
+        warning: '사용 시 주의해야하는 라이선스 개수입니다.',
       },
     };
   },
