@@ -24,117 +24,11 @@
             <strong>라이선스 의무 warning</strong>
           </div>
         </div>
-        <div id="chartdiv">
-          <div class="status-table-warning">
-            <div class="d-tbl-header">
-              <table
-                class="status-table"
-                cellpadding="0"
-                cellspacing="0"
-                border="0"
-              >
-                <caption>
-                  [코드공개(All) / 고지의무]
-                </caption>
-                <thead class="status-thead-css">
-                  <tr>
-                    <th scope="col">저장소</th>
-                    <th scope="col">부서</th>
-                    <th scope="col">프로젝트</th>
-                    <th scope="col">오픈소스</th>
-                    <th scope="col">라이선스</th>
-                  </tr>
-                </thead>
-              </table>
-            </div>
-            <div class="s-tbl-content">
-              <table
-                class="status-table"
-                cellpadding="0"
-                cellspacing="0"
-                border="0"
-              >
-                <tbody>
-                  <tr>
-                    <td>gitlab#1</td>
-                    <td>ICT운영부</td>
-                    <td>ASC project</td>
-                    <td>Elasticsearch Extra Plugins</td>
-                    <td>GPL</td>
-                  </tr>
-                  <tr>
-                    <td>gitlab#3</td>
-                    <td>ICT운영부</td>
-                    <td>MinorLoan</td>
-                    <td>H2</td>
-                    <td>GPL</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
+        <license-warning-table
+          :departId="warningDepartId"
+        ></license-warning-table>
       </div>
     </div>
-
-    <!--
-    <div class="status-body">
-      <div class="status-graph">
-        <top-five-graph :labels="labels" :dataList="dataList"> </top-five-graph>
-      </div>
-
-      <div class="status-table-layout">
-        <div class="dashboard-table-warning">
-          <div class="d-tbl-header">
-            <table
-              class="status-table"
-              cellpadding="0"
-              cellspacing="0"
-              border="0"
-            >
-              <caption>
-                [코드공개(All) / 고지의무]
-              </caption>
-              <thead class="status-thead-css">
-                <tr>
-                  <th scope="col">저장소</th>
-                  <th scope="col">부서</th>
-                  <th scope="col">프로젝트</th>
-                  <th scope="col">오픈소스</th>
-                  <th scope="col">라이선스</th>
-                </tr>
-              </thead>
-            </table>
-          </div>
-          <div class="s-tbl-content">
-            <table
-              class="status-table"
-              cellpadding="0"
-              cellspacing="0"
-              border="0"
-            >
-              <tbody>
-                <tr>
-                  <td>gitlab#1</td>
-                  <td>ICT운영부</td>
-                  <td>ASC project</td>
-                  <td>Elasticsearch Extra Plugins</td>
-                  <td>GPL</td>
-                </tr>
-                <tr>
-                  <td>gitlab#3</td>
-                  <td>ICT운영부</td>
-                  <td>MinorLoan</td>
-                  <td>H2</td>
-                  <td>GPL</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-    -->
   </div>
 </template>
 <script>
@@ -143,6 +37,7 @@ import TopFiveGraph from '@/components/DashBoard/TopFiveGraph.vue';
 import StatusOverview from '@/components/MyProject/StatusOverview.vue';
 import { mapGetters } from 'vuex';
 import dashboardApi from '@/api/dashboard.js';
+import LicenseWarningTable from '@/components/DashBoard/LicenseWarningTable.vue';
 
 export default {
   name: 'MyProjectSummary',
@@ -150,6 +45,7 @@ export default {
     MyProjectPath,
     TopFiveGraph,
     StatusOverview,
+    LicenseWarningTable,
   },
   data() {
     return {
@@ -165,6 +61,7 @@ export default {
       labels: [],
       dataList: [],
       departId: '',
+      warningDepartId: '',
     };
   },
   computed: {
@@ -173,8 +70,13 @@ export default {
   created() {
     this.getDepartmentStatus();
     this.getDepartmentGraph();
+    this.SetDepartId();
   },
   methods: {
+    SetDepartId: function () {
+      this.warningDepartId = this.getDepartment;
+      console.log(this.warningDepartId);
+    },
     getDepartmentGraph: function () {
       this.departId = this.getDepartment;
       dashboardApi
