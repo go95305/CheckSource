@@ -88,7 +88,7 @@ export default {
 		gitType: Number,
 	},
 	created() {
-		console.log(this.gitType);
+		// console.log(this.gitType);
 	},
 	methods: {
 		SelectCard: function () {
