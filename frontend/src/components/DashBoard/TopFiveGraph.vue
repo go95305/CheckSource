@@ -86,7 +86,7 @@ export default {
 							},
 						},
 					},
-					responsive: false,
+					responsive: true,
 					maintainAspectRatio: false,
 				},
 			});
