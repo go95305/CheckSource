@@ -1,118 +1,123 @@
 .depart-status-container {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-around;
-  align-items: center;
-  align-content: center;
-  margin: 20px;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-around;
+	align-items: center;
+	align-content: center;
 }
 
 .panel {
-  box-sizing: border-box;
-  position: relative;
-  display: inline-block;
-  width: 22%;
-  height: 140px;
-  margin: 10px;
-  font-size: 29px;
-  font-weight: 600;
-  color: #fff;
-  //   overflow: hidden;
-  border-radius: 8px;
+	box-sizing: border-box;
+	position: relative;
+	display: inline-block;
+	width: 22%;
+	height: 140px;
+	margin: 10px;
+	font-size: 27px;
+	font-weight: 600;
+	color: #fff;
+	//   overflow: hidden;
+	border-radius: 8px;
 
-  .tooltip-content {
-    visibility: hidden;
-    width: 275px;
-    background-color: rgba(0, 0, 0, 0.6);
-    padding: 3px 3px;
-    color: white;
-    text-align: center;
-    position: absolute;
-    z-index: 1;
-    top: 143px;
-    border-radius: 10px;
+	.tooltip-content {
+		visibility: hidden;
+		width: 275px;
+		background-color: rgba(0, 0, 0, 0.6);
+		padding: 3px 3px;
+		color: white;
+		text-align: center;
+		position: absolute;
+		z-index: 1;
+		top: 143px;
+		border-radius: 10px;
 
-    .tooltip-title {
-      font-size: 15px;
-      font-weight: 500;
-    }
-  }
-  .status-title {
-    position: relative;
-    display: block;
-    padding: 0 25px;
-    color: #fff;
-    text-decoration: none;
-    z-index: 2;
-    span {
-      display: block;
-      font-size: 96px;
-      font-weight: 700;
-      line-height: 96px;
-    }
-  }
-  &:after {
-    position: absolute;
-    font-family: 'Material Icons';
-    color: rgba(0, 0, 0, 1);
-    z-index: 1;
-    transition: all 0.5s;
-    line-height: normal;
-  }
-  &.post {
-    background-color: #af64cc;
-    &:after {
-      content: '\e873';
-      font-size: 130px;
-      color: darken(#af64cc, 4%);
-      top: 5px;
-      right: -6px;
-    }
-    &:hover:after {
-      //   top: 8px;
-      right: 10px;
-    }
-  }
-  &.comment {
-    background-color: #27ae60;
-    &:after {
-      content: '\e8ef';
-      font-size: 135px;
-      color: darken(#27ae60, 4%);
-      top: 5px;
-      right: -6px;
-    }
-    &:hover:after {
-      right: 16px;
-    }
-  }
-  &.page {
-    background-color: #e67e22;
-    &:after {
-      content: '\ef76';
-      font-size: 130px;
-      color: darken(#e67e22, 4%);
-      top: 5px;
-      right: 0px;
-    }
-    &:hover:after {
-      right: 19px;
-    }
-  }
-  &.user {
-    background-color: #e74c3c;
-    &:after {
-      content: '\e8b2';
-      font-size: 130px;
-      color: darken(#e74c3c, 8%);
-      top: 5px;
-      right: 3px;
-    }
-    &:hover:after {
-      right: 19px;
-    }
-  }
-  &:hover:after {
-    transition: all 0.5s;
-  }
+		.tooltip-title {
+			font-size: 15px;
+			font-weight: 500;
+		}
+	}
+	.status-title {
+		position: relative;
+		display: block;
+		padding: 2px 25px;
+		color: #fff;
+		text-decoration: none;
+		z-index: 2;
+		span {
+			display: block;
+			font-size: 91px;
+			font-weight: 700;
+			line-height: 90px;
+		}
+	}
+	&:after {
+		position: absolute;
+		font-family: "Material Icons";
+		color: rgba(0, 0, 0, 1);
+		z-index: 1;
+		transition: all 0.5s;
+		line-height: normal;
+	}
+	&.project {
+		background-color: #af64cc;
+		&:after {
+			content: "\e873";
+			font-size: 130px;
+			color: darken(#af64cc, 4%);
+			top: 5px;
+			right: -6px;
+		}
+		&:hover:after {
+			//   top: 8px;
+			right: 10px;
+		}
+	}
+	&.opensource {
+		background-color: #27ae60;
+		&:after {
+			content: "\e8ef";
+			font-size: 135px;
+			color: darken(#27ae60, 4%);
+			top: 5px;
+			right: -6px;
+		}
+		&:hover:after {
+			right: 16px;
+		}
+	}
+	&.license {
+		background-color: #e67e22;
+		&:after {
+			content: "\ef76";
+			font-size: 130px;
+			color: darken(#e67e22, 4%);
+			top: 5px;
+			right: 0px;
+		}
+		&:hover:after {
+			right: 19px;
+		}
+	}
+	&.warning {
+		background-color: #e74c3c;
+		&:after {
+			content: "\e8b2";
+			font-size: 130px;
+			color: darken(#e74c3c, 8%);
+			top: 5px;
+			right: 3px;
+		}
+		&:hover:after {
+			right: 19px;
+		}
+	}
+	&:hover:after {
+		transition: all 0.5s;
+	}
+
+	&:hover {
+		.tooltip-content {
+			visibility: visible !important;
+		}
+	}
 }
