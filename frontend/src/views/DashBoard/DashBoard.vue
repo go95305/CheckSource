@@ -17,7 +17,7 @@
 						@getDepartProjects="GetDepartProjects"
 					/>
 
-					<div id="slider" v-if="projectList.length > 0">
+					<div class="slider-background" v-if="projectList.length > 0">
 						<div
 							class="dash-c-btn dash-c-btn-prev"
 							aria-label="Previous slide"
@@ -25,11 +25,7 @@
 						>
 							&#10094;
 						</div>
-						<transition-group
-							tag="div"
-							:name="transitionName"
-							class="slides-group"
-						>
+						<transition-group id="slider" tag="div" :name="transitionName">
 							<div :key="current" class="slide">
 								<VerifyCard
 									class="dashboard-verifycard"

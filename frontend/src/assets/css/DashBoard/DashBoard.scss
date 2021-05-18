@@ -606,64 +606,73 @@ $width-sidenav: 240px;
 }
 
 // 뷰 슬라이드
-
-/* FADE IN */
-.fade-enter-active {
-	transition: opacity 1s;
-}
-.fade-enter {
-	opacity: 0;
-}
-
 /* GO TO NEXT SLIDE */
 .slide-next-enter-active,
 .slide-next-leave-active {
-	transition: transform 0.5s ease-in-out;
-}
-.slide-next-enter {
-	transform: translate(0);
-}
-.slide-next-leave-to {
-	transform: translate(-100%);
+	transition: all 1s ease;
+	// transition: all 1s cubic-bezier(0.73, -0.205, 0.23, 1.22);
 }
 
-/* GO TO PREVIOUS SLIDE */
+.slide-next-enter {
+	transform: translateX(0%);
+}
+
+.slide-next-enter-to {
+	transform: translateX(-100%);
+}
+
+.slide-next-leave {
+	transform: translateX(100%);
+	// transform: translateY(-50%);
+}
+
+.slide-next-leave-to {
+	transform: translateX(-100%);
+}
+
+/* GO TO PREV SLIDE */
 .slide-prev-enter-active,
 .slide-prev-leave-active {
-	transition: transform 0.5s ease-in-out;
-}
-.slide-prev-enter {
-	transform: translate(-100%);
-}
-.slide-prev-leave-to {
-	transform: translate(0);
+	transition: all 1s ease;
 }
 
+.slide-prev-enter {
+	transform: translateX(-200%);
+}
+
+.slide-prev-enter-to {
+	transform: translateX(-100%);
+}
+
+.slide-prev-leave {
+	transform: translateX(0%);
+	// transform: translateY(-50%);
+}
+
+.slide-prev-leave-to {
+	transform: translateX(100%);
+}
 /* SLIDER STYLES */
 
-#slider {
-	align-self: stretch;
+.slider-background {
 	flex: 1 0 0;
 	position: relative;
-	color: #ccc;
-	display: flex;
-	flex-flow: row nowrap;
-	justify-content: center;
-	align-items: center;
+	align-self: stretch;
 }
 
-.slides-group {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+#slider {
+	white-space: nowrap;
+	overflow: hidden;
+	height: 100%;
 }
 
 .slide {
-	margin: auto;
-	display: flex;
-	flex-flow: row nowrap;
+	height: 100%;
+	width: 100%;
+	display: inline-flex;
 	align-items: center;
 	justify-content: center;
+	box-sizing: border-box;
 }
 
 .dash-c-btn {
