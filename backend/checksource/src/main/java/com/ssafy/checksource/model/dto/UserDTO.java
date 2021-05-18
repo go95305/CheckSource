@@ -2,11 +2,13 @@ package com.ssafy.checksource.model.dto;
 
 import java.util.List;
 
+import lombok.ToString;
 import org.springframework.boot.autoconfigure.info.ProjectInfoProperties.Git;
 
 import lombok.Data;
 
 @Data
+@ToString
 public class UserDTO {
     
     private String token;
@@ -17,6 +19,6 @@ public class UserDTO {
     private Long job;
     
     private List<GitLabDTO> gitlabList;
-    private GitHubDTO gitHubDTO;
+    private List<GitHubDTO> githubList;
 }
 
