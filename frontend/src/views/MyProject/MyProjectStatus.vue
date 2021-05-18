@@ -61,6 +61,7 @@ export default {
       labels: [],
       dataList: [],
       departId: '',
+      warningDepartId: '',
     };
   },
   computed: {
@@ -69,8 +70,13 @@ export default {
   created() {
     this.getDepartmentStatus();
     this.getDepartmentGraph();
+    this.SetDepartId();
   },
   methods: {
+    SetDepartId: function () {
+      this.warningDepartId = this.getDepartment;
+      console.log(this.warningDepartId);
+    },
     getDepartmentGraph: function () {
       this.departId = this.getDepartment;
       dashboardApi
