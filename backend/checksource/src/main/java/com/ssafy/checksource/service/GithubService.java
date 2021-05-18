@@ -4,10 +4,8 @@ import com.google.gson.Gson;
 import com.ssafy.checksource.config.security.JwtTokenProvider;
 import com.ssafy.checksource.model.dto.*;
 import com.ssafy.checksource.model.entity.*;
-import com.ssafy.checksource.model.key.GitLabUserKey;
 import com.ssafy.checksource.model.repository.ProjectRepository;
 import org.apache.commons.codec.binary.Base64;
-import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.http.*;
 import com.ssafy.checksource.model.repository.GitHubRepository;
 import com.ssafy.checksource.model.repository.UserRepository;
@@ -18,10 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.sound.midi.Soundbank;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -52,32 +47,41 @@ public class GithubService {
         GitHubConnectDTO gitHubConnectDTO = new GitHubConnectDTO();
         gitHubConnectDTO.setFlag(false);
         //헤더에 토큰 담기
-        String s = null;
-        HttpHeaders headers = new HttpHeaders();
-        String plainCreds = "go95305:" + personalAccessToken;
-        byte[] plainCredsBytes = plainCreds.getBytes();
-        byte[] base64CredsBytes = Base64.encodeBase64(plainCredsBytes);
-        String base64Creds = new String(base64CredsBytes);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", "Basic " + base64Creds);
-        HttpEntity entity = new HttpEntity(headers);
-        try {
-            //api요청
-            ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-            GithubUser githubUser = new GithubUser();
-            githubUser.setUser(user);
-            githubUser.setUsername(username);
-            githubUser.setPersonalAccessToken(personalAccessToken);
-            GithubUser githubSaveUser = gitHubRepository.save(githubUser);
 
+        Optional<GithubUser> gitUser = Optional.ofNullable(gitHubRepository.findByUserNameAndUser(username, user));
+        if (gitUser.isPresent()) {
             gitHubConnectDTO.setFlag(true);
-            gitHubConnectDTO.setUserId(githubSaveUser.getUser().getUserId());
-            gitHubConnectDTO.setGithubId(githubSaveUser.getGithubId());
-            gitHubConnectDTO.setUsername(username);
+            gitHubConnectDTO.setUserId(gitUser.get().getUser().getUserId());
+            gitHubConnectDTO.setGithubId(gitUser.get().getGithubId());
+            gitHubConnectDTO.setUsername(gitUser.get().getUsername());
             return gitHubConnectDTO;
-        } catch (HttpClientErrorException e) {
-            e.printStackTrace();
-            return gitHubConnectDTO;
+        } else {
+            HttpHeaders headers = new HttpHeaders();
+            String plainCreds = "go95305:" + personalAccessToken;
+            byte[] plainCredsBytes = plainCreds.getBytes();
+            byte[] base64CredsBytes = Base64.encodeBase64(plainCredsBytes);
+            String base64Creds = new String(base64CredsBytes);
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.set("Authorization", "Basic " + base64Creds);
+            HttpEntity entity = new HttpEntity(headers);
+            try {
+                //api요청
+                ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+                GithubUser githubUser = new GithubUser();
+                githubUser.setUser(user);
+                githubUser.setUsername(username);
+                githubUser.setPersonalAccessToken(personalAccessToken);
+                GithubUser githubSaveUser = gitHubRepository.save(githubUser);
+
+                gitHubConnectDTO.setFlag(true);
+                gitHubConnectDTO.setUserId(githubSaveUser.getUser().getUserId());
+                gitHubConnectDTO.setGithubId(githubSaveUser.getGithubId());
+                gitHubConnectDTO.setUsername(username);
+                return gitHubConnectDTO;
+            } catch (HttpClientErrorException e) {
+                e.printStackTrace();
+                return gitHubConnectDTO;
+            }
         }
     }
 
@@ -155,7 +159,7 @@ public class GithubService {
             // 검증, 비검증으로 나누기
             for (GitHubProjectDTO gitHubProject : gitHubProjectlist) {
                 String githubProjectId = gitHubProject.getId();
-                Project project = projectRepository.findByGitProjectIdAndGitType(githubProjectId, (long)3);
+                Project project = projectRepository.findByGitProjectIdAndGitType(githubProjectId, (long) 3);
                 if (project == null) {// 비검증
                     gitHubProjectList.add(gitHubProject);
                 } else {// 검증
@@ -219,7 +223,6 @@ public class GithubService {
             headers.set("Authorization", "Basic " + base64Creds);
             HttpEntity entity = new HttpEntity(headers);
 
-            System.out.println(url);
             try {// api - RepositoryTree 리스트 받아옴
                 ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity,
                         String.class);
@@ -227,7 +230,6 @@ public class GithubService {
                 GithubRepoTreeDTO githubRepoTreeDTOS = gson.fromJson(responseEntity.getBody(),
                         GithubRepoTreeDTO.class);
                 githubRepoTreeDTOList = Arrays.asList(githubRepoTreeDTOS);
-                System.out.println(githubRepoTreeDTOList.get(0));
             } catch (HttpClientErrorException e) {
                 // 토큰이 유효하지 않을 경우 401
                 if (e.getStatusCode() == HttpStatus.UNAUTHORIZED) {
@@ -261,7 +263,6 @@ public class GithubService {
             for (int i = 0; i < githubRepoTreeDTOList.get(0).getTree().length; i++) {
                 String name = githubRepoTreeDTOList.get(0).getTree()[i].getPath();
                 if (name.contains("pom.xml") || name.contains("package.json")) {
-                    System.out.println(name);
                     githubRepoPathDTO.setSha(githubRepoTreeDTOList.get(0).getSha());
                     githubRepoPathDTO.setUrl(githubRepoTreeDTOList.get(0).getUrl());
                     githubRepoPathDTO.setPath(name);
@@ -280,7 +281,6 @@ public class GithubService {
         // 3. 검증할 프로젝트별 패키지매니저 파일 리스트에서 패키지 매니터 파일의 contents 뽑기
         for (AnalyProjectListDTO analyProjectListDto : analyProjectList) {
             String refBranch = analyProjectListDto.getBranch();
-            System.out.println(refBranch);
             List<GithubRepoPathDTO> packageManageFileList = analyProjectListDto.getGithubpackageManageFileList();
             String githubProjectId = analyProjectListDto.getGitProjectId();
 
@@ -307,7 +307,7 @@ public class GithubService {
 
                 // path 경로 url encoding해서 api 요청
                 //contents를 얻기위한 api
-                String url = baseURL + "repos/" + gitHub.getUsername() + "/" + project.getName() + "/contents/" + path+"?ref="+refBranch;
+                String url = baseURL + "repos/" + gitHub.getUsername() + "/" + project.getName() + "/contents/" + path + "?ref=" + refBranch;
                 // 헤더
                 HttpHeaders headers = new HttpHeaders();
                 headers.setContentType(MediaType.APPLICATION_XML);
@@ -326,7 +326,6 @@ public class GithubService {
                             GithubPackageManageFileDTO.class);
                     // contents 뽑음
                     String contents = packageManageFileDto.getContent().replace("\n", "");
-                    System.out.println(contents);
                     String filePath = packageManageFileDto.getPath();
                     String fileName = packageManageFileDto.getName();
                     // 4. base64 - decoding 등 승환 코드
