@@ -24,6 +24,14 @@
             <strong>라이선스 의무 warning</strong>
           </div>
         </div>
+        <license-warning-table
+          :departId="warningDepartId"
+        ></license-warning-table>
+        <!-- <div class="card__header">
+          <div class="card__header-title">
+            <strong>라이선스 의무 warning</strong>
+          </div>
+        </div>
         <div id="chartdiv">
           <div class="status-table-warning">
             <div class="d-tbl-header">
@@ -73,7 +81,7 @@
               </table>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
 
@@ -143,6 +151,7 @@ import TopFiveGraph from '@/components/DashBoard/TopFiveGraph.vue';
 import StatusOverview from '@/components/MyProject/StatusOverview.vue';
 import { mapGetters } from 'vuex';
 import dashboardApi from '@/api/dashboard.js';
+import LicenseWarningTable from '@/components/DashBoard/LicenseWarningTable.vue';
 
 export default {
   name: 'MyProjectSummary',
@@ -150,6 +159,7 @@ export default {
     MyProjectPath,
     TopFiveGraph,
     StatusOverview,
+    LicenseWarningTable,
   },
   data() {
     return {
