@@ -86,6 +86,8 @@ export default {
 							},
 						},
 					},
+					responsive: false,
+					maintainAspectRatio: false,
 				},
 			});
 		},
@@ -98,9 +100,12 @@ export default {
 
 <style scoped>
 .top-five-chart {
-	margin: auto;
-	width: 60%;
-	height: 60%;
+	flex: 1 0 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	/* width: 60%;
+	height: 60%; */
 	padding: 15px;
 }
 
