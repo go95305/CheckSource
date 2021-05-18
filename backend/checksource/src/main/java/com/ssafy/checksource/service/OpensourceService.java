@@ -53,6 +53,7 @@ public class OpensourceService {
 		}else if(typeFilter.equals("License")) {
 			opensourcePagedata = opensourceRepository.findByLicenseLike("%"+keyword+"%", paging);
 		}
+		System.out.println(opensourcePagedata);
 		
 		for (Opensource ops : opensourcePagedata) {
 			

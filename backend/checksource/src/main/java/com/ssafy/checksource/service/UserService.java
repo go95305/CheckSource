@@ -72,13 +72,15 @@ public class UserService {
                 }
                 userDto.setGitlabList(gitlabListDto);
 
-                GitHubDTO gitHubDTO = new GitHubDTO();
-                Optional<GithubUser> githubUser = Optional.ofNullable(gitHubRepository.findByUser(user));
-                if(githubUser.isPresent()) {
-                    gitHubDTO.setGithubId(githubUser.get().getGithubId());
-                    gitHubDTO.setUsername(githubUser.get().getUsername());
+                List<GithubUser> githubList = gitHubRepository.findByUser(user);
+                List<GitHubDTO> githubListDto = new ArrayList<>();
+                for(GithubUser gitHubUser : githubList ){
+                    GitHubDTO gitHubDTO = new GitHubDTO();
+                    gitHubDTO.setUsername(gitHubUser.getUsername());
+                    gitHubDTO.setGithubId(gitHubUser.getGithubId());
+                    githubListDto.add(gitHubDTO);
                 }
-                userDto.setGitHubDTO(gitHubDTO);
+                userDto.setGithubList(githubListDto);
                 return userDto;
             }
             //최초로그인은 아니지만 회원정보 미입력시 flag = false

@@ -36,7 +36,6 @@ public interface OpensourceRepository extends JpaRepository<Opensource, Long>{
 					+ "(select distinct opensource_id from license_opensource where license_id in "
 					+ "(select license_id from license where name like ?1)) "
 					+ "order by name",
-					countQuery = "SELECT COUNT(*) FROM opensource",
 					nativeQuery = true
 			)
 	public Page<Opensource> findByLicenseLike(String name, Pageable pageable);
