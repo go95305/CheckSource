@@ -4,6 +4,7 @@
   justify-content: space-around;
   align-items: center;
   align-content: center;
+  margin: 20px;
 }
 
 .panel {
@@ -13,7 +14,7 @@
   width: 22%;
   height: 140px;
   margin: 10px;
-  font-size: 27px;
+  font-size: 29px;
   font-weight: 600;
   color: #fff;
   //   overflow: hidden;
@@ -39,15 +40,15 @@
   .status-title {
     position: relative;
     display: block;
-    padding: 2px 25px;
+    padding: 0 25px;
     color: #fff;
     text-decoration: none;
     z-index: 2;
     span {
       display: block;
-      font-size: 91px;
+      font-size: 96px;
       font-weight: 700;
-      line-height: 90px;
+      line-height: 96px;
     }
   }
   &:after {
@@ -58,7 +59,7 @@
     transition: all 0.5s;
     line-height: normal;
   }
-  &.project {
+  &.post {
     background-color: #af64cc;
     &:after {
       content: '\e873';
@@ -72,7 +73,7 @@
       right: 10px;
     }
   }
-  &.opensource {
+  &.comment {
     background-color: #27ae60;
     &:after {
       content: '\e8ef';
@@ -85,7 +86,7 @@
       right: 16px;
     }
   }
-  &.license {
+  &.page {
     background-color: #e67e22;
     &:after {
       content: '\ef76';
@@ -98,7 +99,7 @@
       right: 19px;
     }
   }
-  &.warning {
+  &.user {
     background-color: #e74c3c;
     &:after {
       content: '\e8b2';
@@ -113,11 +114,5 @@
   }
   &:hover:after {
     transition: all 0.5s;
-  }
-
-  &:hover {
-    .tooltip-content {
-      visibility: visible !important;
-    }
   }
 }

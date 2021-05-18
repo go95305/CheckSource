@@ -53,8 +53,9 @@ export default {
     };
   },
   props: {
-    status: Object,
+    editLicense: Object,
   },
+  methods: {},
 };
 </script>
 <style
