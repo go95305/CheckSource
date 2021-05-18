@@ -13,9 +13,7 @@ export default {
 	},
 	computed: {
 		EncordingContent: function () {
-			if (this.informationData.userName == "관리자")
-				return window.atob(this.informationData.contents);
-			else return this.informationData.contents;
+			return window.atob(this.informationData.contents);
 		},
 	},
 };
