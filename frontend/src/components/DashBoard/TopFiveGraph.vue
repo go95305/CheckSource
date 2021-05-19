@@ -1,13 +1,19 @@
 <template>
 	<div class="top-five-chart">
-		<canvas id="myChart"></canvas>
+		<no-result v-if="data.length == 0"></no-result>
+		<canvas v-show="data.length > 0" id="myChart"></canvas>
 	</div>
 </template>
 
 <script>
 import Chart from "chart.js/auto";
+import NoResult from "../MyProject/NoResult.vue";
 
 export default {
+	name: "TopFiveGraph",
+	components: {
+		NoResult,
+	},
 	data() {
 		return {
 			label: [],
@@ -24,22 +30,24 @@ export default {
 			deep: true,
 			handler() {
 				this.label = this.labels;
-				this.chart.destroy();
-				this.createChart();
 			},
 		},
 		dataList: {
 			deep: true,
 			handler() {
 				this.data = this.dataList;
-				this.chart.destroy();
 				this.createChart();
 			},
 		},
 	},
 	methods: {
-		createChart() {
+		async createChart() {
 			var ctx = document.getElementById("myChart");
+			if (this.chart != null) {
+				//chart가 destroy될때까지 대기
+				await this.chart.destroy();
+			}
+			console.log("들");
 			this.chart = new Chart(ctx, {
 				type: "doughnut",
 				data: {
@@ -79,6 +87,8 @@ export default {
 							},
 						},
 					},
+					responsive: true,
+					maintainAspectRatio: false,
 				},
 			});
 		},
@@ -91,9 +101,16 @@ export default {
 
 <style scoped>
 .top-five-chart {
-	margin: auto;
-	width: 60%;
-	height: 60%;
+	flex: 1 0 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	/* width: 60%;
+	height: 60%; */
 	padding: 15px;
+}
+
+.no-result {
+	margin: 30px 0px;
 }
 </style>

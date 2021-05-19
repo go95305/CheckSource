@@ -11,7 +11,14 @@
 				<span
 					v-for="(licenseName, index) in opensource.licenseList"
 					:key="`${index}_licenseList`"
-					>{{ licenseName.name }}</span
+					><router-link
+						class="detail-table-a"
+						:to="{
+							name: 'OSSDetailLicenseInformation',
+							query: { id: licenseName.licenseId },
+						}"
+						>{{ licenseName.name }}</router-link
+					></span
 				>
 			</td>
 		</tr>
@@ -22,7 +29,9 @@
 		<tr class="detail-table-tr">
 			<td class="detail-table-td-head">주소</td>
 			<td class="detail-table-td-body">
-				{{ opensource.url }}
+				<a class="detail-table-a" :href="opensource.url" target="_blank">{{
+					opensource.url
+				}}</a>
 			</td>
 		</tr>
 		<tr class="detail-table-tr">
