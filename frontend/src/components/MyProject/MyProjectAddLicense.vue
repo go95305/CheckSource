@@ -61,7 +61,6 @@
 					class="text-input"
 					id="contents"
 					name="contents"
-					required
 					type="text"
 					placeholder="라이선스 전문"
 					v-model="license.contents"
@@ -72,15 +71,15 @@
 				<p class="tooltip-contents-content">라이선스 전문을 입력해주세요</p>
 			</div>
 
-			<p class="field required">
-				<label class="label required" for="sourceopen">소스코드 공개여부</label>
+			<p class="field">
+				<label class="label" for="sourceopen">소스코드 공개여부</label>
 				<input
 					class="text-input"
 					id="sourceopen"
 					name="sourceopen"
 					required
 					type="text"
-					placeholder="소스코드 공개여부"
+					placeholder="공개 의무가 없으면 비워주세요"
 					v-model="license.sourceopen"
 				/>
 			</p>
@@ -429,11 +428,18 @@
 
 		<div class="add-component-button-div">
 			<div v-if="isEditMode">
-				<span class="btn edit-btn" @click="updateLicense">수정</span>
+				<span
+					class="btn edit-btn"
+					:class="{ CantDo: !CanDo }"
+					@click="updateLicense"
+					>수정</span
+				>
 				<span class="btn delete-btn" @click="deleteLicense">삭제</span>
 			</div>
 			<div v-else>
-				<span class="btn" @click="addLicense">추가</span>
+				<span class="btn" :class="{ CantDo: !CanDo }" @click="addLicense"
+					>추가</span
+				>
 			</div>
 		</div>
 		<!-- <div class="box-3">
@@ -495,21 +501,38 @@ export default {
 			}
 		}
 	},
+	computed: {
+		CanDo: function () {
+			//전부 입력되었는지 확인
+			if (
+				this.license.name.length > 0 &&
+				this.license.url.length > 0 &&
+				this.license.contents.length > 0 &&
+				this.license.identifier.length > 0
+			) {
+				return true;
+			}
+			return false;
+		},
+	},
 	methods: {
 		addLicense() {
-			this.license.contents = window.btoa(this.license.contents);
-			licenseApi.addLicense(this.license).then(() => {
-				console.log("추가성공");
-				this.$router.go(-1);
-			});
+			if (this.CanDo) {
+				this.license.contents = window.btoa(this.license.contents);
+				licenseApi.addLicense(this.license).then(() => {
+					console.log("추가성공");
+					this.$router.go(-1);
+				});
+			}
 		},
 		updateLicense() {
-			this.license.contents = window.btoa(this.license.contents);
-			console.log(this.license.contents);
-			licenseApi.updateLicense(this.license).then(() => {
-				console.log("수정성공");
-				this.$router.go(-1);
-			});
+			if (this.CanDo) {
+				this.license.contents = window.btoa(this.license.contents);
+				licenseApi.updateLicense(this.license).then(() => {
+					console.log("수정성공");
+					this.$router.go(-1);
+				});
+			}
 		},
 		deleteLicense() {
 			swal.confirm("정말로 삭제하시겠습니까?").then((response) => {
