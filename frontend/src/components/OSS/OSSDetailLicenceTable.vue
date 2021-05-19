@@ -19,7 +19,11 @@
 		</tr>
 		<tr class="detail-table-tr">
 			<td class="detail-table-td-head">주소</td>
-			<td class="detail-table-td-body">{{ license.url }}</td>
+			<td class="detail-table-td-body">
+				<a class="detail-table-a" :href="license.url" target="_blank">{{
+					license.url
+				}}</a>
+			</td>
 		</tr>
 		<tr class="detail-table-tr">
 			<td class="detail-table-td-head">생성자</td>

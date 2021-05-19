@@ -27,12 +27,12 @@ export default {
 	margin: 0;
 }
 
-/* *::-webkit-scrollbar {
+*::-webkit-scrollbar {
 	width: 10px;
 	height: 10px;
 }
 *::-webkit-scrollbar-thumb {
-	background-color: #eac03a30;
+	background-color: #99999985;
 	border-radius: 10px;
 	background-clip: padding-box;
 	border: 1px solid transparent;
@@ -41,7 +41,7 @@ export default {
 	background-color: rgba(255, 255, 255);
 	border-radius: 10px;
 	box-shadow: inset 0px 0px 5px white;
-} */
+}
 
 #app {
 	font-family: "Noto Sans KR";
