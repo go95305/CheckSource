@@ -19,7 +19,9 @@
 						class="dash-table-tr"
 						v-for="(item, index) of list"
 						:key="`${index}_list`"
-						@click="GoProjectResult(item.gitType, item.gitProjectId)"
+						@click="
+							GoProjectResult(item.departId, item.gitType, item.gitProjectId)
+						"
 					>
 						<td>{{ GetGitType(item.gitType) }}</td>
 						<td>{{ GetDepartmentName(item.departId) }}</td>
@@ -47,6 +49,7 @@
 	</div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 import "@/assets/css/DashBoard/DashBoardTable.scss";
 import InfiniteLoading from "vue-infinite-loading";
 import dayjs from "dayjs";
@@ -71,6 +74,9 @@ export default {
 			type: Number,
 			default: 0,
 		},
+	},
+	computed: {
+		...mapGetters(["getDepartment"]),
 	},
 	watch: {
 		departId: function () {
@@ -129,11 +135,15 @@ export default {
 		GetDepartmentName: function (departId) {
 			return Info.GetDepartmentName(departId - 1);
 		},
-		GoProjectResult: function (gitType, projectId) {
-			this.$router.push({
-				name: "Summary",
-				query: { gitType: gitType, projectId: projectId },
-			});
+		GoProjectResult: function (departId, gitType, projectId) {
+			if (this.getDepartment == departId) {
+				this.$router.push({
+					name: "Summary",
+					query: { gitType: gitType, projectId: projectId },
+				});
+			} else {
+				alert("내 부서의 프로젝트만 볼 수 있습니다.");
+			}
 		},
 	},
 };

@@ -30,23 +30,24 @@ export default {
 			deep: true,
 			handler() {
 				this.label = this.labels;
-				this.chart.destroy();
-				console.log(this.chart);
-				this.createChart();
 			},
 		},
 		dataList: {
 			deep: true,
 			handler() {
 				this.data = this.dataList;
-				this.chart.destroy();
 				this.createChart();
 			},
 		},
 	},
 	methods: {
-		createChart() {
+		async createChart() {
 			var ctx = document.getElementById("myChart");
+			if (this.chart != null) {
+				//chart가 destroy될때까지 대기
+				await this.chart.destroy();
+			}
+			console.log("들");
 			this.chart = new Chart(ctx, {
 				type: "doughnut",
 				data: {

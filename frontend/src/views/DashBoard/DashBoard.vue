@@ -30,6 +30,8 @@
 								<VerifyCard
 									class="dashboard-verifycard"
 									:project="projectList[current]"
+									:departId="choicedDepartId"
+									@goReport="GoReport"
 								/>
 							</div>
 						</transition-group>
@@ -86,6 +88,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import dayjs from "dayjs";
 import Info from "@/api/info.js";
 import verifyApi from "@/api/verify.js";
@@ -120,7 +123,6 @@ export default {
 			current: 0,
 			direction: 1,
 			transitionName: "fade",
-			show: false,
 			status: {
 				project: "31",
 				opensource: "29",
@@ -129,6 +131,9 @@ export default {
 			},
 			departList: [],
 		};
+	},
+	computed: {
+		...mapGetters(["getDepartment"]),
 	},
 	created() {
 		this.departList = Info.GetDepartmentList().slice();
@@ -187,6 +192,17 @@ export default {
 		SetDepartId(index) {
 			this.warningDepartId = index;
 		},
+		GoReport(gitType, projectId) {
+			//레포트 페이지로 가기
+			if (this.choicedDepartId == this.getDepartment) {
+				this.$router.push({
+					name: "Summary",
+					query: { gitType: gitType, projectId: projectId },
+				});
+			} else {
+				alert("내 부서의 프로젝트만 볼 수 있습니다.");
+			}
+		},
 		slide(dir) {
 			console.log(this.current);
 			this.direction = dir;
@@ -196,9 +212,6 @@ export default {
 			var len = this.projectList.length;
 			this.current = (this.current + (dir % len) + len) % len;
 		},
-	},
-	mounted() {
-		this.show = true;
 	},
 };
 </script>
