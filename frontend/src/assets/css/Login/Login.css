@@ -133,8 +133,6 @@
   display: inline-block;
 }
 
-
-
 .login-input-container .login-input-wrap input {
   background: none;
   border: none;
@@ -152,6 +150,7 @@
   align-items: center;
 }
 .login-btn-wrap .login-btn {
+  font-family: 'Noto Sans KR' !important;
   width: 95px;
   height: 35px;
   color: white;
