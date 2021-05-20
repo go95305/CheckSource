@@ -11,5 +11,9 @@ public interface GitHubRepository extends JpaRepository<GithubUser,Long> {
 
     GithubUser findByUserNameAndUser(String username, User user);
 
-    List<GithubUser> findByUser(User user);
+//    List<GithubUser> findByUser(User user);
+
+    List<GithubUser> findAllByUser(User user);
+
+    GithubUser findByUser(User user);
 }
