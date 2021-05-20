@@ -192,7 +192,6 @@ export default {
       //수정하기 모드
       let editOpensource = this.$route.params.editOpensource;
       // let licenseList= this.$route.params.licenseList;
-      console.log(editOpensource);
       if(editOpensource){
         this.isEditMode = true;
         this.opensource = editOpensource;
@@ -202,7 +201,6 @@ export default {
           this.tags.push(license.name);
         }
         delete this.opensource.licenseList;
-        console.log(this.opensource);
       }
       else{
         this.$router.go(-1);
@@ -242,7 +240,6 @@ export default {
     },
     getLicenseName(newVal) {
       opensourceApi.getLicenseName(newVal).then((response) => {
-        console.log(response.data);
         this.licenses = response.data;
         var str = this.licenseName;
         if(str!==''){
@@ -287,7 +284,6 @@ export default {
       //오픈소스 삭제
       if(this.CanDo){
         swal.confirm('정말로 삭제하시겠습니까?').then((response) => {
-          console.log(this.opensource.opensourceId);
           if(response.value){
              opensourceApi.deleteOpenSource(this.opensource.opensourceId).then(()=>{
               swal.success('오픈소스 정보가 삭제되었습니다.');

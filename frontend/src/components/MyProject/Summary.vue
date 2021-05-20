@@ -48,6 +48,7 @@
 <script>
 import "@/assets/css/MyProject/Summary.scss";
 import verifyApi from "@/api/verify.js";
+import swal from "@/api/alert.js";
 
 export default {
 	data() {
@@ -81,7 +82,6 @@ export default {
 			verifyApi
 				.readVerifiedSummary(this.gitType, this.projectId)
 				.then((response) => {
-					console.log(response);
 					this.analyLicenseCnt = response.data.analyLicenseCnt;
 					this.analyOpensourceCnt = response.data.analyOpensourceCnt;
 					this.requireCheckingLicenseCnt =
@@ -90,7 +90,7 @@ export default {
 					this.project = response.data;
 				})
 				.catch(() => {
-					alert("요약정보 불러오기 실패");
+					swal.error("요약정보 불러오기 실패");
 				});
 		},
 	},

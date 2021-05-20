@@ -57,8 +57,8 @@
 	</div>
 </template>
 <script>
-import loginApi from "../../api/login.js";
 import { mapGetters } from "vuex";
+
 export default {
 	name: "AfterLogin",
 	data() {
@@ -75,21 +75,9 @@ export default {
 	},
 	methods: {
 		InsertUserForm: function () {
+			console.log(this.profile);
 			this.profile.userId = this.getUserId;
-			console.log(this.getUserId);
-			loginApi
-				.userForm(this.profile)
-				.then((response) => {
-					alert(response.data);
-					// if (response.data == true) {
-					// 	this.$store.dispatch("CHECKUSER", this.profile.userId);
-					// } else {
-					// 	alert("해당 유저는 존재하지 않습니다.");
-					// }
-				})
-				.catch(() => {
-					console.log("login error");
-				});
+			this.$store.dispatch("USERFORM", this.profile);
 		},
 	},
 };

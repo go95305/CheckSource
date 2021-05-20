@@ -10,6 +10,26 @@ function success(text) {
 	});
 }
 
+function error(text) {
+	return Swal.fire({
+		position: "center",
+		icon: "error",
+		text: text,
+		showConfirmButton: false,
+		timer: 1500,
+	});
+}
+
+function warning(text) {
+	return Swal.fire({
+		position: "center",
+		icon: "warning",
+		text: text,
+		showConfirmButton: false,
+		timer: 1500,
+	});
+}
+
 function confirm(text) {
 	return Swal.fire({
 		icon: "warning",
@@ -39,4 +59,4 @@ function selectBranch(title, inputPlaceHolder, options) {
 	});
 }
 
-export default { success, confirm, inputtext, selectBranch };
+export default { success, error, warning, confirm, inputtext, selectBranch };

@@ -13,7 +13,9 @@ export default {
 	},
 	computed: {
 		EncordingContent: function () {
-			return window.atob(this.informationData.contents);
+			if (this.informationData.contents)
+				return window.atob(this.informationData.contents);
+			else return "";
 		},
 	},
 };

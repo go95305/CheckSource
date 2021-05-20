@@ -80,7 +80,6 @@ export default {
 				if (response.data) {
           this.unMappedLoading = false;
 					this.unmappedList = response.data.unmappedList;
-          console.log(this.unmappedList);
           this.totalPage = response.data.totalPages;
 				}
 			}).catch(() => {
@@ -88,7 +87,6 @@ export default {
       });
 		},
 		GoAddOpensource:function(opensource) {
-      console.log(opensource.artifactId);
       let unmappedOpensource = {artifactId:opensource.artifactId, groupId:opensource.groupId, version:opensource.version};
 			this.$router.push({
 				name: "AddOpenSource",

@@ -78,7 +78,6 @@ export default {
 			this.keyword = this.$route.query.keyword;
 			this.typeFilter = Number(this.$route.query.filter);
 		}
-		console.log("들" + this.keyword);
 		this.GetList();
 	},
 	watch: {
@@ -115,7 +114,6 @@ export default {
 			}
 		},
 		GetList: function () {
-			console.log(this.filterEnglishList[this.typeFilter - 1]);
 			opensourceApi
 				.readOpenSourceList(
 					this.keyword,
@@ -124,7 +122,6 @@ export default {
 					this.filterEnglishList[this.typeFilter - 1]
 				)
 				.then((response) => {
-					console.log(response.data);
 					this.openSourceList = response.data.list;
 					this.totalPage = response.data.totalPage;
 				})
