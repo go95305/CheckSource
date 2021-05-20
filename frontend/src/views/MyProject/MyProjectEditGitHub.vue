@@ -69,14 +69,16 @@ export default {
 					if (response.data.accessflag) {
 						this.repositoryList = response.data.projectList;
 					} else {
-						alert("Github 토큰 기한이 만료되었습니다.\n다시 연동해주세요.");
+						swal.warning(
+							"Github 토큰 기한이 만료되었습니다.\n다시 연동해주세요."
+						);
 						this.$router.push("/mypage/scm/github");
 					}
 				})
 				.catch(() => {
 					this.loading = false;
 					this.repositoryList = [];
-					alert("프로젝트 목록을 불러오지 못했습니다.");
+					swal.error("프로젝트 목록을 불러오지 못했습니다.");
 				});
 		},
 		IsSelected: function (id) {
@@ -107,7 +109,7 @@ export default {
 					this.SelectBranch(branchOption);
 				})
 				.catch(() => {
-					alert("프로젝트 브랜치 목록을 불러오지 못했습니다.");
+					swal.error("프로젝트 브랜치 목록을 불러오지 못했습니다.");
 				});
 		},
 		SelectBranch: function (branchOption) {

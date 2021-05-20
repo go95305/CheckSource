@@ -50,11 +50,12 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+import dayjs from "dayjs";
 import "@/assets/css/DashBoard/DashBoardTable.scss";
 import InfiniteLoading from "vue-infinite-loading";
-import dayjs from "dayjs";
 import dashboardApi from "@/api/dashboard.js";
 import Info from "@/api/info.js";
+import swal from "@/api/alert.js";
 
 export default {
 	name: "LicenseWarningTable",
@@ -139,7 +140,7 @@ export default {
 					query: { gitType: gitType, projectId: projectId },
 				});
 			} else {
-				alert("내 부서의 프로젝트만 볼 수 있습니다.");
+				swal.error("내 부서의 프로젝트만 볼 수 있습니다.");
 			}
 		},
 	},

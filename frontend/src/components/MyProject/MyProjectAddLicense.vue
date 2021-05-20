@@ -519,7 +519,7 @@ export default {
 			if (this.CanDo) {
 				this.license.contents = window.btoa(this.license.contents);
 				licenseApi.addLicense(this.license).then(() => {
-					alert("추가성공");
+					swal.success("라이선스가 추가되었습니다.");
 					this.$router.go(-1);
 				});
 			}
@@ -528,7 +528,7 @@ export default {
 			if (this.CanDo) {
 				this.license.contents = window.btoa(this.license.contents);
 				licenseApi.updateLicense(this.license).then(() => {
-					alert("수정성공");
+					swal.success("라이선스가 수정되었습니다.");
 					this.$router.go(-1);
 				});
 			}
@@ -537,7 +537,7 @@ export default {
 			swal.confirm("정말로 삭제하시겠습니까?").then((response) => {
 				if (response.value) {
 					licenseApi.deleteLicense(this.license.licenseId).then(() => {
-						alert("삭제성공");
+						swal.success("라이선스가 삭제되었습니다");
 						this.$router.go(-2);
 					});
 				}

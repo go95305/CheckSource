@@ -29,7 +29,9 @@
 	</div>
 </template>
 <script>
-import loginApi from "../../api/login.js";
+import loginApi from "@/api/login.js";
+import swal from "@/api/alert.js";
+
 export default {
 	name: "BeforeLogin",
 	data() {
@@ -49,11 +51,11 @@ export default {
 					if (response.data == true) {
 						this.$store.dispatch("CHECKUSER", this.loginInfo.userId);
 					} else {
-						alert("해당 유저는 존재하지 않습니다.");
+						swal.error("해당 유저는 존재하지 않습니다.");
 					}
 				})
 				.catch(() => {
-					alert("로그인에 실패했습니다.");
+					swal.error("로그인에 실패했습니다.");
 				});
 		},
 	},

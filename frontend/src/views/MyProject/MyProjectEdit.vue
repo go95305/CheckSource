@@ -49,12 +49,14 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import "@/assets/css/MyProject/Edit/MyProjectEdit.css";
-import Loading from "@/components/Loading/Loading.vue";
 import gitApi from "@/api/git.js";
-import RepositoryCard from "../../components/MyProject/RepositoryCard.vue";
-import MyProjectPath from "../../components/MyProject/MyProjectPath.vue";
-import Tab from "../../components/Tab/Tab.vue";
+import swal from "@/api/alert.js";
+import Loading from "@/components/Loading/Loading.vue";
+import RepositoryCard from "@/components/MyProject/RepositoryCard.vue";
+import MyProjectPath from "@/components/MyProject/MyProjectPath.vue";
+import Tab from "@/components/Tab/Tab.vue";
+import "@/assets/css/MyProject/Edit/MyProjectEdit.css";
+
 export default {
 	name: "MyProjectEdit",
 	components: { MyProjectPath, Tab, RepositoryCard, Loading },
@@ -111,12 +113,12 @@ export default {
 				gitApi
 					.verifyGitLabProjects(this.gitId, this.selectedRepositoryList)
 					.then(() => {
-						alert("검증이 완료되었습니다.");
+						swal.success("검증이 완료되었습니다.");
 						this.fullLoading = false;
 						this.$router.push("/project/main/projects");
 					})
 					.catch(() => {
-						alert("검증에 실패했습니다.");
+						swal.error("검증에 실패했습니다.");
 						this.fullLoading = false;
 					});
 			} else {
@@ -126,12 +128,12 @@ export default {
 						this.selectedRepositoryList
 					)
 					.then(() => {
-						alert("검증이 완료되었습니다.");
+						swal.success("검증이 완료되었습니다.");
 						this.fullLoading = false;
 						this.$router.push("/project/main/projects");
 					})
 					.catch(() => {
-						alert("검증에 실패했습니다.");
+						swal.error("검증에 실패했습니다.");
 						this.fullLoading = false;
 					});
 			}

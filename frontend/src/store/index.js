@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
 import loginApi from "../api/login";
 import router from "../router/index";
+import swal from "@/api/alert.js";
 
 Vue.use(Vuex);
 
@@ -142,11 +143,11 @@ export default new Vuex.Store({
 						context.commit("LOGIN", response.data);
 						router.push("/dashboard");
 					} else {
-						alert("사용자 정보 입력에 실패했습니다.");
+						swal.error("사용자 정보 입력에 실패했습니다.");
 					}
 				})
-				.catch((error) => {
-					alert("사용자 정보 입력에 실패했습니다.");
+				.catch(() => {
+					swal.error("사용자 정보 입력에 실패했습니다.");
 				});
 		},
 		UPDATEUSER(context, userform) {
@@ -156,13 +157,13 @@ export default new Vuex.Store({
 					if (response.data.flag) {
 						//입력 완료
 						context.commit("LOGIN", response.data);
-						alert("변경 성공");
+						swal.success("변경 성공");
 					} else {
-						alert("사용자 정보 변경에 실패했습니다.");
+						swal.error("사용자 정보 변경에 실패했습니다.");
 					}
 				})
 				.catch(() => {
-					alert("변경 실패");
+					swal.error("변경 실패");
 				});
 		},
 		LOGOUT(context) {
@@ -174,7 +175,7 @@ export default new Vuex.Store({
 					router.push("/");
 				})
 				.catch(() => {
-					alert("로그아웃에 실패했습니다.");
+					swal.error("로그아웃에 실패했습니다.");
 				});
 		},
 	},

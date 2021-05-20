@@ -75,9 +75,11 @@
 	</div>
 </template>
 <script>
-import SCMCard from "@/components/MyPage/SCMCard.vue";
 import { mapGetters } from "vuex";
+import SCMCard from "@/components/MyPage/SCMCard.vue";
 import gitApi from "@/api/git.js";
+import swal from "@/api/alert.js";
+
 export default {
 	name: "MyPageGitHub",
 	components: { SCMCard },
@@ -125,15 +127,15 @@ export default {
 				.createGitHubConnect(this.newGitHubAccount)
 				.then((response) => {
 					if (response.data.flag) {
-						alert("계정이 연동되었습니다.");
+						swal.success("계정이 연동되었습니다.");
 						this.$store.commit("CONNECTGITHUB", response.data);
 						this.OpenAndCloseInputArea();
 					} else {
-						alert("존재하지 않는 계정입니다.\n다시 확인해주세요.");
+						swal.error("존재하지 않는 계정입니다.\n다시 확인해주세요.");
 					}
 				})
 				.catch(() => {
-					alert("오류가 발생했습니다.");
+					swal.error("오류가 발생했습니다.");
 				});
 		},
 		DeleteAccount: function (index, githubId) {
@@ -141,11 +143,11 @@ export default {
 			gitApi
 				.deleteGitHubConnect(githubId)
 				.then(() => {
-					alert("연동이 중지되었습니다.");
+					swal.success("연동이 중지되었습니다.");
 					this.$store.commit("DISCONNECTGITHUB", index);
 				})
 				.catch(() => {
-					alert("오류가 발생했습니다.");
+					swal.error("오류가 발생했습니다.");
 				});
 		},
 	},

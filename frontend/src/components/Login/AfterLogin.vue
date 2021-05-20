@@ -57,8 +57,10 @@
 	</div>
 </template>
 <script>
-import loginApi from "../../api/login.js";
 import { mapGetters } from "vuex";
+import loginApi from "@/api/login.js";
+import swal from "@/api/alert.js";
+
 export default {
 	name: "AfterLogin",
 	data() {
@@ -87,7 +89,7 @@ export default {
 					// }
 				})
 				.catch(() => {
-					alert("로그인에 실패했습니다.");
+					swal.error("로그인에 실패했습니다.");
 				});
 		},
 	},

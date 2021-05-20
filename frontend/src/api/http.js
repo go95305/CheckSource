@@ -1,6 +1,8 @@
 import axios from "axios";
 import router from "../router";
 import store from "../store";
+import swal from "@/api/alert.js";
+
 const instance = axios.create({
 	// baseURL: process.env.VUE_APP_BASE_URL,
 	baseURL: "http://52.79.151.0:8080",
@@ -27,7 +29,7 @@ instance.interceptors.response.use(
 	},
 	(error) => {
 		if (error.response.status == "403") {
-			alert("토큰 기한이 만료되었습니다.");
+			swal.warning("토큰 기한이 만료되었습니다.");
 			store.commit("LOGOUT");
 			router.push("/");
 			return Promise.reject(error);

@@ -91,13 +91,15 @@
 import { mapGetters } from "vuex";
 import dayjs from "dayjs";
 import Info from "@/api/info.js";
+import swal from "@/api/alert.js";
 import verifyApi from "@/api/verify.js";
 import dashboardApi from "@/api/dashboard.js";
+
 import TopFiveGraph from "@/components/DashBoard/TopFiveGraph.vue";
 import VerifyCard from "@/components/DashBoard/VerifyCard.vue";
 import DropDown from "@/components/DropDown/DropDown.vue";
 import DashBoardTable from "@/components/DashBoard/DashBoardTable.vue";
-import LicenseWarningTable from "../../components/DashBoard/LicenseWarningTable.vue";
+import LicenseWarningTable from "@/components/DashBoard/LicenseWarningTable.vue";
 import DashBoardOverview from "@/components/DashBoard/DashBoardOverview.vue";
 import "vueperslides/dist/vueperslides.css";
 
@@ -197,7 +199,7 @@ export default {
 					query: { gitType: gitType, projectId: projectId },
 				});
 			} else {
-				alert("내 부서의 프로젝트만 볼 수 있습니다.");
+				swal.error("내 부서의 프로젝트만 볼 수 있습니다.");
 			}
 		},
 		slide(dir) {

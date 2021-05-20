@@ -115,7 +115,7 @@ export default {
 			if (this.departId == this.getDepartment) {
 				this.GetRepoBranch();
 			} else {
-				alert("내 부서의 프로젝트만 검증이 가능합니다.");
+				swal.error("내 부서의 프로젝트만 검증이 가능합니다.");
 			}
 		},
 		GetRepoBranch: function () {
@@ -131,7 +131,7 @@ export default {
 						this.SelectBranch(branchOption);
 					})
 					.catch(() => {
-						alert("프로젝트 브랜치 목록을 불러오지 못했습니다.");
+						swal.error("프로젝트 브랜치 목록을 불러오지 못했습니다.");
 					});
 			} else {
 				gitApi
@@ -148,7 +148,7 @@ export default {
 						this.SelectBranch(branchOption);
 					})
 					.catch(() => {
-						alert("프로젝트 브랜치 목록을 불러오지 못했습니다.");
+						swal.error("프로젝트 브랜치 목록을 불러오지 못했습니다.");
 					});
 			}
 		},
@@ -196,12 +196,12 @@ export default {
 			gitApi
 				.verifyGitLabProjects(this.project.gitType, repoList)
 				.then(() => {
-					alert("검증이 완료되었습니다.");
+					swal.success("검증이 완료되었습니다.");
 					this.loading = false;
 					window.location.reload();
 				})
 				.catch(() => {
-					alert("검증에 실패했습니다.");
+					swal.error("검증에 실패했습니다.");
 					this.loading = false;
 				});
 		},
@@ -211,12 +211,12 @@ export default {
 			gitApi
 				.verifyGitHubProjects(this.getGitHubList[0].githubId, repoList)
 				.then(() => {
-					alert("검증이 완료되었습니다.");
+					swal.success("검증이 완료되었습니다.");
 					this.loading = false;
 					window.location.reload();
 				})
 				.catch(() => {
-					alert("검증에 실패했습니다.");
+					swal.error("검증에 실패했습니다.");
 					this.loading = false;
 				});
 		},
@@ -238,13 +238,12 @@ export default {
 			gitApi
 				.deleteProject(this.project.projectId, this.project.gitType)
 				.then(() => {
-					// alert("프로젝트가 삭제되었습니다.");
 					swal.success("프로젝트가 삭제되었습니다.");
 					this.loading = false;
 					window.location.reload();
 				})
 				.catch(() => {
-					alert("삭제에 실패했습니다.");
+					swal.error("삭제에 실패했습니다.");
 					this.loading = false;
 				});
 		},

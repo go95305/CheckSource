@@ -48,6 +48,7 @@
 <script>
 import "@/assets/css/MyProject/Summary.scss";
 import verifyApi from "@/api/verify.js";
+import swal from "@/api/alert.js";
 
 export default {
 	data() {
@@ -89,7 +90,7 @@ export default {
 					this.project = response.data;
 				})
 				.catch(() => {
-					alert("요약정보 불러오기 실패");
+					swal.error("요약정보 불러오기 실패");
 				});
 		},
 	},
