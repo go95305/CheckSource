@@ -58,28 +58,30 @@ export default {
 	methods: {
 		GetRepositories: function () {
 			//레포지토리 얻어오기
-			this.loading = true;
-			this.repositoryList = [];
-			gitApi
-				.readGitHubProjects(
-					this.getGitHubList[this.githubAccountValue].githubId
-				)
-				.then((response) => {
-					this.loading = false;
-					if (response.data.accessflag) {
-						this.repositoryList = response.data.projectList;
-					} else {
-						swal.warning(
-							"Github 토큰 기한이 만료되었습니다.\n다시 연동해주세요."
-						);
-						this.$router.push("/mypage/scm/github");
-					}
-				})
-				.catch(() => {
-					this.loading = false;
-					this.repositoryList = [];
-					swal.error("프로젝트 목록을 불러오지 못했습니다.");
-				});
+			if (this.getGitHubList.length > 0) {
+				this.loading = true;
+				this.repositoryList = [];
+				gitApi
+					.readGitHubProjects(
+						this.getGitHubList[this.githubAccountValue].githubId
+					)
+					.then((response) => {
+						this.loading = false;
+						if (response.data.accessflag) {
+							this.repositoryList = response.data.projectList;
+						} else {
+							swal.warning(
+								"Github 토큰 기한이 만료되었습니다.\n다시 연동해주세요."
+							);
+							this.$router.push("/mypage/scm/github");
+						}
+					})
+					.catch(() => {
+						this.loading = false;
+						this.repositoryList = [];
+						swal.error("프로젝트 목록을 불러오지 못했습니다.");
+					});
+			}
 		},
 		IsSelected: function (id) {
 			//선택된 레포지토리인지 확인

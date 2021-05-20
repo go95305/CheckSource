@@ -3,7 +3,7 @@
 		<div class="login-form-right-side-before">
 			<div class="top-logo-wrap"></div>
 			<img id="right-side-logo" src="@/assets/shinhan.png" />
-			<h3>Shinhan Bank Opensource Validation</h3>
+			<h3>Shinhan Bank Opensource Verification</h3>
 		</div>
 		<div class="login-form-left-side">
 			<div class="login-top-wrap"></div>

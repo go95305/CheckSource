@@ -41,7 +41,7 @@
 		</div>
 
 		<!-- 관리 버튼 -->
-		<div id="mypage-gitlab-buttons">
+		<div id="mypage-gitlab-buttons" v-if="github.length == 0">
 			<button
 				v-if="newGitHubAccount.username.length > 0 && openInputArea"
 				class="mypage-gitlab-button new-button"

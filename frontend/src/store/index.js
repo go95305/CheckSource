@@ -104,6 +104,9 @@ export default new Vuex.Store({
 			state.userImg = payload["userImg"];
 			state.gitlabList = payload["gitlabList"];
 			state.githubList = payload["githubList"];
+			if (state.githubList.length > 0) {
+				state.githubUsername = state.githubList[0].username;
+			}
 			state.name = payload["name"];
 			state.department = payload["depart"];
 		},
