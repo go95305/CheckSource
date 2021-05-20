@@ -114,6 +114,7 @@ export default new Vuex.Store({
 			state.userImg = "";
 			state.gitlabList = [];
 			state.githubList = [];
+			state.githubUsername = "";
 			state.name = "";
 			state.department = "";
 		},
@@ -129,7 +130,7 @@ export default new Vuex.Store({
 					router.push("/dashboard");
 				} else {
 					//사용자 정보가 없으면
-					router.push("/afterLogin");
+					router.push({ name: "AfterLogin" });
 				}
 			});
 		},
