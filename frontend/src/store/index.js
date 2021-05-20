@@ -1,11 +1,14 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import createPersistedState from "vuex-persistedstate";
 import loginApi from "../api/login";
-import axios from "axios";
 import router from "../router/index";
+import swal from "@/api/alert.js";
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+	plugins: [createPersistedState()],
 	state: {
 		accessToken: null,
 		userId: "",
@@ -13,7 +16,9 @@ export default new Vuex.Store({
 		job: "",
 		department: "",
 		userImg: "",
-		gitlabId: "",
+		gitlabList: [],
+		githubList: [],
+		githubUsername: "",
 	},
 	getters: {
 		getAccessToken(state) {
@@ -29,54 +34,106 @@ export default new Vuex.Store({
 			return state.job;
 		},
 		getDepartment(state) {
-			return state.getDepartment;
+			return state.department;
 		},
 		getUserImg(state) {
 			return state.userImg;
 		},
-		getGitLabId(state) {
-			return state.gitlabId;
+		getGitLabList(state) {
+			return state.gitlabList;
+		},
+		getGitHubList(state) {
+			return state.githubList;
+		},
+		getGithubUsername(state) {
+			return state.githubUsername;
 		},
 	},
 	mutations: {
+		SAVEUSERID(state, userId) {
+			state.userId = userId;
+		},
+		CONNECTGITLAB(state, account) {
+			//flag 요소 지우기
+			delete account.flag;
+
+			//같은 gitlabid가 있으면 삭제
+			let temp = state.gitlabList;
+			for (let i = 0; i < temp.length; ++i) {
+				if (temp[i].gitlabId == account.gitlabId) {
+					temp.splice(i, 1);
+				}
+			}
+			//배열에 추가
+			temp.push(account);
+			//gitlabid 순서대로 정렬
+			temp.sort(function (a, b) {
+				return a.gitlabId - b.gitlabId;
+			});
+			state.gitlabList = [];
+			state.gitlabList = temp;
+		},
+		CONNECTGITHUB(state, account) {
+			delete account.flag;
+
+			let temp = state.githubList;
+			for (let i = 0; i < temp.length; ++i) {
+				if (temp[i].githubId == account.githubId) {
+					temp.splice(i, 1);
+				}
+			}
+
+			temp.push(account);
+			//githubid 순서대로 정렬
+			temp.sort(function (a, b) {
+				return a.githubId - b.githubId;
+			});
+			state.githubUsername = account.username;
+			state.githubList = [];
+			state.githubList = temp;
+		},
+		DISCONNECTGITLAB(state, index) {
+			state.gitlabList.splice(index, 1);
+		},
+		DISCONNECTGITHUB(state, index) {
+			state.githubList.splice(index, 1);
+		},
 		LOGIN(state, payload) {
 			state.accessToken = payload["token"];
-			state.userId = payload["userId"];
 			state.job = payload["job"];
 			state.userImg = payload["userImg"];
-			state.gitlabId = payload["gitlabId"];
+			state.gitlabList = payload["gitlabList"];
+			state.githubList = payload["githubList"];
+			if (state.githubList && state.githubList.length > 0) {
+				state.githubUsername = state.githubList[0].username;
+			}
 			state.name = payload["name"];
 			state.department = payload["depart"];
-			localStorage.setItem("token", state.accessToken);
-			localStorage.setItem("userId", state.userId);
 		},
 		LOGOUT(state) {
 			state.accessToken = null;
 			state.userId = "";
 			state.job = "";
 			state.userImg = "";
-			state.gitlabId = "";
+			state.gitlabList = [];
+			state.githubList = [];
+			state.githubUsername = "";
 			state.name = "";
 			state.department = "";
-			localStorage.removeItem("token");
-			localStorage.removeItem("userId");
 		},
 	},
 	actions: {
 		CHECKUSER(context, userId) {
 			//사용자 정보 유무 확인
 			loginApi.checkUser(userId).then((response) => {
-				console.log(response.data.flag);
-				if (!response.data.flag) {
+				context.commit("SAVEUSERID", userId);
+				if (response.data.flag) {
 					//사용자 정보가 있으면
 					context.commit("LOGIN", response.data);
-					axios.defaults.headers.common[
-						"auth-token"
-					] = `${response.data["token"]}`;
 					router.push("/dashboard");
 				} else {
 					//사용자 정보가 없으면
-					router.push("/afterLogin");
+					router.push({ name: "AfterLogin" });
 				}
 			});
 		},
@@ -88,23 +145,42 @@ export default new Vuex.Store({
 					if (response.data.flag) {
 						//입력 완료
 						context.commit("LOGIN", response.data);
-						axios.defaults.headers.common[
-							"auth-token"
-						] = `${response.data["token"]}`;
 						router.push("/dashboard");
 					} else {
-						alert("사용자 정보 입력에 실패했습니다.");
+						swal.error("사용자 정보 입력에 실패했습니다.");
 					}
 				})
-				.catch((error) => {
-					console.log(error);
-					alert("사용자 정보 입력에 실패했습니다.");
+				.catch(() => {
+					swal.error("사용자 정보 입력에 실패했습니다.");
+				});
+		},
+		UPDATEUSER(context, userform) {
+			loginApi
+				.userUpdate(userform)
+				.then((response) => {
+					if (response.data.flag) {
+						//입력 완료
+						context.commit("LOGIN", response.data);
+						swal.success("변경 성공");
+					} else {
+						swal.error("사용자 정보 변경에 실패했습니다.");
+					}
+				})
+				.catch(() => {
+					swal.error("변경 실패");
 				});
 		},
 		LOGOUT(context) {
 			//로그아웃
-			context.commit("LOGOUT");
-			axios.defaults.headers.common["auth-token"] = undefined;
+			loginApi
+				.userLogout()
+				.then(() => {
+					context.commit("LOGOUT");
+					router.push("/");
+				})
+				.catch(() => {
+					swal.error("로그아웃에 실패했습니다.");
+				});
 		},
 	},
 });

@@ -1,9 +1,14 @@
 package com.ssafy.checksource.model.dto;
 
-import io.swagger.annotations.ApiModelProperty;
+import java.util.List;
+
+import lombok.ToString;
+import org.springframework.boot.autoconfigure.info.ProjectInfoProperties.Git;
+
 import lombok.Data;
 
 @Data
+@ToString
 public class UserDTO {
     
     private String token;
@@ -12,7 +17,8 @@ public class UserDTO {
     private Integer userImg;
     private Long depart;
     private Long job;
-    private String gitlabId;
-    private String username;
+    
+    private List<GitLabDTO> gitlabList;
+    private List<GitHubDTO> githubList;
 }
 

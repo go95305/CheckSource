@@ -23,7 +23,7 @@ import lombok.Data;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "User")
+@Table(name = "USER")
 public class User implements UserDetails{
 
 	@Id
@@ -33,7 +33,7 @@ public class User implements UserDetails{
 	private String token;
 	@Column(name = "user_img")
 	private Integer userImg;
-    @Column(columnDefinition = "boolean default false")
+    @Column(columnDefinition = "bit default 0")
 	private boolean flag; //회원정보 입력 여부
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -45,12 +45,18 @@ public class User implements UserDetails{
 	private Job job;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<GitLab> gitLab = new ArrayList<>();
+    private List<GitLabUser> gitLabUser = new ArrayList<>();
 	
 	
 	@OneToMany(mappedBy = "user")
     private List<Project> project = new ArrayList<>();
 	
+	@OneToMany(mappedBy = "user")
+    private List<Opensource> opensource = new ArrayList<>();
+	
+	
+	@OneToMany(mappedBy = "user")
+	private List<License> license = new ArrayList<>(); 
 	
 	@ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default

@@ -6,19 +6,21 @@
 		</span>
 
 		<!-- 첫 페이지 -->
-		<span class="pagination-list" v-show="displayFirstNum">
+		<span class="pagination-list" v-if="displayFirstNum">
 			<input
 				class="pagination-input"
 				type="radio"
-				name="pageList"
-				:id="`pagination-first`"
+				:name="`pageList_` + name"
+				:id="`pagination-first` + name"
 				:value="1"
 				v-model="page"
 				@click="AlertPageChange(1)"
 			/>
-			<label :for="`pagination-first`" class="pagination-label"> 1 </label>
+			<label :for="`pagination-first` + name" class="pagination-label">
+				1
+			</label>
 		</span>
-		<span class="pagination-list" v-show="displayFirstNum">...</span>
+		<span class="pagination-list" v-if="displayFirstNum">...</span>
 
 		<!-- 페이지 리스트 -->
 		<span
@@ -29,30 +31,30 @@
 			<input
 				class="pagination-input"
 				type="radio"
-				name="pageList"
-				:id="`pagination-${value}`"
+				:name="`pageList_` + name"
+				:id="`pagination-${value}` + name"
 				:value="value"
 				v-model="page"
 				@click="AlertPageChange(value)"
 			/>
-			<label :for="`pagination-${value}`" class="pagination-label">{{
+			<label :for="`pagination-${value}` + name" class="pagination-label">{{
 				value
 			}}</label>
 		</span>
 
 		<!-- 마지막 페이지 -->
-		<span class="pagination-list" v-show="displayLastNum">...</span>
-		<span class="pagination-list" v-show="displayLastNum">
+		<span class="pagination-list" v-if="displayLastNum">...</span>
+		<span class="pagination-list" v-if="displayLastNum">
 			<input
 				class="pagination-input"
 				type="radio"
-				name="pageList"
-				:id="`pagination-last`"
+				:name="`pageList_` + name"
+				:id="`pagination-last` + name"
 				:value="lastPage"
 				v-model="page"
 				@click="AlertPageChange(lastPage)"
 			/>
-			<label :for="`pagination-last`" class="pagination-label"
+			<label :for="`pagination-last` + name" class="pagination-label"
 				>{{ lastPage }}
 			</label>
 		</span>
@@ -68,6 +70,7 @@ export default {
 	props: {
 		currentPage: Number,
 		lastPage: Number,
+		name: String,
 	},
 	data() {
 		return {
@@ -84,6 +87,9 @@ export default {
 		page: function () {
 			this.CalculatePageList();
 		},
+		lastPage: function () {
+			this.CalculatePageList();
+		},
 	},
 	created() {
 		this.page = this.currentPage;
@@ -92,7 +98,7 @@ export default {
 		CalculatePageList: function () {
 			//페이지 목록 연산
 			let list = [];
-
+			this.pageList = null;
 			if (this.lastPage < 8) {
 				//전체 리스트 만들기
 				this.displayFirstNum = false;
@@ -115,15 +121,17 @@ export default {
 			this.pageList = list;
 		},
 		MovePageForward: function () {
-			if (this.page < this.lastPage) {
-				++this.page;
-				this.AlertPageChange(this.page);
+			let value = this.page;
+			if (value < this.lastPage) {
+				++value;
+				this.AlertPageChange(value);
 			}
 		},
 		MovePageBackward: function () {
-			if (this.page > 1) {
-				--this.page;
-				this.AlertPageChange(this.page);
+			let value = this.page;
+			if (value > 1) {
+				--value;
+				this.AlertPageChange(value);
 			}
 		},
 		AlertPageChange: function (value) {

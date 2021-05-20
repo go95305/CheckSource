@@ -29,6 +29,12 @@ export default {
 	props: {
 		placeHolderText: String,
 		filterList: Array,
+		keyword: String,
+		filter: Number,
+	},
+	created() {
+		this.inputValue = this.keyword ? this.keyword : "";
+		this.filterValue = this.filter ? this.filter : 1;
 	},
 	data() {
 		return {

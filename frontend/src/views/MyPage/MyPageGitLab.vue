@@ -1,88 +1,164 @@
 <template>
-    <div id="mypage-gitlab-container">
-        <!-- 현재 연동된 계정 정보 -->
-        <div id="mypage-gitlab-current" v-if="isCurrentAccount">
-            <span id="mypage-gitlab-current-title">현재 연동된 계정</span>
-            <span id="mypage-gitlab-current-account">{{ currentAccount }}</span>
-        </div>
+	<div id="mypage-gitlab-container">
+		<!-- 현재 연동된 계정 정보 -->
+		<div v-if="gitlab.length > 0" class="mypage-scm-account-background">
+			<h3 class="mypage-gitlab-title">현재 연동된 계정</h3>
+			<SCMCard
+				v-for="(account, index) in gitlab"
+				:key="`${index}_accountList`"
+				:index="index"
+				:account="account"
+				:gitType="1"
+				@deleteSCM="DeleteAccount"
+			></SCMCard>
+		</div>
 
-        <div
-            id="mypage-gitlab-new-account"
-            :class="{ open: openNewAccount || !isCurrentAccount }"
-        >
-            <label
-                id="mypage-gitlab-account-label"
-                for="mypage-gitlab-account-input"
-                >새 계정(UserName)</label
-            >
-            <input
-                id="mypage-gitlab-account-input"
-                type="text"
-                v-model="newAccount"
-            />
-        </div>
+		<!-- 새로 입력할 계정 정보 -->
+		<div id="mypage-gitlab-new-account" :class="{ open: openInputArea }">
+			<h3 class="mypage-gitlab-title">새로 연동할 계정 정보</h3>
+			<label class="mypage-gitlab-label" for="mypage-gitlab-baseurl"
+				>BaseURL</label
+			>
+			<select
+				v-model="newGitLabAccount.gitlabId"
+				name="gitlab-baseurl"
+				id="mypage-gitlab-baseurl"
+				class="mypage-gitlab-input"
+			>
+				<option
+					v-for="(baseUrl, index) in baseUrlList"
+					:key="`${index}_baseUrlList`"
+					:value="index + 1"
+				>
+					{{ baseUrl }}
+				</option>
+			</select>
+			<label class="mypage-gitlab-label" for="mypage-gitlab-account-input"
+				>UserName</label
+			>
+			<input
+				id="mypage-gitlab-account-input"
+				class="mypage-gitlab-input"
+				type="text"
+				v-model="newGitLabAccount.username"
+			/>
+		</div>
 
-        <!-- 관리 버튼 -->
-        <div id="mypage-gitlab-buttons">
-            <button
-                class="mypage-gitlab-button new-button"
-                @click="CheckNewAccount"
-            >
-                <div v-if="newAccount.length > 0 || !isCurrentAccount">
-                    <i class="material-icons"> check </i>
-                    <span>연동하기</span>
-                </div>
-                <div v-else>
-                    <i class="material-icons"> swap_horiz </i>
-                    <span>다른 계정으로 연동하기</span>
-                </div>
-            </button>
-            <button
-                v-if="isCurrentAccount"
-                class="mypage-gitlab-button close-button"
-                @click="CloseAccout"
-            >
-                <div>
-                    <i class="material-icons"> close </i>
-                    <span>연동끊기</span>
-                </div>
-            </button>
-        </div>
-    </div>
+		<!-- 관리 버튼 -->
+		<div id="mypage-gitlab-buttons">
+			<button
+				v-if="newGitLabAccount.username.length > 0 && openInputArea"
+				class="mypage-gitlab-button new-button"
+				@click="CreateAccount"
+			>
+				<div>
+					<i class="material-icons"> check </i>
+					<span>연동하기</span>
+				</div></button
+			><button
+				v-else-if="newGitLabAccount.username.length == 0 && openInputArea"
+				class="mypage-gitlab-button new-button"
+				@click="OpenAndCloseInputArea"
+			>
+				<div>
+					<i class="material-icons"> close </i>
+					<span>창 닫기</span>
+				</div>
+			</button>
+			<button
+				v-else
+				class="mypage-gitlab-button new-button"
+				@click="OpenAndCloseInputArea"
+			>
+				<div>
+					<i class="material-icons"> add </i>
+					<span>계정추가</span>
+				</div>
+			</button>
+		</div>
+	</div>
 </template>
 <script>
+import { mapGetters } from "vuex";
+import gitApi from "@/api/git.js";
+import SCMCard from "@/components/MyPage/SCMCard.vue";
+import swal from "@/api/alert.js";
+
 export default {
-    name: "MyPageGitLab",
-    data() {
-        return {
-            isCurrentAccount: true,
-            currentAccount: "checksource",
-            openNewAccount: false,
-            newAccount: "",
-        };
-    },
-    watch: {
-        openNewAccount: function () {
-            if (!this.openNewAccount) {
-                this.newAccount = "";
-            }
-        },
-    },
-    methods: {
-        CheckNewAccount: function () {
-            //새 계정 입력에 따른 연산
-            if (!this.openNewAccount || this.newAccount.length == 0) {
-                this.openNewAccount = !this.openNewAccount;
-            } else {
-                //변경시도
-                alert("변경시도");
-            }
-        },
-        CloseAccout: function () {
-            //연결끊기 시도
-            this.isCurrentAccount = false;
-        },
-    },
+	name: "MyPageGitLab",
+	components: { SCMCard },
+	data() {
+		return {
+			openInputArea: false,
+			newGitLabAccount: {
+				gitlabId: 1,
+				username: "",
+			},
+			gitlab: [],
+			baseUrlList: [],
+		};
+	},
+	watch: {
+		openInputArea: function () {
+			if (!this.openInputArea) {
+				//계정 추가 영역 열 때 비우기
+				this.newGitLabAccount.username = "";
+				this.newGitLabAccount.gitlabId = 1;
+			}
+		},
+		getGitLabList: {
+			deep: true,
+			handler(newData) {
+				this.gitlab = [];
+				this.gitlab = newData;
+			},
+		},
+	},
+	created() {
+		this.baseUrlList = gitApi.getBaseUrlList();
+		this.gitlab = this.getGitLabList;
+		if (this.gitlab.length == 0) {
+			this.openInputArea = true;
+		}
+	},
+	methods: {
+		OpenAndCloseInputArea: function () {
+			//계정 추가 영역 열고 닫기
+			this.openInputArea = !this.openInputArea;
+		},
+		CreateAccount: function () {
+			//계정 연동
+			gitApi
+				.createGitLabConnect(this.newGitLabAccount)
+				.then((response) => {
+					if (response.data.flag) {
+						swal.success("계정이 연동되었습니다.");
+						this.$store.commit("CONNECTGITLAB", response.data);
+						this.OpenAndCloseInputArea();
+					} else {
+						swal.error("존재하지 않는 계정입니다.\n다시 확인해주세요.");
+					}
+				})
+				.catch(() => {
+					swal.error("오류가 발생했습니다.");
+				});
+		},
+		DeleteAccount: function (index, gitlabId) {
+			//연결끊기
+			gitApi
+				.deleteGitLabConnect(gitlabId)
+				.then(() => {
+					swal.success("연동이 중지되었습니다.");
+					this.$store.commit("DISCONNECTGITLAB", index);
+				})
+				.catch(() => {
+					swal.error("오류가 발생했습니다.");
+				});
+		},
+	},
+	computed: {
+		...mapGetters(["getGitLabList"]),
+	},
 };
 </script>
 <style scoped src="@/assets/css/MyPage/MyPageGitLab.css"></style>

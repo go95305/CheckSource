@@ -16,16 +16,12 @@
     display: flex;
     flex: 1 1 300px;
     flex-wrap: wrap;
+    flex-direction: column;
     align-self: flex-start;
 }
 
 #myproject-edit-tab {
     flex: 0 0 100%;
-}
-
-#myproject-edit-scm-button {
-    position: relative;
-    right: 0px;
 }
 
 #myproject-edit-selected-div {
@@ -51,29 +47,54 @@
     padding: 10px;
     font-size: large;
     font-weight: 700;
+    cursor: pointer;
     border: 1px solid #eee;
     background-color: white;
     border-radius: 5px;
     box-shadow: 0px 4px 5px #ddd;
+    transition: all 0.3s ease;
 }
 
 #myproject-edit-selected-button:hover {
     box-shadow: 0px 4px 5px #ccc;
 }
 
-/* @media (max-width: 700px) {
-    #myproject-edit-container {
-        display: block;
-    }
+.myproject-dropdown .common_dropdown_option {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 10px 0px 0px;
+}
 
-    #myproject-edit-tab-div {
-        display: block;
-    }
+.myproject-dropdown .common_dropdown_option_list {
+    width: 330px;
+}
 
-    #myproject-edit-selected-div {
-        display: block;
-        white-space: nowrap;
-        max-height: 600px;
-        padding: 30px;
-    }
-} */
+.myproject-dropdown .common_dropdown_option_list span {
+    width: inherit;
+}
+
+.myproject-edit-selected-info {
+    display: flex;
+    align-items: center;
+    font-size: small;
+    align-self: flex-start;
+    color: skyblue;
+}
+
+.myproject-edit-selected-info span {
+    font-size: small;
+    margin-right: 5px;
+}
+
+.loading {
+    z-index: 1001;
+    background-color: rgba(128, 128, 128, 0.3);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

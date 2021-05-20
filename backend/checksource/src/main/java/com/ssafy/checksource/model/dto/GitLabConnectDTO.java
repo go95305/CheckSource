@@ -6,6 +6,7 @@ import lombok.Data;
 public class GitLabConnectDTO {
 	
 	private boolean flag;
-	private String gitlabId;
+	private Long gitlabId;
+	private String userGitlabId;
 	private String username;
 }

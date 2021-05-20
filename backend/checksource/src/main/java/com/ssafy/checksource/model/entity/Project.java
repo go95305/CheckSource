@@ -27,17 +27,27 @@ import lombok.Data;
 public class Project {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "project_id")
-	private String projectId;
+	private Long projectId;
+	
+	@Column(name = "git_project_id")
+	private String gitProjectId;
 	
 	private String name;
 	
-	@Column(columnDefinition = "boolean default false")
+	@Column(columnDefinition = "bit default 0")
 	private boolean status;
 	
+	@Column(name = "web_url")
+	private String webUrl;
+	
+	@Column(name =  "git_type")
+	private Long gitType;
 	
 	@CreationTimestamp
 	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm", timezone="Asia/Seoul")
+	@Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
 	private LocalDateTime date;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -47,6 +57,13 @@ public class Project {
     
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
-	private User user; //양방향 매핑 안 시켜놓음
+	private User user; 
 	
+	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private List<OpensourceProject> opensourceProject = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private List<UnmappedOpensource> unmappendOpensource = new ArrayList<>();
+	
+	private String branch;
 }

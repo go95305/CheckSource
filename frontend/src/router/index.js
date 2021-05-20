@@ -1,34 +1,51 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import store from "../store";
 // login
-import Login from "@/views/Login/Login";
-import AfterLogin from "@/components/Login/AfterLogin";
-import BeforeLogin from "@/components/Login/BeforeLogin";
+const Login = () => import("@/views/Login/Login");
+const AfterLogin = () => import("@/components/Login/AfterLogin");
+const BeforeLogin = () => import("@/components/Login/BeforeLogin");
 // main
-import Index from "@/views/Main/Index";
+const Index = () => import("@/views/Main/Index");
 
-import DashBoard from "@/views/DashBoard/DashBoard";
+const DashBoard = () => import("@/views/DashBoard/DashBoard");
 
-import MyProject from "@/views/MyProject/MyProject";
-import MyProjectMain from "@/views/MyProject/MyProjectMain";
-import MyProjectStatus from "@/views/MyProject/MyProjectStatus";
-import MyProjectResult from "@/views/MyProject/MyProjectResult";
-import MyProjectEdit from "@/views/MyProject/MyProjectEdit";
-import MyProjectEditGitLab from "@/views/MyProject/MyProjectEditGitLab";
-import MyProjectGitlab from "@/views/MyProject/MyProjectGitlab";
-import LicenseList from "@/components/MyProject/LicenseList";
+const MyProject = () => import("@/views/MyProject/MyProject");
+const MyProjectMain = () => import("@/views/MyProject/MyProjectMain");
+const MyProjectStatus = () => import("@/views/MyProject/MyProjectStatus");
+const MyProjectResult = () => import("@/views/MyProject/MyProjectResult");
+const MyProjectEdit = () => import("@/views/MyProject/MyProjectEdit");
+const MyProjectEditGitLab = () =>
+	import("@/views/MyProject/MyProjectEditGitLab");
+const MyProjectEditGitHub = () =>
+	import("@/views/MyProject/MyProjectEditGitHub");
+const MyProjects = () => import("@/views/MyProject/MyProjects");
+const MyProjectAddLicense = () =>
+	import("@/components/MyProject/MyProjectAddLicense");
+const LicenseList = () => import("@/views/MyProject/LicenseList");
+const Summary = () => import("@/components/MyProject/Summary");
 
-import OSSMain from "@/views/OSS/OSSMain";
-import OSSList from "@/views/OSS/OSSList";
-import OSSOpenSource from "@/views/OSS/OSSOpenSource";
-import OSSLicense from "@/views/OSS/OSSLicense";
+const OSSMain = () => import("@/views/OSS/OSSMain");
+const OSSList = () => import("@/views/OSS/OSSList");
+const OSSOpenSource = () => import("@/views/OSS/OSSOpenSource");
+const OSSLicense = () => import("@/views/OSS/OSSLicense");
+const OSSDetail = () => import("@/views/OSS/OSSDetail");
+const OSSDetailOpenSource = () => import("@/views/OSS/OSSDetailOpenSource");
+const OSSDetailLicense = () => import("@/views/OSS/OSSDetailLicense");
+const OSSDetailLicenseContent = () =>
+	import("@/views/OSS/OSSDetailLicenseContent");
+const OSSDetailLicenseInformation = () =>
+	import("@/views/OSS/OSSDetailLicenseInformation");
 
-import MyPage from "@/views/MyPage/MyPage";
-import MyPageProfile from "@/views/MyPage/MyPageProfile";
-import MyPageSCM from "@/views/MyPage/MyPageSCM";
-import MyPageGitLab from "@/views/MyPage/MyPageGitLab";
-import OpensourceList from "@/components/MyProject/OpensourceList";
-import AddComponent from "@/components/MyProject/AddComponent";
+const MyPage = () => import("@/views/MyPage/MyPage");
+const MyPageProfile = () => import("@/views/MyPage/MyPageProfile");
+const MyPageSCM = () => import("@/views/MyPage/MyPageSCM");
+const MyPageGitLab = () => import("@/views/MyPage/MyPageGitLab");
+const MyPageGitHub = () => import("@/views/MyPage/MyPageGitHub");
+const OpensourceList = () => import("@/views/MyProject/OpensourceList");
+const AddComponent = () => import("@/components/MyProject/AddComponent");
+const OpensourceMain = () => import("@/views/MyProject/OpensourceMain");
+const LicenseMain = () => import("@/views/MyProject/LicenseMain");
 Vue.use(VueRouter);
 
 const routes = [
@@ -75,9 +92,9 @@ const routes = [
 								component: MyProjectStatus,
 							},
 							{
-								path: "gitlab",
-								name: "GitLab",
-								component: MyProjectGitlab,
+								path: "projects",
+								name: "Projects",
+								component: MyProjects,
 							},
 							{
 								path: "github",
@@ -85,7 +102,7 @@ const routes = [
 								component: DashBoard,
 							},
 							{
-								path: "edit",
+								path: "newproject",
 								name: "MyProjectEdit",
 								component: MyProjectEdit,
 								children: [
@@ -97,6 +114,12 @@ const routes = [
 										path: "gitlab",
 										name: "MyProjectEditGitLab",
 										component: MyProjectEditGitLab,
+										props: true,
+									},
+									{
+										path: "github",
+										name: "MyProjectEditGitHub",
+										component: MyProjectEditGitHub,
 										props: true,
 									},
 								],
@@ -111,22 +134,41 @@ const routes = [
 							{
 								path: "summary",
 								name: "Summary",
-								component: DashBoard,
+								component: Summary,
 							},
 							{
 								path: "license",
-								name: "License",
-								component: LicenseList,
+								name: "ResultLicense",
+								component: LicenseMain,
+								children: [
+									{
+										path: "addLicense",
+										name: "MyProjectAddLicense",
+										component: MyProjectAddLicense,
+									},
+									{
+										path: "",
+										name: "License",
+										component: LicenseList,
+									},
+								],
 							},
 							{
-								path: "component",
-								name: "Component",
-								component: OpensourceList,
-							},
-							{
-								path: "addComponent",
-								name: "AddComponent",
-								component: AddComponent,
+								path: "opensource",
+								name: "ResultOpenSource",
+								component: OpensourceMain,
+								children: [
+									{
+										path: "add-opensource",
+										name: "AddOpenSource",
+										component: AddComponent,
+									},
+									{
+										path: "",
+										name: "OpenSourceList",
+										component: OpensourceList,
+									},
+								],
 							},
 						],
 					},
@@ -158,6 +200,57 @@ const routes = [
 							},
 						],
 					},
+					{
+						path: "detail",
+						name: "OSSDetail",
+						component: OSSDetail,
+						children: [
+							{
+								path: "",
+								redirect: "opensource",
+							},
+							{
+								path: "opensource",
+								name: "OSSDetailOpenSource",
+								component: OSSDetailOpenSource,
+							},
+							{
+								path: "license",
+								name: "OSSDetailLicense",
+								component: OSSDetailLicense,
+								children: [
+									{
+										path: "",
+										redirect: "information",
+									},
+									{
+										path: "information",
+										name: "OSSDetailLicenseInformation",
+										component: OSSDetailLicenseInformation,
+										props: true,
+									},
+									{
+										path: "content",
+										name: "OSSDetailLicenseContent",
+										component: OSSDetailLicenseContent,
+										props: true,
+									},
+								],
+							},
+							{
+								path: "editOpensource",
+								name: "EditOpenSource",
+								component: AddComponent,
+								props: true,
+							},
+							{
+								path: "editLicense",
+								name: "EditLicense",
+								component: MyProjectAddLicense,
+								props: true,
+							},
+						],
+					},
 				],
 			},
 			{
@@ -180,6 +273,11 @@ const routes = [
 								name: "MyPageGitLab",
 								component: MyPageGitLab,
 							},
+							{
+								path: "github",
+								name: "MyPageGitHub",
+								component: MyPageGitHub,
+							},
 						],
 					},
 				],
@@ -191,8 +289,17 @@ const routes = [
 const router = new VueRouter({
 	mode: "history",
 	base: process.env.BASE_URL,
-	// linkActiveClass: "active",
 	routes,
+});
+
+router.beforeEach((to, from, next) => {
+	//로그인 여부 확인
+	if (to.name != "BeforeLogin" && to.name != "AfterLogin") {
+		if (!store.getters.getAccessToken) {
+			next("/");
+		}
+	}
+	next();
 });
 
 export default router;
