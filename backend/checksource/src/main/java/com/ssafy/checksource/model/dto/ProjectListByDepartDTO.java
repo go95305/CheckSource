@@ -24,5 +24,6 @@ public class ProjectListByDepartDTO {
 	private String userId;
 	private String webUrl;
 	private Long gitType;
-	
+	private Long githubId;
+	private String githubUsername;
 }
