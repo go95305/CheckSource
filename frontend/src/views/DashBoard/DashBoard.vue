@@ -157,11 +157,13 @@ export default {
 		GetDepartProjects(departId) {
 			//클릭한 부서의 프로젝트 리스트 조회
 			this.choicedDepartId = departId;
+
 			this.currentTime = dayjs().format("YYYY-MM-DD HH:mm:ss");
 			verifyApi
 				.readVerifiedProjectList(1, departId, "", 100, this.currentTime)
 				.then((response) => {
 					this.projectList = response.data.projectList;
+					this.current = 0;
 				});
 		},
 		GetTopFive(index) {
