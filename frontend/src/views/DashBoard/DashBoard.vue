@@ -68,7 +68,7 @@
 			<div class="warning-card card">
 				<div class="card__header">
 					<div class="card__header-title text-light">
-						<strong>라이선스 의무 warning</strong>
+						<strong>라이선스 의무 Warning</strong>
 					</div>
 				</div>
 				<div class="dash-dropdown">
