@@ -144,7 +144,6 @@ export default {
 			swal
 				.selectBranch("Branch 선택", "Branch를 선택하세요.", branchOption)
 				.then((result) => {
-					console.log(result);
 					if (result.value) {
 						let branchRepo = Object.assign({}, this.selectRepo);
 						branchRepo.branch = result.value;

@@ -64,7 +64,6 @@ export default {
     $route:{
       deep:true,
       handler(){
-        console.log(this.$route.query.page);
         if(this.$route.query.page && this.page != this.$route.query.page){
           
           this.page = Number(this.$route.query.page);
@@ -85,7 +84,6 @@ export default {
         .then((response) => {
           if (response.data) {
             this.list = response.data.licenseList; 
-            console.log(this.list);
             this.totalPage =response.data.totalPages; 
           }
           this.loading = false;

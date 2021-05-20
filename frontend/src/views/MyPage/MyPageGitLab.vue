@@ -143,7 +143,6 @@ export default {
 		},
 		DeleteAccount: function (index, gitlabId) {
 			//연결끊기
-			console.log(gitlabId);
 			gitApi
 				.deleteGitLabConnect(gitlabId)
 				.then(() => {

@@ -138,7 +138,6 @@ export default {
 		},
 		DeleteAccount: function (index, githubId) {
 			//연결끊기
-			console.log(githubId);
 			gitApi
 				.deleteGitHubConnect(githubId)
 				.then(() => {

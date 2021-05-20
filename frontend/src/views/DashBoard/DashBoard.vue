@@ -166,7 +166,6 @@ export default {
 		},
 		GetTopFive(index) {
 			//top5 정보 조회
-			console.log(index);
 			if (index == 0) {
 				dashboardApi.readTopFive().then((response) => {
 					this.SetTopFive(response.data);
@@ -174,14 +173,12 @@ export default {
 			} else {
 				dashboardApi.readTopFiveDepart(index).then((response) => {
 					this.SetTopFive(response.data);
-					// console.log(this.topFiveList);
 				});
 			}
 		},
 		SetTopFive(list) {
 			let labels = [];
 			let values = [];
-			console.log(list);
 			for (let item of list) {
 				labels.push(item.name);
 				values.push(item.cnt);
@@ -204,7 +201,6 @@ export default {
 			}
 		},
 		slide(dir) {
-			console.log(this.current);
 			this.direction = dir;
 			dir === 1
 				? (this.transitionName = "slide-next")
