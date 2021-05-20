@@ -16,7 +16,9 @@ export default {
 	name: "NavbarProfile",
 	data() {
 		return {
-			image: 1,
+			image: {
+				url: "",
+			},
 			name: "",
 			department: 1,
 			job: 1,
@@ -36,11 +38,17 @@ export default {
 			this.department = Info.GetDepartmentName(this.getDepartment - 1);
 		},
 		getUserImg: function () {
-			this.image = Info.GetProfileImage(this.getUserImg - 1);
+			const img = Info.GetProfileImage(this.getUserImg - 1);
+			if (img) {
+				this.image = img;
+			}
 		},
 	},
 	created() {
-		this.image = Info.GetProfileImage(this.getUserImg - 1);
+		const img = Info.GetProfileImage(this.getUserImg - 1);
+		if (img) {
+			this.image = img;
+		}
 		this.name = this.getName;
 		this.department = Info.GetDepartmentName(this.getDepartment - 1);
 		this.job = Info.GetJobName(this.getJob - 1);

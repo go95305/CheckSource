@@ -3,7 +3,7 @@
 		<div class="login-form-right-side-before">
 			<div class="top-logo-wrap"></div>
 			<img id="right-side-logo" src="@/assets/shinhan.png" />
-			<h3>Shinhan Bank Opensource Validation</h3>
+			<h3>Shinhan Bank Opensource Verification</h3>
 		</div>
 		<div class="login-form-left-side">
 			<div class="login-top-wrap"></div>
@@ -29,7 +29,9 @@
 	</div>
 </template>
 <script>
-import loginApi from "../../api/login.js";
+import loginApi from "@/api/login.js";
+import swal from "@/api/alert.js";
+
 export default {
 	name: "BeforeLogin",
 	data() {
@@ -43,18 +45,17 @@ export default {
 	},
 	methods: {
 		loginChk() {
-			console.log(this.loginInfo);
 			loginApi
 				.login(this.loginInfo)
 				.then((response) => {
 					if (response.data == true) {
 						this.$store.dispatch("CHECKUSER", this.loginInfo.userId);
 					} else {
-						alert("해당 유저는 존재하지 않습니다.");
+						swal.error("해당 유저는 존재하지 않습니다.");
 					}
 				})
 				.catch(() => {
-					console.log("login error");
+					swal.error("로그인에 실패했습니다.");
 				});
 		},
 	},
