@@ -294,7 +294,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
 	//로그인 여부 확인
-	if (to.path != "/") {
+	if (to.name != "BeforeLogin" && to.name != "AfterLogin") {
 		if (!store.getters.getAccessToken) {
 			next("/");
 		}
