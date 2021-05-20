@@ -18,6 +18,7 @@
             v-model="loginInfo.password"
             placeholder="비밀번호"
             type="password"
+            @keyup.enter="loginChk"
           />
         </div>
         <p v-if="!isLogin">로그인 정보가 틀렸습니다. 다시 입력해주세요.</p>
