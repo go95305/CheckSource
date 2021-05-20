@@ -1,5 +1,4 @@
 # Check Source 설정 가이드
-
 ---
 
 
@@ -10,12 +9,12 @@
 
 ### 1. Backend 서버 접근 설정 변경
 
-```jsx
+```
 // .\exec\frontend\api\http.js
 
 // 기존 backend 서버 접근에서
 const instance = axios.create({
-	baseURL: "http://52.79.151.0:8080",
+	baseURL: "http://checksource.io:8080",
 });
 
 //아래와 같이 변경
@@ -26,7 +25,7 @@ const instance = axios.create({
 
 ### 2. Vue.js 실행
 
-```jsx
+```
 cd .\exec\frontend  //frontend 폴더 접근
 npm install         //프로젝트에 요구되는 패키지 설치
 npm run serve       //프로젝트 실행
@@ -43,14 +42,14 @@ npm run serve       //프로젝트 실행
 
 ### 2. Spring Boot 세팅
 
-```json
+```
 #IDE **세팅**
 Workspace .\exec\backend      //workspace 설정
 해당 IDE에서 checksource 프로젝트 import
 sts에서 실행할 경우, 자체적으로 lombok 설치 후 import 시킬 것
 ```
 
-```json
+```
 **#db서버 변경시**
 .\exec\backend\checksource\src\main\resources\application.yml
 spring:
@@ -65,7 +64,7 @@ spring:
 
 ### 3. Spring Boot 실행
 
-```jsx
+```
 #**Spring boot 서버 실행**
 // gradle update
 // 실행
@@ -74,7 +73,7 @@ spring:
 
 ### 4. DataBase dump파일 실행
 
-```jsx
+```
 **# 데이터베이스 초기 데이터 insert**
 exec\database\dump.sql 
 // 해당 위치의 DB dump 파일을 실행시켜 insert 
