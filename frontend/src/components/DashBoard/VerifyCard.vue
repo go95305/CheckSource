@@ -136,9 +136,9 @@ export default {
 			} else {
 				gitApi
 					.readHubProjectBranches(
-						this.getGitHubList[0].githubId,
+						this.project.githubId,
 						this.project.name,
-						this.getGithubUsername
+						this.project.githubUsername,
 					)
 					.then((response) => {
 						let branchOption = {};
@@ -209,7 +209,7 @@ export default {
 			//재검증 시작
 			this.loading = true;
 			gitApi
-				.verifyGitHubProjects(this.getGitHubList[0].githubId, repoList)
+				.verifyGitHubProjects(this.project.githubId, repoList)
 				.then(() => {
 					swal.success("검증이 완료되었습니다.");
 					this.loading = false;
