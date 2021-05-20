@@ -72,7 +72,7 @@ public class UserService {
                 }
                 userDto.setGitlabList(gitlabListDto);
 
-                List<GithubUser> githubList = gitHubRepository.findByUser(user);
+                List<GithubUser> githubList = gitHubRepository.findAllByUser(user);
                 List<GitHubDTO> githubListDto = new ArrayList<>();
                 for(GithubUser gitHubUser : githubList ){
                     GitHubDTO gitHubDTO = new GitHubDTO();
