@@ -76,7 +76,6 @@ export default {
 	methods: {
 		InsertUserForm: function () {
 			this.profile.userId = this.getUserId;
-			console.log(this.getUserId);
 			loginApi
 				.userForm(this.profile)
 				.then((response) => {
@@ -88,7 +87,7 @@ export default {
 					// }
 				})
 				.catch(() => {
-					console.log("login error");
+					alert("로그인에 실패했습니다.");
 				});
 		},
 	},

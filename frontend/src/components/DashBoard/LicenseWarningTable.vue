@@ -95,12 +95,10 @@ export default {
 		},
 		GetList: function ($state) {
 			//검증된 프로젝트 리스트 조회
-			// console.log('키워드:' + this.keyword);
 			if (this.departId == 0) {
 				dashboardApi
 					.readDashboardWarning(this.page, this.size, this.currentTime)
 					.then((response) => {
-						console.log(response.data);
 						if (response.data.length > 0) {
 							this.list = this.list.concat(response.data);
 							++this.page;
@@ -118,7 +116,6 @@ export default {
 						this.currentTime
 					)
 					.then((response) => {
-						console.log(response.data);
 						if (response.data.length > 0) {
 							this.list = this.list.concat(response.data);
 							++this.page;

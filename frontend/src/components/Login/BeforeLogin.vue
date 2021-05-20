@@ -43,7 +43,6 @@ export default {
 	},
 	methods: {
 		loginChk() {
-			console.log(this.loginInfo);
 			loginApi
 				.login(this.loginInfo)
 				.then((response) => {
@@ -54,7 +53,7 @@ export default {
 					}
 				})
 				.catch(() => {
-					console.log("login error");
+					alert("로그인에 실패했습니다.");
 				});
 		},
 	},

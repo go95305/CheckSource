@@ -495,7 +495,6 @@ export default {
 				this.isEditMode = true;
 				this.license = this.editLicense;
 				this.license.contents = window.atob(this.license.contents);
-				console.log(this.license);
 			} else {
 				this.$router.go(-1);
 			}
@@ -520,7 +519,7 @@ export default {
 			if (this.CanDo) {
 				this.license.contents = window.btoa(this.license.contents);
 				licenseApi.addLicense(this.license).then(() => {
-					console.log("추가성공");
+					alert("추가성공");
 					this.$router.go(-1);
 				});
 			}
@@ -529,7 +528,7 @@ export default {
 			if (this.CanDo) {
 				this.license.contents = window.btoa(this.license.contents);
 				licenseApi.updateLicense(this.license).then(() => {
-					console.log("수정성공");
+					alert("수정성공");
 					this.$router.go(-1);
 				});
 			}
@@ -538,7 +537,7 @@ export default {
 			swal.confirm("정말로 삭제하시겠습니까?").then((response) => {
 				if (response.value) {
 					licenseApi.deleteLicense(this.license.licenseId).then(() => {
-						console.log("삭제성공");
+						alert("삭제성공");
 						this.$router.go(-2);
 					});
 				}

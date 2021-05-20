@@ -47,7 +47,6 @@ export default {
 				//chart가 destroy될때까지 대기
 				await this.chart.destroy();
 			}
-			console.log("들");
 			this.chart = new Chart(ctx, {
 				type: "doughnut",
 				data: {

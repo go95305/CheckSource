@@ -124,7 +124,6 @@ export default {
 				gitApi
 					.readProjectBranches(this.project.gitType, this.project.projectId)
 					.then((response) => {
-						console.log(response);
 						let branchOption = {};
 						for (let branch of response.data) {
 							branchOption[branch.name] = branch.name;
@@ -142,7 +141,6 @@ export default {
 						this.getGithubUsername
 					)
 					.then((response) => {
-						console.log(response);
 						let branchOption = {};
 						for (let branch of response.data) {
 							branchOption[branch.commit.sha] = branch.name;
@@ -160,8 +158,6 @@ export default {
 				.selectBranch("Branch 선택", "Branch를 선택하세요.", branchOption)
 				.then((result) => {
 					if (result.isConfirmed) {
-						console.log(branchOption[result.value]);
-						console.log(result);
 						if (this.project.gitType <= 2) {
 							let repoList = [
 								{
@@ -184,11 +180,8 @@ export default {
 									sha: result.value,
 								},
 							];
-							console.log(repoList[0]);
 							this.ReverifyGitHub(repoList);
 						}
-						// console.log(repoList[0])
-						// console.log(this.project.gitType)
 						// if (this.project.gitType <= 2) {
 
 						// } else {

@@ -87,9 +87,6 @@ export default {
 		},
 		gitType: Number,
 	},
-	created() {
-		// console.log(this.gitType);
-	},
 	methods: {
 		SelectCard: function () {
 			//레포지토리 추가

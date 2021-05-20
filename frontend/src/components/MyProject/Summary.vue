@@ -81,7 +81,6 @@ export default {
 			verifyApi
 				.readVerifiedSummary(this.gitType, this.projectId)
 				.then((response) => {
-					console.log(response);
 					this.analyLicenseCnt = response.data.analyLicenseCnt;
 					this.analyOpensourceCnt = response.data.analyOpensourceCnt;
 					this.requireCheckingLicenseCnt =
