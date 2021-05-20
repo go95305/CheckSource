@@ -35,7 +35,6 @@
 								/>
 							</div>
 						</transition-group>
-
 						<div
 							class="dash-c-btn dash-c-btn-next"
 							aria-label="Next slide"
@@ -91,15 +90,13 @@
 import { mapGetters } from "vuex";
 import dayjs from "dayjs";
 import Info from "@/api/info.js";
-import swal from "@/api/alert.js";
 import verifyApi from "@/api/verify.js";
 import dashboardApi from "@/api/dashboard.js";
-
 import TopFiveGraph from "@/components/DashBoard/TopFiveGraph.vue";
 import VerifyCard from "@/components/DashBoard/VerifyCard.vue";
 import DropDown from "@/components/DropDown/DropDown.vue";
 import DashBoardTable from "@/components/DashBoard/DashBoardTable.vue";
-import LicenseWarningTable from "@/components/DashBoard/LicenseWarningTable.vue";
+import LicenseWarningTable from "../../components/DashBoard/LicenseWarningTable.vue";
 import DashBoardOverview from "@/components/DashBoard/DashBoardOverview.vue";
 import "vueperslides/dist/vueperslides.css";
 
@@ -168,6 +165,7 @@ export default {
 		},
 		GetTopFive(index) {
 			//top5 정보 조회
+			console.log(index);
 			if (index == 0) {
 				dashboardApi.readTopFive().then((response) => {
 					this.SetTopFive(response.data);
@@ -175,12 +173,14 @@ export default {
 			} else {
 				dashboardApi.readTopFiveDepart(index).then((response) => {
 					this.SetTopFive(response.data);
+					// console.log(this.topFiveList);
 				});
 			}
 		},
 		SetTopFive(list) {
 			let labels = [];
 			let values = [];
+			console.log(list);
 			for (let item of list) {
 				labels.push(item.name);
 				values.push(item.cnt);
@@ -199,16 +199,24 @@ export default {
 					query: { gitType: gitType, projectId: projectId },
 				});
 			} else {
-				swal.error("내 부서의 프로젝트만 볼 수 있습니다.");
+				alert("내 부서의 프로젝트만 볼 수 있습니다.");
 			}
 		},
 		slide(dir) {
-			this.direction = dir;
-			dir === 1
-				? (this.transitionName = "slide-next")
-				: (this.transitionName = "slide-prev");
-			var len = this.projectList.length;
-			this.current = (this.current + (dir % len) + len) % len;
+			const card = document.getElementsByClassName("slide")[0];
+			if (
+				!(
+					card.classList.contains("slide-next-leave-active") ||
+					card.classList.contains("slide-prev-leave-active")
+				)
+			) {
+				this.direction = dir;
+				dir === 1
+					? (this.transitionName = "slide-next")
+					: (this.transitionName = "slide-prev");
+				var len = this.projectList.length;
+				this.current = (this.current + (dir % len) + len) % len;
+			}
 		},
 	},
 };
