@@ -4,7 +4,6 @@ import store from "../store";
 import swal from "@/api/alert.js";
 
 const instance = axios.create({
-	// baseURL: process.env.VUE_APP_BASE_URL,
 	baseURL: "http://52.79.151.0:8080",
 	// baseURL: "http://localhost:8080",
 });
