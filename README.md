@@ -202,6 +202,7 @@ exec\database\dump.sql
 
 ## 🏆 프로젝트 산출물
 
+- [Check Source 문서정리](https://www.notion.so/f60d090cba784f32a66ecdbf289f65f9)
 - [Backend 기능명세서](https://docs.google.com/spreadsheets/d/11KNxKlUoQtLbTplsuT1WPCbLQ96ZR96KuIsGtDj7Ilw/edit?usp=sharing)
 - [ERD](https://drive.google.com/file/d/1C0tlvul8g19nobMH9tSm2jotK9yx_CBa/view?usp=sharing)
 - [Frontend 기능명세서](https://docs.google.com/spreadsheets/d/1gch-bEHKeZvm0v83CO2WlWjSOU7FjEwFJtDxWLeF6Oc/edit#gid=1830621374)
