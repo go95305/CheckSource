@@ -4,7 +4,7 @@
 ## 🎁 프로젝트 개요
 
 
-![document/main.png](document/main.png)
+<img height="400" src="document/main.png" />
 
 - **개발 기간** : 21.04.12 ~ 21.05.21 (6주)
 - **개발 환경** : Vue.js, Spring Boot, Maria DB, GitLab, JIRA
