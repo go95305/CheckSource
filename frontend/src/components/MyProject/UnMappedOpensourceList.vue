@@ -91,6 +91,7 @@ export default {
 			this.$router.push({
 				name: "AddOpenSource",
         params: {unmappedOpensource:unmappedOpensource},
+        query: this.$route.query,
 			});
 		},
     ChangePage:function(page){

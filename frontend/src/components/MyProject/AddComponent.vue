@@ -236,7 +236,7 @@ export default {
   },
   methods: {
     licenseAddPage(){
-      this.$router.push({ name: "MyProjectAddLicense" });
+      this.$router.push({ name: "MyProjectAddLicense", query:this.$route.query });
     },
     getLicenseName(newVal) {
       opensourceApi.getLicenseName(newVal).then((response) => {
