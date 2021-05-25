@@ -396,7 +396,10 @@ public class GitService {
 					String filePath = packageManageFileDto.getFile_path();
 					String fileName = packageManageFileDto.getFile_name();
 					// 4. base64 - decoding 등 승환 코드
-					analyzeService.analyze(projectId, fileName, contents, filePath); // 변경
+					if(!analyzeService.analyze(projectId, fileName, contents, filePath)) {// 변경
+						newProject.setStatus(false);
+						projectRepository.save(newProject);
+					}
 
 				} catch (HttpClientErrorException e) {
 					System.out.println(e.getStatusCode());
