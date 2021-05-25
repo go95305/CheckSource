@@ -91,7 +91,7 @@ export default {
 			this.loading = true;
 			this.repositoryList = [];
       if(this.getGitLabList[this.gitlabAccountValue]){
-	      gitApi
+	gitApi
 				.readGitLabProjects(
 					this.getGitLabList[this.gitlabAccountValue].gitlabId
 				)
