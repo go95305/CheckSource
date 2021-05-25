@@ -37,7 +37,10 @@
       </div>
 
       <div class="verifycard-main-second">
-        <div class="verifycard-skill-s">{{ getStatus }}</div>
+        <div class="verifycard-skill-s">
+          <span class="material-icons verifycard-icon" v-if="!project.status">
+          error_outline
+          </span>{{ getStatus }}</div>
       </div>
 
       <div class="verifycard-main-third">
@@ -96,11 +99,12 @@ export default {
       return "GitHub";
     },
     getStatus: function () {
-      if (this.project.status == true) {
-        return "검증완료";
-      } else {
-        return "검증대기중";
-      }
+      // if (this.project.status) {
+      //   return "검증완료";
+      // } else {
+      //   return "검증실패";
+      // }
+      return "검증완료";
     },
   },
   methods: {

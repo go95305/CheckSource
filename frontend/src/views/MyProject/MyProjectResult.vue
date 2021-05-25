@@ -12,6 +12,7 @@
 				<span class="my-project-info-weburl">{{ projectInfo.webUrl }}</span>
 				<span class="my-project-info-branch">{{ projectInfo.branch }}</span>
 			</div>
+      <p class="my-project-status" v-if="!projectInfo.status">프로젝트 내부의 패키지 매니저 중 검증에 문제가 있는 파일이 있습니다. </p>
 		</div>
 		<tab id="my-project-result-tab" :list="tabList" />
 		<router-view />

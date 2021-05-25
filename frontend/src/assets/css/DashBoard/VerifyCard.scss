@@ -64,6 +64,17 @@
   border-radius: 100px;
   padding: 4px 10px;
   margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.verifycard-icon{
+  font-size: medium;
+  font-weight: 700;
+  margin-right: 5px;
+  color: orange;
+  cursor: default;
 }
 
 .verifycard-difficulty {
