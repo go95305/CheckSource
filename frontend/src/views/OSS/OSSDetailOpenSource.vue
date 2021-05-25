@@ -52,6 +52,7 @@ export default {
 				groupId: "",
 				artifactId: "",
 				packageType: "",
+        userName:"관리자",
 			},
 		};
 	},
