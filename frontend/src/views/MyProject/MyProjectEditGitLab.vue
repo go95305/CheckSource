@@ -90,7 +90,8 @@ export default {
 			//레포지토리 얻어오기
 			this.loading = true;
 			this.repositoryList = [];
-			gitApi
+      if(this.getGitLabList[this.gitlabAccountValue]){
+	gitApi
 				.readGitLabProjects(
 					this.getGitLabList[this.gitlabAccountValue].gitlabId
 				)
@@ -110,6 +111,8 @@ export default {
 					this.repositoryList = [];
 					swal.error("프로젝트 목록을 불러오지 못했습니다.");
 				});
+      }
+		
 		},
 		IsSelected: function (id) {
 			//선택된 레포지토리인지 확인
