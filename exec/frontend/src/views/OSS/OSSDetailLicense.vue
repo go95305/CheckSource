@@ -42,6 +42,7 @@ export default {
 				identifier: "",
 				sourceopen: "",
 				url: "",
+        userName:"관리자",
 			},
 			tabList: [
 				{
