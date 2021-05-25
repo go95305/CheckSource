@@ -29,7 +29,9 @@ export default {
 		return {
 			projectId: this.$route.query.projectId,
 			gitType: this.$route.query.gitType,
-			projectInfo: "",
+			projectInfo: {
+        status:true,
+      },
 			tabList: [],
 		};
 	},
