@@ -18,7 +18,7 @@ public interface OpensourceRepository extends JpaRepository<Opensource, Long>{
 
     public Opensource findById(long id);
     public Opensource findByOpensourceId(long opensourceId);
-    public Opensource findByGroupIdAndArtifactId(String groupId,String artifactId);
+    public Opensource findByGroupIdAndArtifactIdAndPackageType(String groupId,String artifactId,String packageType);
     public Opensource save(Opensource ops);
 //    @Query(
 //    		value = "select o.*, l.* "

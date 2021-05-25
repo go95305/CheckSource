@@ -14,11 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.xml.sax.InputSource;
 
-import com.ssafy.checksource.model.dto.LicenseDetailDTO;
-import com.ssafy.checksource.model.dto.OpensourceDetailDTO;
 import com.ssafy.checksource.model.dto.ParsingDTO;
-import com.ssafy.checksource.model.entity.License;
-import com.ssafy.checksource.model.entity.LicenseOpensource;
 import com.ssafy.checksource.model.entity.Opensource;
 import com.ssafy.checksource.model.entity.OpensourceProject;
 import com.ssafy.checksource.model.entity.Project;
@@ -48,20 +44,32 @@ public class AnalyzeService {
 	private final ProjectRepository projectRepository;
 	private final UnmappedOpensourceRepository unmappedOpensourceRepository;
 
-	// packageManager = "pom.xml"
+	// filename = packageManager ex)pom.xml
 	// content = base64 encoding data
-	public void analyze(Long projectId, String fileName, String content,String filePath) throws Exception {
+	public boolean analyze(Long projectId, String fileName, String content,String filePath) throws Exception {
 		//기존 데이터 삭제
 		
-		List<Long> list = null;
+		List<Long> list = new ArrayList<Long>();
 		byte[] decoded = Base64.getDecoder().decode(content);
 		content = new String(decoded, StandardCharsets.UTF_8);
-		if (fileName.equals("pom.xml")) {
-			list = getOpensourceId(filePath, projectId ,pomxmlParsing(content));
-		} else if(fileName.equals("build.gradle")) {
-			
-		} else if(fileName.equals("package.json")) {
-			list = getOpensourceId(filePath, projectId, packageJsonParsing(content));
+		String packageType = "";
+		try {
+			if (fileName.equals("pom.xml")) {
+				packageType = "MAVEN";
+				list = getOpensourceId(filePath,packageType,projectId,pomxmlParsing(content));
+			} else if(fileName.equals("build.gradle")) {
+				
+			} else if(fileName.equals("package.json")) {
+				packageType = "NPM";
+				list = getOpensourceId(filePath,packageType,projectId,packageJsonParsing(content));
+			}
+		}catch(com.google.gson.JsonSyntaxException e) {
+			//Json 자체 문제
+			return false;
+		}catch (Exception e) {
+			e.printStackTrace();
+			// 패키지 매니저 파일이 파일형태를 벗어 났을 때
+			return false;
 		}
 
 		//opensourceProject insert
@@ -76,7 +84,7 @@ public class AnalyzeService {
 			opensourceProject.setPath(filePath);
 			opensourceProjectRepository.save(opensourceProject);
 		}
-		
+		return true;
 	}
 
 	// pom.xml Parsing
@@ -112,10 +120,10 @@ public class AnalyzeService {
 	
 	
 	//groupId와 artifactId로 opensourceId 찾아오기
-	public List<Long> getOpensourceId(String filePath, Long projectId, List<ParsingDTO> list){
+	public List<Long> getOpensourceId(String filePath,String packageType, Long projectId, List<ParsingDTO> list){
 		List<Long> opensourceList = new ArrayList<Long>();
 		for (ParsingDTO dto : list) {
-			Opensource ops = opensourceRepository.findByGroupIdAndArtifactId(dto.getGroupId(), dto.getArtifactId());
+			Opensource ops = opensourceRepository.findByGroupIdAndArtifactIdAndPackageType(dto.getGroupId(), dto.getArtifactId(),packageType);
 			if (ops != null) {
 				opensourceList.add(ops.getOpensourceId());
 			}else { //db에 오픈소스 없는 경우
