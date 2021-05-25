@@ -3,6 +3,7 @@ package com.ssafy.checksource.parser;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.ssafy.checksource.model.dto.ParsingDTO;
@@ -18,8 +19,22 @@ public class PackageJsonParser {
 
 	private void parse(String json) {
 		JsonObject jsonObject = (JsonObject) JsonParser.parseString(json);
-		JsonObject depenObject = (JsonObject) jsonObject.get("dependencies");
-
+		JsonElement depenElement = jsonObject.get("dependencies");
+		JsonObject depenObject = null;
+		if(depenElement == null) {
+			return;
+		}
+		else if(depenElement.isJsonObject()) {
+			depenObject = (JsonObject) depenElement;
+		}
+		else if(depenElement.isJsonNull()) {
+			return;
+		}
+		else {
+			return;
+		}
+		
+		
 		for (String depenName : depenObject.keySet()) {
 			ParsingDTO depen = new ParsingDTO();
 			depen.setGroupId("");
