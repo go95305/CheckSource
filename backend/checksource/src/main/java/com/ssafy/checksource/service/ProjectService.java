@@ -68,7 +68,7 @@ public class ProjectService {
 
 
 
-	//프로젝트 이름
+	//프로젝트 정보
 	public ProjectInfoDTO getProjectName(String gitProjectId, Long gitType) {
 		ProjectInfoDTO projectInfoDto = new ProjectInfoDTO();
 		Project project = projectRepository.findByGitProjectIdAndGitType(gitProjectId, gitType);
