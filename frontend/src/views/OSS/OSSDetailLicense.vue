@@ -65,7 +65,6 @@ export default {
         .getDetailLicense(this.licenseId)
         .then((response) => {
           this.license = response.data;
-          console.log(this.license);
         })
         .catch();
     },
