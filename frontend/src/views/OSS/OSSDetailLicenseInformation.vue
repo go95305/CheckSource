@@ -55,11 +55,11 @@ export default {
           value: "this.informationData.is_modify_notice",
         },
         {
-          name: "책임 여부",
+          name: "책임의 제한",
           value: "this.informationData.is_respon",
         },
         {
-          name: "보증 여부",
+          name: "보증의 부인",
           value: "this.informationData.is_warranty",
         },
       ],
