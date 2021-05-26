@@ -49,6 +49,54 @@
 
 <br/>
 
+## 🛠️ 실행 환경 설정 - 로컬 환경 실행 시
+
+## 🖥️ FrontEnd 환경 설정
+
+### 1. Backend 서버 접근 설정 변경
+
+```
+// .\exec\frontend\src\api\http.js
+
+// 기존 backend 서버 접근에서
+const instance = axios.create({
+	baseURL: "http://checksource.io:8080",
+});
+
+//아래와 같이 변경
+const instance = axios.create({
+	baseURL: "http://localhost:8080",
+});
+```
+
+### 2. GitLab 정보 변경
+
+```
+// .\exec\frontend\src\api\git.js
+
+// 기존 배포용 GitLab 정보에서
+const baseUrl = [
+  "http://gitlab.checksource.io:8081",
+  "http://gitlab.checksource.io:8082",
+];
+
+//아래와 같이 변경
+const baseUrl = [
+  "설치한 깃랩1 url",
+  "설치한 깃랩2 url",
+];
+```
+
+### 3. Vue.js 실행
+
+```
+cd .\exec\frontend  //frontend 폴더 접근
+npm install         //프로젝트에 요구되는 패키지 설치
+npm run serve       //프로젝트 실행
+```
+
+<br/>
+
 ## 💾 BackEnd 환경 설정
 
 ### 1. Data Base 세팅
@@ -133,9 +181,9 @@ exec\database\dump.sql
     update gitlab set root_access_token = "루트 토큰" where gitlab_id = 2;
     ```
 
-## 🛠️ 실행 환경 설정 - 배포 환경 실행 시
+<br/>
 
----
+## 🛠️ 실행 환경 설정 - 배포 환경 실행 시
 
 ## 🖥️ FrontEnd 환경 설정
 
@@ -172,6 +220,8 @@ const baseUrl = [
   "설치한 깃랩2 url",
 ];
 ```
+
+<br/>
 
 ## 💾 BackEnd 환경 설정
 
