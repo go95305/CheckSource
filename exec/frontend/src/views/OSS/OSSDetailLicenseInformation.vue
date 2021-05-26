@@ -48,7 +48,7 @@ export default {
         },
         {
           name: "타 라이선스 배포 허용",
-          value: "this.informationData.is_autherlicense",
+          value: "this.informationData.is_anotherlicense",
         },
         {
           name: "수정여부 고지 의무",
