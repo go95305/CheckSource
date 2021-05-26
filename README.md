@@ -1,5 +1,6 @@
 # <strong>Check Source</strong>
 
+<br/>
 
 ## 🎁 프로젝트 개요
 
@@ -15,6 +16,8 @@
     - **backend** - [http://checksource.io:8080/swagger-ui.html#/](http://52.79.151.0:8080/swagger-ui.html#/)
     - **깃랩 1** - [http://gitlab.checksource.io:8081/](http://gitlab.checksource.io:8081/)
     - **깃랩 2** - [http://gitlab.checksource.io:8082/](http://gitlab.checksource.io:8081/)
+
+<br/>
 
 ## 👩 Team 눈앞에 양파
 
@@ -44,34 +47,9 @@
     - [https://github.com/go95305](https://github.com/go95305)
     - 역할 - frontend
 
-## 🛠️ FrontEnd 환경 세팅
+<br/>
 
-### 1. Backend 서버 접근 설정 변경
-
-```
-// .\exec\frontend\api\http.js
-
-// 기존 backend 서버 접근에서
-const instance = axios.create({
-	baseURL: "http://checksource.io:8080",
-});
-
-//아래와 같이 변경
-const instance = axios.create({
-	baseURL: "http://localhost:8080",
-});
-```
-
-### 2. Vue.js 실행
-
-```
-cd .\exec\frontend  //frontend 폴더 접근
-npm install         //프로젝트에 요구되는 패키지 설치
-npm run serve       //프로젝트 실행
-```
-
-## 🛠️ BackEnd 환경 세팅
-
+## 💾 BackEnd 환경 설정
 
 ### 1. Data Base 세팅
 
@@ -81,14 +59,14 @@ npm run serve       //프로젝트 실행
 ### 2. Spring Boot 세팅
 
 ```
-#IDE **세팅**
+#IDE 세팅
 Workspace .\exec\backend      //workspace 설정
 해당 IDE에서 checksource 프로젝트 import
 sts에서 실행할 경우, 자체적으로 lombok 설치 후 import 시킬 것
 ```
 
 ```
-**#db서버 변경시**
+#db서버 변경시
 .\exec\backend\checksource\src\main\resources\application.yml
 spring:
 	datasource:
@@ -103,7 +81,7 @@ spring:
 ### 3. Spring Boot 실행
 
 ```
-#**Spring boot 서버 실행**
+#Spring boot 서버 실행
 // gradle update
 // 실행
 // JPA 실행하면 DB 스키마 및 엔터티 자동 세팅
@@ -112,10 +90,130 @@ spring:
 ### 4. DataBase dump파일 실행
 
 ```
-**# 데이터베이스 초기 데이터 insert**
+# 데이터베이스 초기 데이터 insert
 exec\database\dump.sql 
 // 해당 위치의 DB dump 파일을 실행시켜 insert 
 ```
+
+### 5. GitLab 서버 자체 구축
+
+### backend
+
+1. Gitlab server 구축
+    - Gitlab server 설치
+    - reference: [https://about.gitlab.com/install/](https://about.gitlab.com/install/)
+
+2. 구축한 Gitlab server의 root 계정 로그인 → root Token 발급
+
+    ![document/gitlab1.png](document/gitlab1.png)
+
+    - root Token 발급: User Settings > Access Tokens
+
+    ![document/gitlab2.png](document/gitlab2.png)
+    
+    - 토큰 발급시 유효기간 설정하지 말 것
+3. Database gitlab 테이블 변경
+
+    ![document/gitlab3.png](document/gitlab3.png)
+    
+    - gitlab 서버는 최대 2개까지만 가능합니다.
+    - 데이터 베이스 내의 gitlab base_url과 root_access_token을 update문을 통해 직접 수정
+
+    ```
+    # SQL문
+
+    select * from gitlab;
+
+    #깃랩1 정보 수정
+    update gitlab set base_url = "깃랩1 url" where gitlab_id = 1;
+    update gitlab set root_access_token = "루트 토큰" where gitlab_id = 1;
+
+    #깃랩2 정보 수정
+    update gitlab set base_url = "깃랩2 url" where gitlab_id = 2;
+    update gitlab set root_access_token = "루트 토큰" where gitlab_id = 2;
+    ```
+
+## 🛠️ 실행 환경 설정 - 배포 환경 실행 시
+
+---
+
+## 🖥️ FrontEnd 환경 설정
+
+### 1. Backend 서버 접근 설정 변경
+
+```
+// .\exec\frontend\api\http.js
+
+// 기존 backend 서버 접근에서
+const instance = axios.create({
+	baseURL: "http://checksource.io:8080",
+});
+
+//아래와 같이 변경
+const instance = axios.create({
+	baseURL: "http://{backend 배포 URL or IP:포트}",
+});
+```
+
+### 2. GitLab 정보 변경
+
+```
+// .\exec\frontend\src\api\git.js
+
+// 기존 배포용 GitLab 정보에서
+const baseUrl = [
+  "http://gitlab.checksource.io:8081",
+  "http://gitlab.checksource.io:8082",
+];
+
+//아래와 같이 변경
+const baseUrl = [
+  "설치한 깃랩1 url",
+  "설치한 깃랩2 url",
+];
+```
+
+## 💾 BackEnd 환경 설정
+
+### 1. 서버 Data Base 세팅
+
+- Maria DB 설치
+- port : 3306
+
+### 2. GitLab 서버 자체 구축
+
+- Local 세팅에 적힌 내용과 동일
+
+### 3. Spring Boot 세팅
+
+```
+#application.yml 파일 수정
+.\exec\backend\checksource\src\main\resources\application.yml
+spring:
+	datasource:
+		url: 연결할 DB url
+		(ex. jdbc:mariadb://{DB를 설치한 IP 또는 도메인}:3306/checksource?useUnicode=yes&characterEncoding=UTF-8&serverTimezone=Asia/Seoul)
+		username: 설정했을시 수정
+		password: 설정했을시 수정
+```
+
+### 4. DataBase dump 파일 실행
+
+```
+# 데이터베이스 초기 데이터 insert
+exec\database\dump.sql
+// 해당 위치의 DB dump 파일을 실행시켜 insert 
+```
+
+### 5. 배포
+
+- 서버에 Jenkins 설치 후
+    - 매개변수 세팅
+        - CREDENTIALIS_ID, GIT_URL
+    - jenkins pipeline 설정
+        - exec\Jenkinsfile.groovy
+
+<br/>
 
 ## **📚기술스택**
 
@@ -139,6 +237,8 @@ exec\database\dump.sql
 
 - Jenkins : 2.290
 - docker : 20.10.6
+
+<br/>
 
 ## 🎈 주요기능
 
@@ -199,6 +299,7 @@ exec\database\dump.sql
 - 형상관리
     - 검증에 사용될 GitLab, GitHub 계정 연동, 해제
 
+<br/>
 
 ## 🏆 프로젝트 산출물
 
