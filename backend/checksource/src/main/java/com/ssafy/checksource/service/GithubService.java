@@ -103,7 +103,7 @@ public class GithubService {
         // 헤더 담음
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        String plainCreds = "go95305:" + personalAccessToken;
+        String plainCreds = username+":" + personalAccessToken;
         byte[] plainCredsBytes = plainCreds.getBytes();
         byte[] base64CredsBytes = Base64.encodeBase64(plainCredsBytes);
         String base64Creds = new String(base64CredsBytes);
