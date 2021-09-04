@@ -4,7 +4,7 @@
 
 ![main](./img/main.png)
 
-출처: https://zeddios.tistory.com/34 [ZeddiOS]
+
 
 - **개발 기간** : 21.04.12 ~ 21.05.28 (총 7주)
 - **개발 환경** : Vue.js, Spring Boot, Maria DB, GitLab, JIRA
